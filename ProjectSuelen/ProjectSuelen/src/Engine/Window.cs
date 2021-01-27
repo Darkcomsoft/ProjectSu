@@ -24,12 +24,17 @@ namespace ProjectSuelen.src.Engine
 
         protected override void OnLoad(EventArgs e)
         {
+            GL.ClearColor(Color4.Black);
+
+            //VSync = VSyncMode.Off;
+            WindowBorder = WindowBorder.Resizable;
+
             engineMain = new EngineMain();
         }
 
         protected override void OnUpdateFrame(FrameEventArgs e)
         {
-            Time._DeltaTime = (double)e.Time;
+            Time._DeltaTime = e.Time;
             Time._DTime += e.Time;
 
             if (engineMain != null)
@@ -37,7 +42,7 @@ namespace ProjectSuelen.src.Engine
                 engineMain.Tick();
             }
 
-            Time.UPS = (int)(1f / e.Time);
+            Time.UPS = (int)(1d / e.Time);
         }
 
         protected override void OnRenderFrame(FrameEventArgs e)
@@ -54,7 +59,7 @@ namespace ProjectSuelen.src.Engine
             Time._Time++;
             Time._Tick = Time._Time % 60;
 
-            if (Time._Time >= double.MaxValue)
+            if (Time._Time >= int.MaxValue)
             {
                 Time._Time = -Time._Time;
             }

@@ -12,7 +12,7 @@ using ProjectSuelen.src.Engine.AssetsPipeline;
 
 namespace ProjectSuelen.src.Engine.UI.Font
 {
-	public class FontRender : ObjectBase
+	public class FontRender : ClassBase
 	{
 		private string textString;
 		private float fontSize;

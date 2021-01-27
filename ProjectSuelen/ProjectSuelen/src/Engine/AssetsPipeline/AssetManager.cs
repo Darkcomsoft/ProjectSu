@@ -14,7 +14,7 @@ using System.Threading.Tasks;
 
 namespace ProjectSuelen.src.Engine.AssetsPipeline
 {
-    public class AssetManager : ObjectBase
+    public class AssetManager : ClassBase
     {
         private static AssetManager thisinstance;
         private static bool assetsReady = false;
@@ -23,6 +23,8 @@ namespace ProjectSuelen.src.Engine.AssetsPipeline
         private Dictionary<string, Model> _Models;
         private Dictionary<string, FontType> _FontList;
         private Dictionary<string, AudioClip> _soundList;
+
+        private Dictionary<string, Vector2[]> _Tiles;
 
         private string AssetsPath = "NULL_PATH";
 
@@ -39,6 +41,7 @@ namespace ProjectSuelen.src.Engine.AssetsPipeline
             _Models = new Dictionary<string, Model>();
             _FontList = new Dictionary<string, FontType>();
             _soundList = new Dictionary<string, AudioClip>();
+            _Tiles = new Dictionary<string, Vector2[]>();
 
             LoadPreAssets();
         }
@@ -65,12 +68,26 @@ namespace ProjectSuelen.src.Engine.AssetsPipeline
         {
             BasicScreen.SetStatus(ScreenType.SplashScreen, "Loading Assests");
             //Assets aqui
+
+            BasicScreen.SetStatus(ScreenType.SplashScreen, "Loading Shaders");
+            _shaderList.Add("Default", new Shader(LoadShader("/Shaders/", "Default")));
+            _shaderList.Add("TerrainDefault", new Shader(LoadShader("/Shaders/", "TerrainDefault")));
+
+            BasicScreen.SetStatus(ScreenType.SplashScreen, "Loading Textures");
+            _textureList.Add("TileAtlas", new Texture(LoadImage("/Texture/", "TileAtlas", "png")));
+
             BasicScreen.SetStatus(ScreenType.SplashScreen, "Loading Images");
             _textureList.Add("VaKLogoYellow", new Texture(LoadImage("/Images/", "VaKLogoYellow", "png")));
             _textureList.Add("BackGround", new Texture(LoadImage("/Images/", "BackGround", "png")));
-            
+
+            BasicScreen.SetStatus(ScreenType.SplashScreen, "Loading Images");
+            AddTileUv("Grass", new Vector2(0.15f, 0.066667f), new Vector2(0.15f, 0f), new Vector2(0.2f, 0.066667f), new Vector2(0.2f, 0f));
+            AddTileUv("Dirt", new Vector2(0.55f, 0.066667f), new Vector2(0.55f, 0f), new Vector2(0.6f, 0.066667f), new Vector2(0.6f, 0f));
+            AddTileUv("Sand", new Vector2(0.8f, 0.066667f), new Vector2(0.8f, 0f), new Vector2(0.85f, 0.066667f), new Vector2(0.85f, 0f));
+            AddTileUv("Water", new Vector2(0.2f, 0.066667f), new Vector2(0.2f, 0f), new Vector2(0.25f, 0.066667f), new Vector2(0.25f, 0f));
+            AddTileUv("Snow", new Vector2(0.7f, 0.066667f), new Vector2(0.7f, 0f), new Vector2(0.75f, 0.066667f), new Vector2(0.75f, 0f));
             //
-                        assetsReady = true;
+            assetsReady = true;
             BasicScreen.SetStatus();
         }
 
@@ -128,7 +145,20 @@ namespace ProjectSuelen.src.Engine.AssetsPipeline
             LoadAssets();
         }
 
+
         #region GetAssets
+        public static Vector2[] GetTileUV(string tileName)
+        {
+            if (instance._Tiles.TryGetValue(tileName, out Vector2[] arraylist))
+            {
+                return arraylist;
+            }
+            else
+            {
+                throw new Exception("Dont Found this Tile UV: " + tileName);
+            }
+        }
+
         public static int GetSound(string soundName)
         {
             if (AssetManager.instance._soundList.TryGetValue(soundName, out AudioClip clip))
@@ -395,6 +425,18 @@ namespace ProjectSuelen.src.Engine.AssetsPipeline
 
     return processor.Load();
 }*/
+
+        public void AddTileUv(string tileName, Vector2 point1, Vector2 point2, Vector2 point3, Vector2 point4)
+        {
+            Vector2[] uvs = new Vector2[4];
+
+            uvs[0] = point1;
+            uvs[1] = point2;
+            uvs[2] = point3;
+            uvs[3] = point4;
+
+            _Tiles.Add(tileName, uvs);
+        }
         #endregion
 
         public static AssetManager instance { get => thisinstance; private set { } }

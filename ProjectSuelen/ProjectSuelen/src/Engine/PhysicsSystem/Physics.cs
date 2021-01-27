@@ -6,7 +6,7 @@ using OpenTK;
 
 namespace ProjectSuelen.src.Engine.PhysicsSystem
 {
-    public class Physics: ObjectBase
+    public class Physics: ClassBase
     {
         public static Physics _Main;
 

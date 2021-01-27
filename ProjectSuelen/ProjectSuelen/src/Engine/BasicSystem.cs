@@ -10,7 +10,7 @@ namespace ProjectSuelen.src.Engine
     /// <summary>
     /// BasicSystem is the most basic systems, EX: GUI, OS operations, is gona still load until engine(Window) are open, and runing
     /// </summary>
-    public class BasicSystem : ObjectBase
+    public class BasicSystem : ClassBase
     {
         private GUI guiManager;
         private BasicScreen basicScreen;
@@ -33,13 +33,14 @@ namespace ProjectSuelen.src.Engine
 
         protected override void OnDispose()
         {
-            if (guiManager != null)
-            {
-                guiManager.Dispose();
-            }
             if (basicScreen != null)
             {
                 basicScreen.Dispose();
+            }
+
+            if (guiManager != null)
+            {
+                guiManager.Dispose();
             }
             base.OnDispose();
         }

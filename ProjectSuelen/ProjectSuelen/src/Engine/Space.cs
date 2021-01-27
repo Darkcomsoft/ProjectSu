@@ -6,24 +6,49 @@ using System.Threading.Tasks;
 
 namespace ProjectSuelen.src.Engine
 {
-    public class Space : ObjectBase
+    public class Space : ClassBase
     {
-        public List<Entity> spaceEntityList;
+        public string spaceName;
+
+        public List<GameObject> spaceEntityList;
+        public Ambience ambience;
 
         public Space()
         {
-            spaceEntityList = new List<Entity>();
+            spaceEntityList = new List<GameObject>();
+        }
+
+        public virtual void OnSpaceStart()
+        {
+            ambience = new Ambience(spaceName);
+        }
+
+        public void Clear()
+        {
+            for (int i = 0; i < spaceEntityList.Count; i++)
+            {
+                spaceEntityList[i].Dispose();
+            }
+
+            spaceEntityList.Clear();
         }
 
         protected override void OnDispose()
         {
-            foreach (var item in spaceEntityList)
+            for (int i = 0; i < spaceEntityList.Count; i++)
             {
-                item.Dispose();
+                spaceEntityList[i].Dispose();
             }
 
             spaceEntityList.Clear();
             spaceEntityList = null;
+
+            if (ambience != null)
+            {
+                ambience.Dispose();
+                ambience = null;
+            }
+            base.OnDispose();
         }
     }
 }

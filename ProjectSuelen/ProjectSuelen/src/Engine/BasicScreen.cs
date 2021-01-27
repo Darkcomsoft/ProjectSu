@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace ProjectSuelen.src.Engine
 {
-    public class BasicScreen : ObjectBase
+    public class BasicScreen : ClassBase
     {
         private static BasicScreen instanceThis;
 
@@ -20,7 +20,7 @@ namespace ProjectSuelen.src.Engine
         {
             instanceThis = this;
 
-            darkcomsoftLogo = new GUIImage(new System.Drawing.Rectangle(0, 0, 500, 350), UIDock.Cennter, "Darkcomsoft");
+            darkcomsoftLogo = new GUIImage(new System.Drawing.Rectangle(0, 50, 500, 500), UIDock.Cennter, "Darkcomsoft");
             darkcomsoftLogo.Disable();
 
             loadingInfoText = new GUILable("NULL", new System.Drawing.Rectangle(0, 15, 250, 250), UIDock.CenterBottom);
@@ -71,6 +71,8 @@ namespace ProjectSuelen.src.Engine
                         break;
                 }
             }
+
+            GUI.CallTickRender();
         }
 
         public static void SetStatus()

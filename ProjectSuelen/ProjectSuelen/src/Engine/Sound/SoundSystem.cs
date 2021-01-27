@@ -15,7 +15,7 @@ namespace ProjectSuelen.src.Engine
     /// <summary>
     /// SoundEngine, AudioThread
     /// </summary>
-    public class SoundSystem : ObjectBase
+    public class SoundSystem : ClassBase
     {
 		AudioContext _audioContext;
         private Thread soundThread;
@@ -113,7 +113,7 @@ namespace ProjectSuelen.src.Engine
                 var formatSignature = new string(reader.ReadChars(4));
                 if (formatSignature != "fmt ")
                 {
-                    Debug.LogError("Wave file is not supported.");
+                    Debug.LogError("This Type of Wave file is not supported.");
                     return;
                 }
 
@@ -129,7 +129,7 @@ namespace ProjectSuelen.src.Engine
                 var dataSignature = new string(reader.ReadChars(4));
                 if (dataSignature != "data")
                 {
-                    Debug.LogError("Wave file is not supported.");
+                    Debug.LogError("This Type of Wave file is not supported.");
                     return;
                 }
 

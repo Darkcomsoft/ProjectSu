@@ -4,7 +4,7 @@ using OpenTK.Graphics;
 
 namespace ProjectSuelen.src.Engine.AssetsPipeline
 {
-    public class Mesh : ObjectBase
+    public class Mesh : ClassBase
     {
         public Vector3[] _vertices;
         public int[] _indices;

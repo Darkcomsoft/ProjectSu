@@ -12,7 +12,7 @@ namespace ProjectSuelen.src.Engine.Sound
     /// <summary>
     /// AudioListener is the listener off audio system, Recomended use with Camera
     /// </summary>
-    public class AudioListener : ObjectBase
+    public class AudioListener : ClassBase
     {
         public AudioListener()
         {

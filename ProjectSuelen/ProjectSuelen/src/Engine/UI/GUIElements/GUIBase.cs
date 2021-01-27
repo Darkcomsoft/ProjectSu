@@ -13,7 +13,7 @@ using ProjectSuelen.src.Engine.UI.GUIElements;
 
 namespace ProjectSuelen.src.Engine.UI
 {
-    public abstract class GUIBase : ObjectBase
+    public abstract class GUIBase : ClassBase
     {
         private bool Enabled;
         private Rectangle _Rectangle;

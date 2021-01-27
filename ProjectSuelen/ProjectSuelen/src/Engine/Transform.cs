@@ -8,12 +8,12 @@ using OpenTK.Graphics;
 
 namespace ProjectSuelen.src.Engine
 {
-    public class Transform : ObjectBase
+    public class Transform : ClassBase
     {
         /// <summary>
         /// This is the global player position.
         /// </summary>
-        private static Vector3d PlayerRootPosition;
+        public static Vector3d PlayerRootPosition;
 
         private Vector3d _Position;
         private Quaterniond _Rotation;

@@ -11,7 +11,7 @@ using ProjectSuelen.src.Engine.AssetsPipeline;
 
 namespace ProjectSuelen.src.Engine.UI.Font
 {
-    public class FontType : ObjectBase
+    public class FontType : ClassBase
     {
 	    private float aspectRatio;
 

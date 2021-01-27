@@ -4,14 +4,10 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace ProjectSuelen.src.Engine.Spaces
+namespace ProjectSuelen.src.Engine.Render
 {
-    public class GlobalSpace : Space
+    public class EntityRender : ClassBase
     {
-        public GlobalSpace()
-        {
-
-        }
 
         protected override void OnDispose()
         {

@@ -28,49 +28,8 @@
     <UseApplicationTrust>false</UseApplicationTrust>
     <BootstrapperEnabled>true</BootstrapperEnabled>
   </PropertyGroup>
-  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
-    <PlatformTarget>AnyCPU</PlatformTarget>
-    <DebugSymbols>true</DebugSymbols>
-    <DebugType>full</DebugType>
-    <Optimize>false</Optimize>
-    <OutputPath>bin\Debug\</OutputPath>
-    <DefineConstants>TRACE;DEBUG;Client</DefineConstants>
-    <ErrorReport>prompt</ErrorReport>
-    <WarningLevel>4</WarningLevel>
-  </PropertyGroup>
-  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
-    <PlatformTarget>AnyCPU</PlatformTarget>
-    <DebugType>pdbonly</DebugType>
-    <Optimize>true</Optimize>
-    <OutputPath>bin\Release\</OutputPath>
-    <DefineConstants>TRACE;Client</DefineConstants>
-    <ErrorReport>prompt</ErrorReport>
-    <WarningLevel>4</WarningLevel>
-  </PropertyGroup>
   <PropertyGroup>
-    <StartupObject>ProjectSuelen.src.Engine.main</StartupObject>
-  </PropertyGroup>
-  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug Server|AnyCPU'">
-    <DebugSymbols>true</DebugSymbols>
-    <OutputPath>bin\Debug Server\</OutputPath>
-    <DefineConstants>TRACE;DEBUG;Server</DefineConstants>
-    <DebugType>full</DebugType>
-    <PlatformTarget>AnyCPU</PlatformTarget>
-    <LangVersion>7.3</LangVersion>
-    <ErrorReport>prompt</ErrorReport>
-    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
-    <Prefer32Bit>true</Prefer32Bit>
-  </PropertyGroup>
-  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release Server|AnyCPU'">
-    <OutputPath>bin\Release Server\</OutputPath>
-    <DefineConstants>TRACE;Server</DefineConstants>
-    <Optimize>true</Optimize>
-    <DebugType>pdbonly</DebugType>
-    <PlatformTarget>AnyCPU</PlatformTarget>
-    <LangVersion>7.3</LangVersion>
-    <ErrorReport>prompt</ErrorReport>
-    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
-    <Prefer32Bit>true</Prefer32Bit>
+    <StartupObject>ProjectSuelen.src.main</StartupObject>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|x64'">
     <DebugSymbols>true</DebugSymbols>
@@ -128,6 +87,9 @@
     <Reference Include="BEPUutilities">
       <HintPath>..\packages\BEPUphysics\BEPUutilities.dll</HintPath>
     </Reference>
+    <Reference Include="Lidgren.Network">
+      <HintPath>..\packages\Lidgren.Network\Lidgren.Network.dll</HintPath>
+    </Reference>
     <Reference Include="Newtonsoft.Json, Version=12.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
       <HintPath>..\packages\Newtonsoft.Json.12.0.3\lib\net45\Newtonsoft.Json.dll</HintPath>
     </Reference>
@@ -151,6 +113,15 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="src\database\Enums.cs" />
+    <Compile Include="src\database\GlobalData.cs" />
+    <Compile Include="src\Engine\PhysicsSystem\MeshCollider.cs" />
+    <Compile Include="src\Engine\Render\ChunkMeshRender.cs" />
+    <Compile Include="src\Entitys\PlayerEntity.cs" />
+    <Compile Include="src\GameManager.cs" />
+    <Compile Include="src\UserUI\InGameGUI.cs" />
+    <Compile Include="src\PlayerController.cs" />
+    <Compile Include="src\Spaces\ElbriumSpace.cs" />
     <Compile Include="src\Engine\Application.cs" />
     <Compile Include="src\Engine\AssetsPipeline\AssetManager.cs" />
     <Compile Include="src\Engine\AssetsPipeline\ImageFile.cs" />
@@ -160,16 +131,24 @@
     <Compile Include="src\Engine\Camera.cs" />
     <Compile Include="src\Engine\Debug.cs" />
     <Compile Include="src\Engine\EngineMain.cs" />
-    <Compile Include="src\Engine\Entity.cs" />
-    <Compile Include="src\Engine\Entitys\NetEntity.cs" />
-    <Compile Include="src\Engine\Entitys\StaticEntity.cs" />
+    <Compile Include="src\Entitys\Entity.cs" />
+    <Compile Include="src\Engine\Ambience.cs" />
+    <Compile Include="src\Engine\GameObject.cs" />
+    <Compile Include="src\Engine\Entitys\NEntity.cs" />
+    <Compile Include="src\Engine\Entitys\EEntity.cs" />
+    <Compile Include="src\Engine\HelpClass.cs" />
     <Compile Include="src\Engine\Input.cs" />
     <Compile Include="src\Engine\BasicSystem.cs" />
-    <Compile Include="src\Engine\main.cs" />
+    <Compile Include="src\main.cs" />
     <Compile Include="src\Engine\MouseCursor.cs" />
-    <Compile Include="src\Engine\ObjectBase.cs" />
-    <Compile Include="src\Engine\Physics\Physics.cs" />
+    <Compile Include="src\Engine\ClassBase.cs" />
+    <Compile Include="src\Engine\NetCode\Network.cs" />
+    <Compile Include="src\Engine\PhysicsSystem\Physics.cs" />
+    <Compile Include="src\Engine\QueeSystem.cs" />
+    <Compile Include="src\Engine\Render\EntityRender.cs" />
     <Compile Include="src\Engine\Render\Model.cs" />
+    <Compile Include="src\Engine\Render\ModelRender.cs" />
+    <Compile Include="src\Engine\Render\RenderGroup.cs" />
     <Compile Include="src\Engine\Render\Shader.cs" />
     <Compile Include="src\Engine\Render\Texture.cs" />
     <Compile Include="src\Engine\Sound\AudioClip.cs" />
@@ -178,8 +157,9 @@
     <Compile Include="src\Engine\Sound\SoundSystem.cs" />
     <Compile Include="src\Engine\Space.cs" />
     <Compile Include="src\Engine\SpaceManager.cs" />
-    <Compile Include="src\Engine\Spaces\GlobalSpace.cs" />
-    <Compile Include="src\Engine\Spaces\MainMenuSpace.cs" />
+    <Compile Include="src\Spaces\GlobalSpace.cs" />
+    <Compile Include="src\Spaces\MainMenuSpace.cs" />
+    <Compile Include="src\Engine\TickManager.cs" />
     <Compile Include="src\Engine\Time.cs" />
     <Compile Include="src\Engine\Transform.cs" />
     <Compile Include="src\Engine\UI\Font\FontRender.cs" />
@@ -193,10 +173,22 @@
     <Compile Include="src\Engine\UI\GUIElements\GUITextInput.cs" />
     <Compile Include="src\Engine\UI\RectangleMesh.cs" />
     <Compile Include="src\Engine\Window.cs" />
+    <Compile Include="src\Game.cs" />
+    <Compile Include="src\utillity\Mathf.cs" />
+    <Compile Include="src\world\Biomes\BiomeData.cs" />
+    <Compile Include="src\world\Biomes\OakForest.cs" />
+    <Compile Include="src\world\Biomes\SnowForest.cs" />
+    <Compile Include="src\world\Chunk.cs" />
+    <Compile Include="src\world\ElbriumWorld.cs" />
+    <Compile Include="src\world\Noise\FastNoise.cs" />
+    <Compile Include="src\world\WorldBase.cs" />
+    <Compile Include="src\world\WorldManager.cs" />
   </ItemGroup>
   <ItemGroup>
+    <Folder Include="src\Client\" />
     <Folder Include="src\Engine\Elements\" />
     <Folder Include="src\Engine\UI\GUITemplate\" />
+    <Folder Include="src\Server\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

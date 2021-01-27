@@ -4,10 +4,10 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace ProjectSuelen.src.Engine.Entitys
+namespace ProjectSuelen.src
 {
-    public class StaticEntity : Entity
+    public static class Game
     {
-
+        public static GameManager GameManager;
     }
 }

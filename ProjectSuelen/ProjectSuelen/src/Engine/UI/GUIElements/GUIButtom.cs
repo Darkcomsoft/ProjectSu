@@ -35,6 +35,7 @@ namespace ProjectSuelen.src.Engine.UI.GUIElements
         private void Start(string text)
         {
             fontRender = new FontRender(text, 22, FontName, new Vector2(0f, 0f), GetRectangle.Width, GetRectangle);
+            Interactable();
         }
 
         public override void OnResize()

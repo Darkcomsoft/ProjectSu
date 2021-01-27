@@ -13,7 +13,7 @@ namespace ProjectSuelen.src.Engine.Sound
     /// <summary>
     /// AudioSource is for playing a AudioClip, with position
     /// </summary>
-    public class AudioSource : ObjectBase
+    public class AudioSource : ClassBase
     {
         private int Handler;
 

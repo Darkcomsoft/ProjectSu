@@ -64,6 +64,7 @@ namespace ProjectSuelen.src.Engine.UI.GUIElements
             if (fontRender != null)
             {
                 fontRender.Dispose();
+                fontRender = null;
             }
             //_drawing.Dispose();
             //RendeTextOption = null;

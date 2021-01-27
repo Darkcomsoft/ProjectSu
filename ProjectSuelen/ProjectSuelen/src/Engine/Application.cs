@@ -12,6 +12,8 @@ namespace ProjectSuelen.src.Engine
         public const string AppName = "ProjectSuelen";
         public const string Version = "DEV 0.0.1";
 
+        public static int TargetFrameRate = 60;
+
         public static readonly string BinaryPath = GetBinaryPath();
         public static readonly string AssetsPath = GetAssetsPath() + "\\Assets";
 

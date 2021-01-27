@@ -9,8 +9,9 @@ using System.Threading.Tasks;
 using ProjectSuelen.src;
 using System.Windows;
 using System.Runtime.InteropServices;
+using ProjectSuelen.src.Engine;
 
-namespace ProjectSuelen.src.Engine
+namespace ProjectSuelen.src
 {
     public class main
     {
@@ -20,7 +21,7 @@ namespace ProjectSuelen.src.Engine
 
             if (CheckLibrary("openal32.dll"))
             {
-                Debug.Log("You Have OpenAL, you good to go!");
+                Debug.Log("You Have OpenAL(Audio Library), you good to go!");
             }
             else
             {

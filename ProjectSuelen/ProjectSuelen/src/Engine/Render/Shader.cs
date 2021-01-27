@@ -7,7 +7,7 @@ using ProjectSuelen.src.Engine.AssetsPipeline;
 
 namespace ProjectSuelen.src.Engine.Render
 {
-    public class Shader : ObjectBase
+    public class Shader : ClassBase
     {
         public int _shaderProgram;
         private bool IsValid = true;

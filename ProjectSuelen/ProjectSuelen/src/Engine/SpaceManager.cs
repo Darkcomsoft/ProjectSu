@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace ProjectSuelen.src.Engine
 {
-    public class SpaceManager : ObjectBase
+    public class SpaceManager : ClassBase
     {
         private static SpaceManager Instance;
         private Dictionary<string, Space> spacesList;
@@ -37,6 +37,8 @@ namespace ProjectSuelen.src.Engine
             if (!instance.spacesList.ContainsKey(SpaceName))
             {
                 instance.spacesList.Add(SpaceName, space);
+                space.spaceName = SpaceName;
+                space.OnSpaceStart();
             }
         }
 
@@ -49,6 +51,14 @@ namespace ProjectSuelen.src.Engine
             }
         }
 
+        public static void ClearSpace(string SpaceName)
+        {
+            if (instance.spacesList.ContainsKey(SpaceName))
+            {
+                instance.spacesList[SpaceName].Clear();
+            }
+        }
+
         public static Space GetSpace(string spacename)
         {
             if (instance.spacesList.TryGetValue(spacename, out Space space))
@@ -56,6 +66,28 @@ namespace ProjectSuelen.src.Engine
                 return space;
             }
             return null;
+        }
+
+        public static GameObject AddObjectToSpace(string space, GameObject obj)
+        {
+            if (instance.spacesList.ContainsKey(space))
+            {
+                instance.spacesList[space].spaceEntityList.Add(obj);
+                obj.SpaceName = space;
+                obj.Start();
+                return obj;
+            }
+            throw new Exception("Don't exist this space : " + space);
+        }
+
+        public static GameObject RemoveObjectToSpace(string space, GameObject obj)
+        {
+            if (instance.spacesList.ContainsKey(space))
+            {
+                instance.spacesList[space].spaceEntityList.Remove(obj);
+                return obj;
+            }
+            throw new Exception("Don't exist this space : " + space);
         }
 
         public static SpaceManager instance { get { return Instance; } private set { } }

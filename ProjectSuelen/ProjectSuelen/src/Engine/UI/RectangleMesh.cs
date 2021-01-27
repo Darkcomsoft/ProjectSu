@@ -11,7 +11,7 @@ namespace ProjectSuelen.src.Engine.UI
     /// <summary>
     /// this is a 2D Rectangle, to use in GUI System
     /// </summary>
-    public class RectangleMesh : ObjectBase
+    public class RectangleMesh : ClassBase
     {
         public Vector2d[] _vertices;
         public int[] _indices;

@@ -7,7 +7,7 @@ using OpenTK.Audio.OpenAL;
 
 namespace ProjectSuelen.src.Engine.Sound
 {
-    public class AudioClip : ObjectBase
+    public class AudioClip : ClassBase
     {
         private int Handler;
 

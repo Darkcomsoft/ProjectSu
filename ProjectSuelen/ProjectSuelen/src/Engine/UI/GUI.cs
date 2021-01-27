@@ -14,7 +14,7 @@ using ProjectSuelen.src.Engine.AssetsPipeline;
 
 namespace ProjectSuelen.src.Engine.UI
 {
-    public class GUI : ObjectBase
+    public class GUI : ClassBase
     {
         private static GUI Instance; 
 
@@ -67,7 +67,7 @@ namespace ProjectSuelen.src.Engine.UI
 
                             UpUI.Click();
                             FocusedUI = UpUI;
-
+                            
                             FocusedUI.Focus();
                         }
                         else
@@ -117,10 +117,10 @@ namespace ProjectSuelen.src.Engine.UI
 
         public void OnMouseMove(MouseMoveEventArgs e)
         {
-            if (!ProjectSuelen.src.Engine.MouseCursor.MouseLocked)
+            if (!MouseCursor.MouseLocked)
             {
                 Point point = new Point(e.X, e.Y);
-
+                
                 foreach (var item in GuiBaseList)
                 {
                     if (item.IsInteract)
@@ -164,7 +164,7 @@ namespace ProjectSuelen.src.Engine.UI
 
         public void OnKeyPress(KeyPressEventArgs e)
         {
-            if (!ProjectSuelen.src.Engine.MouseCursor.MouseLocked)
+            if (!MouseCursor.MouseLocked)
             {
                 if (FocusedUI != null)
                 {
@@ -175,7 +175,14 @@ namespace ProjectSuelen.src.Engine.UI
 
         protected override void OnDispose()
         {
+            for (int i = 0; i < GuiBaseList.Count; i++)
+            {
+                GuiBaseList[i].Dispose();
+            }
+
             GuiBaseList.Clear();
+            GuiBaseList = null;
+            Instance = null;
             base.OnDispose();
         }
 
@@ -187,6 +194,12 @@ namespace ProjectSuelen.src.Engine.UI
         public static void RemoveGuiElement(GUIBase baseGui)
         {
             GUI.instance.GuiBaseList.Remove(baseGui);
+        }
+
+        public static void CallTickRender()
+        {
+            GUI.instance.Tick();
+            GUI.instance.TickRender();
         }
 
         public static Shader GetShader { get { return GUI.Instance._Shader; } }

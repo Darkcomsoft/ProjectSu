@@ -4,7 +4,7 @@ using ProjectSuelen.src.Engine.AssetsPipeline;
 
 namespace ProjectSuelen.src.Engine.Render
 {
-    public class Texture : ObjectBase
+    public class Texture : ClassBase
     {
         public int Handle;
         public int _Width;
