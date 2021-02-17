@@ -16,6 +16,7 @@ namespace ProjectSu.src.Engine
         private static Window instance;
 
         private EngineMain engineMain;
+        private bool engineIsRunning = false;
 
         public Window(int width, int height, string title) : base(width, height, GraphicsMode.Default, title, GameWindowFlags.Default, DisplayDevice.Default, 3, 3, GraphicsContextFlags.Default)
         {
@@ -34,8 +35,6 @@ namespace ProjectSu.src.Engine
 
             UpdateFrame += Tick;
             RenderFrame += TickRender;
-
-            engineMain = new EngineMain();
         }
 
         private void Tick(object sender, FrameEventArgs e)
@@ -43,10 +42,13 @@ namespace ProjectSu.src.Engine
             Time._DeltaTime = e.Time;
             Time._DTime += e.Time;
 
-            if (engineMain != null)
+            if (!engineIsRunning)
             {
-                engineMain.Tick();
+                engineIsRunning = true;
+                engineMain = new EngineMain();
             }
+
+            engineMain?.Tick();
 
             Time.UPS = (int)(1 / e.Time);
         }
@@ -57,11 +59,9 @@ namespace ProjectSu.src.Engine
             GL.Clear(ClearBufferMask.ColorBufferBit | ClearBufferMask.DepthBufferBit);
             GL.FrontFace(FrontFaceDirection.Cw);
 
-            if (engineMain != null)
-            {
-                engineMain.TickRender();
-            }
+            engineMain?.TickRender();
 
+            SwapBuffers();
             Time.FPS = (int)(1 / e.Time);
 
             Time._Time++;
@@ -71,45 +71,33 @@ namespace ProjectSu.src.Engine
             {
                 Time._Time = -Time._Time;
             }
-
-            SwapBuffers();
         }
 
         protected override void OnResize(EventArgs e)
         {
             GL.Viewport(0, 0, Width, Height);
-            if (engineMain != null)
-            {
-                engineMain.OnResize();
-            }
+            engineMain?.OnResize();
             base.OnResize(e);
         }
 
         protected override void OnKeyPress(KeyPressEventArgs e)
         {
-            if (engineMain != null)
-            {
-                engineMain.OnKeyPress(e);
-            }
+            engineMain?.OnKeyPress(e);
         }
 
         protected override void OnMouseMove(MouseMoveEventArgs e)
         {
-            if (engineMain != null)
-            {
-                engineMain.OnMouseMove(e);
-            }
+            engineMain?.OnMouseMove(e);
         }
 
         protected override void OnUnload(EventArgs e)
         {
-            if (engineMain != null)
-            {
-                engineMain.Dispose();
-            }
+            engineMain?.Dispose();
 
             UpdateFrame -= Tick;
             RenderFrame -= TickRender;
+
+            engineIsRunning = false;
         }
 
         public static Window Instance { get => instance; private set { } }

@@ -11,7 +11,7 @@ namespace ProjectSu.src.Engine
     public class Application
     {
         public const string AppName = "ProjectSu";
-        public const string Version = "DEV 0.0.1";
+        public const string Version = "PRE-ALPHA 21pa01";
 
         public static int TargetFrameRate = 60;
 
