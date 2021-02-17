@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace ProjectSuelen.src.utillity
+namespace ProjectSu.src.utillity
 {
     public static class Mathf
     {

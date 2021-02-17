@@ -6,7 +6,7 @@ using System.Runtime.InteropServices;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace ProjectSuelen.src.Engine
+namespace ProjectSu.src.Engine
 {
     public class ClassBase : IDisposable
     {
@@ -47,7 +47,7 @@ namespace ProjectSuelen.src.Engine
         /// </summary>
         protected virtual void OnDispose()
         {
-
+            //Debug.Log("DISPOSED: " + this.GetType() + " (HASH: " + this.GetHashCode() + ")");
         }
     }
 }

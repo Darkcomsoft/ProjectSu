@@ -9,7 +9,7 @@ using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 
-namespace ProjectSuelen.src.Engine
+namespace ProjectSu.src.Engine
 {
     public class Window : GameWindow
     {
@@ -17,7 +17,7 @@ namespace ProjectSuelen.src.Engine
 
         private EngineMain engineMain;
 
-        public Window(int width, int height, string title) : base(width, height, GraphicsMode.Default, title)
+        public Window(int width, int height, string title) : base(width, height, GraphicsMode.Default, title, GameWindowFlags.Default, DisplayDevice.Default, 3, 3, GraphicsContextFlags.Default)
         {
             instance = this;
         }
@@ -26,13 +26,19 @@ namespace ProjectSuelen.src.Engine
         {
             GL.ClearColor(Color4.Black);
 
-            //VSync = VSyncMode.Off;
+            TargetRenderFrequency = 60;
+            TargetUpdateFrequency = 60;
+            
+            VSync = VSyncMode.Adaptive;
             WindowBorder = WindowBorder.Resizable;
+
+            UpdateFrame += Tick;
+            RenderFrame += TickRender;
 
             engineMain = new EngineMain();
         }
 
-        protected override void OnUpdateFrame(FrameEventArgs e)
+        private void Tick(object sender, FrameEventArgs e)
         {
             Time._DeltaTime = e.Time;
             Time._DTime += e.Time;
@@ -42,19 +48,21 @@ namespace ProjectSuelen.src.Engine
                 engineMain.Tick();
             }
 
-            Time.UPS = (int)(1d / e.Time);
+            Time.UPS = (int)(1 / e.Time);
         }
 
-        protected override void OnRenderFrame(FrameEventArgs e)
+        private void TickRender(object sender, FrameEventArgs e)
         {
+            Thread.Sleep(10);
             GL.Clear(ClearBufferMask.ColorBufferBit | ClearBufferMask.DepthBufferBit);
+            GL.FrontFace(FrontFaceDirection.Cw);
 
-            if (engineMain !=null)
+            if (engineMain != null)
             {
                 engineMain.TickRender();
             }
 
-            Time.FPS = (int)(1f / e.Time);
+            Time.FPS = (int)(1 / e.Time);
 
             Time._Time++;
             Time._Tick = Time._Time % 60;
@@ -63,7 +71,6 @@ namespace ProjectSuelen.src.Engine
             {
                 Time._Time = -Time._Time;
             }
-            //Thread.Sleep(60 / 5);
 
             SwapBuffers();
         }
@@ -100,6 +107,9 @@ namespace ProjectSuelen.src.Engine
             {
                 engineMain.Dispose();
             }
+
+            UpdateFrame -= Tick;
+            RenderFrame -= TickRender;
         }
 
         public static Window Instance { get => instance; private set { } }

@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace ProjectSuelen.src.Engine.Render
+namespace ProjectSu.src.Engine.Render
 {
     public class EntityRender : ClassBase
     {

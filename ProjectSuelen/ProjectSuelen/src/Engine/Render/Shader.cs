@@ -3,9 +3,9 @@ using System.Collections.Generic;
 using OpenTK;
 using OpenTK.Graphics;
 using OpenTK.Graphics.OpenGL4;
-using ProjectSuelen.src.Engine.AssetsPipeline;
+using ProjectSu.src.Engine.AssetsPipeline;
 
-namespace ProjectSuelen.src.Engine.Render
+namespace ProjectSu.src.Engine.Render
 {
     public class Shader : ClassBase
     {

@@ -1,10 +1,10 @@
-﻿using ProjectSuelen;
+﻿using ProjectSu;
 using OpenTK;
 using OpenTK.Graphics;
 using OpenTK.Graphics.OpenGL4;
-using ProjectSuelen.src;
-using ProjectSuelen.src.Engine;
-using ProjectSuelen.src.Engine.Render;
+using ProjectSu.src;
+using ProjectSu.src.Engine;
+using ProjectSu.src.Engine.Render;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
@@ -13,13 +13,13 @@ using System.Linq;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
-using ProjectSuelen.src.Engine.Entitys;
-using ProjectSuelen.src.database;
-using ProjectSuelen.src.world.Biomes;
-using ProjectSuelen.src.Engine.AssetsPipeline;
-using ProjectSuelen.src.Engine.PhysicsSystem;
+using ProjectSu.src.Engine.Entitys;
+using ProjectSu.src.database;
+using ProjectSu.src.world.Biomes;
+using ProjectSu.src.Engine.AssetsPipeline;
+using ProjectSu.src.Engine.PhysicsSystem;
 
-namespace ProjectSuelen.src.world
+namespace ProjectSu.src.world
 {
     public class Chunk : EEntity
     {
@@ -30,7 +30,7 @@ namespace ProjectSuelen.src.world
         private Block[,] blocks;
 
         public ChunkMeshRender _meshRender;
-        //private WaterMeshRender _waterMeshRender;
+        private WaterMeshRender _waterMeshRender;
 
         private MeshCollider _meshCollider;
 
@@ -82,6 +82,18 @@ namespace ProjectSuelen.src.world
             base.OnTick();
         }
 
+        protected override void OnTickDraw()
+        {
+            _meshRender?.DrawChunk();
+            base.OnTickDraw();
+        }
+
+        protected override void OnTickDrawTrans()
+        {
+            _waterMeshRender?.DrawWater();
+            base.OnTickDrawTrans();
+        }
+
         protected override void OnDestroy()
         {
             isReady = false;
@@ -93,35 +105,14 @@ namespace ProjectSuelen.src.world
 
             _trees.Clear();*/
 
-            if (_meshRender != null)
-            {
-                _meshRender.Dispose();
-                _meshRender = null;
-            }
+            _meshRender?.Dispose();
+            _meshRender = null;
 
-            if (_meshCollider != null)
-            {
-                _meshCollider.Dispose();
-                _meshCollider = null;
-            }
+            _meshCollider?.Dispose();
+            _meshCollider = null;
 
-            /*if (_waterMeshRender != null)
-            {
-                _waterMeshRender.Dispose();
-                _waterMeshRender = null;
-            }*/
-
-            if (WaterMesh != null)
-            {
-                WaterMesh.Dispose();
-                WaterMesh = null;
-            }
-
-            if (ChunkMesh != null)
-            {
-                ChunkMesh.Dispose();
-                ChunkMesh = null;
-            }
+            _waterMeshRender?.Dispose();
+            _waterMeshRender = null;
 
             ActionUpdateMesh.Clear();
             ActionUpdateMesh = null;
@@ -278,45 +269,35 @@ namespace ProjectSuelen.src.world
 
         private void SMakeMesh()
         {
-            if (ChunkMesh != null)
+            if (_meshCollider != null)
             {
-                if (_meshCollider != null)
-                {
-                    _meshCollider.UpdateCollider(transform, ChunkMesh);
-                }
-                else
-                {
-                    _meshCollider = new MeshCollider(transform, ChunkMesh._vertices, ChunkMesh._indices);
-                }
-
-                if (_meshRender != null)
-                {
-                    _meshRender.UpdateMeshRender(ChunkMesh);
-                }
-                else
-                {
-                    _meshRender = new ChunkMeshRender(this, ChunkMesh, "TerrainDefault", "TileAtlas");
-
-                    /*_meshRender.ViewBoxWitdh = 10;
-                    _meshRender.ViewBoxHeight = 1000;*/
-                }
+                _meshCollider.UpdateCollider(transform, ChunkMesh);
+            }
+            else
+            {
+                _meshCollider = new MeshCollider(transform, ChunkMesh._vertices, ChunkMesh._indices);
             }
 
-            /*if (WaterMesh != null)
+            if (_meshRender != null)
             {
-                if (_waterMeshRender != null)
-                {
-                    //_meshRender.UpdateMeshRender(ChunkMesh);
-                }
-                else
-                {
-                    _waterMeshRender = new WaterMeshRender(transform, WaterMesh, AssetManager.GetShader("Water"), AssetManager.GetTexture("Water"), AssetManager.GetTexture("Water2"));
-                    _waterMeshRender.Transparency = true;
+                _meshRender.UpdateMeshRender(ChunkMesh);
+            }
+            else
+            {
+                _meshRender = new ChunkMeshRender(this, ChunkMesh, "TerrainDefault", "TileAtlas");
 
-                    _waterMeshRender.ViewBoxWitdh = 10;
-                    _waterMeshRender.ViewBoxHeight = 1000;
-                }
-            }*/
+                /*_meshRender.ViewBoxWitdh = 10;
+                _meshRender.ViewBoxHeight = 1000;*/
+            }
+
+            if (_waterMeshRender != null)
+            {
+                //_waterMeshRender.UpdateMeshRender(WaterMesh);
+            }
+            else
+            {
+                _waterMeshRender = new WaterMeshRender(this, WaterMesh, "Water", "Water");
+            }
 
             /*for (int i = 0; i < _trees.Count; i++)
             {
@@ -376,11 +357,6 @@ namespace ProjectSuelen.src.world
 
             if (data._vertices.Count > 0)
             {
-                if (ChunkMesh != null)
-                {
-                    ChunkMesh.Dispose();
-                }
-
                 ChunkMesh = new Mesh(data._vertices.ToArray(), data._UVs.ToArray(), data._colors.ToArray(), data._triangles.ToArray());
 
                 VoxelMesh mesh = data.MakeWatersMehs(blocks);
@@ -445,6 +421,9 @@ namespace ProjectSuelen.src.world
 
             float XX = x;
             float ZZ = z;
+
+            ElbriumWorld.roadsNoise.GradientPerturbFractal(ref XX, ref ZZ);
+            float road = ElbriumWorld.roadsNoise.GetCellular(XX,ZZ);
 
             ElbriumWorld.biomeNoise.GradientPerturbFractal(ref XX, ref ZZ);
 
@@ -565,6 +544,12 @@ namespace ProjectSuelen.src.world
                 Type = biomeData._typeBlock;
                 treeType = biomeData._treeType;
                 height = Math.Abs(biomeData._Height + _Height / 10f);
+
+                if (road >= -0.05f)
+                {
+                    Type = TypeBlock.Sand;
+                    height = Math.Abs(biomeData._Height + _Height / 10f) * Math.Abs(road);
+                }
             }
         }
 

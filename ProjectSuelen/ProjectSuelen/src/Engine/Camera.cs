@@ -7,7 +7,7 @@ using OpenTK;
 using OpenTK.Input;
 using OpenTK.Graphics.OpenGL4;
 
-namespace ProjectSuelen.src.Engine
+namespace ProjectSu.src.Engine
 {
     public class Camera : ClassBase
     {
@@ -24,6 +24,8 @@ namespace ProjectSuelen.src.Engine
         private double _aspectRatio;
         private Vector3 finalTarget;
 
+        private Matrix4 ViewMatrix;
+
         public Camera(GameObject obj, float camHight)
         {
             Main = this;
@@ -35,22 +37,28 @@ namespace ProjectSuelen.src.Engine
 
             _aspectRatio = (double)Window.Instance.Width / (double)Window.Instance.Height;
         }
+
+        public void Tick()
+        {
+            var camRotation = Matrix3.CreateRotationX((float)rotation.X + (float)gameObject.transform.Rotation.X) * Matrix3.CreateRotationY((float)rotation.Y + (float)gameObject.transform.Rotation.Y) * Matrix3.CreateRotationZ((float)rotation.Z + (float)gameObject.transform.Rotation.Z);
+
+            var camOriginalTarget = new Vector3d(0, 0, 1);
+            var camRotatedTarget = Vector3.Transform((Vector3)camOriginalTarget, camRotation);
+            finalTarget = position + camRotatedTarget;
+
+            var camOriginalUpVector = new Vector3(0, 1, 0);
+            var camRotatedUpVector = Vector3.Transform(camOriginalUpVector, camRotation);
+
+            ViewMatrix = Matrix4.LookAt(position, finalTarget, camRotatedUpVector);
+        }
+
         /// <summary>
         /// Get view matrix with float precision fix
         /// </summary>
         /// <returns></returns>
         public Matrix4 GetViewMatrix()
         {
-            var camRotation = Matrix3.CreateRotationX((float)rotation.X + (float)gameObject.transform.Rotation.X) * Matrix3.CreateRotationY((float)rotation.Y + (float)gameObject.transform.Rotation.Y) * Matrix3.CreateRotationZ((float)rotation.Z + (float)gameObject.transform.Rotation.Z);
-
-            var camOriginalTarget = new Vector3d(0, 0, 1);
-            var camRotatedTarget = Vector3.Transform((Vector3)camOriginalTarget, camRotation);
-            finalTarget = new Vector3(Vector3.Zero) + camRotatedTarget;
-
-            var camOriginalUpVector = new Vector3(0, 1, 0);
-            var camRotatedUpVector = Vector3.Transform(camOriginalUpVector, camRotation);
-
-            return Matrix4.LookAt(Vector3.Zero, finalTarget, camRotatedUpVector);
+            return ViewMatrix;
         }
 
         /// <summary>

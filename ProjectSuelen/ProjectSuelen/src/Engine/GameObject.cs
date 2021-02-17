@@ -1,12 +1,12 @@
-﻿using ProjectSuelen.src.Engine.Entitys;
-using ProjectSuelen.src.Engine.NetCode;
+﻿using ProjectSu.src.Engine.Entitys;
+using ProjectSu.src.Engine.NetCode;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace ProjectSuelen.src.Engine
+namespace ProjectSu.src.Engine
 {
     public class GameObject : ClassBase
     {
@@ -28,9 +28,19 @@ namespace ProjectSuelen.src.Engine
             OnTick();
         }
 
+        public void TickDraw()
+        {
+            OnTickDraw();
+        }
+
+        public void TickDrawTrans()
+        {
+            OnTickDrawTrans();
+        }
+
         protected override void OnDispose()
         {
-            TickManager.OnTick -= Tick;
+            TickManager.RemoveTickList(this);
             OnDestroy();
 
             Transform.Dispose();
@@ -40,10 +50,29 @@ namespace ProjectSuelen.src.Engine
 
         public virtual void Start()
         {
-            TickManager.OnTick += Tick;
+            TickManager.AddTickList(this);
         }
 
+        /// <summary>
+        /// Used for all update logics
+        /// </summary>
         protected virtual void OnTick()
+        {
+
+        }
+
+        /// <summary>
+        /// used to reder solid obejcts
+        /// </summary>
+        protected virtual void OnTickDraw()
+        {
+
+        }
+
+        /// <summary>
+        /// Used to render transparent objects
+        /// </summary>
+        protected virtual void OnTickDrawTrans()
         {
 
         }

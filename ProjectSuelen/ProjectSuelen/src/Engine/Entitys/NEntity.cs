@@ -1,6 +1,6 @@
 ﻿using Lidgren.Network;
 using OpenTK;
-using ProjectSuelen.src.Engine.NetCode;
+using ProjectSu.src.Engine.NetCode;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -8,7 +8,7 @@ using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace ProjectSuelen.src.Engine.Entitys
+namespace ProjectSu.src.Engine.Entitys
 {
     /// <summary>
     /// A dynamic entity, use network, so is syncronized with the others player. EX:Player, NPC, Projectil, Son, GameManager etc.

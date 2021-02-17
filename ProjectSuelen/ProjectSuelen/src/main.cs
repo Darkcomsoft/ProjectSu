@@ -6,15 +6,16 @@ using System.Linq;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
-using ProjectSuelen.src;
+using ProjectSu.src;
 using System.Windows;
 using System.Runtime.InteropServices;
-using ProjectSuelen.src.Engine;
+using ProjectSu.src.Engine;
 
-namespace ProjectSuelen.src
+namespace ProjectSu.src
 {
     public class main
     {
+        [MTAThread]
         public static void Main()
         {
             AppDomain.CurrentDomain.UnhandledException += new UnhandledExceptionEventHandler(CurrentDomain_UnhandledException);
@@ -34,7 +35,7 @@ namespace ProjectSuelen.src
             {
                 try
                 {
-                    game.Run();
+                    game.Run(60);
                 }
                 catch (OutOfMemoryException memoryEx)
                 {

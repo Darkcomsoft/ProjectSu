@@ -5,7 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace ProjectSuelen.src.database
+namespace ProjectSu.src.database
 {
     /// <summary>
     /// this is for setting global data like the SEED of the world generator, and other things like version of the game 

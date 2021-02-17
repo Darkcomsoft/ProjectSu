@@ -1,11 +1,11 @@
-﻿using ProjectSuelen.src.Engine;
+﻿using ProjectSu.src.Engine;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace ProjectSuelen.src.world
+namespace ProjectSu.src.world
 {
     public class WorldManager : ClassBase
     {

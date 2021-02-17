@@ -1,15 +1,15 @@
 ﻿using OpenTK;
 using OpenTK.Graphics;
 using OpenTK.Graphics.OpenGL4;
-using ProjectSuelen.src.Engine;
-using ProjectSuelen.src.Engine.AssetsPipeline;
-using ProjectSuelen.src.Engine.Render;
+using ProjectSu.src.Engine;
+using ProjectSu.src.Engine.AssetsPipeline;
+using ProjectSu.src.Engine.Render;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace ProjectSuelen.src.Engine.Render
+namespace ProjectSu.src.Engine.Render
 {
 
     public class ModelRender : ClassBase
@@ -151,7 +151,6 @@ namespace ProjectSuelen.src.Engine.Render
 
             GL.DeleteVertexArray(VAO);
 
-            _mesh = null;
             base.OnDispose();
         }
     }

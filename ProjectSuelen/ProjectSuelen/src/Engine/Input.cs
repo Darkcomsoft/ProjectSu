@@ -3,7 +3,7 @@ using System.Drawing;
 using System.Collections.Generic;
 using OpenTK.Input;
 
-namespace ProjectSuelen.src.Engine
+namespace ProjectSu.src.Engine
 {
     /// <summary>
     /// All input calculation/system, mouse, keyboard, and more in near future...
@@ -12,8 +12,10 @@ namespace ProjectSuelen.src.Engine
     {
         private static List<Key> keyToggleList = new List<Key>();
         private static List<MouseButton> mouseButtomToggleList = new List<MouseButton>();
-
+        
         private static Point _mousePosition;
+
+        public static KeyboardState keyboardState;
 
         internal static int ScrollWheelValue
         {
@@ -30,14 +32,14 @@ namespace ProjectSuelen.src.Engine
         {
             if (!Window.Instance.Focused) { return false; }
 
-            if (!keyToggleList.Contains(key) && Keyboard.GetState().IsKeyDown(key))
+            if (!keyToggleList.Contains(key) && keyboardState.IsKeyDown(key))
             {
                 keyToggleList.Add(key);
                 return true;
             }
             else
             {
-                if (Keyboard.GetState().IsKeyUp(key))
+                if (keyboardState.IsKeyUp(key))
                 {
                     keyToggleList.Remove(key);
                     return false;
@@ -88,14 +90,14 @@ namespace ProjectSuelen.src.Engine
         {
             if (!Window.Instance.Focused) { return false; }
 
-            if (!keyToggleList.Contains(key) && Keyboard.GetState().IsKeyUp(key))
+            if (!keyToggleList.Contains(key) && keyboardState.IsKeyUp(key))
             {
                 keyToggleList.Add(key);
                 return true;
             }
             else
             {
-                if (Keyboard.GetState().IsKeyDown(key))
+                if (keyboardState.IsKeyDown(key))
                 {
                     keyToggleList.Remove(key);
                     return false;
@@ -108,7 +110,7 @@ namespace ProjectSuelen.src.Engine
         {
             if (!Window.Instance.Focused) { return false; }
 
-            return Keyboard.GetState().IsKeyDown(key);
+            return keyboardState.IsKeyDown(key);
         }
         internal static bool GetKey(MouseButton buttom)
         {

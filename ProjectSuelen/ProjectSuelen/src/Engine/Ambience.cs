@@ -2,11 +2,13 @@
 using OpenTK.Graphics;
 using System.Collections.Generic;
 
-namespace ProjectSuelen.src.Engine
+namespace ProjectSu.src.Engine
 {
     public class Ambience : ClassBase
     {
         private static Dictionary<string, Ambience> instancesList = new Dictionary<string, Ambience>();
+
+        private SkySphere skySphere;
 
         public bool Enabled = true;
         public float Density = 0.014f;
@@ -25,10 +27,15 @@ namespace ProjectSuelen.src.Engine
         {
             instancesList = new Dictionary<string, Ambience>();
             instancesList.Add(spaceName, this);
+
+            skySphere = new SkySphere(this, "Sky");
         }
 
         protected override void OnDispose()
         {
+            skySphere?.Dispose();
+            skySphere = null;
+
             if (instancesList != null)
             {
                 instancesList.Clear();

@@ -3,12 +3,12 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using ProjectSuelen;
+using ProjectSu;
 using OpenTK;
 using OpenTK.Audio.OpenAL;
-using ProjectSuelen.src.Engine.AssetsPipeline;
+using ProjectSu.src.Engine.AssetsPipeline;
 
-namespace ProjectSuelen.src.Engine.Sound
+namespace ProjectSu.src.Engine.Sound
 {
     /// <summary>
     /// AudioSource is for playing a AudioClip, with position

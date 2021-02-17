@@ -1,0 +1,82 @@
+version:#version 330
+vertex [
+	$version
+	layout (location = 0) in vec4 position;
+	layout (location = 1) in vec4 colors;
+	layout (location = 2) in vec2 aTexCoord;
+	layout (location = 3) in vec3 Normals;
+
+	out vec2 texCoord;
+	out vec4 TileColor;
+	out float visiblity;
+
+	uniform mat4 world;
+	uniform mat4 view;
+	uniform mat4 projection;
+
+	uniform float FOG_Density; 
+	uniform float FOG_Gradiante;
+
+	void main()
+	{
+		vec4 worldPosition = position * world;
+		vec4 posRelativeCamera = worldPosition * view;
+		vec4 finalposition = posRelativeCamera;
+		float radius = 500;
+		
+		float dis = length(worldPosition.xz);
+		float curvature = 1-cos(dis/radius);
+		
+		finalposition.y -= radius*curvature;
+
+		//float xcoord = position.x - Normals.x;
+		//float zcoord = position.z - Normals.z;
+		//float ycoord = position.y - Normals.y;
+
+		// projection1. y is largest normal component
+		// so use x and z to sample texture
+		//texCoord = vec2(xcoord,zcoord); //first projection
+		// projection2. x is largest normal component
+		// so use z and y to sample texture
+		//texCoord= vec2(zcoord,ycoord); //second projection
+		// projection3. z is largest normal component
+		// so use x and y to sample texture
+		//texCoord = vec2(xcoord,ycoord); //third projection
+
+		TileColor = colors;
+		texCoord = aTexCoord;
+		
+		float distance = length(finalposition.xyz);
+		visiblity = exp(-pow((distance * FOG_Density), FOG_Gradiante));
+		visiblity = clamp(visiblity, 0.0, 1.0);
+
+
+		gl_Position = finalposition * projection;
+	}
+];
+
+fragment [
+	$version
+
+	layout(location = 0) out vec4 color;
+
+	in vec2 texCoord;
+	in vec4 TileColor;
+	in float visiblity;
+
+	uniform sampler2D texture0;
+	uniform vec4 FOG_Color;
+
+	uniform vec4 AmbienceColor;
+
+	//Blend Fucntion By https://github.com/Jam3/glsl-blend-overlay
+	vec3 blendOverlay(vec3 base, vec3 blend) {
+		return mix(1.0 - 2.0 * (1.0 - base) * (1.0 - blend), 2.0 * base * blend, step(base, vec3(0.5)));
+	}
+
+	void main()
+	{
+		color = mix(texture(texture0, texCoord),vec4(blendOverlay(texture(texture0, texCoord).rgb, TileColor.rgb), 1), TileColor.a) * AmbienceColor;	
+		color = mix(FOG_Color, color, visiblity);
+	}
+];

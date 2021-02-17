@@ -4,7 +4,7 @@ using BEPUphysics.BroadPhaseEntries;
 using BEPUutilities.Threading;
 using OpenTK;
 
-namespace ProjectSuelen.src.Engine.PhysicsSystem
+namespace ProjectSu.src.Engine.PhysicsSystem
 {
     public class Physics: ClassBase
     {

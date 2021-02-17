@@ -1,11 +1,11 @@
-﻿using ProjectSuelen.src.database;
+﻿using ProjectSu.src.database;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace ProjectSuelen.src.world.Biomes
+namespace ProjectSu.src.world.Biomes
 {
     public struct BiomeData
     {

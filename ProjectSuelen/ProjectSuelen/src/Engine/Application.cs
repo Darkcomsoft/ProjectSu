@@ -1,15 +1,16 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace ProjectSuelen.src.Engine
+namespace ProjectSu.src.Engine
 {
     public class Application
     {
-        public const string AppName = "ProjectSuelen";
+        public const string AppName = "ProjectSu";
         public const string Version = "DEV 0.0.1";
 
         public static int TargetFrameRate = 60;
@@ -42,5 +43,20 @@ namespace ProjectSuelen.src.Engine
 #endif
 #endif
         }
+
+        public static long GetPrivateMemory()
+        {
+            return Process.GetCurrentProcess().PrivateMemorySize64 / (1024*1024);
+        }
+
+        public static long GetVirtualMemory()
+        {
+            return Process.GetCurrentProcess().VirtualMemorySize64 / (1024 * 1024);
+        }
+
+        /*public static long GetCPUUsage()
+        {
+            return Process.GetCurrentProcess().;
+        }*/
     }
 }

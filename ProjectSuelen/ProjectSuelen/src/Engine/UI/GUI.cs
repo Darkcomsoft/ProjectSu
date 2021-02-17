@@ -6,13 +6,13 @@ using System.Text;
 using System.Threading.Tasks;
 using OpenTK.Graphics;
 using OpenTK.Graphics.OpenGL4;
-using ProjectSuelen;
+using ProjectSu;
 using System.Drawing;
 using OpenTK.Input;
-using ProjectSuelen.src.Engine.Render;
-using ProjectSuelen.src.Engine.AssetsPipeline;
+using ProjectSu.src.Engine.Render;
+using ProjectSu.src.Engine.AssetsPipeline;
 
-namespace ProjectSuelen.src.Engine.UI
+namespace ProjectSu.src.Engine.UI
 {
     public class GUI : ClassBase
     {

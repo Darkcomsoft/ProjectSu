@@ -2,16 +2,16 @@
 using OpenTK;
 using OpenTK.Graphics;
 using OpenTK.Input;
-using ProjectSuelen.src.Engine;
-using ProjectSuelen.src.Engine.PhysicsSystem;
-using ProjectSuelen.src.Entitys;
+using ProjectSu.src.Engine;
+using ProjectSu.src.Engine.PhysicsSystem;
+using ProjectSu.src.Entitys;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace ProjectSuelen.src
+namespace ProjectSu.src
 {
     public class PlayerController : ClassBase
     {
@@ -179,12 +179,20 @@ namespace ProjectSuelen.src
                     _CharacterController.StandingSpeed = MoveSpeed * 2;
                 }
 
+                _CharacterController.AirSpeed = _CharacterController.StandingSpeed;
+
                 if (Input.GetKey(Key.Z))
+                {
                     _CharacterController.StanceManager.DesiredStance = Stance.Prone;
+                }
                 else if (Input.GetKey(Key.ControlLeft))
+                {
                     _CharacterController.StanceManager.DesiredStance = Stance.Crouching;
+                }
                 else
+                {
                     _CharacterController.StanceManager.DesiredStance = Stance.Standing;
+                }
 
                 if (Input.GetKeyDown(Key.Space))
                 {
@@ -201,7 +209,7 @@ namespace ProjectSuelen.src
 
             //Game.GetWorld.PlayerPos = _playerEntity.transform.Position;
 
-            //_PlayerCamera.UpdateCamera();//Update the camera
+            _PlayerCamera.Tick();//Update the camera
         }
 
         protected override void OnDispose()

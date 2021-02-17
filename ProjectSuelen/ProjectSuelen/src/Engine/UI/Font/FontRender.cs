@@ -1,4 +1,4 @@
-﻿using ProjectSuelen;
+﻿using ProjectSu;
 using OpenTK;
 using System;
 using System.Collections.Generic;
@@ -8,9 +8,9 @@ using System.Threading.Tasks;
 using OpenTK.Graphics.OpenGL4;
 using OpenTK.Graphics;
 using System.Drawing;
-using ProjectSuelen.src.Engine.AssetsPipeline;
+using ProjectSu.src.Engine.AssetsPipeline;
 
-namespace ProjectSuelen.src.Engine.UI.Font
+namespace ProjectSu.src.Engine.UI.Font
 {
 	public class FontRender : ClassBase
 	{
@@ -215,11 +215,12 @@ namespace ProjectSuelen.src.Engine.UI.Font
 						curserY = (FontType.LINE_HEIGHT * fontSize) / 2f;
 						break;
 					case TextAling.Right:
-						curserX = (font.getSpaceWidth() * fontSize) / 2f + (line.getLineLength() / line.getMaxLength());
+						curserX = (font.getSpaceWidth() * fontSize) - (line.getLineLength());
+						curserY = (FontType.LINE_HEIGHT * fontSize) / 2f;
 						break;
-					case TextAling.Top:
-						break;
-					case TextAling.Bottom:
+					default:
+						curserX = (font.getSpaceWidth() * fontSize) - (line.getLineLength() / 2f);
+						curserY = (FontType.LINE_HEIGHT * fontSize) / 2f;
 						break;
 				}
 
@@ -322,6 +323,8 @@ namespace ProjectSuelen.src.Engine.UI.Font
 					_FinalPos.Y = _ParentRectangle.Y + (_ParentRectangle.Height / 2f);
 					break;
 				case TextAling.Right:
+					_FinalPos.X = _FinalPos.X - (_ParentRectangle.Width / 2.2f) + textString.Length;
+					_FinalPos.Y = _ParentRectangle.Y + (_ParentRectangle.Height / 2f);
 					break;
 				case TextAling.Top:
 					break;

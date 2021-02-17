@@ -1,5 +1,5 @@
-﻿using ProjectSuelen.src.Engine.UI;
-using ProjectSuelen.src.Engine.UI.GUIElements;
+﻿using ProjectSu.src.Engine.UI;
+using ProjectSu.src.Engine.UI.GUIElements;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -7,7 +7,7 @@ using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 
-namespace ProjectSuelen.src.Engine
+namespace ProjectSu.src.Engine
 {
     public class BasicScreen : ClassBase
     {

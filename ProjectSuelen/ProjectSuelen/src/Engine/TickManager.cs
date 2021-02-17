@@ -1,11 +1,11 @@
-﻿using ProjectSuelen.src.Engine.Render;
+﻿using ProjectSu.src.Engine.Render;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace ProjectSuelen.src.Engine
+namespace ProjectSu.src.Engine
 {
     public class TickManager : ClassBase
     {
@@ -15,7 +15,6 @@ namespace ProjectSuelen.src.Engine
         private Dictionary<string, RenderGroup> solidRenderGroup;
         private Dictionary<string, RenderGroup> transRenderGroup;
 
-        public static Action OnTick;
         public static Action OnDraw;
 
         public TickManager()
@@ -29,16 +28,24 @@ namespace ProjectSuelen.src.Engine
 
         public void Tick()
         {
-            OnTick?.Invoke();
-            /*for (int i = 0; i < tickList.Count; i++)
+            for (int i = 0; i < tickList.Count; i++)
             {
                 tickList[i].Tick();
-            }*/
+            }
         }
 
         public void TickDraw()
         {
             OnDraw?.Invoke();
+            for (int i = 0; i < tickList.Count; i++)
+            {
+                tickList[i].TickDraw();
+            }
+
+            for (int i = 0; i < tickList.Count; i++)
+            {
+                tickList[i].TickDrawTrans();
+            }
         }
 
         protected override void OnDispose()
@@ -72,7 +79,7 @@ namespace ProjectSuelen.src.Engine
             base.OnDispose();
         }
 
-        /*public static void AddTickList(GameObject gameObject)
+        public static void AddTickList(GameObject gameObject)
         {
             Instance.tickList.Add(gameObject);
         }
@@ -83,6 +90,6 @@ namespace ProjectSuelen.src.Engine
             {
                 Instance.tickList.Remove(gameObject);
             }
-        }*/
+        }
     }
 }

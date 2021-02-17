@@ -1,12 +1,12 @@
 ﻿using OpenTK;
 using OpenTK.Graphics.OpenGL4;
 using OpenTK.Input;
-using ProjectSuelen.src.Engine.AssetsPipeline;
-using ProjectSuelen.src.Engine.NetCode;
-using ProjectSuelen.src.Engine.PhysicsSystem;
-using ProjectSuelen.src.Engine.UI;
-using ProjectSuelen.src.Spaces;
-using ProjectSuelen.src.world;
+using ProjectSu.src.Engine.AssetsPipeline;
+using ProjectSu.src.Engine.NetCode;
+using ProjectSu.src.Engine.PhysicsSystem;
+using ProjectSu.src.Engine.UI;
+using ProjectSu.src.Spaces;
+using ProjectSu.src.world;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -15,7 +15,7 @@ using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace ProjectSuelen.src.Engine
+namespace ProjectSu.src.Engine
 {
     /// <summary>
     /// All engine logic, is like the Window Class but just for the systems
@@ -35,11 +35,14 @@ namespace ProjectSuelen.src.Engine
         private TickManager tickManager;
         private WorldManager worldManager;
 
+        private DebugGUI debugGUI;
+
         public EngineMain()
         {
             assetManager = new AssetManager();
 
             basicSystem = new BasicSystem();
+            debugGUI = new DebugGUI();
 
             MouseCursor.UnLockCursor();
         }
@@ -48,7 +51,7 @@ namespace ProjectSuelen.src.Engine
         {
             if (AssetManager.AssetsReady && engineReady)
             {
-                QueeSystem.Tick();
+                Input.keyboardState = Keyboard.GetState();
 
                 if (Input.GetKeyDown(Key.F11))
                 {
@@ -74,16 +77,19 @@ namespace ProjectSuelen.src.Engine
                     }
                 }
 
-                MouseCursor.CursorLockPosition();
+                QueeSystem.Tick();
                 Network.NetworkTick();
-                basicSystem?.Tick();
-                physics?.UpdatePhisics(Time._DeltaTime);
                 tickManager?.Tick();
+                debugGUI?.Tick();
+                physics?.UpdatePhisics(Time._DeltaTime);
+                MouseCursor.CursorLockPosition();
             }
             else if (!GameLoaded)//first load the window, before load the systems
             {
                 StartGame();
             }
+
+            basicSystem?.Tick();
         }
 
         public void TickRender()
@@ -91,17 +97,14 @@ namespace ProjectSuelen.src.Engine
             if (AssetManager.AssetsReady && engineReady)
             {
                 GL.Enable(EnableCap.DepthTest);
-                if (tickManager != null)
-                {
-                    tickManager.TickDraw();
-                }
+                tickManager?.TickDraw();
                 GL.Disable(EnableCap.DepthTest);
-                basicSystem.TickRender();
+                basicSystem?.TickRender();
             }
             else
             {
                 GL.Disable(EnableCap.DepthTest);
-                basicSystem.TickRender();
+                basicSystem?.TickRender();
             }
         }
 
@@ -111,15 +114,9 @@ namespace ProjectSuelen.src.Engine
 
             ClearEngine();
 
-            if (basicSystem != null)
-            {
-                basicSystem.Dispose();
-            }
-
-            if (assetManager != null)
-            {
-                assetManager.Dispose();
-            }
+            debugGUI?.Dispose();
+            basicSystem?.Dispose();
+            assetManager?.Dispose();
             base.OnDispose();
         }
 
@@ -191,25 +188,10 @@ namespace ProjectSuelen.src.Engine
         {
             ClearSpaces();
 
-            if (worldManager != null)
-            {
-                worldManager.Dispose();
-            }
-
-            if (tickManager != null)
-            {
-                tickManager.Dispose();
-            }
-
-            if (physics != null)
-            {
-                physics.Dispose();
-            }
-
-            if (soundSystem != null)
-            {
-                soundSystem.Dispose();
-            }
+            worldManager?.Dispose();
+            tickManager?.Dispose();
+            physics?.Dispose();
+            soundSystem?.Dispose();
         }
 
         #region InputFunctions

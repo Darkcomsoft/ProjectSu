@@ -1,15 +1,16 @@
-﻿using ProjectSuelen.src.Engine;
-using ProjectSuelen.src.Engine.Entitys;
-using ProjectSuelen.src.Engine.NetCode;
-using ProjectSuelen.src.Spaces;
-using ProjectSuelen.src.UserUI;
+﻿using ProjectSu.src.Engine;
+using ProjectSu.src.Engine.AssetsPipeline;
+using ProjectSu.src.Engine.Entitys;
+using ProjectSu.src.Engine.NetCode;
+using ProjectSu.src.Spaces;
+using ProjectSu.src.UserUI;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace ProjectSuelen.src
+namespace ProjectSu.src
 {
     public class GameManager : EEntity
     {

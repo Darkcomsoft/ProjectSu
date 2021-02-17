@@ -1,4 +1,4 @@
-﻿using ProjectSuelen;
+﻿using ProjectSu;
 using OpenTK;
 using OpenTK.Graphics;
 using System;
@@ -7,9 +7,9 @@ using System.Drawing;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using ProjectSuelen.src.Engine.AssetsPipeline;
+using ProjectSu.src.Engine.AssetsPipeline;
 
-namespace ProjectSuelen.src.Engine.UI.GUIElements
+namespace ProjectSu.src.Engine.UI.GUIElements
 {
     public class GUIPanel : GUIBase
     {

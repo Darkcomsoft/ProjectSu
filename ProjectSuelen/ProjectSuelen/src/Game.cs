@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace ProjectSuelen.src
+namespace ProjectSu.src
 {
     public static class Game
     {

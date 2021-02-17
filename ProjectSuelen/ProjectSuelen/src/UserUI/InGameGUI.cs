@@ -1,14 +1,14 @@
 ﻿using OpenTK.Graphics;
-using ProjectSuelen.src.Engine.Entitys;
-using ProjectSuelen.src.Engine.UI;
-using ProjectSuelen.src.Engine.UI.GUIElements;
+using ProjectSu.src.Engine.Entitys;
+using ProjectSu.src.Engine.UI;
+using ProjectSu.src.Engine.UI.GUIElements;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace ProjectSuelen.src.UserUI
+namespace ProjectSu.src.UserUI
 {
     public class InGameGUI :EEntity
     {
@@ -16,7 +16,7 @@ namespace ProjectSuelen.src.UserUI
 
         public InGameGUI()
         {
-            playButtom = new GUIButtom("Disconnect", new System.Drawing.Rectangle(0, 0, 200, 100), UIDock.Cennter);
+            playButtom = new GUIButtom("Disconnect", new System.Drawing.Rectangle(0, 0, 100, 50), UIDock.BottomLeft);
             playButtom.SetBackColors(Color4.DeepSkyBlue, Color4.Gray, Color4.Red, Color4.Black);
             playButtom.OnClick += disconnectOnClick;
         }

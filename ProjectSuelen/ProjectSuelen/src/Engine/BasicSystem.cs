@@ -1,11 +1,11 @@
-﻿using ProjectSuelen.src.Engine.UI;
+﻿using ProjectSu.src.Engine.UI;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace ProjectSuelen.src.Engine
+namespace ProjectSu.src.Engine
 {
     /// <summary>
     /// BasicSystem is the most basic systems, EX: GUI, OS operations, is gona still load until engine(Window) are open, and runing

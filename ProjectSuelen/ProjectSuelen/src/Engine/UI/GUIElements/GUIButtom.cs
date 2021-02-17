@@ -1,5 +1,5 @@
-﻿using ProjectSuelen;
-using ProjectSuelen.src.Engine.UI;
+﻿using ProjectSu;
+using ProjectSu.src.Engine.UI;
 using System;
 using System.Collections.Generic;
 using System.Drawing;
@@ -7,11 +7,11 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using OpenTK;
-using ProjectSuelen.src.Engine.UI.Font;
+using ProjectSu.src.Engine.UI.Font;
 using OpenTK.Graphics;
-using ProjectSuelen.src.Engine.AssetsPipeline;
+using ProjectSu.src.Engine.AssetsPipeline;
 
-namespace ProjectSuelen.src.Engine.UI.GUIElements
+namespace ProjectSu.src.Engine.UI.GUIElements
 {
     public class GUIButtom : GUIBase
     {

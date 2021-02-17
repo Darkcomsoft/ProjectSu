@@ -6,11 +6,11 @@ using System.Threading.Tasks;
 using OpenTK.Audio.OpenAL;
 using OpenTK;
 using OpenTK.Audio;
-using ProjectSuelen;
+using ProjectSu;
 using System.IO;
 using System.Threading;
 
-namespace ProjectSuelen.src.Engine
+namespace ProjectSu.src.Engine
 {
     /// <summary>
     /// SoundEngine, AudioThread

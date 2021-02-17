@@ -1,14 +1,14 @@
-﻿using ProjectSuelen.src.Engine.UI;
+﻿using ProjectSu.src.Engine.UI;
 using System;
 using System.Collections.Generic;
 using System.Drawing;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using ProjectSuelen;
+using ProjectSu;
 using OpenTK;
 
-namespace ProjectSuelen.src.Engine.UI.GUIElements
+namespace ProjectSu.src.Engine.UI.GUIElements
 {
     public class GUITextInput : GUIBase
     {

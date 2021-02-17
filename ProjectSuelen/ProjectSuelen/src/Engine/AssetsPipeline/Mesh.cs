@@ -2,9 +2,9 @@
 using OpenTK;
 using OpenTK.Graphics;
 
-namespace ProjectSuelen.src.Engine.AssetsPipeline
+namespace ProjectSu.src.Engine.AssetsPipeline
 {
-    public class Mesh : ClassBase
+    public struct Mesh
     {
         public Vector3[] _vertices;
         public int[] _indices;
@@ -21,7 +21,7 @@ namespace ProjectSuelen.src.Engine.AssetsPipeline
             _Normals = newmesh._Normals;
         }
 
-        public Mesh()
+        public Mesh(object obj)
         {
             _vertices = new Vector3[]
             {
@@ -51,25 +51,38 @@ namespace ProjectSuelen.src.Engine.AssetsPipeline
                 new Vector2(0.0f, 1.0f)
             };
 
-            OptimizeMesh();
+            _Normals = new Vector3[] { };
             _Normals = CalculateNormals();
+
+            OptimizeMesh();
         }
+
         public Mesh(Vector3[] vertices, int[] indices, Color4[] colors)
         {
             _vertices = vertices;
             _indices = indices;
             _Colors = colors;
 
-            OptimizeMesh();
+            _texCoords = new Vector2[] { };
+
+
+            _Normals = null;
             _Normals = CalculateNormals();
+
+            OptimizeMesh();
         }
         public Mesh(Vector3[] vertices, int[] indices)
         {
             _vertices = vertices;
             _indices = indices;
 
-            OptimizeMesh();
+            _texCoords = new Vector2[] { };
+            _Colors = new Color4[] { };
+
+            _Normals = null;
             _Normals = CalculateNormals();
+
+            OptimizeMesh();
         }
 
         public Mesh(Vector3[] vertices, Vector2[] textures, Color4[] colors, int[] indices)
@@ -79,8 +92,10 @@ namespace ProjectSuelen.src.Engine.AssetsPipeline
             _texCoords = textures;
             _Colors = colors;
 
-            OptimizeMesh();
+            _Normals = null;
             _Normals = CalculateNormals();
+
+            OptimizeMesh();
         }
 
         public Mesh(Vector3[] vertices, Vector3[] normals, Vector2[] textures, Color4[] colors, int[] indices)
@@ -90,8 +105,10 @@ namespace ProjectSuelen.src.Engine.AssetsPipeline
             _texCoords = textures;
             _Colors = colors;
 
+            _Normals = normals;
+            //_Normals = CalculateNormals();
+
             OptimizeMesh();
-            _Normals = CalculateNormals();
         }
 
         public void OptimizeMesh()
@@ -154,16 +171,6 @@ namespace ProjectSuelen.src.Engine.AssetsPipeline
             }
 
             return normals;
-        }
-
-        protected override void OnDispose()
-        {
-            _vertices = null;
-            _indices = null;
-            _texCoords = null;
-            _Colors = null;
-            _Normals = null;
-            base.OnDispose();
         }
 
         public void ClearMesh()

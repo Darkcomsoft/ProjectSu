@@ -1,4 +1,4 @@
-﻿using ProjectSuelen;
+﻿using ProjectSu;
 using OpenTK.Graphics.OpenGL4;
 using System;
 using System.Collections.Generic;
@@ -6,10 +6,10 @@ using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using ProjectSuelen.src.Engine.Render;
-using ProjectSuelen.src.Engine.AssetsPipeline;
+using ProjectSu.src.Engine.Render;
+using ProjectSu.src.Engine.AssetsPipeline;
 
-namespace ProjectSuelen.src.Engine.UI.Font
+namespace ProjectSu.src.Engine.UI.Font
 {
     public class FontType : ClassBase
     {

@@ -1,15 +1,15 @@
 ﻿using OpenTK;
 using OpenTK.Graphics;
 using OpenTK.Graphics.OpenGL4;
-using ProjectSuelen.src.Engine;
-using ProjectSuelen.src.Engine.AssetsPipeline;
-using ProjectSuelen.src.Engine.Render;
+using ProjectSu.src.Engine;
+using ProjectSu.src.Engine.AssetsPipeline;
+using ProjectSu.src.Engine.Render;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace ProjectSuelen.src.Engine.Render
+namespace ProjectSu.src.Engine.Render
 {
     /// <summary>
     /// Model is a mesh data allready in videocard buffer, ready to draw
@@ -26,7 +26,7 @@ namespace ProjectSuelen.src.Engine.Render
 
         public Model(Mesh mesh, string shader, string texture)
         {
-            _cullType = CullFaceMode.Front;
+            _cullType = CullFaceMode.FrontAndBack;
 
             _mesh = mesh;
             _shader = shader;
@@ -77,17 +77,8 @@ namespace ProjectSuelen.src.Engine.Render
         {
             if (_shader != null && Camera.main != null)
             {
-                if (Transparency)
-                {
-                    GL.BlendFunc(BlendingFactor.SrcAlpha, BlendingFactor.OneMinusSrcAlpha);
-                    GL.Enable(EnableCap.Blend);
-                }
-
-                if (_cullType != CullFaceMode.FrontAndBack)
-                {
-                    GL.CullFace(_cullType);
-                    GL.Enable(EnableCap.CullFace);
-                }
+                GL.Enable(EnableCap.CullFace);
+                GL.CullFace(CullFaceMode.Front);
 
                 GL.BindVertexArray(VAO);
                 GL.BindBuffer(BufferTarget.ElementArrayBuffer, IBO);
@@ -96,7 +87,7 @@ namespace ProjectSuelen.src.Engine.Render
 
                 AssetManager.UseShader(_shader);
 
-                AssetManager.ShaderSet(_shader, "world", obj.transform.GetTransformWorld);
+                AssetManager.ShaderSet(_shader, "world", obj.transform.GetTransformWorld * Matrix4.CreateTranslation(new Vector3(2,2,2)));
                 AssetManager.ShaderSet(_shader, "view", Camera.main.GetViewMatrix());
                 AssetManager.ShaderSet(_shader, "projection", Camera.main.GetProjectionMatrix());
 
@@ -111,15 +102,7 @@ namespace ProjectSuelen.src.Engine.Render
                 GL.BindBuffer(BufferTarget.ElementArrayBuffer, 0);
                 GL.BindVertexArray(0);
 
-                if (_cullType != CullFaceMode.FrontAndBack)
-                {
-                    GL.Disable(EnableCap.CullFace);
-                }
-
-                if (Transparency)
-                {
-                    GL.Disable(EnableCap.Blend);
-                }
+               GL.Disable(EnableCap.CullFace);
             }
         }
 
@@ -153,7 +136,6 @@ namespace ProjectSuelen.src.Engine.Render
 
             GL.DeleteVertexArray(VAO);
 
-            _mesh = null;
             base.OnDispose();
         }
     }

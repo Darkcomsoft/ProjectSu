@@ -1,4 +1,4 @@
-﻿using ProjectSuelen;
+﻿using ProjectSu;
 using OpenTK.Graphics.OpenGL4;
 using System;
 using System.Collections.Generic;
@@ -9,9 +9,9 @@ using OpenTK;
 using OpenTK.Graphics;
 using System.Drawing;
 using OpenTK.Input;
-using ProjectSuelen.src.Engine.UI.GUIElements;
+using ProjectSu.src.Engine.UI.GUIElements;
 
-namespace ProjectSuelen.src.Engine.UI
+namespace ProjectSu.src.Engine.UI
 {
     public abstract class GUIBase : ClassBase
     {

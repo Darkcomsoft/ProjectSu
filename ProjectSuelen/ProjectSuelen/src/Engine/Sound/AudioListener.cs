@@ -3,11 +3,11 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using ProjectSuelen;
+using ProjectSu;
 using OpenTK;
 using OpenTK.Audio.OpenAL;
 
-namespace ProjectSuelen.src.Engine.Sound
+namespace ProjectSu.src.Engine.Sound
 {
     /// <summary>
     /// AudioListener is the listener off audio system, Recomended use with Camera

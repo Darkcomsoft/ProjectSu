@@ -6,7 +6,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace ProjectSuelen.src.Engine.UI
+namespace ProjectSu.src.Engine.UI
 {
     /// <summary>
     /// this is a 2D Rectangle, to use in GUI System

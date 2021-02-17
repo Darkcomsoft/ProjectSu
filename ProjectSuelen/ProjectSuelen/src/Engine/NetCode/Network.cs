@@ -8,15 +8,15 @@ using System.Reflection;
 using System.Runtime.Remoting.Messaging;
 using System.Text;
 using System.Threading.Tasks;
-using ProjectSuelen;
+using ProjectSu;
 using Lidgren.Network;
 using OpenTK;
-using ProjectSuelen.src.Engine.Entitys;
-using ProjectSuelen.src.Engine;
+using ProjectSu.src.Engine.Entitys;
+using ProjectSu.src.Engine;
 using Newtonsoft.Json;
-using ProjectSuelen.src.Entitys;
+using ProjectSu.src.Entitys;
 
-namespace ProjectSuelen.src.Engine.NetCode
+namespace ProjectSu.src.Engine.NetCode
 {
     public class Network : ClassBase
     {

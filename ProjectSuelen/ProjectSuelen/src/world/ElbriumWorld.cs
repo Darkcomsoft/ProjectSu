@@ -1,8 +1,8 @@
 ﻿using OpenTK;
-using ProjectSuelen.src.database;
-using ProjectSuelen.src.Engine;
-using ProjectSuelen.src.Engine.Entitys;
-using ProjectSuelen.src.utillity;
+using ProjectSu.src.database;
+using ProjectSu.src.Engine;
+using ProjectSu.src.Engine.Entitys;
+using ProjectSu.src.utillity;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -10,7 +10,7 @@ using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 
-namespace ProjectSuelen.src.world
+namespace ProjectSu.src.world
 {
     public class ElbriumWorld : WorldBase
     {
@@ -34,6 +34,7 @@ namespace ProjectSuelen.src.world
         public static FastNoise globalNoise;
         public static FastNoise globalNoise2;
         public static FastNoise biomeNoise;
+        public static FastNoise roadsNoise;
 
 #if Client
 #elif Server
@@ -70,6 +71,13 @@ namespace ProjectSuelen.src.world
             biomeNoise.SetCellularNoiseLookup(new FastNoise());
             biomeNoise.SetCellularDistanceFunction(FastNoise.CellularDistanceFunction.Manhattan);
             biomeNoise.SetCellularReturnType(FastNoise.CellularReturnType.NoiseLookup);
+
+            roadsNoise = new FastNoise(GlobalData.Seed);
+
+            roadsNoise.SetFrequency(0.005f);
+            roadsNoise.SetGradientPerturbAmp(30f);
+            roadsNoise.SetCellularDistanceFunction(FastNoise.CellularDistanceFunction.Natural);
+            roadsNoise.SetCellularReturnType(FastNoise.CellularReturnType.Distance2Div);
 
             //LoadTheWorld if has a save
             /*if (SaveManager.LoadWorld())//Have a Save

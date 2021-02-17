@@ -5,7 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using OpenTK.Audio.OpenAL;
 
-namespace ProjectSuelen.src.Engine.Sound
+namespace ProjectSu.src.Engine.Sound
 {
     public class AudioClip : ClassBase
     {
