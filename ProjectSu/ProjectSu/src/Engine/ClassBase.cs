@@ -10,6 +10,11 @@ namespace ProjectSu.src.Engine
 {
     public class ClassBase : IDisposable
     {
+        public ClassBase()
+        {
+            GC.KeepAlive(this);
+        }
+
         // To detect redundant calls
         private bool _disposed = false;
 
@@ -18,8 +23,6 @@ namespace ProjectSu.src.Engine
         {
             Dispose(true);
         }
-
-        ~ClassBase() => Dispose(false);
 
         // Protected implementation of Dispose pattern.
         protected virtual void Dispose(bool disposing)
@@ -31,12 +34,9 @@ namespace ProjectSu.src.Engine
 
             if (disposing)
             {
-                // TODO: dispose managed state (managed objects).
+                OnDispose();
                 GC.SuppressFinalize(this);
             }
-
-            OnDispose();
-
             _disposed = true;
         }
 

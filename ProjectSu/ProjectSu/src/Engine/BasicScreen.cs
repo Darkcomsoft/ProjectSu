@@ -71,7 +71,6 @@ namespace ProjectSu.src.Engine
                         break;
                 }
             }
-
             GUI.CallTickRender();
         }
 

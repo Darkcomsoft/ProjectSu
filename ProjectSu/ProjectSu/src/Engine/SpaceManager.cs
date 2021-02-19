@@ -80,14 +80,12 @@ namespace ProjectSu.src.Engine
             throw new Exception("Don't exist this space : " + space);
         }
 
-        public static GameObject RemoveObjectToSpace(string space, GameObject obj)
+        public static void RemoveObjectToSpace(string space, GameObject obj)
         {
             if (instance.spacesList.ContainsKey(space))
             {
                 instance.spacesList[space].spaceEntityList.Remove(obj);
-                return obj;
             }
-            throw new Exception("Don't exist this space : " + space);
         }
 
         public static SpaceManager instance { get { return Instance; } private set { } }

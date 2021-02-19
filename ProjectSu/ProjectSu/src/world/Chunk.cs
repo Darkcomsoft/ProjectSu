@@ -18,6 +18,7 @@ using ProjectSu.src.database;
 using ProjectSu.src.world.Biomes;
 using ProjectSu.src.Engine.AssetsPipeline;
 using ProjectSu.src.Engine.PhysicsSystem;
+using ProjectSu.src.world.Noise;
 
 namespace ProjectSu.src.world
 {
@@ -146,7 +147,7 @@ namespace ProjectSu.src.world
             {
                 for (int z = 0; z < ElbriumWorld.ChunkSize; z++)
                 {
-                    Vector3 pos = new Vector3(x + (int)transform.Position.X, z + (int)transform.Position.Z, 0);
+                    Vector3d pos = new Vector3d(x + (int)transform.Position.X, z + (int)transform.Position.Z, 0);
 
                     ElbriumWorld.globalNoise.GradientPerturbFractal(ref pos.X, ref pos.Y, ref pos.Z);
 
@@ -310,6 +311,8 @@ namespace ProjectSu.src.world
             {
                 for (int z = 0; z < ElbriumWorld.ChunkSize; z++)
                 {
+                    doRoad(blocks[x, z]);
+
                     if (blocks[x, z].treeType != TreeType.none)
                     {
                         //_trees.Add(new Tree(new Vector3d(blocks[x, z].x, blocks[x, z].height, blocks[x, z].z), blocks[x, z].treeType));
@@ -372,6 +375,20 @@ namespace ProjectSu.src.world
             data.Dispose();
         }
 
+        private void doRoad(Block block)
+        {
+            double XX = block.x;
+            double ZZ = block.z;
+
+            ElbriumWorld.roadsNoise.GradientPerturbFractal(ref XX, ref ZZ);
+            double road = ElbriumWorld.roadsNoise.GetCellular(XX, ZZ);
+
+            if (road > -0.05f)
+            {
+                block.Type = TypeBlock.Sand;
+            }
+        }
+
         public Block[,] GetBlocksMap { get { return blocks; } }
         public ChunkState GetStatus { get { return ChunkState; } }
         public double GetSeed { get { return ChunkSeed; } }
@@ -379,7 +396,7 @@ namespace ProjectSu.src.world
 
     public struct Block
     {
-        public float height;
+        public double height;
 
         public byte index;
 
@@ -396,7 +413,7 @@ namespace ProjectSu.src.world
         double MoistureValue;
 
 
-        public Block(int _x, int _z, Vector3d chunkPosition, float _Height, Chunk chunk)
+        public Block(int _x, int _z, Vector3d chunkPosition, double _Height, Chunk chunk)
         {
             index = 0;
             x = _x;
@@ -404,26 +421,24 @@ namespace ProjectSu.src.world
 
             spaceName = chunk.SpaceName;
 
-            float xDistance = (float)Math.Pow(Math.Abs(x), 2);
-            float yDistance = (float)Math.Pow(Math.Abs(z), 2);
-            float distance = (float)Math.Sqrt(xDistance + yDistance) / 500f;
+            double xDistance = (double)Math.Pow(Math.Abs(x), 2);
+            double yDistance = (double)Math.Pow(Math.Abs(z), 2);
+            double distance = (double)Math.Sqrt(xDistance + yDistance) / 500f;
 
-            float pos = Vector3.Zero.LengthSquared;
-            float finalh = MathHelper.Clamp((float)Math.Exp(-Math.Pow((pos * 0.011f), 20f)), 0.0f, 1.0f);
+            double pos = Vector3d.Zero.LengthSquared;
+            double finalh = MathHelper.Clamp((double)Math.Exp(-Math.Pow((pos * 0.011f), 20f)), 0.0f, 1.0f);
 
             height = _Height - finalh;
             //height = _Height;
             Chunk = chunkPosition;
 
+
             #region BiomeGen
             HeatType HeatType;
             MoistureType MoistureType;
 
-            float XX = x;
-            float ZZ = z;
-
-            ElbriumWorld.roadsNoise.GradientPerturbFractal(ref XX, ref ZZ);
-            float road = ElbriumWorld.roadsNoise.GetCellular(XX,ZZ);
+            double XX = x;
+            double ZZ = z;
 
             ElbriumWorld.biomeNoise.GradientPerturbFractal(ref XX, ref ZZ);
 
@@ -544,12 +559,6 @@ namespace ProjectSu.src.world
                 Type = biomeData._typeBlock;
                 treeType = biomeData._treeType;
                 height = Math.Abs(biomeData._Height + _Height / 10f);
-
-                if (road >= -0.05f)
-                {
-                    Type = TypeBlock.Sand;
-                    height = Math.Abs(biomeData._Height + _Height / 10f) * Math.Abs(road);
-                }
             }
         }
 
@@ -659,11 +668,11 @@ namespace ProjectSu.src.world
                         int xB = tile[x, z].x;
                         int zB = tile[x, z].z;
 
-                        float Right = GetTile(xB + 1, zB, tile[x, z].height, tile[x, z]);
-                        float FrenteRight = GetTile(xB, zB + 1, tile[x, z].height, tile[x, z]);
-                        float FrenteLeft = GetTile(xB + 1, zB + 1, tile[x, z].height, tile[x, z]);
+                        float Right = (float)GetTile(xB + 1, zB, tile[x, z].height, tile[x, z]);
+                        float FrenteRight = (float)GetTile(xB, zB + 1, tile[x, z].height, tile[x, z]);
+                        float FrenteLeft = (float)GetTile(xB + 1, zB + 1, tile[x, z].height, tile[x, z]);
 
-                        _vertices.Add(new Vector3(x, tile[x, z].height, z));
+                        _vertices.Add(new Vector3(x, (float)tile[x, z].height, z));
                         _vertices.Add(new Vector3(x + 1, Right, z));
                         _vertices.Add(new Vector3(x, FrenteRight, z + 1));
                         _vertices.Add(new Vector3(x + 1, FrenteLeft, z + 1));
@@ -807,7 +816,7 @@ namespace ProjectSu.src.world
             _colors = null;
         }
 
-        float GetTile(int x, int z, float hDeafult, Block blockthis)
+        double GetTile(int x, int z, double hDeafult, Block blockthis)
         {
             Block block = WorldManager.GetWorld(blockthis.spaceName).GetTileAt(x, z);
 

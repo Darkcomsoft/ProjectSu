@@ -19,7 +19,7 @@ namespace ProjectSu.src.world.Biomes
             noiseFast.SetFrequency(0.009f);
             noiseFast2.SetFrequency(0.009f);
 
-            float noise =  noiseFast.GetPerlinFractal(x, z) * 100;
+            double noise =  noiseFast.GetPerlinFractal(x, z) * 100;
 
             if (rand.Next(0, 100) <= 5)
             {

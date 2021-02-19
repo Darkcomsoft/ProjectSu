@@ -27,7 +27,7 @@ namespace ProjectSu.src.Engine
         {
             for (int i = 0; i < spaceEntityList.Count; i++)
             {
-                spaceEntityList[i].Dispose();
+                GameObject.Destroy(spaceEntityList[i], true);
             }
 
             spaceEntityList.Clear();
@@ -37,7 +37,7 @@ namespace ProjectSu.src.Engine
         {
             for (int i = 0; i < spaceEntityList.Count; i++)
             {
-                spaceEntityList[i].Dispose();
+                GameObject.Destroy(spaceEntityList[i], true);
             }
 
             spaceEntityList.Clear();

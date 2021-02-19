@@ -18,7 +18,7 @@ namespace ProjectSu.src.Engine
         private EngineMain engineMain;
         private bool engineIsRunning = false;
 
-        public Window(int width, int height, string title) : base(width, height, GraphicsMode.Default, title, GameWindowFlags.Default, DisplayDevice.Default, 3, 3, GraphicsContextFlags.Default)
+        public Window(int width, int height, string title) : base(width, height, GraphicsMode.Default, title, GameWindowFlags.Default, DisplayDevice.Default, 330, 330, GraphicsContextFlags.Default)
         {
             instance = this;
         }
@@ -32,6 +32,7 @@ namespace ProjectSu.src.Engine
             
             VSync = VSyncMode.Adaptive;
             WindowBorder = WindowBorder.Resizable;
+
 
             UpdateFrame += Tick;
             RenderFrame += TickRender;

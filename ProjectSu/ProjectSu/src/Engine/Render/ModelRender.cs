@@ -86,7 +86,7 @@ namespace ProjectSu.src.Engine.Render
                     GL.CullFace(_cullType);
                     GL.Enable(EnableCap.CullFace);
                 }
-
+                
                 GL.BindVertexArray(VAO);
                 GL.BindBuffer(BufferTarget.ElementArrayBuffer, IBO);
 

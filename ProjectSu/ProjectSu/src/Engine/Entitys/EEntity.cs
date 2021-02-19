@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 namespace ProjectSu.src.Engine.Entitys
 {
     /// <summary>
-    /// EEntity is the the Engine Engine, used for add local objects, used for any type of entity that doesn't use Network, EX:particle, localScript
+    /// EEntity is the Entity, used for add local objects, used for any type of entity that doesn't use Network, EX:particle, localScript
     /// </summary>
     public class EEntity : GameObject
     {

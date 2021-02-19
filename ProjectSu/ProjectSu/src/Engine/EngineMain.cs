@@ -49,6 +49,8 @@ namespace ProjectSu.src.Engine
 
         public void Tick()
         {
+            basicSystem?.Tick();
+            
             if (AssetManager.AssetsReady && engineReady)
             {
                 Input.keyboardState = Keyboard.GetState();
@@ -88,8 +90,6 @@ namespace ProjectSu.src.Engine
             {
                 StartGame();
             }
-
-            basicSystem?.Tick();
         }
 
         public void TickRender()
@@ -100,11 +100,13 @@ namespace ProjectSu.src.Engine
                 tickManager?.TickDraw();
                 GL.Disable(EnableCap.DepthTest);
                 basicSystem?.TickRender();
+                GL.Enable(EnableCap.DepthTest);
             }
             else
             {
                 GL.Disable(EnableCap.DepthTest);
                 basicSystem?.TickRender();
+                GL.Enable(EnableCap.DepthTest);
             }
         }
 
@@ -113,7 +115,6 @@ namespace ProjectSu.src.Engine
             engineReady = false;
 
             ClearEngine();
-
             debugGUI?.Dispose();
             basicSystem?.Dispose();
             assetManager?.Dispose();
@@ -186,12 +187,14 @@ namespace ProjectSu.src.Engine
 
         private void ClearEngine()
         {
-            ClearSpaces();
-
             worldManager?.Dispose();
             tickManager?.Dispose();
             physics?.Dispose();
             soundSystem?.Dispose();
+
+            ClearSpaces();
+
+            QueeSystem.CleanUp();
         }
 
         #region InputFunctions

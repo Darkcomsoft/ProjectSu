@@ -17,14 +17,15 @@ namespace ProjectSu.src.Engine
         public Vector3 position;
         public Quaternion rotation;
 
-        public double _fildOfView = 75;
-        public double _nearPlane = 0.1f;
-        public double _farPlane = 1000;
+        private double _fildOfView = 75;
+        private double _nearPlane = 0.1f;
+        private double _farPlane = 1000;
 
         private double _aspectRatio;
         private Vector3 finalTarget;
 
         private Matrix4 ViewMatrix;
+        private Matrix4 ProjectionMatrix;
 
         public Camera(GameObject obj, float camHight)
         {
@@ -35,7 +36,7 @@ namespace ProjectSu.src.Engine
             position = new Vector3(0, camHight, 0);
             rotation = Quaternion.Identity;
 
-            _aspectRatio = (double)Window.Instance.Width / (double)Window.Instance.Height;
+            UpdateProjection();
         }
 
         public void Tick()
@@ -48,6 +49,8 @@ namespace ProjectSu.src.Engine
 
             var camOriginalUpVector = new Vector3(0, 1, 0);
             var camRotatedUpVector = Vector3.Transform(camOriginalUpVector, camRotation);
+
+            UpdateProjection();
 
             ViewMatrix = Matrix4.LookAt(position, finalTarget, camRotatedUpVector);
         }
@@ -67,8 +70,7 @@ namespace ProjectSu.src.Engine
         /// <returns></returns>
         public Matrix4 GetProjectionMatrix()
         {
-            _aspectRatio = (double)Window.Instance.Width / (double)Window.Instance.Height;
-            return Matrix4.CreatePerspectiveFieldOfView(MathHelper.DegreesToRadians((float)_fildOfView), (float)_aspectRatio, (float)_nearPlane, (float)_farPlane);
+            return ProjectionMatrix;
         }
 
         /// <summary>
@@ -87,6 +89,30 @@ namespace ProjectSu.src.Engine
             var camRotatedUpVector = Vector3.Transform(camOriginalUpVector, camRotation);
 
             return Matrix4.LookAt(position + (Vector3)gameObject.transform.Position, finalTarget, camRotatedUpVector);
+        }
+
+        private void UpdateProjection()
+        {
+            _aspectRatio = (double)Window.Instance.Width / (double)Window.Instance.Height;
+            ProjectionMatrix = Matrix4.CreatePerspectiveFieldOfView(MathHelper.DegreesToRadians((float)_fildOfView), (float)_aspectRatio, (float)_nearPlane, (float)_farPlane);
+        }
+
+        public void UpdateFOV(float newfov)
+        {
+            _fildOfView = newfov;
+            UpdateProjection();
+        }
+
+        public void UpdateNearPlane(float newUpdateNearPlane)
+        {
+            _nearPlane = newUpdateNearPlane;
+            UpdateProjection();
+        }
+
+        public void UpdateFarPlane(float newUpdateFarPlane)
+        {
+            _farPlane = newUpdateFarPlane;
+            UpdateProjection();
         }
 
         protected override void OnDispose()

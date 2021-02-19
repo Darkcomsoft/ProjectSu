@@ -134,6 +134,7 @@
     <Compile Include="src\Engine\Render\ChunkMeshRender.cs" />
     <Compile Include="src\Engine\Render\WaterMeshRender.cs" />
     <Compile Include="src\Engine\SkySphere.cs" />
+    <Compile Include="src\Engine\UI\lowlevel\LowLevelGUI.cs" />
     <Compile Include="src\Entitys\PlayerEntity.cs" />
     <Compile Include="src\GameManager.cs" />
     <Compile Include="src\UserUI\InGameGUI.cs" />
@@ -197,6 +198,12 @@
     <Compile Include="src\world\Biomes\SnowForest.cs" />
     <Compile Include="src\world\Chunk.cs" />
     <Compile Include="src\world\ElbriumWorld.cs" />
+    <Compile Include="src\world\Noise\DelaunayVoronoi\Delaunay.cs" />
+    <Compile Include="src\world\Noise\DelaunayVoronoi\Edge.cs" />
+    <Compile Include="src\world\Noise\DelaunayVoronoi\Point.cs" />
+    <Compile Include="src\world\Noise\DelaunayVoronoi\Triangle.cs" />
+    <Compile Include="src\world\Noise\DelaunayVoronoi\Voronoi.cs" />
+    <Compile Include="src\world\Noise\dNoise.cs" />
     <Compile Include="src\world\Noise\FastNoise.cs" />
     <Compile Include="src\world\WorldBase.cs" />
     <Compile Include="src\world\WorldManager.cs" />

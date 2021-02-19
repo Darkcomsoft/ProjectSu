@@ -13,6 +13,8 @@ namespace ProjectSu.src.Engine
         private Transform Transform;
         private string spacename;
 
+        private bool IsDetroying;
+
         public GameObject gameObject;
 
         public GameObject()
@@ -25,22 +27,33 @@ namespace ProjectSu.src.Engine
 
         public void Tick()
         {
-            OnTick();
+            if (!IsDetroying)
+            {
+                OnTick();
+            }
         }
 
         public void TickDraw()
         {
-            OnTickDraw();
+            if (!IsDetroying)
+            {
+                OnTickDraw();
+            }
         }
 
         public void TickDrawTrans()
         {
-            OnTickDrawTrans();
+            if (!IsDetroying)
+                OnTickDrawTrans();
         }
 
         protected override void OnDispose()
         {
-            TickManager.RemoveTickList(this);
+            if (!IsDetroying)
+            {
+                TickManager.RemoveTickList(this);
+            }
+
             OnDestroy();
 
             Transform.Dispose();
@@ -87,17 +100,31 @@ namespace ProjectSu.src.Engine
 
         }
 
+        private void StartDestroyProcess()
+        {
+            IsDetroying = true;
+            TickManager.RemoveTickList(this);
+        }
+
         public static GameObject Instantiate(string SpaceName, GameObject obj)
         {
             SpaceManager.AddObjectToSpace(SpaceName, obj);
             return obj;
         }
 
-        public static void Destroy(GameObject obj)
+        public static void Destroy(GameObject obj, bool imediato = false)
         {
             SpaceManager.RemoveObjectToSpace(obj.SpaceName, obj);
-            obj.Dispose();
-            //QueeSystem.EnqueueObjDestoy(obj);
+
+            if (imediato)
+            {
+                obj.Dispose();
+            }
+            else
+            {
+                obj.StartDestroyProcess();
+                QueeSystem.EnqueueObjDestoy(obj);
+            }
         }
 
         public static NEntity Net_Instantiate(string SpaceName, NEntity obj)

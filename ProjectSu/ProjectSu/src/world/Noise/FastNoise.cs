@@ -37,6 +37,8 @@
 
 // ----------------
 
+#define FN_USE_DOUBLES
+
 #if UNITY_3 || UNITY_4 || UNITY_5
 #define FN_DISABLE_AGGRESSIVE_INLINING
 #endif

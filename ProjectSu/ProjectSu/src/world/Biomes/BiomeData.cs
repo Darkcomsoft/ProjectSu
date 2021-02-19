@@ -12,9 +12,9 @@ namespace ProjectSu.src.world.Biomes
         public TypeBlock _typeBlock;
         public BlockVariant _blockVariant;
         public TreeType _treeType;
-        public float _Height;
+        public double _Height;
 
-        public BiomeData(float Height,TypeBlock typeBlock, BlockVariant blockVariant, TreeType treeType)
+        public BiomeData(double Height,TypeBlock typeBlock, BlockVariant blockVariant, TreeType treeType)
         {
             _typeBlock = typeBlock;
             _blockVariant = blockVariant;
