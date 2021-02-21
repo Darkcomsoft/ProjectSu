@@ -3,6 +3,7 @@ using OpenTK.Graphics;
 using ProjectSu.src.Engine;
 using ProjectSu.src.Engine.UI;
 using ProjectSu.src.Engine.UI.Font;
+using OpenTK.Mathematics;
 
 namespace ProjectSu.src.Spaces
 {
@@ -74,7 +75,7 @@ namespace ProjectSu.src.Spaces
 
         void quitclick()
         {
-            Window.Instance.Exit();
+            Window.Instance.Close();
         }
     }
 }

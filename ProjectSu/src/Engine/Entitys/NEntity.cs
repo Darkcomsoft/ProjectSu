@@ -1,5 +1,6 @@
 ﻿using Lidgren.Network;
 using OpenTK;
+using OpenTK.Mathematics;
 using ProjectSu.src.Engine.NetCode;
 using System;
 using System.Collections.Generic;

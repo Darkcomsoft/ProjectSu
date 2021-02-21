@@ -1,6 +1,8 @@
 ﻿using OpenTK.Graphics;
 using OpenTK.Graphics.ES20;
 using OpenTK.Input;
+using OpenTK.Mathematics;
+using OpenTK.Windowing.GraphicsLibraryFramework;
 using ProjectSu.src.Engine.UI;
 using ProjectSu.src.Engine.UI.Font;
 using ProjectSu.src.Engine.UI.GUIElements;
@@ -56,7 +58,7 @@ namespace ProjectSu.src.Engine
 
         public void Tick()
         {
-            if (Input.GetKeyDown(Key.F4))
+            if (Input.GetKeyDown(Keys.F4))
             {
                 if (showing)
                 {

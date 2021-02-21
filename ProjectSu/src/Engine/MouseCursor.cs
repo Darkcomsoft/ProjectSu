@@ -1,4 +1,6 @@
 ﻿using OpenTK.Input;
+using OpenTK.Windowing.Common.Input;
+using OpenTK.Windowing.GraphicsLibraryFramework;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -16,6 +18,7 @@ namespace ProjectSu.src.Engine
         public static void LockCursor()
         {
             Window.Instance.CursorVisible = false;
+            Window.Instance.CursorGrabbed = true;
             _isLocked = true;
         }
 
@@ -23,14 +26,7 @@ namespace ProjectSu.src.Engine
         {
             _isLocked = false;
             Window.Instance.CursorVisible = true;
-        }
-
-        public static void CursorLockPosition()
-        {
-            if (_isLocked)
-            {
-                Mouse.SetPosition(Window.Instance.X + Window.Instance.Width / 2f, Window.Instance.Y + Window.Instance.Height / 2f);
-            }
+            Window.Instance.CursorGrabbed = false;
         }
     }
 }

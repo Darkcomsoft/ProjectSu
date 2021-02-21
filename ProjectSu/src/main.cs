@@ -60,9 +60,6 @@ namespace ProjectSu.src
                     Debug.LogError(ex.Message + " StackTrace: " + ex.StackTrace);
                 }
             }
-
-            AppDomain.CurrentDomain.UnhandledException -= new UnhandledExceptionEventHandler(CurrentDomain_UnhandledException);
-
 #if Server
             using (Server server = new Server())
             {

@@ -6,3 +6,7 @@ C:\Users\estev\Documents\GitHub\ProjectSu\ProjectSu\obj\x64\Release\netcoreapp3.
 C:\Users\estev\Documents\GitHub\ProjectSu\ProjectSu\obj\x64\Release\netcoreapp3.1\ProjectSu.AssemblyInfoInputs.cache
 C:\Users\estev\Documents\GitHub\ProjectSu\ProjectSu\obj\x64\Release\netcoreapp3.1\ProjectSu.AssemblyInfo.cs
 C:\Users\estev\Documents\GitHub\ProjectSu\ProjectSu\obj\x64\Release\netcoreapp3.1\ProjectSu.csproj.CoreCompileInputs.cache
+C:\Users\Estevao\Documents\GitHub\ProjectSu\ProjectSu\obj\x64\Release\netcoreapp3.1\ProjectSu.csprojAssemblyReference.cache
+C:\Users\Estevao\Documents\GitHub\ProjectSu\ProjectSu\obj\x64\Release\netcoreapp3.1\ProjectSu.AssemblyInfoInputs.cache
+C:\Users\Estevao\Documents\GitHub\ProjectSu\ProjectSu\obj\x64\Release\netcoreapp3.1\ProjectSu.AssemblyInfo.cs
+C:\Users\Estevao\Documents\GitHub\ProjectSu\ProjectSu\obj\x64\Release\netcoreapp3.1\ProjectSu.csproj.CoreCompileInputs.cache

@@ -84,7 +84,6 @@ namespace ProjectSu.src.Engine
                 tickManager?.Tick();
                 debugGUI?.Tick();
                 physics?.UpdatePhisics(Time._DeltaTime);
-                MouseCursor.CursorLockPosition();
             }
             else if (!GameLoaded)//first load the window, before load the systems
             {
