@@ -122,7 +122,7 @@ namespace ProjectSu.src.Engine
         }
 
         /// <summary>
-        /// This is used for reload the game, like if you first started
+        /// This is used for reload the game ,engine systems, assets etc.
         /// </summary>
         public void ReloadGame()
         {
@@ -132,16 +132,7 @@ namespace ProjectSu.src.Engine
 
             assetManager.ReloadAssets();
 
-            BasicScreen.SetStatus(ScreenType.SplashScreen, "Starting EngineSystem");
-            physics = new Physics();
-            soundSystem = new SoundSystem();
-            tickManager = new TickManager();
-            spaceManager = new SpaceManager();
-            worldManager = new WorldManager();
-
-            BasicScreen.SetStatus(ScreenType.SplashScreen, "Creating Spaces");
-            SpaceManager.AddSpace("GlobalSpace", new GlobalSpace());
-            SpaceManager.AddSpace("MainMenuSpace", new MainMenuSpace());
+            StartEngineStuff();
 
             BasicScreen.SetStatus(ScreenType.SplashScreen, "Finished Loading Good to Go (:");
             engineReady = true;
@@ -149,23 +140,16 @@ namespace ProjectSu.src.Engine
             BasicScreen.SetStatus();
         }
 
-        public void StartGame()
+        /// <summary>
+        /// Only called in the firts time window open
+        /// </summary>
+        private void StartGame()
         {
             engineReady = false;
             GameLoaded = false;
             assetManager.StartLoadAssets();
 
-            BasicScreen.SetStatus(ScreenType.SplashScreen, "Starting EngineSystem");
-            physics = new Physics();
-
-            soundSystem = new SoundSystem();
-            tickManager = new TickManager();
-            spaceManager = new SpaceManager();
-            worldManager = new WorldManager();
-
-            BasicScreen.SetStatus(ScreenType.SplashScreen, "Creating Spaces");
-            SpaceManager.AddSpace("GlobalSpace", new GlobalSpace());
-            SpaceManager.AddSpace("MainMenuSpace", new MainMenuSpace());
+            StartEngineStuff();
 
             BasicScreen.SetStatus(ScreenType.SplashScreen, "Finished Loading Good to Go (:");
             engineReady = true;
@@ -174,11 +158,28 @@ namespace ProjectSu.src.Engine
         }
 
         /// <summary>
+        /// All engine/game systems, and setups for start the game
+        /// </summary>
+        private void StartEngineStuff()
+        {
+            BasicScreen.SetStatus(ScreenType.SplashScreen, "Starting EngineSystem");
+            physics = new Physics();
+            soundSystem = new SoundSystem();
+            tickManager = new TickManager();
+            spaceManager = new SpaceManager();
+            worldManager = new WorldManager();
+
+            BasicScreen.SetStatus(ScreenType.SplashScreen, "Creating Spaces");
+            SpaceManager.AddSpace("GlobalSpace", new GlobalSpace());
+            SpaceManager.AddSpace("MainMenuSpace", new MainMenuSpace());
+        }
+
+        /// <summary>
         /// Used for reload all assets, only assets
         /// </summary>
         public void ReloadAssets()
         {
-
+            throw new NotImplementedException();
         }
 
         public void ClearSpaces()
