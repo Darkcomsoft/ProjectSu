@@ -42,7 +42,7 @@ namespace ProjectSu.src.Engine
 
         public void Tick()
         {
-            var camRotation = Matrix3.CreateRotationX((float)rotation.X + (float)gameObject.transform.Rotation.X) * Matrix3.CreateRotationY((float)rotation.Y + (float)gameObject.transform.Rotation.Y) * Matrix3.CreateRotationZ((float)rotation.Z + (float)gameObject.transform.Rotation.Z);
+            var camRotation = rotation + new Quaternion((float)gameObject.transform.Rotation.X, (float)gameObject.transform.Rotation.Y, (float)gameObject.transform.Rotation.Z, (float)gameObject.transform.Rotation.W); 
 
             var camOriginalTarget = new Vector3d(0, 0, 1);
             var camRotatedTarget = Vector3.Transform((Vector3)camOriginalTarget, camRotation);
@@ -75,12 +75,12 @@ namespace ProjectSu.src.Engine
         }
 
         /// <summary>
-        /// Get view matrix with-out float precision fix
+        /// (DONT WORKING RIGHT NOW)Get view matrix with-out float precision fix
         /// </summary>
         /// <returns></returns>
         public Matrix4 GetWorldViewMatrix()
         {
-            var camRotation = Matrix3.CreateRotationX((float)rotation.X + (float)gameObject.transform.Rotation.X) * Matrix3.CreateRotationY((float)rotation.Y + (float)gameObject.transform.Rotation.Y) * Matrix3.CreateRotationZ((float)rotation.Z + (float)gameObject.transform.Rotation.Z);
+            /*var camRotation = Matrix3.CreateRotationX((float)rotation.X + (float)gameObject.transform.Rotation.X) * Matrix3.CreateRotationY((float)rotation.Y + (float)gameObject.transform.Rotation.Y) * Matrix3.CreateRotationZ((float)rotation.Z + (float)gameObject.transform.Rotation.Z);
 
             var camOriginalTarget = new Vector3d(0, 0, 1);
             var camRotatedTarget = Vector3.Transform((Vector3)camOriginalTarget, camRotation);
@@ -89,7 +89,8 @@ namespace ProjectSu.src.Engine
             var camOriginalUpVector = new Vector3(0, 1, 0);
             var camRotatedUpVector = Vector3.Transform(camOriginalUpVector, camRotation);
 
-            return Matrix4.LookAt(position + (Vector3)gameObject.transform.Position, finalTarget, camRotatedUpVector);
+            return Matrix4.LookAt(position + (Vector3)gameObject.transform.Position, finalTarget, camRotatedUpVector);*/
+            return Matrix4.Identity;
         }
 
         private void UpdateProjection()
