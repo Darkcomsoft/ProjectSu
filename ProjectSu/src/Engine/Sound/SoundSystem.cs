@@ -26,6 +26,11 @@ namespace ProjectSu.src.Engine
 
 		public SoundSystem()
         {
+            //talvez remover isso depois, 
+            //por que a nova versao do opentk parece que tem um methdo melhor para checar se voce nao tem openal
+            if (Application.NoSoundMode) { return; }
+            //
+
             Running = true;
             soundThread = new Thread(new ThreadStart(StartSoundSystem));
             soundThread.Name = "SoundEngine Thread";

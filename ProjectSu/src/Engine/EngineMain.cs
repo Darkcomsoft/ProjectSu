@@ -157,6 +157,7 @@ namespace ProjectSu.src.Engine
 
             BasicScreen.SetStatus(ScreenType.SplashScreen, "Starting EngineSystem");
             physics = new Physics();
+
             soundSystem = new SoundSystem();
             tickManager = new TickManager();
             spaceManager = new SpaceManager();
@@ -197,7 +198,7 @@ namespace ProjectSu.src.Engine
             QueeSystem.CleanUp();
         }
 
-        #region InputFunctions
+#region InputFunctions
         public void OnResize()
         {
             if (GUI.instance != null)
@@ -222,7 +223,7 @@ namespace ProjectSu.src.Engine
             }
             Input.SetMousePos(e.Position);
         }
-        #endregion
+#endregion
 
         public static bool EngineReady { get => engineReady; private set { } }
     }

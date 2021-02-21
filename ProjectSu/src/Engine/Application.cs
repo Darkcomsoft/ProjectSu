@@ -18,6 +18,8 @@ namespace ProjectSu.src.Engine
         public static readonly string BinaryPath = GetBinaryPath();
         public static readonly string AssetsPath = GetAssetsPath() + "\\Assets";
 
+        public static bool NoSoundMode = false;
+
         private static string GetBinaryPath()
         {
 #if DEBUG
