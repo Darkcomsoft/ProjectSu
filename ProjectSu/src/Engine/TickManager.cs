@@ -86,9 +86,12 @@ namespace ProjectSu.src.Engine
 
         public static void RemoveTickList(GameObject gameObject)
         {
-            if (Instance.tickList.Contains(gameObject))
+            if (Instance != null)
             {
-                Instance.tickList.Remove(gameObject);
+                if (Instance.tickList.Contains(gameObject))
+                {
+                    Instance.tickList.Remove(gameObject);
+                }
             }
         }
     }

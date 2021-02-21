@@ -55,6 +55,19 @@ namespace ProjectSu.src.Engine
             
             if (AssetManager.AssetsReady && engineReady)
             {
+                if (Input.GetKeyDown(Keys.Escape))
+                {
+                    Debug.Log("Teste Keys");
+                    if (MouseCursor.MouseLocked)
+                    {
+                        MouseCursor.UnLockCursor();
+                    }
+                    else
+                    {
+                        MouseCursor.LockCursor();
+                    }
+                }
+
                 if (Input.GetKeyDown(Keys.F11))
                 {
                     if (Window.Instance.WindowState == WindowState.Fullscreen)
@@ -64,18 +77,6 @@ namespace ProjectSu.src.Engine
                     else
                     {
                         Window.Instance.WindowState = WindowState.Fullscreen;
-                    }
-                }
-
-                if (Input.GetKeyDown(Keys.Escape))
-                {
-                    if (MouseCursor.MouseLocked)
-                    {
-                        MouseCursor.UnLockCursor();
-                    }
-                    else
-                    {
-                        MouseCursor.LockCursor();
                     }
                 }
 

@@ -26,7 +26,7 @@ namespace ProjectSu.src
             gameWindowSettings.RenderFrequency = 60;
             gameWindowSettings.UpdateFrequency = 60;
 
-            NativeWindowSettings nativeWindow = new NativeWindowSettings();
+            NativeWindowSettings nativeWindow = NativeWindowSettings.Default;
             nativeWindow.API = OpenTK.Windowing.Common.ContextAPI.OpenGL;
             nativeWindow.APIVersion = new Version(3,3);
             nativeWindow.Profile = OpenTK.Windowing.Common.ContextProfile.Core;
@@ -35,6 +35,8 @@ namespace ProjectSu.src
             nativeWindow.Flags = OpenTK.Windowing.Common.ContextFlags.Default;
             nativeWindow.StartVisible = true;
             nativeWindow.StartFocused = true;
+
+            nativeWindow.IsFullscreen = true;
 
             nativeWindow.Title = Application.AppName + " : " + Application.Version;
 

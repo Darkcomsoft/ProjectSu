@@ -36,8 +36,11 @@ namespace ProjectSu.src.Engine
         {
             GL.ClearColor(Color4.Black);
 
-            VSync = VSyncMode.Adaptive;
+            VSync = VSyncMode.Off;
             WindowBorder = WindowBorder.Resizable;
+
+            Input.keyboardState = KeyboardState;
+            Input.mouseState = MouseState;
 
             UpdateFrame += Tick;
             RenderFrame += TickRender;
@@ -48,9 +51,6 @@ namespace ProjectSu.src.Engine
         {
             Time._DeltaTime = e.Time;
             Time._DTime += e.Time;
-
-            Input.keyboardState = KeyboardState;
-            Input.mouseState = MouseState;
 
             if (!engineIsRunning)
             {
@@ -65,7 +65,7 @@ namespace ProjectSu.src.Engine
 
         private void TickRender(FrameEventArgs e)
         {
-            Thread.Sleep(10);
+            //Thread.Sleep(10);
             GL.Clear(ClearBufferMask.ColorBufferBit | ClearBufferMask.DepthBufferBit);
             GL.FrontFace(FrontFaceDirection.Cw);
 

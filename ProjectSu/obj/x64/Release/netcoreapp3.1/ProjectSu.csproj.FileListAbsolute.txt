@@ -2,10 +2,6 @@ C:\Users\estev\Documents\GitHub\ProjectSu\NetCoreTeste\ProjectSu\obj\x64\Release
 C:\Users\estev\Documents\GitHub\ProjectSu\NetCoreTeste\ProjectSu\obj\x64\Release\netcoreapp3.1\ProjectSu.AssemblyInfoInputs.cache
 C:\Users\estev\Documents\GitHub\ProjectSu\NetCoreTeste\ProjectSu\obj\x64\Release\netcoreapp3.1\ProjectSu.AssemblyInfo.cs
 C:\Users\estev\Documents\GitHub\ProjectSu\NetCoreTeste\ProjectSu\obj\x64\Release\netcoreapp3.1\ProjectSu.csproj.CoreCompileInputs.cache
-C:\Users\estev\Documents\GitHub\ProjectSu\ProjectSu\obj\x64\Release\netcoreapp3.1\ProjectSu.csprojAssemblyReference.cache
-C:\Users\estev\Documents\GitHub\ProjectSu\ProjectSu\obj\x64\Release\netcoreapp3.1\ProjectSu.AssemblyInfoInputs.cache
-C:\Users\estev\Documents\GitHub\ProjectSu\ProjectSu\obj\x64\Release\netcoreapp3.1\ProjectSu.AssemblyInfo.cs
-C:\Users\estev\Documents\GitHub\ProjectSu\ProjectSu\obj\x64\Release\netcoreapp3.1\ProjectSu.csproj.CoreCompileInputs.cache
 C:\Users\Estevao\Documents\GitHub\ProjectSu\ProjectSu\obj\x64\Release\netcoreapp3.1\ProjectSu.csprojAssemblyReference.cache
 C:\Users\Estevao\Documents\GitHub\ProjectSu\ProjectSu\obj\x64\Release\netcoreapp3.1\ProjectSu.AssemblyInfoInputs.cache
 C:\Users\Estevao\Documents\GitHub\ProjectSu\ProjectSu\obj\x64\Release\netcoreapp3.1\ProjectSu.AssemblyInfo.cs
@@ -74,6 +70,10 @@ C:\Users\estev\Documents\GitHub\ProjectSu\ProjectSu\bin\x64\Release\netcoreapp3.
 C:\Users\estev\Documents\GitHub\ProjectSu\ProjectSu\bin\x64\Release\netcoreapp3.1\Newtonsoft.Json.dll
 C:\Users\estev\Documents\GitHub\ProjectSu\ProjectSu\bin\x64\Release\netcoreapp3.1\ObjParser.dll
 C:\Users\estev\Documents\GitHub\ProjectSu\ProjectSu\bin\x64\Release\netcoreapp3.1\Newtonsoft.Json.xml
+C:\Users\estev\Documents\GitHub\ProjectSu\ProjectSu\obj\x64\Release\netcoreapp3.1\ProjectSu.csprojAssemblyReference.cache
+C:\Users\estev\Documents\GitHub\ProjectSu\ProjectSu\obj\x64\Release\netcoreapp3.1\ProjectSu.AssemblyInfoInputs.cache
+C:\Users\estev\Documents\GitHub\ProjectSu\ProjectSu\obj\x64\Release\netcoreapp3.1\ProjectSu.AssemblyInfo.cs
+C:\Users\estev\Documents\GitHub\ProjectSu\ProjectSu\obj\x64\Release\netcoreapp3.1\ProjectSu.csproj.CoreCompileInputs.cache
 C:\Users\estev\Documents\GitHub\ProjectSu\ProjectSu\obj\x64\Release\netcoreapp3.1\ProjectSu.csproj.CopyComplete
 C:\Users\estev\Documents\GitHub\ProjectSu\ProjectSu\obj\x64\Release\netcoreapp3.1\ProjectSu.dll
 C:\Users\estev\Documents\GitHub\ProjectSu\ProjectSu\obj\x64\Release\netcoreapp3.1\ProjectSu.pdb

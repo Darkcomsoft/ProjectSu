@@ -35,26 +35,30 @@ namespace ProjectSu.src.Engine
         {
             if (!Window.Instance.IsFocused) { return false; }
 
-            return keyboardState.IsKeyPressed(key);
+            Input.keyboardState = Window.Instance.KeyboardState;
+            Input.mouseState = Window.Instance.MouseState;
 
-            /*if (!keyToggleList.Contains(key) && keyboardState.IsKeyDown(key))
+            if (!keyToggleList.Contains(key) && keyboardState.IsKeyDown(key))
             {
                 keyToggleList.Add(key);
                 return true;
             }
             else
             {
-                if (keyboardState.IsKeyUp(key))
+                if (!keyboardState.IsKeyDown(key))
                 {
                     keyToggleList.Remove(key);
                     return false;
                 }
                 return false;
-            }*/
+            }
         }
         internal static bool GetKeyDown(MouseButton buttom)
         {
             if (!Window.Instance.IsFocused) { return false; }
+
+            Input.keyboardState = Window.Instance.KeyboardState;
+            Input.mouseState = Window.Instance.MouseState;
 
             if (!mouseButtomToggleList.Contains(buttom) && mouseState.IsButtonDown(buttom))
             {
@@ -76,6 +80,9 @@ namespace ProjectSu.src.Engine
         {
             if (!Window.Instance.IsFocused) { return false; }
 
+            Input.keyboardState = Window.Instance.KeyboardState;
+            Input.mouseState = Window.Instance.MouseState;
+
             if (!mouseButtomToggleList.Contains(buttom) && !mouseState.IsButtonDown(buttom))
             {
                 mouseButtomToggleList.Add(buttom);
@@ -95,9 +102,10 @@ namespace ProjectSu.src.Engine
         {
             if (!Window.Instance.IsFocused) { return false; }
 
-            return keyboardState.IsKeyReleased(key);
+            Input.keyboardState = Window.Instance.KeyboardState;
+            Input.mouseState = Window.Instance.MouseState;
 
-            /*if (!keyToggleList.Contains(key) && keyboardState.IsKeyUp(key))
+            if (!keyToggleList.Contains(key) && !keyboardState.IsKeyDown(key))
             {
                 keyToggleList.Add(key);
                 return true;
@@ -110,18 +118,24 @@ namespace ProjectSu.src.Engine
                     return false;
                 }
                 return false;
-            }*/
+            }
         }
 
         internal static bool GetKey(Keys key)
         {
             if (!Window.Instance.IsFocused) { return false; }
 
+            Input.keyboardState = Window.Instance.KeyboardState;
+            Input.mouseState = Window.Instance.MouseState;
+
             return keyboardState.IsKeyDown(key);
         }
         internal static bool GetKey(MouseButton buttom)
         {
             if (!Window.Instance.IsFocused) { return false; }
+
+            Input.keyboardState = Window.Instance.KeyboardState;
+            Input.mouseState = Window.Instance.MouseState;
 
             return mouseState.IsButtonDown(buttom);
         }

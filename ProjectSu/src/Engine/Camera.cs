@@ -42,14 +42,14 @@ namespace ProjectSu.src.Engine
 
         public void Tick()
         {
-            var camRotation = rotation + new Quaternion((float)gameObject.transform.Rotation.X, (float)gameObject.transform.Rotation.Y, (float)gameObject.transform.Rotation.Z, (float)gameObject.transform.Rotation.W); 
+            var camRotation = Matrix3.CreateRotationX((float)rotation.X + (float)gameObject.transform.Rotation.X) * Matrix3.CreateRotationY((float)rotation.Y + (float)gameObject.transform.Rotation.Y) * Matrix3.CreateRotationZ((float)rotation.Z + (float)gameObject.transform.Rotation.Z);
 
             var camOriginalTarget = new Vector3d(0, 0, 1);
-            var camRotatedTarget = Vector3.Transform((Vector3)camOriginalTarget, camRotation);
+            var camRotatedTarget = Vector3.Transform((Vector3)camOriginalTarget, camRotation.ExtractRotation());
             finalTarget = position + camRotatedTarget;
 
             var camOriginalUpVector = new Vector3(0, 1, 0);
-            var camRotatedUpVector = Vector3.Transform(camOriginalUpVector, camRotation);
+            var camRotatedUpVector = Vector3.Transform(camOriginalUpVector, camRotation.ExtractRotation());
 
             UpdateProjection();
 

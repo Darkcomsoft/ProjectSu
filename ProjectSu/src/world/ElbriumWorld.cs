@@ -137,6 +137,8 @@ namespace ProjectSu.src.world
                 }
             }
 
+            Debug.Log("WorldThread is Finished!");
+
             CanDestroyWorld = true;
         }
 
@@ -239,10 +241,6 @@ namespace ProjectSu.src.world
         protected override void OnDestroy()
         {
             WorldRuning = false;
-
-            Debug.Log("Wait for the world loop stop....");
-            while (CanDestroyWorld != true) { }//wait to other thread loop finishe and destroy the thread
-            Debug.Log("Yayyyyyy we are free to go (:");
 
             foreach (var item in chunkMap.Values)
             {
