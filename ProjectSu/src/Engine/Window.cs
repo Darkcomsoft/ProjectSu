@@ -85,15 +85,16 @@ namespace ProjectSu.src.Engine
 
         protected override void OnResize(ResizeEventArgs e)
         {
+            GL.Viewport(0, 0, e.Width, e.Height);
+
             width = e.Width;
             height = e.Height;
 
-            WindowRectangle.X = (int)ClientRectangle.Center.X;
-            WindowRectangle.Y = (int)ClientRectangle.Center.Y;
+            WindowRectangle.X = 0;
+            WindowRectangle.Y = 0;
             WindowRectangle.Width = width;
             WindowRectangle.Height = height;
 
-            GL.Viewport(0, 0, e.Width, e.Height);
             engineMain?.OnResize();
             base.OnResize(e);
         }
@@ -118,6 +119,12 @@ namespace ProjectSu.src.Engine
 
             engineIsRunning = false;
             base.OnUnload();
+        }
+
+        protected override void OnClosed()
+        {
+            Close();
+            base.OnClosed();
         }
 
         public int Width { get { return instance.width; } }

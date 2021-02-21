@@ -16,5 +16,15 @@ namespace ProjectSu.src.Engine
             }
             return ptr;
         }
+
+        public static IntPtr GetIntPtr(int[] byteBuf)
+        {
+            IntPtr ptr = Marshal.AllocHGlobal(byteBuf.Length);
+            for (int i = 0; i < byteBuf.Length; i++)
+            {
+                Marshal.WriteByte(ptr, i, (byte)byteBuf[i]);
+            }
+            return ptr;
+        }
     }
 }

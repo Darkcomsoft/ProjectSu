@@ -21,23 +21,23 @@ namespace ProjectSu.src
         {
             CheckOpenAL();
 
-            GameWindowSettings gameWindowSettings = new GameWindowSettings();
-            gameWindowSettings.IsMultiThreaded = true;
+            GameWindowSettings gameWindowSettings = GameWindowSettings.Default;
+            gameWindowSettings.IsMultiThreaded = false;
             gameWindowSettings.RenderFrequency = 60;
             gameWindowSettings.UpdateFrequency = 60;
 
             NativeWindowSettings nativeWindow = new NativeWindowSettings();
-            //nativeWindow.API = OpenTK.Windowing.Common.ContextAPI.OpenGL;
-            //nativeWindow.APIVersion = new Version(3,3);
-           // nativeWindow.Profile = OpenTK.Windowing.Common.ContextProfile.Any;
+            nativeWindow.API = OpenTK.Windowing.Common.ContextAPI.OpenGL;
+            nativeWindow.APIVersion = new Version(3,3);
+            nativeWindow.Profile = OpenTK.Windowing.Common.ContextProfile.Core;
             nativeWindow.WindowState = OpenTK.Windowing.Common.WindowState.Normal;
             nativeWindow.WindowBorder = OpenTK.Windowing.Common.WindowBorder.Resizable;
             nativeWindow.Title = Application.AppName + " : " + Application.Version;
-           // nativeWindow.Flags = OpenTK.Windowing.Common.ContextFlags.Default;
-            //nativeWindow.StartVisible = true;
-            //nativeWindow.StartFocused = true;
+            nativeWindow.Flags = OpenTK.Windowing.Common.ContextFlags.Default;
+            nativeWindow.StartVisible = true;
+            nativeWindow.StartFocused = true;
 
-            using (Window game = new Window(GameWindowSettings.Default, nativeWindow))
+            using (Window game = new Window(gameWindowSettings, nativeWindow))
             {
                 try
                 {
