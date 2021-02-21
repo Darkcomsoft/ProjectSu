@@ -16,7 +16,7 @@ namespace ProjectSu.src.Engine.Sound
             var soundFile = new WavLoader(path, filename);
 
             Handler = AL.GenBuffer();
-            AL.BufferData(Handler, soundFile._Format, soundFile._Data, soundFile._Data.Length, soundFile._Rate);
+            AL.BufferData(Handler, soundFile._Format, Utilits.GetIntPtr(soundFile._Data), soundFile._Data.Length, soundFile._Rate);
         }
 
         public int GetHandler()
