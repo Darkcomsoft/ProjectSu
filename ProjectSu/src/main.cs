@@ -32,10 +32,11 @@ namespace ProjectSu.src
             nativeWindow.Profile = OpenTK.Windowing.Common.ContextProfile.Core;
             nativeWindow.WindowState = OpenTK.Windowing.Common.WindowState.Normal;
             nativeWindow.WindowBorder = OpenTK.Windowing.Common.WindowBorder.Resizable;
-            nativeWindow.Title = Application.AppName + " : " + Application.Version;
             nativeWindow.Flags = OpenTK.Windowing.Common.ContextFlags.Default;
             nativeWindow.StartVisible = true;
             nativeWindow.StartFocused = true;
+
+            nativeWindow.Title = Application.AppName + " : " + Application.Version;
 
             using (Window game = new Window(gameWindowSettings, nativeWindow))
             {

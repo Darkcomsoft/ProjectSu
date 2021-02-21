@@ -85,8 +85,6 @@ namespace ProjectSu.src.Engine
 
         protected override void OnResize(ResizeEventArgs e)
         {
-            GL.Viewport(0, 0, e.Width, e.Height);
-
             width = e.Width;
             height = e.Height;
 
@@ -94,6 +92,8 @@ namespace ProjectSu.src.Engine
             WindowRectangle.Y = 0;
             WindowRectangle.Width = width;
             WindowRectangle.Height = height;
+
+            GL.Viewport(0, 0, e.Width, e.Height);
 
             engineMain?.OnResize();
             base.OnResize(e);
