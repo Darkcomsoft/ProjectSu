@@ -19,23 +19,12 @@ namespace ProjectSu.src
         [MTAThread]
         public static void Main()
         {
-            AppDomain.CurrentDomain.UnhandledException += new UnhandledExceptionEventHandler(CurrentDomain_UnhandledException);
-
-            if (CheckLibrary("openal32.dll"))
-            {
-                Debug.Log("You Have OpenAL(Audio Library), you good to go!");
-                Application.NoSoundMode = false;
-
-            }
-            else
-            {
-                Debug.LogError("You don't Have OpanAL(Audio Library), you need to Download: https://www.openal.org/");
-                Debug.Log("Starting! No-Sound Mode ):");
-                Application.NoSoundMode = true;
-            }
+            CheckOpenAL();
 
             GameWindowSettings gameWindowSettings = new GameWindowSettings();
             gameWindowSettings.IsMultiThreaded = true;
+            gameWindowSettings.RenderFrequency = 60;
+            gameWindowSettings.UpdateFrequency = 60;
 
             NativeWindowSettings nativeWindow = new NativeWindowSettings();
             nativeWindow.API = OpenTK.Windowing.Common.ContextAPI.OpenGL;
@@ -44,6 +33,9 @@ namespace ProjectSu.src
             nativeWindow.WindowState = OpenTK.Windowing.Common.WindowState.Normal;
             nativeWindow.WindowBorder = OpenTK.Windowing.Common.WindowBorder.Resizable;
             nativeWindow.Title = Application.AppName + " : " + Application.Version;
+            nativeWindow.Flags = OpenTK.Windowing.Common.ContextFlags.Default;
+            nativeWindow.StartVisible = true;
+            nativeWindow.StartFocused = false;
 
             using (Window game = new Window(gameWindowSettings, nativeWindow))
             {
@@ -79,26 +71,20 @@ namespace ProjectSu.src
 #endif
         }
 
-        private static void CurrentDomain_UnhandledException(Object sender, UnhandledExceptionEventArgs e)
+        private static void CheckOpenAL()
         {
-            try
+            if (CheckLibrary("openal32.dll"))
             {
-                Exception ex = (Exception)e.ExceptionObject;
-                Debug.LogError("Unhadled domain exception:\n\n" + ex.Message);
-            }
-            catch (Exception exc)
-            {
-                try
-                {
-                    Debug.LogError("Fatal exception happend inside UnhadledExceptionHandler: \n\n" + exc.Message);
-                }
-                finally
-                {
-                    Environment.Exit(1);
-                }
-            }
+                Debug.Log("You Have OpenAL(Audio Library), you good to go!");
+                Application.NoSoundMode = false;
 
-            // It should terminate our main thread so Application.Exit() is unnecessary here
+            }
+            else
+            {
+                Debug.LogError("You don't Have OpanAL(Audio Library), you need to Download: https://www.openal.org/");
+                Debug.Log("Starting! No-Sound Mode ):");
+                Application.NoSoundMode = true;
+            }
         }
 
         public static void GoToSite(string url)
