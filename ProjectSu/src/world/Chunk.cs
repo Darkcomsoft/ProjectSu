@@ -1,7 +1,7 @@
 ﻿using ProjectSu;
 using OpenTK;
 using OpenTK.Graphics;
-using OpenTK.Graphics.OpenGL4;
+using OpenTK.Graphics.OpenGL;
 using ProjectSu.src;
 using ProjectSu.src.Engine;
 using ProjectSu.src.Engine.Render;

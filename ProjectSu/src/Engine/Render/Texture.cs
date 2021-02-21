@@ -1,5 +1,5 @@
 ﻿using System;
-using OpenTK.Graphics.OpenGL4;
+using OpenTK.Graphics.OpenGL;
 using ProjectSu.src.Engine.AssetsPipeline;
 
 namespace ProjectSu.src.Engine.Render

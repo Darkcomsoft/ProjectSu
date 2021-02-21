@@ -5,7 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using OpenTK;
 using OpenTK.Input;
-using OpenTK.Graphics.OpenGL4;
+using OpenTK.Graphics.OpenGL;
 using OpenTK.Mathematics;
 
 namespace ProjectSu.src.Engine
