@@ -1,5 +1,5 @@
 ﻿using ProjectSu;
-using OpenTK.Graphics.OpenGL4;
+using OpenTK.Graphics.OpenGL;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -131,7 +131,7 @@ namespace ProjectSu.src.Engine.UI
             ubo = GL.GenBuffer();
 
             GL.BindBuffer(BufferTarget.ElementArrayBuffer, IBO);
-            GL.BufferData(BufferTarget.ElementArrayBuffer, _indices.Length * sizeof(int), _indices, BufferUsageHint.StaticDraw);
+            GL.BufferData(BufferTarget.ElementArrayBuffer, _indices.Length * sizeof(int), _indices, BufferUsageHint.StreamDraw);
 
             GL.BindVertexArray(VAO);
 

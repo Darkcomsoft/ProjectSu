@@ -1,6 +1,6 @@
 ﻿using OpenTK;
 using OpenTK.Graphics;
-using OpenTK.Graphics.OpenGL4;
+using OpenTK.Graphics.OpenGL;
 using OpenTK.Input;
 using OpenTK.Mathematics;
 using OpenTK.Windowing.Common;
@@ -38,8 +38,6 @@ namespace ProjectSu.src.Engine
 
             VSync = VSyncMode.Adaptive;
             WindowBorder = WindowBorder.Resizable;
-
-            
 
             UpdateFrame += Tick;
             RenderFrame += TickRender;
