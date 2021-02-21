@@ -70,7 +70,7 @@ namespace ProjectSu.src.Engine.UI.Font
 				GUI.GetFontShader.Setbool("HaveTexture", true);
 				GUI.GetFontShader.SetColor("MainColor", colour);
 
-				GUI.GetFontShader.SetMatrix4("projection", Matrix4.CreateOrthographicOffCenter(Window.Instance.ClientRectangle.Center, Window.Instance.ClientRectangle.Right, Window.Instance.ClientRectangle.Bottom, Window.Instance.ClientRectangle.Top, 0f, 5.0f));
+				GUI.GetFontShader.SetMatrix4("projection", Matrix4.CreateOrthographicOffCenter(Window.Instance.WindowRectangle.Left, Window.Instance.WindowRectangle.Right, Window.Instance.WindowRectangle.Bottom, Window.Instance.WindowRectangle.Top, 0f, 5.0f));
 
 				GL.DrawArrays(PrimitiveType.Triangles, 0, textMeshData.getVertexLength());
 

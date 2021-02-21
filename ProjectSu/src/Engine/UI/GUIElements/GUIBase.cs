@@ -122,7 +122,7 @@ namespace ProjectSu.src.Engine.UI
                 new Vector2(0.0f, 0.0f)
             };
 
-            _projection = Matrix4.CreateOrthographicOffCenter(Window.Instance.ClientRectangle.Left, Window.Instance.ClientRectangle.Right, Window.Instance.ClientRectangle.Bottom, Window.Instance.ClientRectangle.Top, 0f, 5.0f);
+            _projection = Matrix4.CreateOrthographicOffCenter(Window.Instance.WindowRectangle.Left, Window.Instance.WindowRectangle.Right, Window.Instance.WindowRectangle.Bottom, Window.Instance.WindowRectangle.Top, 0f, 5.0f);
 
 
             VAO = GL.GenVertexArray();
@@ -251,7 +251,7 @@ namespace ProjectSu.src.Engine.UI
 
         public void Resize()
         {
-            _projection = Matrix4.CreateOrthographicOffCenter(Window.Instance.ClientRectangle.Left, Window.Instance.ClientRectangle.Right, Window.Instance.ClientRectangle.Bottom, Window.Instance.ClientRectangle.Top, 0f, 5.0f);
+            _projection = Matrix4.CreateOrthographicOffCenter(Window.Instance.WindowRectangle.X -1, Window.Instance.WindowRectangle.Right, Window.Instance.WindowRectangle.Bottom, Window.Instance.WindowRectangle.Top, 0f, 5.0f);
 
             IsReady = false;
 

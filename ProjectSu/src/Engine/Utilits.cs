@@ -7,7 +7,7 @@ namespace ProjectSu.src.Engine
 {
     public static class Utilits
     {
-        public static IntPtr GetIntPtr(Byte[] byteBuf)
+        public static IntPtr GetIntPtr(byte[] byteBuf)//isso e um bom codigo? nao sei, nao so muito expert em pointers
         {
             IntPtr ptr = Marshal.AllocHGlobal(byteBuf.Length);
             for (int i = 0; i < byteBuf.Length; i++)

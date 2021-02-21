@@ -7,6 +7,7 @@ using OpenTK.Windowing.Common;
 using OpenTK.Windowing.Desktop;
 using System;
 using System.Collections.Generic;
+using System.Drawing;
 using System.Linq;
 using System.Text;
 using System.Threading;
@@ -23,6 +24,8 @@ namespace ProjectSu.src.Engine
 
         private int width;
         private int height;
+
+        public Rectangle WindowRectangle;
 
         public Window(GameWindowSettings gameWindowSettings, NativeWindowSettings nativeWindowSettings) : base(gameWindowSettings, nativeWindowSettings)
         {
@@ -86,6 +89,11 @@ namespace ProjectSu.src.Engine
         {
             width = e.Width;
             height = e.Height;
+
+            WindowRectangle.X = (int)ClientRectangle.Center.X;
+            WindowRectangle.Y = (int)ClientRectangle.Center.Y;
+            WindowRectangle.Width = width;
+            WindowRectangle.Height = height;
 
             GL.Viewport(0, 0, e.Width, e.Height);
             engineMain?.OnResize();
