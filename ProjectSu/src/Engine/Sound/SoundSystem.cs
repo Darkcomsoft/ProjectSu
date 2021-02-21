@@ -15,58 +15,52 @@ namespace ProjectSu.src.Engine
     /// <summary>
     /// SoundEngine, AudioThread
     /// </summary>
-    public class SoundSystem : ClassBase
+    public unsafe class SoundSystem : ClassBase
     {
-		ALContext _audioContext;
-        
-        private Thread soundThread;
+        private ALDevice aLDevice;
+        private ALContext aLContext;
 
         private bool Running = false;
-        private bool finished = false;
-
+   
 		public SoundSystem()
         {
             //talvez remover isso depois, 
             //por que a nova versao do opentk parece que tem um methdo melhor para checar se voce nao tem openal
             if (Application.NoSoundMode) { return; }
-            //
 
-            Running = true;
-            soundThread = new Thread(new ThreadStart(StartSoundSystem));
-            soundThread.Name = "SoundEngine Thread";
-            soundThread.Start();
-            
-            
-            while (_audioContext == null){   }
-            _audioContext.MakeCurrent();
-        }
+            Debug.Log("Starting SoundEngine!");
 
+            aLDevice = ALC.OpenDevice(null);
+            var aLContext = ALC.CreateContext(aLDevice, (int*)null);
 
-        private void StartSoundSystem()
-        {
-            Debug.Log("Starting Sound Engine!");
-            _audioContext = new AudioContext(AudioContext.DefaultDevice, 0, 0, true);
+            ALC.MakeContextCurrent(aLContext);
 
-            _audioContext.Process();
-            
-            Debug.Log("DefaultDevice: " + AudioContext.DefaultDevice);
+            Debug.Log("DefaultDevice: " + ALC.GetString(aLDevice, AlcGetString.DefaultDeviceSpecifier));
             Debug.Log("Version: " + AL.Get(ALGetString.Version));
             Debug.Log("Vendor: " + AL.Get(ALGetString.Vendor));
             Debug.Log("Renderer: " + AL.Get(ALGetString.Renderer));
 
             Debug.Log("Sound Engine Started!");
-
-            while (_audioContext.IsProcessing && Running) { Thread.Sleep(1000); }
-
-            Alc.MakeContextCurrent(ContextHandle.Zero);
-            _audioContext.Dispose();
-            finished = true;
+            Running = true;
         }
 
         protected override void OnDispose()
         {
             Running = false;
-            while (!finished) { }
+
+            if (aLContext != ALContext.Null)
+            {
+                ALC.MakeContextCurrent(ALContext.Null);
+                ALC.DestroyContext(aLContext);
+            }
+            aLContext = ALContext.Null;
+
+            if (aLDevice != ALDevice.Null)
+            {
+                ALC.CloseDevice(aLDevice);
+            }
+            aLDevice = ALDevice.Null;
+
             Debug.Log("Sound Engine Stoped!");
             base.OnDispose();
         }
