@@ -1,20 +1,20 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\estev\\Documents\\GitHub\\ProjectSu\\ProjectSu\\ProjectSu.csproj": {}
+    "C:\\Users\\Estevao\\Documents\\GitHub\\ProjectSu\\ProjectSu\\ProjectSu.csproj": {}
   },
   "projects": {
-    "C:\\Users\\estev\\Documents\\GitHub\\ProjectSu\\ProjectSu\\ProjectSu.csproj": {
+    "C:\\Users\\Estevao\\Documents\\GitHub\\ProjectSu\\ProjectSu\\ProjectSu.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\estev\\Documents\\GitHub\\ProjectSu\\ProjectSu\\ProjectSu.csproj",
+        "projectUniqueName": "C:\\Users\\Estevao\\Documents\\GitHub\\ProjectSu\\ProjectSu\\ProjectSu.csproj",
         "projectName": "ProjectSu",
-        "projectPath": "C:\\Users\\estev\\Documents\\GitHub\\ProjectSu\\ProjectSu\\ProjectSu.csproj",
-        "packagesPath": "C:\\Users\\estev\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\estev\\Documents\\GitHub\\ProjectSu\\ProjectSu\\obj\\",
+        "projectPath": "C:\\Users\\Estevao\\Documents\\GitHub\\ProjectSu\\ProjectSu\\ProjectSu.csproj",
+        "packagesPath": "C:\\Users\\Estevao\\.nuget\\packages\\",
+        "outputPath": "C:\\Users\\Estevao\\Documents\\GitHub\\ProjectSu\\ProjectSu\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
-          "C:\\Users\\estev\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Users\\Estevao\\AppData\\Roaming\\NuGet\\NuGet.Config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
         "originalTargetFrameworks": [
@@ -26,6 +26,7 @@
         },
         "frameworks": {
           "netcoreapp3.1": {
+            "targetAlias": "netcoreapp3.1",
             "projectReferences": {}
           }
         },
@@ -37,6 +38,7 @@
       },
       "frameworks": {
         "netcoreapp3.1": {
+          "targetAlias": "netcoreapp3.1",
           "dependencies": {
             "OpenTK": {
               "target": "Package",
@@ -62,7 +64,7 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\3.1.402\\RuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\5.0.103\\RuntimeIdentifierGraph.json"
         }
       }
     }

@@ -24,12 +24,14 @@ namespace ProjectSu.src
             if (CheckLibrary("openal32.dll"))
             {
                 Debug.Log("You Have OpenAL(Audio Library), you good to go!");
+                Application.NoSoundMode = false;
+
             }
             else
             {
                 Debug.LogError("You don't Have OpanAL(Audio Library), you need to Download: https://www.openal.org/");
-                GoToSite("https://www.openal.org/");
-                return;
+                Debug.Log("Starting! No-Sound Mode ):");
+                Application.NoSoundMode = true;
             }
 
             GameWindowSettings gameWindowSettings = new GameWindowSettings();
