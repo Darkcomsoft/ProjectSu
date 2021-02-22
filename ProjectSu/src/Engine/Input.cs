@@ -12,13 +12,16 @@ namespace ProjectSu.src.Engine
     /// </summary>
     public static class Input
     {
-        private static List<Keys> keyToggleList = new List<Keys>();
-        private static List<MouseButton> mouseButtomToggleList = new List<MouseButton>();
+        private static List<CurrentKey> keyToggleList = new List<CurrentKey>();
+        private static List<CurrentButtom> mouseButtomToggleList = new List<CurrentButtom>();
         
         private static Vector2 _mousePosition;
 
         public static KeyboardState keyboardState;
         public static MouseState mouseState;
+
+        private static CurrentKey currentKey = new CurrentKey();
+        private static CurrentButtom currentButtom = new CurrentButtom();
 
         internal static float ScrollWheelValue
         {
@@ -31,99 +34,138 @@ namespace ProjectSu.src.Engine
 
         internal static Vector2 GetMousePosition { get { return _mousePosition; } }
 
-        internal static bool GetKeyDown(Keys key)
+        /// <summary>
+        /// If KeyPressed is Down Once, Set a Key and a any number you want, any other input check can have the same number
+        /// </summary>
+        /// <param name="key"></param>
+        /// <param name="ID">any number you want, any other input check can have the same number</param>
+        /// <returns></returns>
+        internal static bool GetKeyDown(Keys key, int ID)
         {
             if (!Window.Instance.IsFocused) { return false; }
 
             Input.keyboardState = Window.Instance.KeyboardState;
             Input.mouseState = Window.Instance.MouseState;
 
-            if (!keyToggleList.Contains(key) && keyboardState.IsKeyDown(key))
+            currentKey.Index = ID;
+            currentKey.key = key;
+
+            if (!keyToggleList.Contains(currentKey) && keyboardState.IsKeyDown(key))
             {
-                keyToggleList.Add(key);
+                keyToggleList.Add(currentKey);
                 return true;
             }
             else
             {
                 if (!keyboardState.IsKeyDown(key))
                 {
-                    if (keyToggleList.Contains(key))
-                    {
-                        keyToggleList.Remove(key);
-                    }
+                    keyToggleList.Remove(currentKey);
                 }
                 return false;
             }
         }
 
-        internal static bool GetKeyDown(MouseButton buttom)
+        /// <summary>
+        /// If MouseKeyPressed is Down Once, Set a Key and a any number you want, any other input check can have the same number
+        /// </summary>
+        /// <param name="buttom"></param>
+        /// <param name="ID">any number you want, any other input check can have the same number</param>
+        /// <returns></returns>
+        internal static bool GetKeyDown(MouseButton buttom, int ID)
         {
             if (!Window.Instance.IsFocused) { return false; }
 
             Input.keyboardState = Window.Instance.KeyboardState;
             Input.mouseState = Window.Instance.MouseState;
 
-            if (!mouseButtomToggleList.Contains(buttom) && mouseState.IsButtonDown(buttom))
+            currentButtom.Index = ID;
+            currentButtom.Buttom = buttom;
+
+            if (!mouseButtomToggleList.Contains(currentButtom) && mouseState.IsButtonDown(buttom))
             {
-                mouseButtomToggleList.Add(buttom);
+                mouseButtomToggleList.Add(currentButtom);
                 return true;
             }
             else
             {
                 if (!mouseState.IsButtonDown(buttom))
                 {
-                    mouseButtomToggleList.Remove(buttom);
+                    mouseButtomToggleList.Remove(currentButtom);
                     return false;
                 }
                 return false;
             }
         }
 
-        internal static bool GetKeyUp(MouseButton buttom)
+        /// <summary>
+        /// If MouseKeyPressed is Up Once, Set a Key and a any number you want, any other input check can have the same number
+        /// </summary>
+        /// <param name="buttom"></param>
+        /// <param name="ID">any number you want, any other input check can have the same number</param>
+        /// <returns></returns>
+        internal static bool GetKeyUp(MouseButton buttom, int ID)
         {
             if (!Window.Instance.IsFocused) { return false; }
 
             Input.keyboardState = Window.Instance.KeyboardState;
             Input.mouseState = Window.Instance.MouseState;
 
-            if (!mouseButtomToggleList.Contains(buttom) && !mouseState.IsButtonDown(buttom))
+            currentButtom.Index = ID;
+            currentButtom.Buttom = buttom;
+
+            if (!mouseButtomToggleList.Contains(currentButtom) && !mouseState.IsButtonDown(buttom))
             {
-                mouseButtomToggleList.Add(buttom);
+                mouseButtomToggleList.Add(currentButtom);
                 return true;
             }
             else
             {
                 if (mouseState.IsButtonDown(buttom))
                 {
-                    mouseButtomToggleList.Remove(buttom);
+                    mouseButtomToggleList.Remove(currentButtom);
                     return false;
                 }
                 return false;
             }
         }
-        internal static bool GetKeyUp(Keys key)
+
+        /// <summary>
+        /// If KeyPressed is Up Once, Set a Key and a any number you want, any other input check can have the same number
+        /// </summary>
+        /// <param name="key"></param>
+        /// <param name="ID">any number you want, any other input check can have the same number</param>
+        /// <returns></returns>
+        internal static bool GetKeyUp(Keys key, int ID)
         {
             if (!Window.Instance.IsFocused) { return false; }
 
             Input.keyboardState = Window.Instance.KeyboardState;
             Input.mouseState = Window.Instance.MouseState;
 
-            if (!keyToggleList.Contains(key) && !keyboardState.IsKeyDown(key))
+            currentKey.Index = ID;
+            currentKey.key = key;
+
+            if (!keyToggleList.Contains(currentKey) && !keyboardState.IsKeyDown(key))
             {
-                keyToggleList.Add(key);
+                keyToggleList.Add(currentKey);
                 return true;
             }
             else
             {
                 if (keyboardState.IsKeyDown(key))
                 {
-                    keyToggleList.Remove(key);
+                    keyToggleList.Remove(currentKey);
                     return false;
                 }
                 return false;
             }
         }
 
+        /// <summary>
+        /// If Key is Pressed
+        /// </summary>
+        /// <param name="key"></param>
+        /// <returns></returns>
         internal static bool GetKey(Keys key)
         {
             if (!Window.Instance.IsFocused) { return false; }
@@ -133,6 +175,12 @@ namespace ProjectSu.src.Engine
 
             return keyboardState.IsKeyDown(key);
         }
+
+        /// <summary>
+        /// If MouseButtom is Pressed
+        /// </summary>
+        /// <param name="key"></param>
+        /// <returns></returns>
         internal static bool GetKey(MouseButton buttom)
         {
             if (!Window.Instance.IsFocused) { return false; }
@@ -146,6 +194,29 @@ namespace ProjectSu.src.Engine
         internal static void SetMousePos(Vector2 position)
         {
             _mousePosition = position;
+        }
+    }
+
+    public struct CurrentKey
+    {
+        public int Index;
+        public Keys key;
+
+        public CurrentKey(int teste, Keys key)
+        {
+            this.Index = teste;
+            this.key = key;
+        }
+    }
+    public struct CurrentButtom
+    {
+        public int Index;
+        public MouseButton Buttom;
+
+        public CurrentButtom(int teste, MouseButton Buttom)
+        {
+            this.Index = teste;
+            this.Buttom = Buttom;
         }
     }
 }

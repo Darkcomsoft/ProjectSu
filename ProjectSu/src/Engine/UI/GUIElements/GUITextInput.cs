@@ -42,7 +42,7 @@ namespace ProjectSu.src.Engine.UI.GUIElements
         {
             if (IsFocused)
             {
-                if (Input.GetKeyDown(Keys.Backspace))
+                if (Input.GetKeyDown(Keys.Backspace, 0))
                 {
                     Value = "";
                 }

@@ -84,7 +84,7 @@ namespace ProjectSu.src.Engine.UI
                 }
             }
 
-            if (Input.GetKeyDown(Keys.Escape) || Input.GetKeyDown(Keys.Enter) || Input.GetKeyDown(Keys.KeyPadEnter))
+            if (Input.GetKeyDown(Keys.Escape, 0) || Input.GetKeyDown(Keys.Enter, 0) || Input.GetKeyDown(Keys.KeyPadEnter, 0))
             {
                 if (FocusedUI != null)
                 {

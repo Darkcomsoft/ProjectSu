@@ -55,14 +55,13 @@ namespace ProjectSu.src.Engine
 
             if (AssetManager.AssetsReady && engineReady)
             {
-                if (Input.GetKeyDown(Keys.F11))
+                if (Input.GetKeyDown(Keys.F11, 0))
                 {
                     Window.Instance.SetFullScreen();
                 }
 
-                if (Input.GetKeyDown(Keys.LeftAlt))
+                if (Input.GetKeyDown(Keys.Escape, 1))
                 {
-                    Debug.Log("Teste Keys");
                     if (MouseCursor.MouseLocked)
                     {
                         MouseCursor.UnLockCursor();
@@ -191,7 +190,7 @@ namespace ProjectSu.src.Engine
             soundSystem?.Dispose();
         }
 
-#region InputFunctions
+        #region InputFunctions
         public void OnResize()
         {
             if (GUI.instance != null)
@@ -216,7 +215,7 @@ namespace ProjectSu.src.Engine
             }
             Input.SetMousePos(e.Position);
         }
-#endregion
+        #endregion
 
         public static bool EngineReady { get => engineReady; private set { } }
     }

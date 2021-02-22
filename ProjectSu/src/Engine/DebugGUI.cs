@@ -58,7 +58,7 @@ namespace ProjectSu.src.Engine
 
         public void Tick()
         {
-            if (Input.GetKeyDown(Keys.F4))
+            if (Input.GetKeyDown(Keys.F4, 0))
             {
                 if (showing)
                 {

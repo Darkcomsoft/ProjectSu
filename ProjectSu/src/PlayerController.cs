@@ -70,7 +70,7 @@ namespace ProjectSu.src
                 
             }*/
 
-            if (Input.GetKeyDown(Keys.F5))
+            if (Input.GetKeyDown(Keys.F5, 0))
             {
                 if (DevSpeed)
                 {
@@ -194,7 +194,7 @@ namespace ProjectSu.src
                     _CharacterController.StanceManager.DesiredStance = Stance.Standing;
                 }
 
-                if (Input.GetKeyDown(Keys.Space))
+                if (Input.GetKeyDown(Keys.Space, 0))
                 {
                     _CharacterController.Jump();
                 }
