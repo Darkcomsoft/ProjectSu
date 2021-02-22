@@ -60,7 +60,7 @@ namespace ProjectSu.src.Engine
                     Window.Instance.SetFullScreen();
                 }
 
-                if (Input.GetKeyDown(Keys.Escape))
+                if (Input.GetKeyDown(Keys.LeftAlt))
                 {
                     Debug.Log("Teste Keys");
                     if (MouseCursor.MouseLocked)
@@ -182,14 +182,13 @@ namespace ProjectSu.src.Engine
 
         private void ClearEngine()
         {
+            QueeSystem.CleanUp();
+            ClearSpaces();
+
             worldManager?.Dispose();
             tickManager?.Dispose();
             physics?.Dispose();
             soundSystem?.Dispose();
-
-            ClearSpaces();
-
-            QueeSystem.CleanUp();
         }
 
 #region InputFunctions

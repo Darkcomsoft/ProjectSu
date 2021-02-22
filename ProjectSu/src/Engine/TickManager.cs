@@ -50,21 +50,6 @@ namespace ProjectSu.src.Engine
 
         protected override void OnDispose()
         {
-            for (int i = 0; i  < tickList.Count; i++)
-            {
-                GameObject.Destroy(tickList[i], true);
-            }
-
-            foreach (var item in solidRenderGroup)
-            {
-                item.Value.Dispose();
-            }
-
-            foreach (var item in transRenderGroup)
-            {
-                item.Value.Dispose();
-            }
-
             tickList.Clear();
             tickList = null;
 
