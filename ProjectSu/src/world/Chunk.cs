@@ -26,20 +26,15 @@ namespace ProjectSu.src.world
     public class Chunk : EEntity
     {
         private double ChunkSeed;
-
         private ChunkState ChunkState;
-
         private Block[,] blocks;
 
-        public ChunkMeshRender _meshRender;
+        private ChunkMeshRender _meshRender;
         private WaterMeshRender _waterMeshRender;
-
         private MeshCollider _meshCollider;
 
         //private List<Tree> _trees = new List<Tree>();
 
-        private bool FirstChunkPopulation = true;
-        private bool isReady = false;
         private Mesh ChunkMesh;
         private Mesh WaterMesh;
 
@@ -58,8 +53,6 @@ namespace ProjectSu.src.world
             blocks = new Block[ElbriumWorld.ChunkSize, ElbriumWorld.ChunkSize];
 
             LockActionUpdateMEsh = new object();
-
-            FirstChunkPopulation = true;
 
             double a = rand.NextDouble();
             double b = rand.NextDouble();
@@ -98,8 +91,6 @@ namespace ProjectSu.src.world
 
         protected override void OnDestroy()
         {
-            isReady = false;
-
             /*for (int i = 0; i < _trees.Count; i++)
             {
                 _trees[i].OnDestroy();
@@ -121,25 +112,6 @@ namespace ProjectSu.src.world
 
             blocks = null;
             base.OnDestroy();
-        }
-
-        public void UpdateStatus(ChunkState state)
-        {
-            ChunkState = state;
-
-            switch (ChunkState)
-            {
-                case ChunkState.noload:
-                    break;
-                case ChunkState.nogameLogic:
-                    break;
-                case ChunkState.noEntity:
-                    break;
-                case ChunkState.AllGameLogic:
-                    break;
-                default:
-                    break;
-            }
         }
 
         private void PopulateVoxel()
@@ -269,6 +241,12 @@ namespace ProjectSu.src.world
         }
         #endregion
 
+        #region MakeMeshStuff
+        private void FirstMakeMesh()
+        {
+
+        }
+
         private void SMakeMesh()
         {
             if (_meshCollider != null)
@@ -363,7 +341,7 @@ namespace ProjectSu.src.world
             {
                 ChunkMesh = new Mesh(data._vertices.ToArray(), data._UVs.ToArray(), data._colors.ToArray(), data._triangles.ToArray());
 
-                VoxelMesh mesh = data.MakeWatersMehs(blocks);
+                VoxelMesh mesh = data.MakeWaterMesh(blocks);
 
                 WaterMesh = new Mesh(mesh.verts, mesh.uvs, mesh.colors, mesh.indices);
 
@@ -376,6 +354,8 @@ namespace ProjectSu.src.world
             data.Dispose();
         }
 
+        #endregion
+
         private void doRoad(Block block)
         {
             double XX = block.x;
@@ -384,11 +364,31 @@ namespace ProjectSu.src.world
             ElbriumWorld.roadsNoise.GradientPerturbFractal(ref XX, ref ZZ);
             double road = ElbriumWorld.roadsNoise.GetCellular(XX, ZZ);
 
-            if (road > -0.05f)
+            if (road >= -0.05f)
             {
                 block.Type = TypeBlock.Sand;
             }
         }
+
+        public void UpdateStatus(ChunkState state)
+        {
+            ChunkState = state;
+
+            switch (ChunkState)
+            {
+                case ChunkState.noload:
+                    break;
+                case ChunkState.nogameLogic:
+                    break;
+                case ChunkState.noEntity:
+                    break;
+                case ChunkState.AllGameLogic:
+                    break;
+                default:
+                    break;
+            }
+        }
+
 
         public Block[,] GetBlocksMap { get { return blocks; } }
         public ChunkState GetStatus { get { return ChunkState; } }
@@ -432,7 +432,6 @@ namespace ProjectSu.src.world
             height = _Height - finalh;
             //height = _Height;
             Chunk = chunkPosition;
-
 
             #region BiomeGen
             HeatType HeatType;
@@ -706,61 +705,6 @@ namespace ProjectSu.src.world
 
         public VoxelMesh MakeWaterMesh(Block[,] tile)
         {
-            Vector3[] vertices;
-            List<Vector2> uvs = new List<Vector2>();
-            int[] triangles;
-            List<Color4> colors = new List<Color4>();
-
-            VoxelMesh mesh = new VoxelMesh();
-
-            int widh = ElbriumWorld.ChunkSize + 1;
-
-            vertices = new Vector3[widh * widh];
-            for (int y = 0; y < widh; y++)
-            {
-                for (int x = 0; x < widh; x++)
-                {
-                    vertices[x + y * widh] = new Vector3(x, 0.0f, y);
-
-                    colors.Add(new Color4(1, 1, 1, 1));
-
-                    uvs.AddRange(AssetManager.GetTileUV("Water"));
-                }
-            }
-
-            triangles = new int[3 * 2 * (widh * widh - widh - widh + 1)];
-            int triangleVertexCount = 0;
-            for (int vertex = 0; vertex < widh * widh - widh; vertex++)
-            {
-                if (vertex % widh != (widh - 1))
-                {
-                    // First triangle
-                    int A = vertex;
-                    int B = A + widh;
-                    int C = B + 1;
-                    triangles[triangleVertexCount] = A;
-                    triangles[triangleVertexCount + 1] = B;
-                    triangles[triangleVertexCount + 2] = C;
-                    //Second triangle
-                    B += 1;
-                    C = A + 1;
-                    triangles[triangleVertexCount + 3] = A;
-                    triangles[triangleVertexCount + 4] = B;
-                    triangles[triangleVertexCount + 5] = C;
-                    triangleVertexCount += 6;
-                }
-            }
-
-            mesh.verts = vertices;
-            mesh.uvs = uvs.ToArray();
-            mesh.indices = triangles;
-            mesh.colors = colors.ToArray();
-
-            return mesh;
-        }
-
-        public VoxelMesh MakeWatersMehs(Block[,] tile)
-        {
             _vertices = new List<Vector3>();
             _UVs = new List<Vector2>();
             _triangles = new List<int>();
@@ -832,6 +776,63 @@ namespace ProjectSu.src.world
             }
             return hDeafult;
         }
+
+        #region Old
+        /*public VoxelMesh MakeWaterMesh(Block[,] tile)
+        {
+            Vector3[] vertices;
+            List<Vector2> uvs = new List<Vector2>();
+            int[] triangles;
+            List<Color4> colors = new List<Color4>();
+
+            VoxelMesh mesh = new VoxelMesh();
+
+            int widh = ElbriumWorld.ChunkSize + 1;
+
+            vertices = new Vector3[widh * widh];
+            for (int y = 0; y < widh; y++)
+            {
+                for (int x = 0; x < widh; x++)
+                {
+                    vertices[x + y * widh] = new Vector3(x, 0.0f, y);
+
+                    colors.Add(new Color4(1, 1, 1, 1));
+
+                    uvs.AddRange(AssetManager.GetTileUV("Water"));
+                }
+            }
+
+            triangles = new int[3 * 2 * (widh * widh - widh - widh + 1)];
+            int triangleVertexCount = 0;
+            for (int vertex = 0; vertex < widh * widh - widh; vertex++)
+            {
+                if (vertex % widh != (widh - 1))
+                {
+                    // First triangle
+                    int A = vertex;
+                    int B = A + widh;
+                    int C = B + 1;
+                    triangles[triangleVertexCount] = A;
+                    triangles[triangleVertexCount + 1] = B;
+                    triangles[triangleVertexCount + 2] = C;
+                    //Second triangle
+                    B += 1;
+                    C = A + 1;
+                    triangles[triangleVertexCount + 3] = A;
+                    triangles[triangleVertexCount + 4] = B;
+                    triangles[triangleVertexCount + 5] = C;
+                    triangleVertexCount += 6;
+                }
+            }
+
+            mesh.verts = vertices;
+            mesh.uvs = uvs.ToArray();
+            mesh.indices = triangles;
+            mesh.colors = colors.ToArray();
+
+            return mesh;
+        }*/
+        #endregion
     }
 }
 
@@ -885,6 +886,7 @@ public struct VoxelMeshData
     }
 }
 
+#region MarchingCubeStuff
 public static class MarchingCubeData
 {
     public static double terrainSurface = 0.0f;
@@ -1186,3 +1188,4 @@ public static class MarchingCubeData
 
     };
 }
+#endregion

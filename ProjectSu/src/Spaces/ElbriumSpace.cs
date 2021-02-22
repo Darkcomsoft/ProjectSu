@@ -1,4 +1,5 @@
-﻿using ProjectSu.src.devtest;
+﻿using OpenTK.Mathematics;
+using ProjectSu.src.devtest;
 using ProjectSu.src.Engine;
 using ProjectSu.src.Entitys;
 using ProjectSu.src.world;
@@ -20,15 +21,15 @@ namespace ProjectSu.src.Spaces
         public override void OnSpaceStart()
         {
             GameObject.Instantiate("ElbriumSpace", new ElbriumWorld());
-            GameObject.Instantiate("ElbriumSpace", new ModelTest());
-            /*for (int x = 0; x < 10; x++)
+            //GameObject.Instantiate("ElbriumSpace", new ModelTest());
+            for (int x = 0; x < 10; x++)
             {
                 for (int z = 0; z < 10; z++)
                 {
                     GameObject obj = GameObject.Instantiate("ElbriumSpace", new ModelTest());
-                    obj.transform.Position = new OpenTK.Vector3d(x * 10,0,z * 10);
+                    obj.transform.Position = new Vector3d(x * 10,0,z * 10);
                 }
-            }*/
+            }
             GameObject.Net_Instantiate("ElbriumSpace", new PlayerEntity());
             base.OnSpaceStart();
         }

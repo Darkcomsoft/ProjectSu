@@ -24,9 +24,11 @@ namespace ProjectSu.src.Engine
 
         public Color4 AmbienceColor = Color4.White;
 
+        private string spacenname;
+
         public Ambience(string spaceName)
         {
-            instancesList = new Dictionary<string, Ambience>();
+            spacenname = spaceName;
             instancesList.Add(spaceName, this);
 
             skySphere = new SkySphere(this, "Sky");
@@ -37,11 +39,7 @@ namespace ProjectSu.src.Engine
             skySphere?.Dispose();
             skySphere = null;
 
-            if (instancesList != null)
-            {
-                instancesList.Clear();
-                instancesList = null;
-            }
+            instancesList?.Remove(spacenname);
             base.OnDispose();
         }
 

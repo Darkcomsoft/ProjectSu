@@ -30,7 +30,7 @@ namespace ProjectSu.src
             NativeWindowSettings nativeWindow = NativeWindowSettings.Default;
             nativeWindow.API = OpenTK.Windowing.Common.ContextAPI.OpenGL;
             nativeWindow.APIVersion = new Version(3,3);
-            nativeWindow.Profile = OpenTK.Windowing.Common.ContextProfile.Core;
+            nativeWindow.Profile = OpenTK.Windowing.Common.ContextProfile.Compatability;
             nativeWindow.WindowState = OpenTK.Windowing.Common.WindowState.Normal;
             nativeWindow.WindowBorder = OpenTK.Windowing.Common.WindowBorder.Resizable;
             nativeWindow.Flags = OpenTK.Windowing.Common.ContextFlags.Default;

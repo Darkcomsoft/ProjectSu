@@ -76,6 +76,8 @@ namespace ProjectSu.src.Engine.Render
         {
             if (_shader != null && Camera.main != null)
             {
+                GL.FrontFace(FrontFaceDirection.Cw);
+
                 if (Transparency)
                 {
                     GL.BlendFunc(BlendingFactor.SrcAlpha, BlendingFactor.OneMinusSrcAlpha);

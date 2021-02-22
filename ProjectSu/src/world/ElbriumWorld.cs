@@ -102,6 +102,7 @@ namespace ProjectSu.src.world
             WorldRuning = true;
             WorldGeneratorThread = new Thread(new ThreadStart(WorldLooping));
             WorldGeneratorThread.Name = "WorldGeneratorLoop";
+            WorldGeneratorThread.IsBackground = true;
             WorldGeneratorThread.Start();
 #elif Server
 
@@ -135,7 +136,9 @@ namespace ProjectSu.src.world
 
             while (WorldRuning)
             {
-                try
+                CheckViewDistance();
+                Thread.Sleep(100);
+                /*try
                 {
                     CheckViewDistance();
                     Thread.Sleep(100);
@@ -143,9 +146,10 @@ namespace ProjectSu.src.world
                 catch (Exception ex)
                 {
                     Debug.LogError("Error On WorldLoop: (" + ex.Message + ") --- (StackTrace: " + ex.StackTrace + ")");
-                }
+                }*/
             }
 
+            AppDomain.CurrentDomain.UnhandledException -= new UnhandledExceptionEventHandler(CurrentDomain_UnhandledException);
             Debug.Log("WorldThread is Finished!");
 
             CanDestroyWorld = true;

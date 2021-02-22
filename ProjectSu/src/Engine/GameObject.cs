@@ -118,6 +118,7 @@ namespace ProjectSu.src.Engine
 
             if (imediato)
             {
+                obj.StartDestroyProcess();
                 obj.Dispose();
             }
             else

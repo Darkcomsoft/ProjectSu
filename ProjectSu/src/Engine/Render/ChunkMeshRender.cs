@@ -93,6 +93,9 @@ namespace ProjectSu.src.Engine.Render
                     GL.CullFace(_cullType);
                     GL.Enable(EnableCap.CullFace);
                 }*/
+                GL.FrontFace(FrontFaceDirection.Ccw);
+                GL.CullFace(CullFaceMode.Front);
+                GL.Enable(EnableCap.CullFace);
 
                 AssetManager.UseTexture(_texture);
 
@@ -115,10 +118,7 @@ namespace ProjectSu.src.Engine.Render
                 GL.BindBuffer(BufferTarget.ElementArrayBuffer, 0);
                 GL.BindVertexArray(0);
 
-                if (_cullType != CullFaceMode.FrontAndBack)
-                {
-                    GL.Disable(EnableCap.CullFace);
-                }
+                GL.Disable(EnableCap.CullFace);
 
                 if (Transparency)
                 {

@@ -72,6 +72,7 @@ namespace ProjectSu.src.Engine.Render
         {
             if (Camera.main != null && isReady)
             {
+                GL.FrontFace(FrontFaceDirection.Ccw);
                 GL.BlendFunc(BlendingFactor.SrcAlpha, BlendingFactor.OneMinusSrcAlpha);
                 GL.Enable(EnableCap.Blend);
 

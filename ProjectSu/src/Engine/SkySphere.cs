@@ -53,6 +53,7 @@ namespace ProjectSu.src.Engine
         {
             if (_shader != null && Camera.main != null)
             {
+                GL.FrontFace(FrontFaceDirection.Cw);
                 GL.CullFace(CullFaceMode.Front);
 
                 GL.Enable(EnableCap.CullFace);

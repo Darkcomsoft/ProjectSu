@@ -78,9 +78,9 @@ namespace ProjectSu.src.Engine.Render
         {
             if (_shader != null && Camera.main != null)
             {
-                GL.Enable(EnableCap.CullFace);
-                GL.CullFace(CullFaceMode.Front);
+                if (Ambience.GetEnvironment(obj.SpaceName) == null) { return; }
 
+                GL.FrontFace(FrontFaceDirection.Cw);
                 GL.BindVertexArray(VAO);
                 GL.BindBuffer(BufferTarget.ElementArrayBuffer, IBO);
 
@@ -102,8 +102,6 @@ namespace ProjectSu.src.Engine.Render
                 GL.DrawElements(Debug.GLBeginMode, _mesh._indices.Length, DrawElementsType.UnsignedInt, 0);
                 GL.BindBuffer(BufferTarget.ElementArrayBuffer, 0);
                 GL.BindVertexArray(0);
-
-               GL.Disable(EnableCap.CullFace);
             }
         }
 
