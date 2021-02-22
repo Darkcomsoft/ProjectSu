@@ -30,7 +30,7 @@ namespace ProjectSu.src.Engine
         {
             for (int i = 0; i < tickList.Count; i++)
             {
-                tickList[i].Tick();
+                tickList[i]?.Tick();
             }
         }
 
@@ -39,12 +39,12 @@ namespace ProjectSu.src.Engine
             OnDraw?.Invoke();
             for (int i = 0; i < tickList.Count; i++)
             {
-                tickList[i].TickDraw();
+                tickList[i]?.TickDraw();
             }
 
             for (int i = 0; i < tickList.Count; i++)
             {
-                tickList[i].TickDrawTrans();
+                tickList[i]?.TickDrawTrans();
             }
         }
 

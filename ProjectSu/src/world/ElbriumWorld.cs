@@ -33,7 +33,8 @@ namespace ProjectSu.src.world
 
         public static FastNoise globalNoise;
         public static FastNoise globalNoise2;
-        public static FastNoise biomeNoise;
+        public static FastNoise heatNoise;
+        public static FastNoise moistureNoise;
         public static FastNoise roadsNoise;
 
 #if Client
@@ -65,12 +66,20 @@ namespace ProjectSu.src.world
             globalNoise2.SetFrequency(0.005f);
 
 
-            biomeNoise = new FastNoise(GlobalData.Seed);
-            biomeNoise.SetFrequency(0.005f);
-            biomeNoise.SetGradientPerturbAmp(30f);
-            biomeNoise.SetCellularNoiseLookup(new FastNoise());
-            biomeNoise.SetCellularDistanceFunction(FastNoise.CellularDistanceFunction.Manhattan);
-            biomeNoise.SetCellularReturnType(FastNoise.CellularReturnType.NoiseLookup);
+            heatNoise = new FastNoise(GlobalData.Seed);
+            heatNoise.SetFrequency(0.05f);
+            heatNoise.SetGradientPerturbAmp(30f);
+            heatNoise.SetCellularNoiseLookup(new FastNoise(GlobalData.Seed));
+            heatNoise.SetCellularDistanceFunction(FastNoise.CellularDistanceFunction.Natural);
+            heatNoise.SetCellularReturnType(FastNoise.CellularReturnType.NoiseLookup);
+
+
+            moistureNoise = new FastNoise(GlobalData.Seed * GlobalData.Seed.GetHashCode());
+            moistureNoise.SetFrequency(0.05f);
+            moistureNoise.SetGradientPerturbAmp(30f);
+            moistureNoise.SetCellularNoiseLookup(new FastNoise(GlobalData.Seed * GlobalData.Seed.GetHashCode()));
+            moistureNoise.SetCellularDistanceFunction(FastNoise.CellularDistanceFunction.Natural);
+            moistureNoise.SetCellularReturnType(FastNoise.CellularReturnType.NoiseLookup);
 
             roadsNoise = new FastNoise(GlobalData.Seed);
 

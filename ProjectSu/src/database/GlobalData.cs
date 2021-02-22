@@ -16,31 +16,6 @@ namespace ProjectSu.src.database
         public static int Seed;
 
         #region BiomesValues
-        //Temperatura
-        /*public static double ColdestValue = 0.0f;
-        public static double ColderValue = 0.2f;
-        public static double ColdValue = 0.5f;
-        public static double WarmValue = 0.8f;
-        public static double WarmerValue = 1.0f;*/
-
-        //Umidade
-        /*public static double DryerValue = 0.0f;
-        public static double DryValue = 0.2f;
-        public static double WetValue = 0.5f;
-        public static double WetterValue = 0.8f;
-        public static double WettestValue = 1.0f;*/
-
-        public static double ColdestValue = 0.05f;
-        public static double ColderValue = 0.18f;
-        public static double ColdValue = 0.4f;
-        public static double WarmValue = 0.6f;
-        public static double WarmerValue = 0.8f;
-        public static double DryerValue = 0.27f;
-        public static double DryValue = 0.4f;
-        public static double WetValue = 0.6f;
-        public static double WetterValue = 0.8f;
-        public static double WettestValue = 0.9f;
-
         public static BiomeType[,] BiomeTable = new BiomeType[6, 6] {   
         //COLDEST        //COLDER          //COLD                  //HOT                          //HOTTER                       //HOTTEST
         { BiomeType.Ice, BiomeType.Tundra, BiomeType.Grassland,    BiomeType.Desert,              BiomeType.Desert,              BiomeType.Desert },              //DRYEST
@@ -50,6 +25,17 @@ namespace ProjectSu.src.database
         { BiomeType.Ice, BiomeType.Tundra, BiomeType.BorealForest, BiomeType.SeasonalForest,      BiomeType.TropicalRainforest,  BiomeType.TropicalRainforest },  //WETTER
         { BiomeType.Ice, BiomeType.Tundra, BiomeType.BorealForest, BiomeType.TemperateRainforest, BiomeType.TropicalRainforest,  BiomeType.TropicalRainforest }   //WETTEST
         };
+
+        public static float ColdestValue = 0.05f;
+        public static float ColderValue = 0.18f;
+        public static float ColdValue = 0.4f;
+        public static float WarmValue = 0.6f;
+        public static float WarmerValue = 0.8f;
+        public static float DryerValue = 0.27f;
+        public static float DryValue = 0.4f;
+        public static float WetValue = 0.6f;
+        public static float WetterValue = 0.8f;
+        public static float WettestValue = 0.9f;
         #endregion
 
         public static Color4 TileColors(BiomeType biome)
@@ -63,17 +49,17 @@ namespace ProjectSu.src.database
                 case BiomeType.Savanna:
                     return new Color4(0, 0, 0, 0);
                 case BiomeType.TropicalRainforest:
-                    return new Color4(70, 175, 66, 255);
+                    return new Color4(50, 100, 66, 255);
                 case BiomeType.Grassland:
                     return new Color4(70, 175, 66, 255);
                 case BiomeType.Woodland:
-                    return new Color4(70, 175, 66, 255);
+                    return new Color4(70, 150, 66, 255);
                 case BiomeType.SeasonalForest:
-                    return new Color4(70, 175, 66, 255);
+                    return new Color4(70, 20, 66, 255);
                 case BiomeType.TemperateRainforest:
-                    return new Color4(70, 175, 66, 255);
+                    return new Color4(70, 200, 66, 255);
                 case BiomeType.BorealForest:
-                    return new Color4(70, 175, 66, 255);
+                    return new Color4(150, 85, 66, 255);
                 case BiomeType.Tundra:
                     return new Color4(226, 118, 68, 255);
                 case BiomeType.Ice:

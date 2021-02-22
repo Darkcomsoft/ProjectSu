@@ -441,10 +441,15 @@ namespace ProjectSu.src.world
             double XX = x;
             double ZZ = z;
 
-            ElbriumWorld.biomeNoise.GradientPerturbFractal(ref XX, ref ZZ);
+            double XXx = x;
+            double ZZz = z;
 
-            heatValue = Math.Abs(ElbriumWorld.biomeNoise.GetCellular(XX, ZZ));
-            MoistureValue = Math.Abs(ElbriumWorld.biomeNoise.GetCellular(XX, ZZ));
+            ElbriumWorld.heatNoise.GradientPerturbFractal(ref XX, ref ZZ);
+
+            heatValue = Math.Abs(ElbriumWorld.heatNoise.GetCellular(XX, ZZ));
+
+            ElbriumWorld.moistureNoise.GradientPerturbFractal(ref XXx, ref ZZz);
+            MoistureValue = Math.Abs(ElbriumWorld.moistureNoise.GetCellular(XXx, ZZz));
 
             if (heatValue <= GlobalData.ColdestValue)
             {
