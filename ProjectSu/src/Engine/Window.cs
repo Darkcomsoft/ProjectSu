@@ -56,6 +56,7 @@ namespace ProjectSu.src.Engine
             {
                 engineIsRunning = true;
                 engineMain = new EngineMain();
+                Size = new Vector2i(800, 600);
             }
 
             engineMain?.Tick();
@@ -65,7 +66,6 @@ namespace ProjectSu.src.Engine
 
         private void TickRender(FrameEventArgs e)
         {
-            //Thread.Sleep(10);
             GL.Clear(ClearBufferMask.ColorBufferBit | ClearBufferMask.DepthBufferBit);
             GL.FrontFace(FrontFaceDirection.Cw);
 
@@ -125,6 +125,28 @@ namespace ProjectSu.src.Engine
         {
             Close();
             base.OnClosed();
+        }
+
+        protected override void OnRefresh()
+        {
+            base.OnRefresh();
+        }
+
+        public void SetFullScreen()
+        {
+            if (WindowState == WindowState.Fullscreen)
+            {
+                WindowBorder = WindowBorder.Resizable;
+                WindowState = WindowState.Normal;
+                Size = new Vector2i(800, 600);
+
+                CenterWindow();
+            }
+            else
+            {
+                WindowBorder = WindowBorder.Hidden;
+                WindowState = WindowState.Fullscreen;
+            }
         }
 
         public int Width { get { return instance.width; } }

@@ -47,12 +47,15 @@ namespace ProjectSu.src.Engine
             {
                 if (!keyboardState.IsKeyDown(key))
                 {
-                    keyToggleList.Remove(key);
-                    return false;
+                    if (keyToggleList.Contains(key))
+                    {
+                        keyToggleList.Remove(key);
+                    }
                 }
                 return false;
             }
         }
+
         internal static bool GetKeyDown(MouseButton buttom)
         {
             if (!Window.Instance.IsFocused) { return false; }

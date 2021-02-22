@@ -52,9 +52,14 @@ namespace ProjectSu.src.Engine
         public void Tick()
         {
             basicSystem?.Tick();
-            
+
             if (AssetManager.AssetsReady && engineReady)
             {
+                if (Input.GetKeyDown(Keys.F11))
+                {
+                    Window.Instance.SetFullScreen();
+                }
+
                 if (Input.GetKeyDown(Keys.Escape))
                 {
                     Debug.Log("Teste Keys");
@@ -65,18 +70,6 @@ namespace ProjectSu.src.Engine
                     else
                     {
                         MouseCursor.LockCursor();
-                    }
-                }
-
-                if (Input.GetKeyDown(Keys.F11))
-                {
-                    if (Window.Instance.WindowState == WindowState.Fullscreen)
-                    {
-                        Window.Instance.WindowState = WindowState.Normal;
-                    }
-                    else
-                    {
-                        Window.Instance.WindowState = WindowState.Fullscreen;
                     }
                 }
 
