@@ -11,6 +11,6 @@ namespace ProjectSu.src.Engine.Entitys
     /// </summary>
     public class EEntity : GameObject
     {
-
+        
     }
 }

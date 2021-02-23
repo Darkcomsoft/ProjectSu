@@ -41,13 +41,10 @@ namespace ProjectSu.src.world
 #elif Server
 #endif
 
-        public ElbriumWorld()
+        protected override void OnStart()
         {
+            AddTick();
 
-        }
-
-        public override void Start()
-        {
             GlobalData.Seed = System.DateTime.Now.GetHashCode() * System.DateTime.UtcNow.GetHashCode();
 
             LockChunkMap = new object();
@@ -107,8 +104,9 @@ namespace ProjectSu.src.world
 #elif Server
 
 #endif
-            base.Start();
+            base.OnStart();
         }
+
 
         protected override void OnTick()
         {

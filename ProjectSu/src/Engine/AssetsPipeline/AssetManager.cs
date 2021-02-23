@@ -152,6 +152,7 @@ namespace ProjectSu.src.Engine.AssetsPipeline
         {
             BasicScreen.SetStatus(ScreenType.SplashScreen, "Loading Trees");
             _Models.Add("oak", new Model(objLoader.ImportFile("/Models/Trees/", "oak"), "Default", "oak"));
+            _Models.Add("Pine01", new Model(objLoader.ImportFile("/Models/Trees/", "Pine01"), "Default", "SpritesTreeHigt_Snow"));
         }
 
         private void LoadTexture()
@@ -163,6 +164,7 @@ namespace ProjectSu.src.Engine.AssetsPipeline
             _textureList.Add("SpritesTreeHigt", new Texture(LoadImage("/Texture/", "SpritesTreeHigt", "png")));
             _textureList.Add("Water", new Texture(LoadImage("/Texture/", "Water", "png")));
             _textureList.Add("oak", new Texture(LoadImage("/Texture/", "oak", "png")));
+            _textureList.Add("SpritesTreeHigt_Snow", new Texture(LoadImage("/Texture/", "SpritesTreeHigt_Snow", "png")));
         }
 
         private void LoadImages()

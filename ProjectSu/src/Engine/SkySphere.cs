@@ -46,7 +46,7 @@ namespace ProjectSu.src.Engine
             GL.VertexAttribPointer(1, 2, VertexAttribPointerType.Float, false, 0, 0);
             GL.EnableVertexAttribArray(1);
 
-            TickManager.OnDraw += TickDraw;
+            TickManager.Instance.OnDraw += TickDraw;
         }
 
         public void TickDraw()
@@ -54,6 +54,7 @@ namespace ProjectSu.src.Engine
             if (_shader != null && Camera.main != null)
             {
                 GL.FrontFace(FrontFaceDirection.Cw);
+
                 GL.CullFace(CullFaceMode.Front);
 
                 GL.Enable(EnableCap.CullFace);
@@ -79,12 +80,14 @@ namespace ProjectSu.src.Engine
                 GL.Enable(EnableCap.DepthTest);
                 GL.Disable(EnableCap.TextureCubeMap);
                 GL.Disable(EnableCap.CullFace);
+
+                GL.FrontFace(FrontFaceDirection.Ccw);
             }
         }
 
         protected override void OnDispose()
         {
-            TickManager.OnDraw -= TickDraw;
+            TickManager.Instance.OnDraw -= TickDraw;
 
             GL.BindBuffer(BufferTarget.ElementArrayBuffer, 0);
             GL.BindVertexArray(0);

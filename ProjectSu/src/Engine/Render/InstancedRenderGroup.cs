@@ -9,12 +9,12 @@ namespace ProjectSu.src.Engine.Render
     /// <summary>
     /// Used to render many of same model, but with jus one DrawCall
     /// </summary>
-    public class RenderGroup : ClassBase
+    public class InstancedRenderGroup : ClassBase
     {
         private string model;
         private int RenderCount = 0;
 
-        public RenderGroup(string model, int startRenderCount)
+        public InstancedRenderGroup(string model, int startRenderCount)
         {
             this.model = model;
             RenderCount = startRenderCount;

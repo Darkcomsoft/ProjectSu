@@ -23,13 +23,13 @@ namespace ProjectSu.src
             Game.GameManager = this;
         }
 
-        public override void Start()
+        protected override void OnStart()
         {
             Debug.Log("GameManager Started!");
 
             Network.OnServerStart += OnServerStart;
             Network.OnServerStop += OnServerStop;
-            base.Start();
+            base.OnStart();
         }
 
         protected override void OnDestroy()

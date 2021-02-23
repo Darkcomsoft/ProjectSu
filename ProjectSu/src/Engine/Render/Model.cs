@@ -81,6 +81,10 @@ namespace ProjectSu.src.Engine.Render
                 if (Ambience.GetEnvironment(obj.SpaceName) == null) { return; }
 
                 GL.FrontFace(FrontFaceDirection.Cw);
+
+                GL.Enable(EnableCap.CullFace);
+                GL.CullFace(CullFaceMode.Front);
+
                 GL.BindVertexArray(VAO);
                 GL.BindBuffer(BufferTarget.ElementArrayBuffer, IBO);
 
@@ -88,7 +92,7 @@ namespace ProjectSu.src.Engine.Render
 
                 AssetManager.UseShader(_shader);
 
-                AssetManager.ShaderSet(_shader, "world", obj.transform.GetTransformWorld * Matrix4.CreateTranslation(new Vector3(2,2,2)));
+                AssetManager.ShaderSet(_shader, "world", obj.transform.GetTransformWorld);
                 AssetManager.ShaderSet(_shader, "view", Camera.main.GetViewMatrix());
                 AssetManager.ShaderSet(_shader, "projection", Camera.main.GetProjectionMatrix());
 
@@ -102,6 +106,9 @@ namespace ProjectSu.src.Engine.Render
                 GL.DrawElements(Debug.GLBeginMode, _mesh._indices.Length, DrawElementsType.UnsignedInt, 0);
                 GL.BindBuffer(BufferTarget.ElementArrayBuffer, 0);
                 GL.BindVertexArray(0);
+
+                GL.Disable(EnableCap.CullFace);
+                GL.FrontFace(FrontFaceDirection.Ccw);
             }
         }
 

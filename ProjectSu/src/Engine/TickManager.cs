@@ -9,21 +9,27 @@ namespace ProjectSu.src.Engine
 {
     public class TickManager : ClassBase
     {
-        private static TickManager Instance;
+        private static TickManager instance;
 
         private List<GameObject> tickList;
-        private Dictionary<string, RenderGroup> solidRenderGroup;
-        private Dictionary<string, RenderGroup> transRenderGroup;
+        private List<GameObject> tickDrawList;
+        private List<GameObject> tickDrawTransList;
 
-        public static Action OnDraw;
+        private Dictionary<string, InstancedRenderGroup> solidRenderGroup;
+        private Dictionary<string, InstancedRenderGroup> transRenderGroup;
+
+        public event Action OnDraw;
 
         public TickManager()
         {
-            Instance = this;
+            instance = this;
 
             tickList = new List<GameObject>();
-            solidRenderGroup = new Dictionary<string, RenderGroup>();
-            transRenderGroup = new Dictionary<string, RenderGroup>();
+            tickDrawList = new List<GameObject>();
+            tickDrawTransList = new List<GameObject>();
+
+            solidRenderGroup = new Dictionary<string, InstancedRenderGroup>();
+            transRenderGroup = new Dictionary<string, InstancedRenderGroup>();
         }
 
         public void Tick()
@@ -37,14 +43,15 @@ namespace ProjectSu.src.Engine
         public void TickDraw()
         {
             OnDraw?.Invoke();
-            for (int i = 0; i < tickList.Count; i++)
+
+            for (int i = 0; i < tickDrawList.Count; i++)
             {
-                tickList[i]?.TickDraw();
+                tickDrawList[i]?.TickDraw();
             }
 
-            for (int i = 0; i < tickList.Count; i++)
+            for (int i = 0; i < tickDrawTransList.Count; i++)
             {
-                tickList[i]?.TickDrawTrans();
+                tickDrawTransList[i]?.TickDrawTrans();
             }
         }
 
@@ -60,13 +67,23 @@ namespace ProjectSu.src.Engine
             transRenderGroup = null;
 
 
-            Instance = null;
+            instance = null;
             base.OnDispose();
         }
 
         public static void AddTickList(GameObject gameObject)
         {
             Instance.tickList.Add(gameObject);
+        }
+
+        public static void AddTickDrawList(GameObject gameObject)
+        {
+            Instance.tickDrawList.Add(gameObject);
+        }
+
+        public static void AddTickDrawTraList(GameObject gameObject)
+        {
+            Instance.tickDrawTransList.Add(gameObject);
         }
 
         public static void RemoveTickList(GameObject gameObject)
@@ -79,5 +96,29 @@ namespace ProjectSu.src.Engine
                 }
             }
         }
+
+        public static void RemoveTickDrawList(GameObject gameObject)
+        {
+            if (Instance != null)
+            {
+                if (Instance.tickDrawList.Contains(gameObject))
+                {
+                    Instance.tickDrawList.Remove(gameObject);
+                }
+            }
+        }
+
+        public static void RemoveTickDrawTraList(GameObject gameObject)
+        {
+            if (Instance != null)
+            {
+                if (Instance.tickDrawTransList.Contains(gameObject))
+                {
+                    Instance.tickDrawTransList.Remove(gameObject);
+                }
+            }
+        }
+
+        public static TickManager Instance { get { return instance; } }
     }
 }

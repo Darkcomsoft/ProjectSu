@@ -66,7 +66,8 @@ namespace ProjectSu.src.Engine
 
         private void TickRender(FrameEventArgs e)
         {
-            GL.Clear(ClearBufferMask.ColorBufferBit | ClearBufferMask.DepthBufferBit | ClearBufferMask.DepthBufferBit | ClearBufferMask.StencilBufferBit);
+            GL.Clear(ClearBufferMask.ColorBufferBit | ClearBufferMask.DepthBufferBit);
+            GL.DepthFunc(DepthFunction.Lequal);
 
             engineMain?.TickRender();
 

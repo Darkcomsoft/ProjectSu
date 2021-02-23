@@ -17,6 +17,12 @@ namespace ProjectSu.src.Entitys
 
         private bool isAlive = true;
 
+        protected override void OnStart()
+        {
+            AddTick();
+            base.OnStart();
+        }
+
         protected override void NetStart()
         {
             isAlive = true;

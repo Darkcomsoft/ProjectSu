@@ -20,6 +20,7 @@ using ProjectSu.src.Engine.AssetsPipeline;
 using ProjectSu.src.Engine.PhysicsSystem;
 using ProjectSu.src.world.Noise;
 using OpenTK.Mathematics;
+using ProjectSu.src.Entitys;
 
 namespace ProjectSu.src.world
 {
@@ -33,7 +34,7 @@ namespace ProjectSu.src.world
         private WaterMeshRender _waterMeshRender;
         private MeshCollider _meshCollider;
 
-        //private List<Tree> _trees = new List<Tree>();
+        private List<Tree> _trees = new List<Tree>();
 
         private Mesh ChunkMesh;
         private Mesh WaterMesh;
@@ -46,8 +47,12 @@ namespace ProjectSu.src.world
             transform.Position = position;
         }
 
-        public override void Start()
+        protected override void OnStart()
         {
+            AddTick();
+            AddDraw();
+            AddDrawTrans();
+
             System.Random rand = new System.Random();
 
             blocks = new Block[ElbriumWorld.ChunkSize, ElbriumWorld.ChunkSize];
@@ -59,7 +64,7 @@ namespace ProjectSu.src.world
 
             ChunkSeed = transform.Position.X * a + transform.Position.Z * b + 0;
             PopulateVoxel();
-            base.Start();
+            base.OnStart();
         }
 
         protected override void OnTick()
@@ -91,12 +96,12 @@ namespace ProjectSu.src.world
 
         protected override void OnDestroy()
         {
-            /*for (int i = 0; i < _trees.Count; i++)
+            for (int i = 0; i < _trees.Count; i++)
             {
-                _trees[i].OnDestroy();
+                GameObject.Destroy(_trees[i]);
             }
 
-            _trees.Clear();*/
+            _trees.Clear();
 
             _meshRender?.Dispose();
             _meshRender = null;
@@ -279,12 +284,12 @@ namespace ProjectSu.src.world
                 _waterMeshRender = new WaterMeshRender(this, WaterMesh, "Water", "Water");
             }
 
-            /*for (int i = 0; i < _trees.Count; i++)
+            for (int i = 0; i < _trees.Count; i++)
             {
-                _trees[i].OnDestroy();
+                GameObject.Destroy(_trees[i]);
             }
 
-            _trees.Clear();*/
+            _trees.Clear();
 
             for (int x = 0; x < ElbriumWorld.ChunkSize; x++)
             {
@@ -294,7 +299,7 @@ namespace ProjectSu.src.world
 
                     if (blocks[x, z].treeType != TreeType.none)
                     {
-                        //_trees.Add(new Tree(new Vector3d(blocks[x, z].x, blocks[x, z].height, blocks[x, z].z), blocks[x, z].treeType));
+                        _trees.Add((Tree)GameObject.Instantiate(SpaceName, new Tree(new Vector3d(blocks[x, z].x, blocks[x, z].height, blocks[x, z].z), blocks[x, z].treeType)));
                     }
                 }
             }

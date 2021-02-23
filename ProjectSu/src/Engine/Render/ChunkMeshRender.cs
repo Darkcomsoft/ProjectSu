@@ -88,12 +88,8 @@ namespace ProjectSu.src.Engine.Render
                     GL.Enable(EnableCap.Blend);
                 }
 
-                /*if (_cullType != CullFaceMode.FrontAndBack)
-                {
-                    GL.CullFace(_cullType);
-                    GL.Enable(EnableCap.CullFace);
-                }*/
                 GL.FrontFace(FrontFaceDirection.Ccw);
+
                 GL.CullFace(CullFaceMode.Front);
                 GL.Enable(EnableCap.CullFace);
 

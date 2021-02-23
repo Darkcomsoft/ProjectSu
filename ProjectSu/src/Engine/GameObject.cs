@@ -51,7 +51,9 @@ namespace ProjectSu.src.Engine
         {
             if (!IsDetroying)
             {
-                TickManager.RemoveTickList(this);
+                RemoveTick();
+                RemoveDraw();
+                RemoveDrawTrans();
             }
 
             OnDestroy();
@@ -63,7 +65,12 @@ namespace ProjectSu.src.Engine
 
         public virtual void Start()
         {
-            TickManager.AddTickList(this);
+            OnStart();
+        }
+
+        protected virtual void OnStart()
+        {
+
         }
 
         /// <summary>
@@ -100,10 +107,47 @@ namespace ProjectSu.src.Engine
 
         }
 
+        #region TickFunctions
+
+        public void AddTick()
+        {
+            TickManager.AddTickList(this);
+        }
+
+        public void AddDraw()
+        {
+            TickManager.AddTickDrawList(this);
+        }
+
+        public void AddDrawTrans()
+        {
+            TickManager.AddTickDrawTraList(this);
+        }
+
+        //
+
+        public void RemoveTick()
+        {
+            TickManager.RemoveTickList(this);
+        }
+
+        public void RemoveDraw()
+        {
+            TickManager.RemoveTickDrawList(this);
+        }
+
+        public void RemoveDrawTrans()
+        {
+            TickManager.RemoveTickDrawTraList(this);
+        }
+        #endregion
+
         private void StartDestroyProcess()
         {
             IsDetroying = true;
-            TickManager.RemoveTickList(this);
+            RemoveTick();
+            RemoveDraw();
+            RemoveDrawTrans();
         }
 
         public static GameObject Instantiate(string SpaceName, GameObject obj)
