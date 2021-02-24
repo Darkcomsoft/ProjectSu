@@ -54,13 +54,13 @@ namespace ProjectSu.src.Entitys
 
         protected override void OnStart()
         {
-            AddDrawTrans();
+            //AddDrawTrans();
             base.OnStart();
         }
 
         protected override void OnTickDrawTrans()
         {
-            AssetManager.GetModel(treeType).DrawModel(this);
+            //AssetManager.GetModel(treeType).DrawModel(this);
             base.OnTickDrawTrans();
         }
 

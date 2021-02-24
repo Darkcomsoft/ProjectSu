@@ -5,6 +5,9 @@ using OpenTK.Mathematics;
 
 namespace ProjectSu.src.Engine.AssetsPipeline
 {
+    /// <summary>
+    /// Global struct for 3d data, Vertices, indices, textureUv etc.
+    /// </summary>
     public struct Mesh
     {
         public Vector3[] _vertices;

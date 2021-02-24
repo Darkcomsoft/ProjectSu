@@ -22,7 +22,6 @@ namespace ProjectSu.src.Engine.AssetsPipeline
         private static bool assetsReady = false;
         private Dictionary<string, Shader> _shaderList;
         private Dictionary<string, Texture> _textureList;
-        private Dictionary<string, Model> _Models;
         private Dictionary<string, Mesh> _MeshList;
         private Dictionary<string, FontType> _FontList;
         private Dictionary<string, AudioClip> _soundList;
@@ -45,7 +44,6 @@ namespace ProjectSu.src.Engine.AssetsPipeline
 
             _shaderList = new Dictionary<string, Shader>();
             _textureList = new Dictionary<string, Texture>();
-            _Models = new Dictionary<string, Model>();
             _MeshList = new Dictionary<string, Mesh>();
             _FontList = new Dictionary<string, FontType>();
             _soundList = new Dictionary<string, AudioClip>();
@@ -105,11 +103,6 @@ namespace ProjectSu.src.Engine.AssetsPipeline
                 item.Value.Dispose();
             }
 
-            foreach (var item in _Models)
-            {
-                item.Value.Dispose();
-            }
-
             foreach (var item in _FontList)
             {
                 item.Value.Dispose();
@@ -123,14 +116,12 @@ namespace ProjectSu.src.Engine.AssetsPipeline
             _MeshList.Clear();
             _shaderList.Clear();
             _textureList.Clear();
-            _Models.Clear();
             _FontList.Clear();
             _soundList.Clear();
 
             _MeshList = null;
             _shaderList = null;
             _textureList = null;
-            _Models = null;
             _FontList = null;
             _soundList = null;
         }
@@ -151,8 +142,8 @@ namespace ProjectSu.src.Engine.AssetsPipeline
         private void LoadTrees()
         {
             BasicScreen.SetStatus(ScreenType.SplashScreen, "Loading Trees");
-            _Models.Add("oak", new Model(objLoader.ImportFile("/Models/Trees/", "oak"), "Default", "oak"));
-            _Models.Add("Pine01", new Model(objLoader.ImportFile("/Models/Trees/", "Pine01"), "Default", "SpritesTreeHigt_Snow"));
+            _MeshList.Add("oak", objLoader.ImportFile("/Models/Trees/", "oak"));
+            _MeshList.Add("Pine01", objLoader.ImportFile("/Models/Trees/", "oak"));
         }
 
         private void LoadTexture()
@@ -186,7 +177,7 @@ namespace ProjectSu.src.Engine.AssetsPipeline
         private void LoadModels()
         {
             BasicScreen.SetStatus(ScreenType.SplashScreen, "Loading 3DModels");
-            _Models.Add("sword", new Model(objLoader.ImportFile("/Models/", "sword"), "Default", "sword"));
+            _MeshList.Add("sword", objLoader.ImportFile("/Models/", "sword"));
         }
 
         private void LoadMeshes()
@@ -252,17 +243,6 @@ namespace ProjectSu.src.Engine.AssetsPipeline
                 throw new Exception("Dont Exist this Assets: " + TextureName);
             }
         }*/
-        public static Model GetModel(string MeshName)
-        {
-            if (AssetManager.instance._Models.TryGetValue(MeshName, out Model _mesh))
-            {
-                return _mesh;
-            }
-            else
-            {
-                throw new Exception("Dont Exist this Assets: " + MeshName);
-            }
-        }
         public static Mesh GetMesh(string MeshName)
         {
             if (AssetManager.instance._MeshList.TryGetValue(MeshName, out Mesh _mesh))
