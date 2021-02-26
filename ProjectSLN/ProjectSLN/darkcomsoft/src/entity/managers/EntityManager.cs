@@ -29,6 +29,21 @@ namespace Projectsln.darkcomsoft.src.entity.managers
             base.OnDispose();
         }
 
+        public void Tick()
+        {
+            for (int i = 0; i < entityList.Count; i++)
+            {
+                EntityBase entityBase = entityList[i].Value;
+                entityBase.Tick();
+
+                if (entityBase.isRemoved)
+                {
+                    entityBase.Dispose();
+                    entityList.RemoveAt(--i);
+                }
+            }
+        }
+
         /// <summary>
         /// Instantiate a entity set the Type <T>, and set world you are calling the function
         /// </summary>
@@ -53,7 +68,7 @@ namespace Projectsln.darkcomsoft.src.entity.managers
                 }
                 else
                 {
-                    QueeSystem.Enqueue(() => destroyEntity(entityBase));
+                    entityBase.DestroyThis();
                 }
             }
         }

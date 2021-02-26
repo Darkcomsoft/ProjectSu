@@ -22,13 +22,13 @@ namespace Projectsln.darkcomsoft.src
 
         public static Game game;
 
-        public static EntityManager entityManager;
         public static WorldManager worldManager;
+        public static EntityManager entityManager;
 
         public Application()
         {
-            entityManager = new EntityManager();
             worldManager = new WorldManager();
+            entityManager = new EntityManager();
 
             for (int i = 0; i < 100; i++)
             {
@@ -40,6 +40,11 @@ namespace Projectsln.darkcomsoft.src
 
         public void Tick(double time)
         {
+            if (entityManager != null)
+            {
+                entityManager.Tick();
+            }
+
             QueeSystem.Tick();
         }
 

@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "WfreKBX+y3KXnZWZAQwe6fl3dXwtSpWBr8YfP0dXGnoiAo3VVQEFoT2368mN+DCTFUQ/yuvFt+TzR/gg+ZJXpw==",
+  "dgSpecHash": "af0oEEQGrH3iHjkFijSn+HyGQ6hJ5ZBb4NDmf3L9k3nh4Vm81YZg040QDHSiWMH9RAW50VCyZKnxe//+AB3rCg==",
   "success": true,
-  "projectFilePath": "C:\\Users\\estev\\Documents\\GitHub\\ProjectSu\\ProjectSLN\\ProjectSLN\\ProjectSLN.csproj",
+  "projectFilePath": "C:\\Users\\estev\\Documents\\GitHub\\ProjectSu\\ProjectSLN\\ProjectSLN\\Projectsln.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\estev\\.nuget\\packages\\opentk\\4.5.0\\opentk.4.5.0.nupkg.sha512",
     "C:\\Users\\estev\\.nuget\\packages\\opentk.compute\\4.5.0\\opentk.compute.4.5.0.nupkg.sha512",

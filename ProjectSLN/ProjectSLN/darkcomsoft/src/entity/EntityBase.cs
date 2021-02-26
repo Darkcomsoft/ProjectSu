@@ -11,6 +11,8 @@ namespace Projectsln.darkcomsoft.src.entity
     /// </summary>
     public class EntityBase : ClassBase
     {
+        private bool removed = false;
+
         protected World world;
 
         public EntityBase()
@@ -20,8 +22,36 @@ namespace Projectsln.darkcomsoft.src.entity
 
         public void Start(World world)
         {
+            OnBeforeStart();
+
             this.world = world;
+
+            OnStart();
         }
+
+        public void Tick()
+        {
+            if (!removed) { OnTick(); }
+        }
+
+        public void DestroyThis()
+        {
+            removed = true;
+        }
+
+        /// <summary>
+        /// Called every frame
+        /// </summary>
+        protected virtual void OnTick() { }
+        /// <summary>
+        /// Called after OnBeforeStart, and all entity system. EX:transform set world var etc.
+        /// </summary>
+        protected virtual void OnStart() { }
+        /// <summary>
+        /// Called before OnStart, and before all entity start system, EX:transform set world var etc. use with carefully
+        /// </summary>
+        protected virtual void OnBeforeStart() { }
+
 
         protected override void OnDispose()
         {
@@ -30,5 +60,6 @@ namespace Projectsln.darkcomsoft.src.entity
         }
 
         public World GetWorld { get { return world; } }
+        public bool isRemoved { get { return removed; } }
     }
 }
