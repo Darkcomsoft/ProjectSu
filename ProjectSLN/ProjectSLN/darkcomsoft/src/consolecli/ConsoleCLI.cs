@@ -12,7 +12,6 @@ namespace Projectsln.darkcomsoft.src.consolecli
             cvar cva = Utilits.CreateInstance<cvar>(typeof(T));
             cva.Execute(parameters);
             cva.Dispose();
-            cva = null;
         }
     }
 }

@@ -6,9 +6,9 @@ namespace Projectsln.darkcomsoft.src.entity
 {
     public class PlayerEntity : LivingEntity
     {
-        public override void Tick()
+        protected override void OnTick()
         {
-            base.Tick();
+            base.OnTick();
         }
 
         protected override void OnDispose()

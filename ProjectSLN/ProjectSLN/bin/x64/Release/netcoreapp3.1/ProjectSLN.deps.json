@@ -6,12 +6,12 @@
   "compilationOptions": {},
   "targets": {
     ".NETCoreApp,Version=v3.1": {
-      "ProjectSLN/1.0.0": {
+      "Projectsln/1.0.0": {
         "dependencies": {
           "OpenTK": "4.5.0"
         },
         "runtime": {
-          "ProjectSLN.dll": {}
+          "Projectsln.dll": {}
         }
       },
       "OpenTK/4.5.0": {
@@ -148,7 +148,7 @@
     }
   },
   "libraries": {
-    "ProjectSLN/1.0.0": {
+    "Projectsln/1.0.0": {
       "type": "project",
       "serviceable": false,
       "sha512": ""

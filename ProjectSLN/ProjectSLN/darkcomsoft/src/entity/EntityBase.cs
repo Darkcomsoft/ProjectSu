@@ -11,8 +11,8 @@ namespace Projectsln.darkcomsoft.src.entity
     /// </summary>
     public class EntityBase : ClassBase
     {
+        private Transform transform;
         private bool removed = false;
-
         protected World world;
 
         public EntityBase()
@@ -24,6 +24,7 @@ namespace Projectsln.darkcomsoft.src.entity
         {
             OnBeforeStart();
 
+            transform = new Transform();
             this.world = world;
 
             OnStart();
@@ -55,6 +56,10 @@ namespace Projectsln.darkcomsoft.src.entity
 
         protected override void OnDispose()
         {
+            transform.Dispose();
+
+            transform = null;
+
             world = null;
             base.OnDispose();
         }
