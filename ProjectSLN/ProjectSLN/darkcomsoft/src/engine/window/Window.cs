@@ -12,9 +12,9 @@ using System.Threading;
 
 namespace Projectsln.darkcomsoft.src.engine.window
 {
-    public class Window : GWindow
+    public class WindowClass : GWindow
     {
-        private static Window instance;
+        private static WindowClass instance;
 
         private Application application;
 
@@ -25,7 +25,7 @@ namespace Projectsln.darkcomsoft.src.engine.window
 
         public Rectangle WindowRectangle;
 
-        public Window(GameWindowSettings gameWindowSettings, NativeWindowSettings nativeWindowSettings) : base(gameWindowSettings, nativeWindowSettings)
+        public WindowClass(GameWindowSettings gameWindowSettings, NativeWindowSettings nativeWindowSettings) : base(gameWindowSettings, nativeWindowSettings)
         {
             instance = this;
         }
@@ -164,6 +164,6 @@ namespace Projectsln.darkcomsoft.src.engine.window
         public int Width { get { return instance.width; } }
         public int Height { get { return instance.height; } }
 
-        public static Window Instance { get => instance; private set { } }
+        public static WindowClass Instance { get => instance; private set { } }
     }
 }

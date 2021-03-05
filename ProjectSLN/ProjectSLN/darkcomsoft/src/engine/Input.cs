@@ -1,5 +1,6 @@
 ﻿using OpenTK.Mathematics;
 using OpenTK.Windowing.GraphicsLibraryFramework;
+using Projectsln.darkcomsoft.src.engine.window;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -26,7 +27,7 @@ namespace Projectsln.darkcomsoft.src.engine
         {
             get
             {
-                if (!Window.Instance.IsFocused) { return 0; }
+                if (!WindowClass.Instance.IsFocused) { return 0; }
                 return mouseState.Scroll.Y;
             }
         }
@@ -41,10 +42,10 @@ namespace Projectsln.darkcomsoft.src.engine
         /// <returns></returns>
         internal static bool GetKeyDown(Keys key, int ID)
         {
-            if (!Window.Instance.IsFocused) { return false; }
+            if (!WindowClass.Instance.IsFocused) { return false; }
 
-            Input.keyboardState = Window.Instance.KeyboardState;
-            Input.mouseState = Window.Instance.MouseState;
+            Input.keyboardState = WindowClass.Instance.KeyboardState;
+            Input.mouseState = WindowClass.Instance.MouseState;
 
             currentKey.Index = ID;
             currentKey.key = key;
@@ -72,10 +73,10 @@ namespace Projectsln.darkcomsoft.src.engine
         /// <returns></returns>
         internal static bool GetKeyDown(MouseButton buttom, int ID)
         {
-            if (!Window.Instance.IsFocused) { return false; }
+            if (!WindowClass.Instance.IsFocused) { return false; }
 
-            Input.keyboardState = Window.Instance.KeyboardState;
-            Input.mouseState = Window.Instance.MouseState;
+            Input.keyboardState = WindowClass.Instance.KeyboardState;
+            Input.mouseState = WindowClass.Instance.MouseState;
 
             currentButtom.Index = ID;
             currentButtom.Buttom = buttom;
@@ -104,10 +105,10 @@ namespace Projectsln.darkcomsoft.src.engine
         /// <returns></returns>
         internal static bool GetKeyUp(MouseButton buttom, int ID)
         {
-            if (!Window.Instance.IsFocused) { return false; }
+            if (!WindowClass.Instance.IsFocused) { return false; }
 
-            Input.keyboardState = Window.Instance.KeyboardState;
-            Input.mouseState = Window.Instance.MouseState;
+            Input.keyboardState = WindowClass.Instance.KeyboardState;
+            Input.mouseState = WindowClass.Instance.MouseState;
 
             currentButtom.Index = ID;
             currentButtom.Buttom = buttom;
@@ -136,10 +137,10 @@ namespace Projectsln.darkcomsoft.src.engine
         /// <returns></returns>
         internal static bool GetKeyUp(Keys key, int ID)
         {
-            if (!Window.Instance.IsFocused) { return false; }
+            if (!WindowClass.Instance.IsFocused) { return false; }
 
-            Input.keyboardState = Window.Instance.KeyboardState;
-            Input.mouseState = Window.Instance.MouseState;
+            Input.keyboardState = WindowClass.Instance.KeyboardState;
+            Input.mouseState = WindowClass.Instance.MouseState;
 
             currentKey.Index = ID;
             currentKey.key = key;
@@ -167,10 +168,10 @@ namespace Projectsln.darkcomsoft.src.engine
         /// <returns></returns>
         internal static bool GetKey(Keys key)
         {
-            if (!Window.Instance.IsFocused) { return false; }
+            if (!WindowClass.Instance.IsFocused) { return false; }
 
-            Input.keyboardState = Window.Instance.KeyboardState;
-            Input.mouseState = Window.Instance.MouseState;
+            Input.keyboardState = WindowClass.Instance.KeyboardState;
+            Input.mouseState = WindowClass.Instance.MouseState;
 
             return keyboardState.IsKeyDown(key);
         }
@@ -182,10 +183,10 @@ namespace Projectsln.darkcomsoft.src.engine
         /// <returns></returns>
         internal static bool GetKey(MouseButton buttom)
         {
-            if (!Window.Instance.IsFocused) { return false; }
+            if (!WindowClass.Instance.IsFocused) { return false; }
 
-            Input.keyboardState = Window.Instance.KeyboardState;
-            Input.mouseState = Window.Instance.MouseState;
+            Input.keyboardState = WindowClass.Instance.KeyboardState;
+            Input.mouseState = WindowClass.Instance.MouseState;
 
             return mouseState.IsButtonDown(buttom);
         }

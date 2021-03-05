@@ -1,4 +1,5 @@
 ﻿using OpenTK.Mathematics;
+using Projectsln.darkcomsoft.src.engine.window;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -18,8 +19,8 @@ namespace Projectsln.darkcomsoft.src.misc
 
         public ResolutionScale()
         {
-            this.scaledWidth = Window.Instance.Width;
-            this.scaledHeight = Window.Instance.Height;
+            this.scaledWidth = WindowClass.Instance.Width;
+            this.scaledHeight = WindowClass.Instance.Height;
             this.scaleFactor = 1;
             bool flag = false;
             int i = GameSettings.GuiScale;
