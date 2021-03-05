@@ -11,7 +11,7 @@ namespace Projectsln.darkcomsoft.src.entity
     /// </summary>
     public class EntityBase : ClassBase
     {
-        private Transform transform;
+        private Transform m_transform;
         private bool removed = false;
         private bool visible = false;
         protected World world;
@@ -25,7 +25,7 @@ namespace Projectsln.darkcomsoft.src.entity
         {
             OnBeforeStart();
 
-            transform = new Transform();
+            m_transform = new Transform();
             this.world = world;
 
             OnStart();
@@ -73,12 +73,14 @@ namespace Projectsln.darkcomsoft.src.entity
         {
             transform.Dispose();
 
-            transform = null;
+            m_transform = null;
 
             world = null;
             base.OnDispose();
         }
 
+
+        public Transform transform { get { return m_transform; } }
         public World GetWorld { get { return world; } }
         public bool isRemoved { get { return removed; } }
         public bool isVisible { get { return visible; } }
