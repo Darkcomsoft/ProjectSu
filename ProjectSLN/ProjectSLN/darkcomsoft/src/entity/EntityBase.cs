@@ -13,11 +13,12 @@ namespace Projectsln.darkcomsoft.src.entity
     {
         private Transform transform;
         private bool removed = false;
+        private bool visible = false;
         protected World world;
 
         public EntityBase()
         {
-            Debug.Log("Entity Constructor", "ENTITY");
+
         }
 
         public void Start(World world)
@@ -32,7 +33,7 @@ namespace Projectsln.darkcomsoft.src.entity
 
         public void Tick()
         {
-            if (!removed) { OnTick(); }
+            if (!removed) { doTick(); }
         }
 
         public void DestroyThis()
@@ -52,7 +53,21 @@ namespace Projectsln.darkcomsoft.src.entity
         /// Called before OnStart, and before all entity start system, EX:transform set world var etc. use with carefully
         /// </summary>
         protected virtual void OnBeforeStart() { }
+        /// <summary>
+        /// When become visible to a camera, is visible in camera View port
+        /// </summary>
+        protected virtual void OnBecomeVisible() { }
+        /// <summary>
+        /// When become invisible to a camera, is not visible in camera View port anymore
+        /// </summary>
+        protected virtual void OnBecomeInvisible() { }
 
+        private void doTick()
+        {
+            //Application.frustum.CalculateFrustum();
+
+            OnTick();
+        }
 
         protected override void OnDispose()
         {
@@ -66,5 +81,6 @@ namespace Projectsln.darkcomsoft.src.entity
 
         public World GetWorld { get { return world; } }
         public bool isRemoved { get { return removed; } }
+        public bool isVisible { get { return visible; } }
     }
 }

@@ -19,9 +19,9 @@ namespace Projectsln.darkcomsoft.src.entity.managers
 
         protected override void OnDispose()
         {
-            foreach (var item in entityList)
+            for (int i = 0; i < Instance.entityList.Count; i++)
             {
-                DestroyEntity(item.Value, true);
+                DestroyEntity(Instance.entityList[i].Value, true);
             }
 
             entityList = null;
@@ -81,11 +81,11 @@ namespace Projectsln.darkcomsoft.src.entity.managers
 
         public static void WorldCleared<T>(T world)
         {
-            foreach (var item in Instance.entityList)
+            for (int i = 0; i < Instance.entityList.Count; i++)
             {
-                if (item.Key is T)
+                if (Instance.entityList[i].Key is T)
                 {
-                    DestroyEntity(item.Value, true);
+                    DestroyEntity(Instance.entityList[i].Value, true);
                 }
             }
         }

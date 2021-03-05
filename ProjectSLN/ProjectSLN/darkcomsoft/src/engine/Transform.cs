@@ -98,7 +98,7 @@ namespace Projectsln.darkcomsoft.src.engine
             set { _Size = value; }
         }
 
-        public Vector3d Forwards { get { return (new Vector3d(_Rotation.X, _Rotation.Y, _Rotation.Z) * Vector3d.UnitZ) * _Size.Z; } }
+        public Vector3d Forward { get { return (new Vector3d(_Rotation.X, _Rotation.Y, _Rotation.Z) * Vector3d.UnitZ) * _Size.Z; } }
         public Vector3d Up { get { return (new Vector3d(_Rotation.X, _Rotation.Y, _Rotation.Z) * Vector3d.UnitY) * _Size.Y; } }
         public Vector3d Right { get { return (new Vector3d(_Rotation.X, _Rotation.Y, _Rotation.Z) * Vector3d.UnitX) * _Size.X; } }
     }

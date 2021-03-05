@@ -4,14 +4,13 @@ using OpenTK.Windowing.Common;
 using OpenTK.Windowing.Desktop;
 using OpenTK.Windowing.GraphicsLibraryFramework;
 using Projectsln.darkcomsoft.src.engine;
-using Projectsln.darkcomsoft.src.window;
 using System;
 using System.Collections.Generic;
 using System.Drawing;
 using System.Text;
 using System.Threading;
 
-namespace Projectsln.darkcomsoft.src
+namespace Projectsln.darkcomsoft.src.engine.window
 {
     public class Window : GWindow
     {

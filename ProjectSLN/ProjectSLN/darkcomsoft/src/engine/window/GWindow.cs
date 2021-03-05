@@ -11,7 +11,7 @@ using OpenTK.Windowing.Desktop;
 using OpenTK.Windowing.GraphicsLibraryFramework;
 using Projectsln.darkcomsoft.src.engine;
 
-namespace Projectsln.darkcomsoft.src.window
+namespace Projectsln.darkcomsoft.src.engine.window
 {
     /// <summary>
     /// The <see cref="GameWindow"/> class contains cross-platform methods to create and render on an OpenGL

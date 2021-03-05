@@ -1,5 +1,6 @@
 ﻿using Projectsln.darkcomsoft.src.consolecli;
 using Projectsln.darkcomsoft.src.engine;
+using Projectsln.darkcomsoft.src.engine.render;
 using Projectsln.darkcomsoft.src.entity.managers;
 using Projectsln.darkcomsoft.src.world;
 using System;
@@ -25,10 +26,13 @@ namespace Projectsln.darkcomsoft.src
         public static WorldManager worldManager;
         public static EntityManager entityManager;
 
+        public static Frustum frustum;
+
         public Application()
         {
             worldManager = new WorldManager();
             entityManager = new EntityManager();
+            frustum = new Frustum();
 
             for (int i = 0; i < 100; i++)
             {
@@ -61,10 +65,13 @@ namespace Projectsln.darkcomsoft.src
                 game = null;
             }
 
-            worldManager.Dispose();
+            frustum?.Dispose();
+            frustum = null;
+
+            worldManager?.Dispose();
             worldManager = null;
 
-            entityManager.Dispose();
+            entityManager?.Dispose();
             entityManager = null;
             base.OnDispose();
         }
