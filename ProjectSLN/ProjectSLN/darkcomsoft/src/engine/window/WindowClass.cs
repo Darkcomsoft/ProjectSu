@@ -42,6 +42,9 @@ namespace Projectsln.darkcomsoft.src.engine.window
 
             UpdateFrame += Tick;
             RenderFrame += TickRender;
+
+            Thread.CurrentThread.IsBackground = true;//THIS IS A TEST REMOVE THIS AFTER
+
             base.OnLoad();
         }
 

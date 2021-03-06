@@ -29,9 +29,20 @@ namespace Projectsln.darkcomsoft.src.engine
 
         public Transform()
         {
-            _Position = new Vector3d(0, 0, 0);
+            _Position = Vector3d.Zero;
             _Rotation = Quaterniond.Identity;
-            _Size = new Vector3d(1, 1, 1);
+            _Size = Vector3d.One;
+
+            m_volumeSize = Vector3d.One;
+
+            UpdateWorldMatrix();
+        }
+        public Transform(Vector3d position, Quaterniond rotation, Vector3d size, Vector3d volumeSize)
+        {
+            _Position = position;
+            _Rotation = rotation;
+            _Size = size;
+            m_volumeSize = volumeSize;
 
             UpdateWorldMatrix();
         }
@@ -40,6 +51,7 @@ namespace Projectsln.darkcomsoft.src.engine
             _Position = position;
             _Rotation = rotation;
             _Size = size;
+            m_volumeSize = Vector3d.One;
 
             UpdateWorldMatrix();
         }
@@ -48,6 +60,7 @@ namespace Projectsln.darkcomsoft.src.engine
             _Position = position;
             _Rotation = rotation;
             _Size = Vector3d.One;
+            m_volumeSize = Vector3d.One;
 
             UpdateWorldMatrix();
         }
@@ -56,6 +69,7 @@ namespace Projectsln.darkcomsoft.src.engine
             _Position = position;
             _Rotation = Quaterniond.Identity;
             _Size = Vector3d.One;
+            m_volumeSize = Vector3d.One;
 
             UpdateWorldMatrix();
         }

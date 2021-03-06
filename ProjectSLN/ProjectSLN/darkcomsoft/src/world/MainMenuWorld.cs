@@ -13,10 +13,12 @@ namespace Projectsln.darkcomsoft.src.world
         {
             Debug.Log("MainMenu Started!");
 
-
-            for (int i = 0; i < 9000; i++)
+            EntityManager.SpawnEntity<PlayerEntity>(this);
+            for (int i = -100; i < 100; i++)
             {
-                EntityManager.SpawnEntity<PlayerEntity>(this);
+                EntityBase entity = EntityManager.SpawnEntity<DebugEntity>(this);
+                entity.transform.Position = new OpenTK.Mathematics.Vector3d(i * 5, i * 5, i * 5);
+                entity.transform.VolumeSize = new OpenTK.Mathematics.Vector3d(5,5,5);
             }
 
             base.Start();

@@ -34,7 +34,7 @@ namespace Projectsln.darkcomsoft.src
 
             nativeWindow.Title = Application.AppName + " : " + Application.Version;
 
-            using (Window game = new Window(gameWindowSettings, nativeWindow))
+            using (WindowClass game = new WindowClass(gameWindowSettings, nativeWindow))
             {
                 try
                 {
