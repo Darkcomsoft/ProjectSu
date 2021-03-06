@@ -14,12 +14,10 @@ namespace Projectsln.darkcomsoft.src.entity
         private Transform m_transform;
         private bool removed = false;
         private bool visible = false;
+        private bool m_tickOlyVisible = true;
         protected World world;
 
-        public EntityBase()
-        {
-
-        }
+        public EntityBase() { }
 
         public void Start(World world)
         {
@@ -31,14 +29,20 @@ namespace Projectsln.darkcomsoft.src.entity
             OnStart();
         }
 
-        public void Tick()
-        {
-            if (!removed) { doTick(); }
-        }
+        public void Tick() { if (!removed) { doTick(); } }
 
         public void DestroyThis()
         {
             removed = true;
+        }
+
+        /// <summary>
+        /// If is true, is gone tick only if is visible by the camera, if is false, dont need to tick if is visible by the camera
+        /// </summary>
+        /// <param name="value"></param>
+        public void TickOnlyVisible(bool value)
+        {
+            m_tickOlyVisible = value;
         }
 
         /// <summary>
@@ -64,9 +68,43 @@ namespace Projectsln.darkcomsoft.src.entity
 
         private void doTick()
         {
-            //Application.frustum.CalculateFrustum();
+            visible = false;//set this every frame to false, just to make sure the entity can't tick, if want the entity tick any way, use TickOnlyVisible(bool value), maybe this is a stupid implementation but (: fuck-it
+            DoCheckIfVisible();
 
-            OnTick();
+            if (m_tickOlyVisible)
+            {
+                if (visible)
+                {
+                    OnTick();
+                }
+            }
+            else
+            {
+                OnTick();
+            }
+        }
+
+        private void DoCheckIfVisible()
+        {
+            if (m_tickOlyVisible)
+            {
+                if (Camera.main == null) { return; }
+
+                Application.frustum.CalculateFrustum(Camera.main.GetProjectionMatrix(), transform.GetTransformWorld);
+
+                if (Application.frustum.VolumeVsFrustum(transform.Position, transform.VolumeSize))
+                {
+                    visible = true;
+                }
+                else
+                {
+                    visible = false;
+                }
+            }
+            else
+            {
+                visible = false;
+            }
         }
 
         protected override void OnDispose()
@@ -78,7 +116,6 @@ namespace Projectsln.darkcomsoft.src.entity
             world = null;
             base.OnDispose();
         }
-
 
         public Transform transform { get { return m_transform; } }
         public World GetWorld { get { return world; } }

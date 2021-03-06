@@ -20,6 +20,11 @@ namespace Projectsln.darkcomsoft.src.engine
         private Quaterniond _Rotation;
         private Vector3d _Size;
 
+        /// <summary>
+        /// this is the boundbox, you can calculate with the 3d model, or set a custom value
+        /// </summary>
+        private Vector3d m_volumeSize;
+
         private Matrix4 transformMatrix;
 
         public Transform()
@@ -96,6 +101,17 @@ namespace Projectsln.darkcomsoft.src.engine
                 return _Size;
             }
             set { _Size = value; }
+        }
+        /// <summary>
+        /// this is the boundbox, you can calculate with the 3d model, or set a custom value
+        /// </summary>
+        public Vector3d VolumeSize
+        {
+            get
+            {
+                return m_volumeSize;
+            }
+            set { m_volumeSize = value; }
         }
 
         public Vector3d Forward { get { return (new Vector3d(_Rotation.X, _Rotation.Y, _Rotation.Z) * Vector3d.UnitZ) * _Size.Z; } }

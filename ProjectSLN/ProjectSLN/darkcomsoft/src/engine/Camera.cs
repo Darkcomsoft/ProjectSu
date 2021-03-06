@@ -13,7 +13,7 @@ using Projectsln.darkcomsoft.src.entity;
 
 namespace Projectsln.darkcomsoft.src.engine
 {
-    public class Camera : ClassBase
+    public class Camera : ClassBase //MAYBE THIS NEED A CODE CLEAN-UP TO THE NEW SYSTEMS
     {
         private static Camera Main;
 
@@ -77,8 +77,9 @@ namespace Projectsln.darkcomsoft.src.engine
             return ProjectionMatrix;
         }
 
+        //FIX THIS FUNCTION, WHY, I DONT KNOW,  MAYBE IN THE NEAR FUTURE SOMEONE NEED THIS
         /// <summary>
-        /// (DONT WORKING RIGHT NOW)Get view matrix with-out float precision fix
+        /// Get view matrix with-out float precision fix
         /// </summary>
         /// <returns></returns>
         public Matrix4 GetWorldViewMatrix()

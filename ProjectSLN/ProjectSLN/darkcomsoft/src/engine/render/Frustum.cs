@@ -15,11 +15,6 @@ namespace Projectsln.darkcomsoft.src.engine.render
         public const int C = 2;
         public const int D = 3;
 
-        public Frustum()
-        {
-            
-        }
-
         protected override void Dispose(bool disposing)
         {
             _clipMatrix = null;
@@ -116,6 +111,31 @@ namespace Projectsln.darkcomsoft.src.engine.render
                 if (_frustum[i, A] * (x - width) + _frustum[i, B] * (y + height) + _frustum[i, C] * (z + length) + _frustum[i, D] > 0)
                     continue;
                 if (_frustum[i, A] * (x + width) + _frustum[i, B] * (y + height) + _frustum[i, C] * (z + length) + _frustum[i, D] > 0)
+                    continue;
+                return false;
+            }
+            return true;
+        }
+
+        public bool VolumeVsFrustum(Vector3d pos, Vector3d volumeSize)
+        {
+            for (int i = 0; i < 6; i++)
+            {
+                if (_frustum[i, A] * (pos.X - volumeSize.X) + _frustum[i, B] * (pos.Y - volumeSize.Y) + _frustum[i, C] * (pos.Z - volumeSize.Z) + _frustum[i, D] > 0)
+                    continue;
+                if (_frustum[i, A] * (pos.X + volumeSize.X) + _frustum[i, B] * (pos.Y - volumeSize.Y) + _frustum[i, C] * (pos.Z - volumeSize.Z) + _frustum[i, D] > 0)
+                    continue;
+                if (_frustum[i, A] * (pos.X - volumeSize.X) + _frustum[i, B] * (pos.Y + volumeSize.Y) + _frustum[i, C] * (pos.Z - volumeSize.Z) + _frustum[i, D] > 0)
+                    continue;
+                if (_frustum[i, A] * (pos.X + volumeSize.X) + _frustum[i, B] * (pos.Y + volumeSize.Y) + _frustum[i, C] * (pos.Z - volumeSize.Z) + _frustum[i, D] > 0)
+                    continue;
+                if (_frustum[i, A] * (pos.X - volumeSize.X) + _frustum[i, B] * (pos.Y - volumeSize.Y) + _frustum[i, C] * (pos.Z + volumeSize.Z) + _frustum[i, D] > 0)
+                    continue;
+                if (_frustum[i, A] * (pos.X + volumeSize.X) + _frustum[i, B] * (pos.Y - volumeSize.Y) + _frustum[i, C] * (pos.Z + volumeSize.Z) + _frustum[i, D] > 0)
+                    continue;
+                if (_frustum[i, A] * (pos.X - volumeSize.X) + _frustum[i, B] * (pos.Y + volumeSize.Y) + _frustum[i, C] * (pos.Z + volumeSize.Z) + _frustum[i, D] > 0)
+                    continue;
+                if (_frustum[i, A] * (pos.X + volumeSize.X) + _frustum[i, B] * (pos.Y + volumeSize.Y) + _frustum[i, C] * (pos.Z + volumeSize.Z) + _frustum[i, D] > 0)
                     continue;
                 return false;
             }
