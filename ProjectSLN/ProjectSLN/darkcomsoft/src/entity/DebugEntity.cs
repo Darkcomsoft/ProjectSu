@@ -14,7 +14,6 @@ namespace Projectsln.darkcomsoft.src.entity
 
         protected override void OnTick()
         {
-            //Debug.Log("PlayerTick");
             base.OnTick();
         }
 

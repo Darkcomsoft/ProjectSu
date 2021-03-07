@@ -5,6 +5,7 @@ using System.Text;
 
 namespace Projectsln.darkcomsoft.src.engine.render
 {
+    //I DONT KNOW BUT THIS FUNCTIONS FRUSTUM NEED SOME OPTIMIZATION, I DON'T KNOW DO A LOOK
     public class Frustum : ClassBase
     {
         private double[] _clipMatrix = new double[16];
@@ -34,8 +35,7 @@ namespace Projectsln.darkcomsoft.src.engine.render
 
         private void NormalizePlane(double[,] frustum, int side)
         {
-            double magnitude = (double)Math.Sqrt((frustum[side, 0] * frustum[side, 0]) + (frustum[side, 1] * frustum[side, 1])
-                                                + (frustum[side, 2] * frustum[side, 2]));
+            double magnitude = (double)Math.Sqrt((frustum[side, 0] * frustum[side, 0]) + (frustum[side, 1] * frustum[side, 1]) + (frustum[side, 2] * frustum[side, 2]));
             frustum[side, 0] /= magnitude;
             frustum[side, 1] /= magnitude;
             frustum[side, 2] /= magnitude;
@@ -122,21 +122,37 @@ namespace Projectsln.darkcomsoft.src.engine.render
             for (int i = 0; i < 6; i++)
             {
                 if (_frustum[i, A] * (pos.X - volumeSize.X) + _frustum[i, B] * (pos.Y - volumeSize.Y) + _frustum[i, C] * (pos.Z - volumeSize.Z) + _frustum[i, D] > 0)
+                {
                     continue;
-                if (_frustum[i, A] * (pos.X + volumeSize.X) + _frustum[i, B] * (pos.Y - volumeSize.Y) + _frustum[i, C] * (pos.Z - volumeSize.Z) + _frustum[i, D] > 0)
+                }
+                else if(_frustum[i, A] * (pos.X + volumeSize.X) + _frustum[i, B] * (pos.Y - volumeSize.Y) + _frustum[i, C] * (pos.Z - volumeSize.Z) + _frustum[i, D] > 0)
+                {
                     continue;
-                if (_frustum[i, A] * (pos.X - volumeSize.X) + _frustum[i, B] * (pos.Y + volumeSize.Y) + _frustum[i, C] * (pos.Z - volumeSize.Z) + _frustum[i, D] > 0)
+                }
+                else if(_frustum[i, A] * (pos.X - volumeSize.X) + _frustum[i, B] * (pos.Y + volumeSize.Y) + _frustum[i, C] * (pos.Z - volumeSize.Z) + _frustum[i, D] > 0)
+                {
                     continue;
-                if (_frustum[i, A] * (pos.X + volumeSize.X) + _frustum[i, B] * (pos.Y + volumeSize.Y) + _frustum[i, C] * (pos.Z - volumeSize.Z) + _frustum[i, D] > 0)
+                }
+                else if(_frustum[i, A] * (pos.X + volumeSize.X) + _frustum[i, B] * (pos.Y + volumeSize.Y) + _frustum[i, C] * (pos.Z - volumeSize.Z) + _frustum[i, D] > 0)
+                {
                     continue;
-                if (_frustum[i, A] * (pos.X - volumeSize.X) + _frustum[i, B] * (pos.Y - volumeSize.Y) + _frustum[i, C] * (pos.Z + volumeSize.Z) + _frustum[i, D] > 0)
+                }
+                else if(_frustum[i, A] * (pos.X - volumeSize.X) + _frustum[i, B] * (pos.Y - volumeSize.Y) + _frustum[i, C] * (pos.Z + volumeSize.Z) + _frustum[i, D] > 0)
+                {
                     continue;
-                if (_frustum[i, A] * (pos.X + volumeSize.X) + _frustum[i, B] * (pos.Y - volumeSize.Y) + _frustum[i, C] * (pos.Z + volumeSize.Z) + _frustum[i, D] > 0)
+                }
+                else if(_frustum[i, A] * (pos.X + volumeSize.X) + _frustum[i, B] * (pos.Y - volumeSize.Y) + _frustum[i, C] * (pos.Z + volumeSize.Z) + _frustum[i, D] > 0)
+                {
                     continue;
-                if (_frustum[i, A] * (pos.X - volumeSize.X) + _frustum[i, B] * (pos.Y + volumeSize.Y) + _frustum[i, C] * (pos.Z + volumeSize.Z) + _frustum[i, D] > 0)
+                }
+                else if (_frustum[i, A] * (pos.X - volumeSize.X) + _frustum[i, B] * (pos.Y + volumeSize.Y) + _frustum[i, C] * (pos.Z + volumeSize.Z) + _frustum[i, D] > 0)
+                {
                     continue;
-                if (_frustum[i, A] * (pos.X + volumeSize.X) + _frustum[i, B] * (pos.Y + volumeSize.Y) + _frustum[i, C] * (pos.Z + volumeSize.Z) + _frustum[i, D] > 0)
+                }
+                else if(_frustum[i, A] * (pos.X + volumeSize.X) + _frustum[i, B] * (pos.Y + volumeSize.Y) + _frustum[i, C] * (pos.Z + volumeSize.Z) + _frustum[i, D] > 0)
+                {
                     continue;
+                }
                 return false;
             }
             return true;
@@ -217,7 +233,6 @@ namespace Projectsln.darkcomsoft.src.engine.render
             return true;
         }
 
-
         public void CalculateFrustum(Matrix4 projectionMatrix, Matrix4 modelViewMatrix)
         {
             _clipMatrix[0] = (modelViewMatrix.M11 * projectionMatrix.M11) + (modelViewMatrix.M12 * projectionMatrix.M21) + (modelViewMatrix.M13 * projectionMatrix.M31) + (modelViewMatrix.M14 * projectionMatrix.M41);
@@ -239,6 +254,65 @@ namespace Projectsln.darkcomsoft.src.engine.render
             _clipMatrix[13] = (modelViewMatrix.M41 * projectionMatrix.M12) + (modelViewMatrix.M42 * projectionMatrix.M22) + (modelViewMatrix.M43 * projectionMatrix.M32) + (modelViewMatrix.M44 * projectionMatrix.M42);
             _clipMatrix[14] = (modelViewMatrix.M41 * projectionMatrix.M13) + (modelViewMatrix.M42 * projectionMatrix.M23) + (modelViewMatrix.M43 * projectionMatrix.M33) + (modelViewMatrix.M44 * projectionMatrix.M43);
             _clipMatrix[15] = (modelViewMatrix.M41 * projectionMatrix.M14) + (modelViewMatrix.M42 * projectionMatrix.M24) + (modelViewMatrix.M43 * projectionMatrix.M34) + (modelViewMatrix.M44 * projectionMatrix.M44);
+
+            _frustum[(int)ClippingPlane.Right, 0] = _clipMatrix[3] - _clipMatrix[0];
+            _frustum[(int)ClippingPlane.Right, 1] = _clipMatrix[7] - _clipMatrix[4];
+            _frustum[(int)ClippingPlane.Right, 2] = _clipMatrix[11] - _clipMatrix[8];
+            _frustum[(int)ClippingPlane.Right, 3] = _clipMatrix[15] - _clipMatrix[12];
+            NormalizePlane(_frustum, (int)ClippingPlane.Right);
+
+            _frustum[(int)ClippingPlane.Left, 0] = _clipMatrix[3] + _clipMatrix[0];
+            _frustum[(int)ClippingPlane.Left, 1] = _clipMatrix[7] + _clipMatrix[4];
+            _frustum[(int)ClippingPlane.Left, 2] = _clipMatrix[11] + _clipMatrix[8];
+            _frustum[(int)ClippingPlane.Left, 3] = _clipMatrix[15] + _clipMatrix[12];
+            NormalizePlane(_frustum, (int)ClippingPlane.Left);
+
+            _frustum[(int)ClippingPlane.Bottom, 0] = _clipMatrix[3] + _clipMatrix[1];
+            _frustum[(int)ClippingPlane.Bottom, 1] = _clipMatrix[7] + _clipMatrix[5];
+            _frustum[(int)ClippingPlane.Bottom, 2] = _clipMatrix[11] + _clipMatrix[9];
+            _frustum[(int)ClippingPlane.Bottom, 3] = _clipMatrix[15] + _clipMatrix[13];
+            NormalizePlane(_frustum, (int)ClippingPlane.Bottom);
+
+            _frustum[(int)ClippingPlane.Top, 0] = _clipMatrix[3] - _clipMatrix[1];
+            _frustum[(int)ClippingPlane.Top, 1] = _clipMatrix[7] - _clipMatrix[5];
+            _frustum[(int)ClippingPlane.Top, 2] = _clipMatrix[11] - _clipMatrix[9];
+            _frustum[(int)ClippingPlane.Top, 3] = _clipMatrix[15] - _clipMatrix[13];
+            NormalizePlane(_frustum, (int)ClippingPlane.Top);
+
+            _frustum[(int)ClippingPlane.Back, 0] = _clipMatrix[3] - _clipMatrix[2];
+            _frustum[(int)ClippingPlane.Back, 1] = _clipMatrix[7] - _clipMatrix[6];
+            _frustum[(int)ClippingPlane.Back, 2] = _clipMatrix[11] - _clipMatrix[10];
+            _frustum[(int)ClippingPlane.Back, 3] = _clipMatrix[15] - _clipMatrix[14];
+            NormalizePlane(_frustum, (int)ClippingPlane.Back);
+
+            _frustum[(int)ClippingPlane.Front, 0] = _clipMatrix[3] + _clipMatrix[2];
+            _frustum[(int)ClippingPlane.Front, 1] = _clipMatrix[7] + _clipMatrix[6];
+            _frustum[(int)ClippingPlane.Front, 2] = _clipMatrix[11] + _clipMatrix[10];
+            _frustum[(int)ClippingPlane.Front, 3] = _clipMatrix[15] + _clipMatrix[14];
+            NormalizePlane(_frustum, (int)ClippingPlane.Front);
+        }
+
+        public void CalculateFrustum(Matrix4 projectionMatrix)
+        {
+            _clipMatrix[0] = (projectionMatrix.M11) + (projectionMatrix.M21) + (projectionMatrix.M31) + (projectionMatrix.M41);
+            _clipMatrix[1] = (projectionMatrix.M12) + (projectionMatrix.M22) + (projectionMatrix.M32) + (projectionMatrix.M42);
+            _clipMatrix[2] = (projectionMatrix.M13) + (projectionMatrix.M23) + (projectionMatrix.M33) + (projectionMatrix.M43);
+            _clipMatrix[3] = (projectionMatrix.M14) + (projectionMatrix.M24) + (projectionMatrix.M34) + (projectionMatrix.M44);
+
+            _clipMatrix[4] = (projectionMatrix.M11) + (projectionMatrix.M21) + (projectionMatrix.M31) + (projectionMatrix.M41);
+            _clipMatrix[5] = ( projectionMatrix.M12) + (projectionMatrix.M22) + ( projectionMatrix.M32) + (projectionMatrix.M42);
+            _clipMatrix[6] = (projectionMatrix.M13) + (projectionMatrix.M23) + (projectionMatrix.M33) + (projectionMatrix.M43);
+            _clipMatrix[7] = (projectionMatrix.M14) + (projectionMatrix.M24) + (projectionMatrix.M34) + (projectionMatrix.M44);
+
+            _clipMatrix[8] = (projectionMatrix.M11) + (projectionMatrix.M21) + (projectionMatrix.M31) + ( projectionMatrix.M41);
+            _clipMatrix[9] = (projectionMatrix.M12) + (projectionMatrix.M22) + (projectionMatrix.M32) + (projectionMatrix.M42);
+            _clipMatrix[10] = (projectionMatrix.M13) + (projectionMatrix.M23) + (projectionMatrix.M33) + (projectionMatrix.M43);
+            _clipMatrix[11] = (projectionMatrix.M14) + (projectionMatrix.M24) + (projectionMatrix.M34) + (projectionMatrix.M44);
+
+            _clipMatrix[12] = (projectionMatrix.M11) + (projectionMatrix.M21) + (projectionMatrix.M31) + (projectionMatrix.M41);
+            _clipMatrix[13] = (projectionMatrix.M12) + (projectionMatrix.M22) + (projectionMatrix.M32) + (projectionMatrix.M42);
+            _clipMatrix[14] = (projectionMatrix.M13) + (projectionMatrix.M23) + (projectionMatrix.M33) + (projectionMatrix.M43);
+            _clipMatrix[15] = (projectionMatrix.M14) + (projectionMatrix.M24) + (projectionMatrix.M34) + (projectionMatrix.M44);
 
             _frustum[(int)ClippingPlane.Right, 0] = _clipMatrix[3] - _clipMatrix[0];
             _frustum[(int)ClippingPlane.Right, 1] = _clipMatrix[7] - _clipMatrix[4];

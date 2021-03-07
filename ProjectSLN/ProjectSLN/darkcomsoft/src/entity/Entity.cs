@@ -9,6 +9,6 @@ namespace Projectsln.darkcomsoft.src.entity
     /// </summary>
     public class Entity : EntityBase
     {
-
+        
     }
 }

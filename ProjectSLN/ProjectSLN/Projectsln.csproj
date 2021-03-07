@@ -34,4 +34,10 @@
     <Folder Include="darkcomsoft\src\server\" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Reference Include="Lidgren.Network">
+      <HintPath>..\..\packages\Lidgren.Network\Lidgren.Network.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+
 </Project>

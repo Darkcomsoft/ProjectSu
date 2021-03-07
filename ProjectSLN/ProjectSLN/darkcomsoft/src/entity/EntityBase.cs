@@ -14,7 +14,7 @@ namespace Projectsln.darkcomsoft.src.entity
         private Transform m_transform;
         private bool removed = false;
         private bool visible = false;
-        private bool m_tickOlyVisible = true;
+        private bool m_usefrustum = true;
         protected World world;
 
         public EntityBase() { }
@@ -37,12 +37,12 @@ namespace Projectsln.darkcomsoft.src.entity
         }
 
         /// <summary>
-        /// If is true, is gone tick only if is visible by the camera, if is false, dont need to tick if is visible by the camera
+        /// If is true, is gone tick only if is visible by the camera, if is false, dont need to tick if is visible by the camera, true only recomended in static no render entity
         /// </summary>
         /// <param name="value"></param>
-        public void TickOnlyVisible(bool value)
+        public void UseFrustum(bool value)
         {
-            m_tickOlyVisible = value;
+            m_usefrustum = value;
         }
 
         /// <summary>
@@ -68,11 +68,13 @@ namespace Projectsln.darkcomsoft.src.entity
 
         private void doTick()
         {
-            visible = false;//set this every frame to false, just to make sure the entity can't tick, if want the entity tick any way, use TickOnlyVisible(bool value), maybe this is a stupid implementation but (: fuck-it
-            DoCheckIfVisible();
+            visible = false;//set this every frame to false, just to make sure the entity can't tick, if want the entity tick any way, use TickOnlyVisible(bool value)
+            //maybe this is a stupid implementation but (: fuck-it
 
-            if (m_tickOlyVisible)
+            if (m_usefrustum)
             {
+                DoCheckIfVisible();
+
                 if (visible)
                 {
                     OnTick();
@@ -86,10 +88,11 @@ namespace Projectsln.darkcomsoft.src.entity
 
         private void DoCheckIfVisible()
         {
-            if (m_tickOlyVisible)
+            if (m_usefrustum)
             {
                 if (Camera.main == null) { return; }
 
+                //I DONT KNOW BUT THIS FUNCTIONS FRUSTUM NEED SOME OPTIMIZATION, I DON'T KNOW DO A LOOK
                 Application.frustum.CalculateFrustum(Camera.main.GetProjectionMatrix(), transform.GetTransformWorld);
 
                 if (Application.frustum.VolumeVsFrustum(transform.Position, transform.VolumeSize))

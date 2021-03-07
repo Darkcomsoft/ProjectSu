@@ -7,11 +7,9 @@ namespace Projectsln.darkcomsoft.src.entity
 {
     public class PlayerEntity : LivingEntity
     {
-        private Camera camera;
-
         protected override void OnStart()
         {
-            camera = new Camera(this, 1);
+            UseFrustum(false);
 
             base.OnStart();
         }
@@ -23,9 +21,6 @@ namespace Projectsln.darkcomsoft.src.entity
 
         protected override void OnDispose()
         {
-            camera.Dispose();
-            camera = null;
-
             base.OnDispose();
         }
     }
