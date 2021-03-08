@@ -1,5 +1,7 @@
-﻿using System;
+﻿using Projectsln.darkcomsoft.src.engine;
+using System;
 using System.Collections.Generic;
+using System.Net;
 using System.Text;
 
 namespace Projectsln.darkcomsoft.src.misc
@@ -30,6 +32,36 @@ namespace Projectsln.darkcomsoft.src.misc
             int z1 = random.Next(0, 1000000);
             int z2 = random.Next(0, 1000);
             return (currentEpochTime / z1 + z2 * Length);
+        }
+
+        /// <summary>
+        /// Get ip from a url using a web address, this get the first address from the web address, EX: myserver.com or survival.myserver.com
+        /// </summary>
+        /// <param name="url"></param>
+        /// <returns></returns>
+        public static string GetipfromURL(string url)
+        {
+            url = url.Replace("http://", ""); //remove http://
+            url = url.Replace("https://", ""); //remove https://
+            url = url.Substring(0, url.IndexOf("/")); //remove everything after the first /
+
+            try
+            {
+                IPHostEntry hosts = Dns.GetHostEntry(url);
+                if (hosts.AddressList.Length > 0)
+                {
+                    return hosts.AddressList[0].ToString();
+                }
+                else
+                {
+                    return string.Empty;
+                }
+            }
+            catch (Exception e)
+            {
+                Debug.LogError("Could not get IP for URL " + url + " ERROR: " + e.StackTrace);
+                return string.Empty;
+            }
         }
     }
 }

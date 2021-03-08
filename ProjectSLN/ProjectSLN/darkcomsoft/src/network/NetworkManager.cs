@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Text;
 using Lidgren.Network;
 using Projectsln.darkcomsoft.src.engine;
+using Projectsln.darkcomsoft.src.misc;
 
 namespace Projectsln.darkcomsoft.src.network
 {
@@ -22,14 +23,31 @@ namespace Projectsln.darkcomsoft.src.network
             m_instance = this;
         }
 
-        public static void CreateServer(string ip, int port, int maxplayers)
+        public static void CreateServer(long ip, int port, int maxplayers)
         {
             instance.doCreateServer(ip, port, maxplayers);
         }
 
-        public static void Connect(string ip, int port, string password)
+        /// <summary>
+        /// Connect Using Numeric ip
+        /// </summary>
+        /// <param name="ip"></param>
+        /// <param name="port"></param>
+        /// <param name="password"></param>
+        public static void Connect(long ip, int port, string password)
         {
             instance.doConnectClient(ip, port, password);
+        }
+
+        /// <summary>
+        /// Connect Using Web URL
+        /// </summary>
+        /// <param name="url"></param>
+        /// <param name="port"></param>
+        /// <param name="password"></param>
+        public static void Connect(string url, int port, string password)
+        {
+            instance.doConnectClient(long.Parse(Utilits.GetipfromURL(url)), port, password);
         }
 
         public static void Disconnect()
@@ -56,15 +74,15 @@ namespace Projectsln.darkcomsoft.src.network
             }
         }
 
-        private void doCreateServer(string ip, int port, int maxplayers)
+        private void doCreateServer(long ip, int port, int maxplayers)
         {
             if (m_netType != NetworkType.none) { Debug.Log("Is allready runing a network instance: " + m_netType, "NETWORK");  return; }
 
             m_netType = NetworkType.Server;
-            network = new NetworkServer();
+            network = new NetworkServer(ip, port, maxplayers);
         }
 
-        private void doConnectClient(string ip, int port, string pass)
+        private void doConnectClient(long ip, int port, string pass)
         {
             if (m_netType != NetworkType.none) { Debug.Log("Is allready runing a network instance: " + m_netType, "NETWORK"); return; }
 

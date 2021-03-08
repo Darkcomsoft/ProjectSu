@@ -6,7 +6,7 @@ namespace Projectsln.darkcomsoft.src.network
 {
     public class NetworkServer : NetworkBase
     {
-        public NetworkServer()
+        public NetworkServer(long ip, int port, int maxplayers)
         {
 
         }

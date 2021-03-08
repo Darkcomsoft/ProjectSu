@@ -6,7 +6,7 @@ namespace Projectsln.darkcomsoft.src.network
 {
     public class NetworkClient : NetworkBase
     {
-        public NetworkClient(string ip, int port, string password)
+        public NetworkClient(long ip, int port, string password)
         {
 
         }
