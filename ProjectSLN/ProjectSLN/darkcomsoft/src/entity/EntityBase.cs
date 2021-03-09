@@ -68,22 +68,14 @@ namespace Projectsln.darkcomsoft.src.entity
 
         private void doTick()
         {
-            visible = false;//set this every frame to false, just to make sure the entity can't tick, if want the entity tick any way, use TickOnlyVisible(bool value)
-            //maybe this is a stupid implementation but (: fuck-it
+            visible = false;
 
             if (m_usefrustum)
             {
                 DoCheckIfVisible();
+            }
 
-                if (visible)
-                {
-                    OnTick();
-                }
-            }
-            else
-            {
-                OnTick();
-            }
+            OnTick();//call tick function anyway if is visible or not, let this to the entity to decide do what when is visible or not
         }
 
         private void DoCheckIfVisible()

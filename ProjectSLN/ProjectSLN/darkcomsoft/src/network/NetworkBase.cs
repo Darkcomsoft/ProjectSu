@@ -7,7 +7,8 @@ namespace Projectsln.darkcomsoft.src.network
 {
     public class NetworkBase : ClassBase
     {
-        private NetPeer m_peer;
+        protected NetPeer m_peer;
+        protected NetPeerStatistics _peerStatistics;
 
         public virtual void Tick() { }
 
@@ -17,5 +18,6 @@ namespace Projectsln.darkcomsoft.src.network
         }
 
         public NetPeer MyNetPeer { get { return m_peer; } }
+        public NetPeerStatistics NetworkStatistics { get { return _peerStatistics; } }
     }
 }

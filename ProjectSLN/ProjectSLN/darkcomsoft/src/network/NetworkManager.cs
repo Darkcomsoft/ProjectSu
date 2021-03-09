@@ -34,9 +34,9 @@ namespace Projectsln.darkcomsoft.src.network
         /// <param name="ip"></param>
         /// <param name="port"></param>
         /// <param name="password"></param>
-        public static void Connect(long ip, int port, string password)
+        public static void Connect(int ip, int port)
         {
-            instance.doConnectClient(ip, port, password);
+            instance.doConnectClient(ip.ToString(), port);
         }
 
         /// <summary>
@@ -45,9 +45,9 @@ namespace Projectsln.darkcomsoft.src.network
         /// <param name="url"></param>
         /// <param name="port"></param>
         /// <param name="password"></param>
-        public static void Connect(string url, int port, string password)
+        public static void Connect(string url, int port)
         {
-            instance.doConnectClient(long.Parse(Utilits.GetipfromURL(url)), port, password);
+            instance.doConnectClient(Utilits.GetipfromURL(url), port);
         }
 
         public static void Disconnect()
@@ -76,18 +76,18 @@ namespace Projectsln.darkcomsoft.src.network
 
         private void doCreateServer(long ip, int port, int maxplayers)
         {
-            if (m_netType != NetworkType.none) { Debug.Log("Is allready runing a network instance: " + m_netType, "NETWORK");  return; }
+            if (m_netType != NetworkType.none) { Debug.Log("Can't create a server, Is allready runing a network instance: " + m_netType, "NETWORK");  return; }
 
             m_netType = NetworkType.Server;
             network = new NetworkServer(ip, port, maxplayers);
         }
 
-        private void doConnectClient(long ip, int port, string pass)
+        private void doConnectClient(string ip, int port)
         {
-            if (m_netType != NetworkType.none) { Debug.Log("Is allready runing a network instance: " + m_netType, "NETWORK"); return; }
+            if (m_netType != NetworkType.none) { Debug.Log("Can't connect Is allready runing a network instance: " + m_netType, "NETWORK"); return; }
 
             m_netType = NetworkType.Client;
-            network = new NetworkClient(ip, port, pass);
+            network = new NetworkClient(ip, port);
         }
 
         protected override void OnDispose()
@@ -108,7 +108,10 @@ namespace Projectsln.darkcomsoft.src.network
 
     public static class NetConfig
     {
-        public static string SecretKey = "secret";
+        /// <summary>
+        /// Is a string used for check if the client can connect with the server, if the server key or client is not equal dont connect, Ex:GameName + GameVersion + Plataform
+        /// </summary>
+        public static string SecretKey = "your app identifier";
         public static int DefaultOutgoingMessageCapacity = 99999;
         public static int SendBufferSize = 131071;
         public static float ConnectionTimeout = 50;
