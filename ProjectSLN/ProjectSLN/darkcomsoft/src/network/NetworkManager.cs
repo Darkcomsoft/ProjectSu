@@ -4,6 +4,7 @@ using System.Text;
 using Lidgren.Network;
 using Projectsln.darkcomsoft.src.engine;
 using Projectsln.darkcomsoft.src.misc;
+using Projectsln.darkcomsoft.src.entity;
 
 namespace Projectsln.darkcomsoft.src.network
 {
@@ -14,6 +15,8 @@ namespace Projectsln.darkcomsoft.src.network
         /// </summary>
         public const NetDeliveryMethod NetBaseDeliveryMethod = NetDeliveryMethod.ReliableOrdered;
 
+        private Dictionary<string, Entity> m_entityList;
+
         private static NetworkManager m_instance;
         private NetworkType m_netType;
         private NetworkBase network;
@@ -21,6 +24,7 @@ namespace Projectsln.darkcomsoft.src.network
         public NetworkManager()
         {
             m_instance = this;
+            m_entityList = new Dictionary<string, Entity>();
         }
 
         public static void CreateServer(long ip, int port, int maxplayers)
@@ -53,6 +57,16 @@ namespace Projectsln.darkcomsoft.src.network
         public static void Disconnect()
         {
             instance.doDisconnect();
+        }
+
+        public static void SpawnEntity()
+        {
+
+        }
+
+        public static void DestroyEntity()
+        {
+
         }
 
         public void Tick()
@@ -94,6 +108,9 @@ namespace Projectsln.darkcomsoft.src.network
         {
             Disconnect();//Call disconnect any way if the network is finished.
 
+            m_entityList.Clear();
+            m_entityList = null;
+
             m_instance = null;
             base.OnDispose();
         }
@@ -104,6 +121,18 @@ namespace Projectsln.darkcomsoft.src.network
     public enum NetworkType
     {
         none, Server, Client
+    }
+
+    public enum NetDataType : byte
+    {
+        RPC, //Remote Procedural Call
+        RPC_All, //RPC from client asking to send some data to everyone
+        RPC_AllOwner, //RPC from client asking to send some data to everyone but no the owner
+        RPC_Owner, //RPC from client asking to send some data to the owner
+        Spawn, //Spawn a entity
+        Destroy, //Destroy a entity
+        StartData, //Send all data when connect to server, EX:spawn all entitys 
+
     }
 
     public static class NetConfig

@@ -21,9 +21,10 @@ namespace Projectsln.darkcomsoft.src.network
             config.DefaultOutgoingMessageCapacity = NetConfig.DefaultOutgoingMessageCapacity;
             config.UseMessageRecycling = true;
             config.SendBufferSize = NetConfig.SendBufferSize;
-            config.EnableMessageType(NetIncomingMessageType.ConnectionApproval);
             config.ConnectionTimeout = NetConfig.ConnectionTimeout;
             config.NetworkThreadName = "DarckNet - Client";
+
+            config.EnableMessageType(NetIncomingMessageType.ConnectionApproval);
 
             NetClient peer = new NetClient(config);
             peer.Start(); // needed for initialization
@@ -55,9 +56,107 @@ namespace Projectsln.darkcomsoft.src.network
             networkCallBacks.OnClientStart?.Invoke();
         }
 
+        public void doSpawnEntity()
+        {
+
+        }
+
+        public void doDestroyEntity()
+        {
+
+        }
+
         public override void Tick()
         {
+            NetIncomingMessage inc;
+            while ((inc = m_peer.ReadMessage()) != null)
+            {
+                switch (inc.MessageType)
+                {
+                    case NetIncomingMessageType.VerboseDebugMessage:
+                        Debug.Log(inc.ReadString(), "NETWORK");
+                        break;
+                    case NetIncomingMessageType.DebugMessage:
+                        Debug.Log(inc.ReadString(), "NETWORK");
+                        break;
+                    case NetIncomingMessageType.WarningMessage:
+                        Debug.LogWarning(inc.ReadString(), "NETWORK");
+                        break;
+                    case NetIncomingMessageType.ErrorMessage:
+                        string erro = inc.ReadString();
+                        Debug.LogError(erro, "NETWORK");
+                        if (erro == "Shutdown complete")
+                        {
+                            networkCallBacks.OnPlayerDisconnect?.Invoke(inc.SenderConnection);
+                        }
+                        break;
+                    case NetIncomingMessageType.Data:
+                        ReadData(inc);
+                        break;
+                    case NetIncomingMessageType.StatusChanged:
+                        NetConnectionStatus status = (NetConnectionStatus)inc.ReadByte();
+
+                        if (status == NetConnectionStatus.Disconnected)
+                        {
+                            _NetConnectionStatus = status;
+                        }
+                        else if (status == NetConnectionStatus.Disconnecting)
+                        {
+
+                        }
+                        else if (status == NetConnectionStatus.Connected)
+                        {
+                            networkCallBacks.OnConnect?.Invoke();
+                        }
+                        break;
+                    default:
+                        Debug.Log("Unhandled type: " + inc.MessageType + " " + inc.LengthBytes + " bytes " + inc.DeliveryMethod + "|" + inc.SequenceChannel, "NETWORK");
+
+                        switch (inc.SenderConnection.Status)
+                        {
+                            case NetConnectionStatus.InitiatedConnect:
+                                break;
+                            case NetConnectionStatus.ReceivedInitiation:
+                                break;
+                            case NetConnectionStatus.RespondedAwaitingApproval:
+                                break;
+                            case NetConnectionStatus.RespondedConnect:
+                                Debug.LogError("This Player : " + NetUtility.ToHexString(inc.SenderConnection.RemoteUniqueIdentifier) + " Are Accepted to server");
+                                break;
+                            case NetConnectionStatus.Connected:
+                                break;
+                            case NetConnectionStatus.Disconnecting:
+                                break;
+                            case NetConnectionStatus.Disconnected:
+                                networkCallBacks.OnPlayerDisconnect?.Invoke(inc.SenderConnection);
+
+                                NEntity[] obj = _NetviewList.Values.ToArray();
+
+                                for (int i = 0; i < obj.Length; i++)
+                                {
+                                    Debug.Log("Entity : " + obj[i]._Owner);
+                                    if (obj[i]._Owner == inc.SenderConnection.RemoteUniqueIdentifier)
+                                    {
+                                        Debug.Log("Entity Destroyed: " + obj[i]._Owner);
+                                        Destroy(obj[i]);
+                                    }
+                                }
+
+                                Debug.Log("Player : " + NetUtility.ToHexString(inc.SenderConnection.RemoteUniqueIdentifier) + " Disconnected!");
+                                break;
+                            default:
+                                break;
+                        }
+                        break;
+                }
+                m_peer.Recycle(inc);
+            }
             base.Tick();
+        }
+
+        private void ReadData(NetIncomingMessage inc)
+        {
+
         }
 
         protected override void OnDispose()

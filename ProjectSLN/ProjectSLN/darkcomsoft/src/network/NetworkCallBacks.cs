@@ -26,6 +26,16 @@ namespace Projectsln.darkcomsoft.src.network
 
         protected override void OnDispose()
         {
+            OnPlayerDisconnect = null;
+            OnPlayerConnect = null;
+            PlayerApproval = null;
+            OnDisconnect = null;
+            OnConnect = null;
+            OnServerStart = null;
+            OnServerStop = null;
+            OnClientStart = null;
+            OnReceivedServerData = null;
+
             m_instance = null;
             base.OnDispose();
         }

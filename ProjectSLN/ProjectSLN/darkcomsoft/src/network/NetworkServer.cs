@@ -23,15 +23,21 @@ namespace Projectsln.darkcomsoft.src.network
             config.DefaultOutgoingMessageCapacity = NetConfig.DefaultOutgoingMessageCapacity;
             config.UseMessageRecycling = NetConfig.UseMessageRecycling;
             config.SendBufferSize = NetConfig.SendBufferSize;
-            config.EnableMessageType(NetIncomingMessageType.ConnectionApproval);
             config.AcceptIncomingConnections = NetConfig.AcceptConnection;
             config.NetworkThreadName = "DarckNet - Server";
+
+            config.EnableMessageType(NetIncomingMessageType.ConnectionApproval);
 
             config.Port = port;
             config.BroadcastAddress = new IPAddress(ip);
 
             NetServer peer = new NetServer(config);
             peer.Start(); // needed for initialization
+
+            if (config.EnableUPnP)
+            {
+                peer.UPnP.ForwardPort(port, "Port for the server of " + Application.AppName);
+            }
 
             m_peer = peer;
             _peerStatistics = peer.Statistics;
