@@ -5,6 +5,7 @@ using System.Text;
 using Lidgren.Network;
 using Projectsln.darkcomsoft.src.engine;
 using Projectsln.darkcomsoft.src.entity.managers;
+using Projectsln.darkcomsoft.src.misc;
 
 namespace Projectsln.darkcomsoft.src.network
 {
@@ -16,7 +17,7 @@ namespace Projectsln.darkcomsoft.src.network
         public NetworkServer(long ip, int port, int maxplayers)
         {
             networkCallBacks = new NetworkCallBacks();
-            _connectionList = new Dictionary<long, NetConnection>;
+            _connectionList = new Dictionary<long, NetConnection>();
 
             NetPeerConfiguration config = new NetPeerConfiguration(NetConfig.AppIdentifier);
             config.MaximumConnections = maxplayers;
@@ -134,7 +135,7 @@ namespace Projectsln.darkcomsoft.src.network
 
                             //Write the data to send when client connect
                             string data = JsonHelper.ToJson(netvi.ToArray());
-                            string compressed = CompressString.StringCompressor.CompressString(data);
+                            string compressed = DataCompressor.CompressStringToByte(data);
 
                             OuMS.Write(compressed);
 

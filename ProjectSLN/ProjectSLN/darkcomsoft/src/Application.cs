@@ -21,18 +21,15 @@ namespace Projectsln.darkcomsoft.src
 
         public static bool NoSoundMode = false;
 
-        public static Game game;
+        public static BuildTypeBase gameInstance;// this is the game instance EX: Client or Server
 
         public static WorldManager worldManager;
         public static EntityManager entityManager;
-
-        public static Frustum frustum;
 
         public Application()
         {
             worldManager = new WorldManager();
             entityManager = new EntityManager();
-            frustum = new Frustum();
 
             for (int i = 0; i < 100; i++)
             {
@@ -59,14 +56,11 @@ namespace Projectsln.darkcomsoft.src
 
         protected override void OnDispose()
         {
-            if (game != null)
+            if (gameInstance != null)
             {
-                game.Dispose();
-                game = null;
+                gameInstance.Dispose();
+                gameInstance = null;
             }
-
-            frustum?.Dispose();
-            frustum = null;
 
             worldManager?.Dispose();
             worldManager = null;
@@ -83,7 +77,12 @@ namespace Projectsln.darkcomsoft.src
 
         private void StartGame()
         {
-            game = new Game();
+            gameInstance = new Client();
+        }
+
+        private void StartServer()
+        {
+            //gameInstance = new Server();
         }
 
         private static string GetBinaryPath()

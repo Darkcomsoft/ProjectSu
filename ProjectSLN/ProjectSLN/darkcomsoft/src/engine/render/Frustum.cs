@@ -6,22 +6,15 @@ using System.Text;
 namespace Projectsln.darkcomsoft.src.engine.render
 {
     //I DONT KNOW BUT THIS FUNCTIONS FRUSTUM NEED SOME OPTIMIZATION, I DON'T KNOW DO A LOOK
-    public class Frustum : ClassBase
+    public static class Frustum
     {
-        private double[] _clipMatrix = new double[16];
-        private double[,] _frustum = new double[6, 4];
+        private static double[] _clipMatrix = new double[16];
+        private static double[,] _frustum = new double[6, 4];
 
         public const int A = 0;
         public const int B = 1;
         public const int C = 2;
         public const int D = 3;
-
-        protected override void Dispose(bool disposing)
-        {
-            _clipMatrix = null;
-            _frustum = null;
-            base.Dispose(disposing);
-        }
 
         public enum ClippingPlane : int
         {
@@ -33,7 +26,7 @@ namespace Projectsln.darkcomsoft.src.engine.render
             Front = 5
         }
 
-        private void NormalizePlane(double[,] frustum, int side)
+        private static void NormalizePlane(double[,] frustum, int side)
         {
             double magnitude = (double)Math.Sqrt((frustum[side, 0] * frustum[side, 0]) + (frustum[side, 1] * frustum[side, 1]) + (frustum[side, 2] * frustum[side, 2]));
             frustum[side, 0] /= magnitude;
@@ -42,11 +35,11 @@ namespace Projectsln.darkcomsoft.src.engine.render
             frustum[side, 3] /= magnitude;
         }
 
-        public bool PointVsFrustum(double x, double y, double z)
+        public static bool PointVsFrustum(double x, double y, double z)
         {
             for (int i = 0; i < 6; i++)
             {
-                if (this._frustum[i, 0] * x + this._frustum[i, 1] * y + this._frustum[i, 2] * z + this._frustum[i, 3] <= 0.0f)
+                if (_frustum[i, 0] * x + _frustum[i, 1] * y + _frustum[i, 2] * z + _frustum[i, 3] <= 0.0f)
                 {
                     return false;
                 }
@@ -54,11 +47,11 @@ namespace Projectsln.darkcomsoft.src.engine.render
             return true;
         }
 
-        public bool PointVsFrustum(Vector3d location)
+        public static bool PointVsFrustum(Vector3d location)
         {
             for (int i = 0; i < 6; i++)
             {
-                if (this._frustum[i, 0] * location.X + this._frustum[i, 1] * location.Y + this._frustum[i, 2] * location.Z + this._frustum[i, 3] <= 0.0f)
+                if (_frustum[i, 0] * location.X + _frustum[i, 1] * location.Y + _frustum[i, 2] * location.Z + _frustum[i, 3] <= 0.0f)
                 {
                     return false;
                 }
@@ -66,7 +59,7 @@ namespace Projectsln.darkcomsoft.src.engine.render
             return true;
         }
 
-        public bool SphereVsFrustum(double x, double y, double z, double radius)
+        public static bool SphereVsFrustum(double x, double y, double z, double radius)
         {
             for (int p = 0; p < 6; p++)
             {
@@ -79,7 +72,7 @@ namespace Projectsln.darkcomsoft.src.engine.render
             return true;
         }
 
-        public bool SphereVsFrustum(Vector3d location, double radius)
+        public static bool SphereVsFrustum(Vector3d location, double radius)
         {
             for (int p = 0; p < 6; p++)
             {
@@ -92,7 +85,7 @@ namespace Projectsln.darkcomsoft.src.engine.render
             return true;
         }
 
-        public bool VolumeVsFrustum(double x, double y, double z, double width, double height, double length)
+        public static bool VolumeVsFrustum(double x, double y, double z, double width, double height, double length)
         {
             for (int i = 0; i < 6; i++)
             {
@@ -117,7 +110,7 @@ namespace Projectsln.darkcomsoft.src.engine.render
             return true;
         }
 
-        public bool VolumeVsFrustum(Vector3d pos, Vector3d volumeSize)
+        public static bool VolumeVsFrustum(Vector3d pos, Vector3d volumeSize)
         {
             for (int i = 0; i < 6; i++)
             {
@@ -158,7 +151,7 @@ namespace Projectsln.darkcomsoft.src.engine.render
             return true;
         }
 
-        public bool VolumeVsFrustum(BoundingVolume volume)
+        public static bool VolumeVsFrustum(BoundingVolume volume)
         {
             for (int i = 0; i < 6; i++)
             {
@@ -183,7 +176,7 @@ namespace Projectsln.darkcomsoft.src.engine.render
             return true;
         }
 
-        public bool VolumeVsFrustum(Vector3d location, double width, double height, double length)
+        public static bool VolumeVsFrustum(Vector3d location, double width, double height, double length)
         {
             for (int i = 0; i < 6; i++)
             {
@@ -208,7 +201,7 @@ namespace Projectsln.darkcomsoft.src.engine.render
             return true;
         }
 
-        public bool CubeVsFrustum(double x, double y, double z, double size)
+        public static bool CubeVsFrustum(double x, double y, double z, double size)
         {
             for (int i = 0; i < 6; i++)
             {
@@ -233,7 +226,7 @@ namespace Projectsln.darkcomsoft.src.engine.render
             return true;
         }
 
-        public void CalculateFrustum(Matrix4 projectionMatrix, Matrix4 modelViewMatrix)
+        public static void CalculateFrustum(Matrix4 projectionMatrix, Matrix4 modelViewMatrix)
         {
             _clipMatrix[0] = (modelViewMatrix.M11 * projectionMatrix.M11) + (modelViewMatrix.M12 * projectionMatrix.M21) + (modelViewMatrix.M13 * projectionMatrix.M31) + (modelViewMatrix.M14 * projectionMatrix.M41);
             _clipMatrix[1] = (modelViewMatrix.M11 * projectionMatrix.M12) + (modelViewMatrix.M12 * projectionMatrix.M22) + (modelViewMatrix.M13 * projectionMatrix.M32) + (modelViewMatrix.M14 * projectionMatrix.M42);
@@ -292,7 +285,7 @@ namespace Projectsln.darkcomsoft.src.engine.render
             NormalizePlane(_frustum, (int)ClippingPlane.Front);
         }
 
-        public void CalculateFrustum(Matrix4 projectionMatrix)
+        public static void CalculateFrustum(Matrix4 projectionMatrix)
         {
             _clipMatrix[0] = (projectionMatrix.M11) + (projectionMatrix.M21) + (projectionMatrix.M31) + (projectionMatrix.M41);
             _clipMatrix[1] = (projectionMatrix.M12) + (projectionMatrix.M22) + (projectionMatrix.M32) + (projectionMatrix.M42);

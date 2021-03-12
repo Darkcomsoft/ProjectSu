@@ -10,7 +10,7 @@ namespace Projectsln.darkcomsoft.src.entity.managers
     public class EntityManager : ClassBase
     {
         private static EntityManager instance;
-        private List<KeyValuePair<World, EntityBase>> entityList = new List<KeyValuePair<World, EntityBase>>();
+        private List<KeyValuePair<World, Entity>> entityList = new List<KeyValuePair<World, Entity>>();
 
         public EntityManager()
         {
@@ -33,7 +33,7 @@ namespace Projectsln.darkcomsoft.src.entity.managers
         {
             for (int i = 0; i < entityList.Count; i++)
             {
-                EntityBase entityBase = entityList[i].Value;
+                Entity entityBase = entityList[i].Value;
                 entityBase.Tick();
 
                 if (entityBase.isRemoved)
@@ -50,30 +50,30 @@ namespace Projectsln.darkcomsoft.src.entity.managers
         /// <typeparam name="T">Type of the entity you want spawn</typeparam>
         /// <param name="world">world you want to spawn a entity</param>
         /// <returns></returns>
-        public static EntityBase SpawnEntity<T>(World world)
+        public static Entity SpawnEntity<T>(World world)
         {
-            EntityBase entityBase = Utilits.CreateInstance<EntityBase>(typeof(T));
+            Entity entityBase = Utilits.CreateInstance<Entity>(typeof(T));
             entityBase.Start(world);
             Instance.entityList.Add(KeyValuePair.Create(entityBase.GetWorld, entityBase));
             return entityBase;
         }
 
-        public static void DestroyEntity(EntityBase entityBase, bool insta = false)
+        public static void DestroyEntity(Entity entity, bool insta = false)
         {
-            if (Instance.entityList.Contains(KeyValuePair.Create(entityBase.GetWorld, entityBase)))
+            if (Instance.entityList.Contains(KeyValuePair.Create(entity.GetWorld, entity)))
             {
                 if (insta)
                 {
-                    destroyEntity(entityBase);
+                    destroyEntity(entity);
                 }
                 else
                 {
-                    entityBase.DestroyThis();
+                    entity.DestroyThis();
                 }
             }
         }
 
-        private static void destroyEntity(EntityBase entityBase)
+        private static void destroyEntity(Entity entityBase)
         {
             Instance.entityList.Remove(KeyValuePair.Create(entityBase.GetWorld, entityBase));
             entityBase.Dispose();

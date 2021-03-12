@@ -8,10 +8,13 @@ using System.Text;
 
 namespace Projectsln.darkcomsoft.src
 {
-    public class Game : ClassBase
+    /// <summary>
+    /// is the client, this is the class start the game stuff, like graphics, and other things
+    /// </summary>
+    public class Client : BuildTypeBase
     {
 
-        public Game()
+        public Client()
         {
             Debug.Log("GameStarted!");
 
