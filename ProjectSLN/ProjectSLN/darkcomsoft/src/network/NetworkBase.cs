@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.Text;
+using Projectsln.darkcomsoft.src.entity;
 
 namespace Projectsln.darkcomsoft.src.network
 {
@@ -11,6 +12,9 @@ namespace Projectsln.darkcomsoft.src.network
         protected NetPeerStatistics _peerStatistics;
 
         public virtual void Tick() { }
+
+        public virtual void Spawn(Entity entity) { }
+        public virtual void Destroy(Entity entity) { }
 
         protected override void OnDispose()
         {

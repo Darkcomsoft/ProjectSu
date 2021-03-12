@@ -4,6 +4,7 @@ using System.Net;
 using System.Text;
 using Lidgren.Network;
 using Projectsln.darkcomsoft.src.engine;
+using Projectsln.darkcomsoft.src.entity;
 
 namespace Projectsln.darkcomsoft.src.network
 {
@@ -68,8 +69,8 @@ namespace Projectsln.darkcomsoft.src.network
 
         public override void Tick()
         {
-            NetIncomingMessage inc;
-            while ((inc = m_peer.ReadMessage()) != null)
+            NetIncomingMessage inc = m_peer.ReadMessage();
+            while (inc != null)
             {
                 switch (inc.MessageType)
                 {
@@ -98,7 +99,7 @@ namespace Projectsln.darkcomsoft.src.network
 
                         if (status == NetConnectionStatus.Disconnected)
                         {
-                            _NetConnectionStatus = status;
+                            //networkCallBacks.OnDisconnect?.Invoke(); //VER SE PODE ADICIONAR ISSO AQUI DEPOIS
                         }
                         else if (status == NetConnectionStatus.Disconnecting)
                         {
@@ -121,7 +122,7 @@ namespace Projectsln.darkcomsoft.src.network
                             case NetConnectionStatus.RespondedAwaitingApproval:
                                 break;
                             case NetConnectionStatus.RespondedConnect:
-                                Debug.LogError("This Player : " + NetUtility.ToHexString(inc.SenderConnection.RemoteUniqueIdentifier) + " Are Accepted to server");
+                                Debug.LogError("This Player : " + NetUtility.ToHexString(inc.SenderConnection.RemoteUniqueIdentifier) + " Are Accepted to server", "NETWORK");
                                 break;
                             case NetConnectionStatus.Connected:
                                 break;
@@ -129,20 +130,7 @@ namespace Projectsln.darkcomsoft.src.network
                                 break;
                             case NetConnectionStatus.Disconnected:
                                 networkCallBacks.OnPlayerDisconnect?.Invoke(inc.SenderConnection);
-
-                                NEntity[] obj = _NetviewList.Values.ToArray();
-
-                                for (int i = 0; i < obj.Length; i++)
-                                {
-                                    Debug.Log("Entity : " + obj[i]._Owner);
-                                    if (obj[i]._Owner == inc.SenderConnection.RemoteUniqueIdentifier)
-                                    {
-                                        Debug.Log("Entity Destroyed: " + obj[i]._Owner);
-                                        Destroy(obj[i]);
-                                    }
-                                }
-
-                                Debug.Log("Player : " + NetUtility.ToHexString(inc.SenderConnection.RemoteUniqueIdentifier) + " Disconnected!");
+                                Debug.Log("Player : " + NetUtility.ToHexString(inc.SenderConnection.RemoteUniqueIdentifier) + " Disconnected!", "NETWORK");
                                 break;
                             default:
                                 break;
@@ -157,6 +145,16 @@ namespace Projectsln.darkcomsoft.src.network
         private void ReadData(NetIncomingMessage inc)
         {
 
+        }
+
+        public override void Spawn(Entity entity)
+        {
+            base.Spawn(entity);
+        }
+
+        public override void Destroy(Entity entity)
+        {
+            base.Destroy(entity);
         }
 
         protected override void OnDispose()

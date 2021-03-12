@@ -131,7 +131,7 @@ namespace Projectsln.darkcomsoft.src.network
         RPC_Owner, //RPC from client asking to send some data to the owner
         Spawn, //Spawn a entity
         Destroy, //Destroy a entity
-        StartData, //Send all data when connect to server, EX:spawn all entitys 
+        ConnectData, //Send all data when connect to server, EX:spawn all entitys 
 
     }
 

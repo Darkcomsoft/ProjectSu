@@ -1,9 +1,10 @@
 {
   "version": 2,
-  "dgSpecHash": "af0oEEQGrH3iHjkFijSn+HyGQ6hJ5ZBb4NDmf3L9k3nh4Vm81YZg040QDHSiWMH9RAW50VCyZKnxe//+AB3rCg==",
+  "dgSpecHash": "uxgtFbrSuFIfvugJE+6Qk+qO2b4Puhxy7dS+P1rXd5W5P6Nj/+pGE2FcK9Co1KrOK298ppNxMLZoDjAHIAyX9Q==",
   "success": true,
   "projectFilePath": "C:\\Users\\estev\\Documents\\GitHub\\ProjectSu\\ProjectSLN\\ProjectSLN\\Projectsln.csproj",
   "expectedPackageFiles": [
+    "C:\\Users\\estev\\.nuget\\packages\\newtonsoft.json\\12.0.3\\newtonsoft.json.12.0.3.nupkg.sha512",
     "C:\\Users\\estev\\.nuget\\packages\\opentk\\4.5.0\\opentk.4.5.0.nupkg.sha512",
     "C:\\Users\\estev\\.nuget\\packages\\opentk.compute\\4.5.0\\opentk.compute.4.5.0.nupkg.sha512",
     "C:\\Users\\estev\\.nuget\\packages\\opentk.core\\4.5.0\\opentk.core.4.5.0.nupkg.sha512",

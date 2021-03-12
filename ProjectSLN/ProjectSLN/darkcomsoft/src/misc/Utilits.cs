@@ -3,6 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.Net;
 using System.Text;
+using Newtonsoft.Json;
 
 namespace Projectsln.darkcomsoft.src.misc
 {
@@ -62,6 +63,75 @@ namespace Projectsln.darkcomsoft.src.misc
                 Debug.LogError("Could not get IP for URL " + url + " ERROR: " + e.StackTrace);
                 return string.Empty;
             }
+        }
+    }
+
+    public static class JsonHelper
+    {
+        public static string SerializeObject<T>(this T toSerialize)
+        {
+            /*JsonConvert.SerializeObject(product);
+            ne xmlSerializer = new XmlSerializer(toSerialize.GetType());
+
+            using (StringWriter textWriter = new StringWriter())
+            {
+                xmlSerializer.Serialize(textWriter, toSerialize);
+                return textWriter.ToString();
+            }*/
+
+            return JsonConvert.SerializeObject(toSerialize);
+        }
+
+        public static T DeSerializeObject<T>(string jsonstring)
+        {
+            /*XmlSerializer xmlSerializer = new XmlSerializer(typeof(T));
+            using (StringReader textReader = new StringReader(xmlstring))
+            {
+                return (T)xmlSerializer.Deserialize(textReader);
+            }*/
+
+            return JsonConvert.DeserializeObject<T>(jsonstring);
+        }
+
+        public static T[] FromJson<T>(string json)
+        {
+            Wrapper<T> wrapper = JsonConvert.DeserializeObject<Wrapper<T>>(json);
+            return wrapper.Items;
+        }
+
+        public static string ToJson<T>(T[] array)
+        {
+            Wrapper<T> wrapper = new Wrapper<T>();
+            wrapper.Items = array;
+            return JsonConvert.SerializeObject(wrapper);
+        }
+
+        #region ArrayCord
+
+        public static T[,] FromJsonChunk<T>(string json)
+        {
+            WrapperChunk<T> wrapper = JsonConvert.DeserializeObject<WrapperChunk<T>>(json);
+            return wrapper.Items;
+        }
+
+        public static string ToJson<T>(T[,] array)
+        {
+            WrapperChunk<T> wrapper = new WrapperChunk<T>();
+            wrapper.Items = array;
+            return JsonConvert.SerializeObject(wrapper);
+        }
+        #endregion
+
+        [System.Serializable]
+        public class Wrapper<T>
+        {
+            public T[] Items;
+        }
+
+        [System.Serializable]
+        public class WrapperChunk<T>
+        {
+            public T[,] Items;
         }
     }
 }
