@@ -23,7 +23,7 @@ namespace Projectsln.darkcomsoft.src.network
             config.UseMessageRecycling = true;
             config.SendBufferSize = NetConfig.SendBufferSize;
             config.ConnectionTimeout = NetConfig.ConnectionTimeout;
-            config.NetworkThreadName = "DarckNet - Client";
+            config.NetworkThreadName = Application.AppName + " - Client";
 
             config.EnableMessageType(NetIncomingMessageType.ConnectionApproval);
 
@@ -55,16 +55,6 @@ namespace Projectsln.darkcomsoft.src.network
             }*/
 
             networkCallBacks.OnClientStart?.Invoke();
-        }
-
-        public void doSpawnEntity()
-        {
-
-        }
-
-        public void doDestroyEntity()
-        {
-
         }
 
         public override void Tick()
@@ -144,7 +134,21 @@ namespace Projectsln.darkcomsoft.src.network
 
         private void ReadData(NetIncomingMessage inc)
         {
+            NetDataType type = (NetDataType)inc.ReadByte();
 
+            switch (type)
+            {
+                case NetDataType.RPC:
+                    break;
+                case NetDataType.Spawn:
+                    break;
+                case NetDataType.Destroy:
+                    break;
+                case NetDataType.ConnectData:
+                    break;
+                default:
+                    break;
+            }
         }
 
         public override void Spawn(Entity entity)

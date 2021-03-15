@@ -4,6 +4,7 @@ using System.Net;
 using System.Text;
 using Lidgren.Network;
 using Projectsln.darkcomsoft.src.engine;
+using Projectsln.darkcomsoft.src.entity;
 using Projectsln.darkcomsoft.src.entity.managers;
 using Projectsln.darkcomsoft.src.misc;
 
@@ -28,7 +29,7 @@ namespace Projectsln.darkcomsoft.src.network
             config.UseMessageRecycling = NetConfig.UseMessageRecycling;
             config.SendBufferSize = NetConfig.SendBufferSize;
             config.AcceptIncomingConnections = NetConfig.AcceptConnection;
-            config.NetworkThreadName = "DarckNet - Server";
+            config.NetworkThreadName = Application.AppName + " - Server";
 
             config.EnableMessageType(NetIncomingMessageType.ConnectionApproval);
 
@@ -112,23 +113,24 @@ namespace Projectsln.darkcomsoft.src.network
                             var OuMS = m_peer.CreateMessage();
                             OuMS.Write((byte)NetDataType.ConnectData);
 
-                            foreach (var kvp in EntityManager.Instance)
+                            foreach (var kvp in EntityManager.Instance.getEntityList)
                             {
                                 NetViewSerializer neww = new NetViewSerializer();
-                                neww.EntityTypeName = kvp.GetType().Name;
 
-                                neww.SpaceName = kvp.SpaceName;
-                                neww.Owner = kvp._Owner;
-                                neww.ViewID = kvp._ViewID;
-                                neww.ChannelID = kvp._currentChannelID;
+                                neww.WorldType = kvp.Value.GetWorld.GetType().Name;
+                                neww.EntityType = kvp.GetType().Name;
 
-                                neww.p_x = kvp.transform.Position.X;
-                                neww.p_y = kvp.transform.Position.Y;
-                                neww.p_z = kvp.transform.Position.Z;
+                                neww.Owner = kvp.Value.getOwner;
+                                neww.ViewID = kvp.Value.getViewId;
+                                neww.ChannelID = kvp.Value._currentChannelID;
 
-                                neww.r_x = kvp.transform.Rotation.X;
-                                neww.r_y = kvp.transform.Rotation.Y;
-                                neww.r_z = kvp.transform.Rotation.Z;
+                                neww.p_x = kvp.Value.transform.Position.X;
+                                neww.p_y = kvp.Value.transform.Position.Y;
+                                neww.p_z = kvp.Value.transform.Position.Z;
+
+                                neww.r_x = kvp.Value.transform.Rotation.X;
+                                neww.r_y = kvp.Value.transform.Rotation.Y;
+                                neww.r_z = kvp.Value.transform.Rotation.Z;
 
                                 netvi.Add(neww);
                             }
@@ -183,7 +185,59 @@ namespace Projectsln.darkcomsoft.src.network
 
         private void ReadData(NetIncomingMessage inc)
         {
+            NetDataType type = (NetDataType)inc.ReadByte();
 
+            switch (type)
+            {
+                case NetDataType.RPC:
+                    break;
+                case NetDataType.RPC_All:
+                    break;
+                case NetDataType.RPC_AllOwner:
+                    break;
+                case NetDataType.RPC_Owner:
+                    break;
+                case NetDataType.Spawn:
+                    break;
+                case NetDataType.Destroy:
+                    break;
+                default:
+                    break;
+            }
+        }
+
+        public override void Spawn(Entity entity)
+        {
+            int viewid = Utilits.UniqueID(5);
+
+            var msg = m_peer.CreateMessage();
+
+            msg.Write((byte)NetDataType.Spawn);
+
+            msg.Write(entity.GetType().Name);//Entity Type
+            msg.Write(entity.GetWorld.GetType().Name);//Curret Entity World
+
+            msg.Write(viewid);
+            msg.Write(entity.getRegionID);//Current region id
+            msg.WriteVariableInt64(m_peer.UniqueIdentifier);//Netcode ID
+
+            //Position
+            msg.Write(entity.transform.Position.X);
+            msg.Write(entity.transform.Position.Y);
+            msg.Write(entity.transform.Position.Z);
+
+            //Rotation
+            msg.Write(entity.transform.Rotation.X);
+            msg.Write(entity.transform.Rotation.Y);
+            msg.Write(entity.transform.Rotation.Z);
+
+            Server_SendToAll(msg, NetDeliveryMethod.ReliableOrdered);
+            base.Spawn(entity);
+        }
+
+        public override void Destroy(Entity entity)
+        {
+            base.Destroy(entity);
         }
 
         protected override void OnDispose()
@@ -195,6 +249,51 @@ namespace Projectsln.darkcomsoft.src.network
             _connectionList = null;
 
             base.OnDispose();
+        }
+
+        /// <summary>
+        /// Get a connection over the id of the connection
+        /// </summary>
+        /// <param name="uniq"></param>
+        /// <returns></returns>
+        private NetConnection GetConnection(long uniq)
+        {
+            if (_connectionList.TryGetValue(uniq, out NetConnection net))
+            {
+                return net;
+            }
+
+            Debug.Log("Dont found this connection: " + uniq);
+            return null;
+        }
+
+        /// <summary>
+        /// Send to everyone only dont to a specifieduser >> param:long ExcludeUniqid
+        /// </summary>
+        /// <param name="msg"></param>
+        /// <param name="method"></param>
+        /// <param name="ExcludeUniqid"></param>
+        private void Server_SendToAll(NetOutgoingMessage msg, NetDeliveryMethod method, long ExcludeUniqid)
+        {
+            if (_connectionList.Count <= 0) { return; }
+
+            NetConnection net = GetConnection(ExcludeUniqid);
+
+            if (net == null) { return; }
+
+            PeerServer.SendToAll(msg, GetConnection(ExcludeUniqid), method, 0);
+        }
+
+        /// <summary>
+        /// Send to everyone in connectted to server
+        /// </summary>
+        /// <param name="msg"></param>
+        /// <param name="method"></param>
+        private void Server_SendToAll(NetOutgoingMessage msg, NetDeliveryMethod method)
+        {
+            if (_connectionList.Count <= 0) { return; }
+
+            PeerServer.SendToAll(msg, method);
         }
     }
 }

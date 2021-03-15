@@ -5,6 +5,9 @@ using Lidgren.Network;
 using Projectsln.darkcomsoft.src.engine;
 using Projectsln.darkcomsoft.src.misc;
 using Projectsln.darkcomsoft.src.entity;
+using System.Reflection;
+using Projectsln.darkcomsoft.src.world;
+using Projectsln.darkcomsoft.src.entity.managers;
 
 namespace Projectsln.darkcomsoft.src.network
 {
@@ -15,16 +18,13 @@ namespace Projectsln.darkcomsoft.src.network
         /// </summary>
         public const NetDeliveryMethod NetBaseDeliveryMethod = NetDeliveryMethod.ReliableOrdered;
 
-        private Dictionary<string, Entity> m_entityList;
-
         private static NetworkManager m_instance;
         private NetworkType m_netType;
-        private NetworkBase network;
+        private NetworkBase m_network;
 
         public NetworkManager()
         {
             m_instance = this;
-            m_entityList = new Dictionary<string, Entity>();
         }
 
         public static void CreateServer(long ip, int port, int maxplayers)
@@ -59,21 +59,51 @@ namespace Projectsln.darkcomsoft.src.network
             instance.doDisconnect();
         }
 
-        public static void SpawnEntity()
-        {
 
+        /// <summary>
+        /// Instantiate a entity set the Type <T>, and set world you are calling the function
+        /// </summary>
+        /// <typeparam name="T">Type of the entity you want spawn</typeparam>
+        /// <param name="world">world you want to spawn a entity</param>
+        /// <returns></returns>
+        public static Entity SpawnEntity<T>(World world)
+        {
+            if (!IsRuning) { throw new Exception("You can't spawn a entity when you are disconnected or when server is not runing"); }
+
+            Entity entityBase = Utilits.CreateInstance<Entity>(typeof(T));
+            entityBase.Start(world);
+
+            EntityManager.AddEntity(entityBase);
+
+            instance.m_network.Spawn(entityBase);
+            return entityBase;
         }
 
-        public static void DestroyEntity()
+        public static void DestroyEntity(Entity entity, bool insta = false)
         {
+            if (!IsRuning) { throw new Exception("You can't destroy a entity when you are disconnected or when server is not runing"); }
 
+            if (EntityManager.ContainsEntity(entity))
+            {
+                instance.m_network.Destroy(entity);
+
+                if (insta)
+                {
+                    EntityManager.RemoveEntity(entity);
+                    entity.Dispose();
+                }
+                else
+                {
+                    entity.DestroyThis();
+                }
+            }
         }
 
         public void Tick()
         {
-            if (network != null)
+            if (m_network != null)
             {
-                network.Tick();
+                m_network.Tick();
             }
         }
 
@@ -81,10 +111,10 @@ namespace Projectsln.darkcomsoft.src.network
         {
             m_netType = NetworkType.none;
 
-            if (network != null)
+            if (m_network != null)
             {
-                network.Dispose();
-                network = null;
+                m_network.Dispose();
+                m_network = null;
             }
         }
 
@@ -93,7 +123,7 @@ namespace Projectsln.darkcomsoft.src.network
             if (m_netType != NetworkType.none) { Debug.Log("Can't create a server, Is allready runing a network instance: " + m_netType, "NETWORK");  return; }
 
             m_netType = NetworkType.Server;
-            network = new NetworkServer(ip, port, maxplayers);
+            m_network = new NetworkServer(ip, port, maxplayers);
         }
 
         private void doConnectClient(string ip, int port)
@@ -101,24 +131,63 @@ namespace Projectsln.darkcomsoft.src.network
             if (m_netType != NetworkType.none) { Debug.Log("Can't connect Is allready runing a network instance: " + m_netType, "NETWORK"); return; }
 
             m_netType = NetworkType.Client;
-            network = new NetworkClient(ip, port);
+            m_network = new NetworkClient(ip, port);
         }
 
         protected override void OnDispose()
         {
             Disconnect();//Call disconnect any way if the network is finished.
 
-            m_entityList.Clear();
-            m_entityList = null;
-
             m_instance = null;
             base.OnDispose();
         }
 
+        #region NetUtilits
+
+        public static NetConnection GetMyConnection()
+        {
+            foreach (var item in instance.m_network.getPeer.Connections)
+            {
+                if (item.RemoteUniqueIdentifier == instance.m_network.getPeer.UniqueIdentifier)
+                {
+                    return item;
+                }
+            }
+
+            Debug.LogError("Sorry this connection don't exist!");
+            return null;
+        }
+
+        public static NetConnection ServerConnection
+        {
+            get
+            {
+                NetConnection retval = null;
+                if (instance.m_network.getPeer.Connections.Count > 0)
+                {
+                    try
+                    {
+                        retval = instance.m_network.getPeer.Connections[0];
+                    }
+                    catch
+                    {
+                        // preempted!
+                        return null;
+                    }
+                }
+                return retval;
+            }
+        }
+        #endregion
+
         public static NetworkManager instance { get { return m_instance; } }
+        public static NetworkType getStatus { get { return instance.m_netType; } }
+        public static bool IsRuning { get { if (instance.m_netType != NetworkType.none) { return true; } return false; } }
+        public static bool IsServer { get { if (instance.m_netType == NetworkType.Server) { return true; } return false; } }
+        public static bool IsClient { get { if (instance.m_netType == NetworkType.Client) { return true; } return false; } }
     }
 
-    public enum NetworkType
+    public enum NetworkType : byte
     {
         none, Server, Client
     }
@@ -134,6 +203,56 @@ namespace Projectsln.darkcomsoft.src.network
         ConnectData, //Send all data when connect to server, EX:spawn all entitys 
 
     }
+
+    public class RPCALL
+    {
+        public MethodInfo _function;
+        public ParameterInfo[] _parameters;
+        public object _obj = null;
+
+        public object Execute(params object[] paramss)
+        {
+            if (_function == null) return null;
+
+            if (_parameters == null)
+            {
+                _parameters = _function.GetParameters();
+            }
+
+            try
+            {
+                return (_parameters.Length == 1 && _parameters[0].ParameterType == typeof(object[])) ? _function.Invoke(_obj, new object[] { paramss }) : _function.Invoke(_obj, paramss);
+            }
+            catch (System.Exception ex)
+            {
+                if (ex.GetType() == typeof(System.NullReferenceException)) return null;
+                Debug.LogException(ex.ToString());
+                return null;
+            }
+        }
+    }
+
+    [Serializable]
+    public class NetViewSerializer
+    {
+        public string WorldType;
+        public string EntityType;
+
+        public int ChannelID = 0;
+        public long Owner;
+        public int ViewID = 0;
+
+        public double p_x;
+        public double p_y;
+        public double p_z;
+
+        public double r_x;
+        public double r_y;
+        public double r_z;
+    }
+
+    [AttributeUsage(AttributeTargets.Method, AllowMultiple = true)]
+    public sealed class RPC : Attribute {  }
 
     public static class NetConfig
     {

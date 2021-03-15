@@ -1,5 +1,6 @@
 ﻿using Projectsln.darkcomsoft.src.engine;
 using Projectsln.darkcomsoft.src.misc;
+using Projectsln.darkcomsoft.src.network;
 using Projectsln.darkcomsoft.src.world;
 using System;
 using System.Collections.Generic;
@@ -21,7 +22,7 @@ namespace Projectsln.darkcomsoft.src.entity.managers
         {
             for (int i = 0; i < Instance.entityList.Count; i++)
             {
-                DestroyEntity(Instance.entityList[i].Value, true);
+                NetworkManager.DestroyEntity(Instance.entityList[i].Value, true);
             }
 
             entityList = null;
@@ -44,39 +45,19 @@ namespace Projectsln.darkcomsoft.src.entity.managers
             }
         }
 
-        /// <summary>
-        /// Instantiate a entity set the Type <T>, and set world you are calling the function
-        /// </summary>
-        /// <typeparam name="T">Type of the entity you want spawn</typeparam>
-        /// <param name="world">world you want to spawn a entity</param>
-        /// <returns></returns>
-        public static Entity SpawnEntity<T>(World world)
+        public static void AddEntity(Entity entity)
         {
-            Entity entityBase = Utilits.CreateInstance<Entity>(typeof(T));
-            entityBase.Start(world);
-            Instance.entityList.Add(KeyValuePair.Create(entityBase.GetWorld, entityBase));
-            return entityBase;
+            Instance.entityList.Add(KeyValuePair.Create(entity.GetWorld, entity));
         }
 
-        public static void DestroyEntity(Entity entity, bool insta = false)
+        public static void RemoveEntity(Entity entity)
         {
-            if (Instance.entityList.Contains(KeyValuePair.Create(entity.GetWorld, entity)))
-            {
-                if (insta)
-                {
-                    destroyEntity(entity);
-                }
-                else
-                {
-                    entity.DestroyThis();
-                }
-            }
+            Instance.entityList.Remove(KeyValuePair.Create(entity.GetWorld, entity));
         }
 
-        private static void destroyEntity(Entity entityBase)
+        public static bool ContainsEntity(Entity entity)
         {
-            Instance.entityList.Remove(KeyValuePair.Create(entityBase.GetWorld, entityBase));
-            entityBase.Dispose();
+            return Instance.entityList.Contains(KeyValuePair.Create(entity.GetWorld, entity));
         }
 
         public static void WorldCleared<T>(T world)
@@ -85,11 +66,12 @@ namespace Projectsln.darkcomsoft.src.entity.managers
             {
                 if (Instance.entityList[i].Key is T)
                 {
-                    DestroyEntity(Instance.entityList[i].Value, true);
+                    NetworkManager.DestroyEntity(Instance.entityList[i].Value, true);
                 }
             }
         }
 
         public static EntityManager Instance { get { return instance; } }
+        public List<KeyValuePair<World, Entity>> getEntityList { get { return entityList; } }
     }
 }

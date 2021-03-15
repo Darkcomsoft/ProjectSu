@@ -1,6 +1,7 @@
 ﻿using Projectsln.darkcomsoft.src.engine;
 using Projectsln.darkcomsoft.src.engine.render;
 using Projectsln.darkcomsoft.src.world;
+using Lidgren.Network;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -16,7 +17,15 @@ namespace Projectsln.darkcomsoft.src.entity
         private bool removed = false;
         private bool visible = false;
         private bool m_usefrustum = true;
+        private bool _IsEntityReady = false;
+
         protected World world;
+        protected int m_regionId = 0;
+        protected long _Owner;
+        protected int _ViewID = 0;
+        protected NetDeliveryMethod _DefaultNetDeliveryMethod = NetDeliveryMethod.Unreliable;
+
+        private Dictionary<string, RPCALL> _methodlist = new Dictionary<string, RPCALL>();
 
         public Entity() { }
 
@@ -117,5 +126,23 @@ namespace Projectsln.darkcomsoft.src.entity
         public World GetWorld { get { return world; } }
         public bool isRemoved { get { return removed; } }
         public bool isVisible { get { return visible; } }
+        public bool isReady { get { return _IsEntityReady; } }
+        public long getOwner { get { return _Owner; } }
+        public int getViewId { get { return _ViewID; } }
+        public int getRegionID { get { return m_regionId; } }
+        public bool isMine
+        {
+            get
+            {
+                if (Network.Runing)
+                {
+                    if (_Owner == Network.MyPeer.UniqueIdentifier)
+                    {
+                        return true;
+                    }
+                }
+                return false;
+            }
+        }
     }
 }

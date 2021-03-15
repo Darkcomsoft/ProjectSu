@@ -21,7 +21,9 @@ namespace Projectsln.darkcomsoft.src.network
             base.OnDispose();
         }
 
-        public NetPeer MyNetPeer { get { return m_peer; } }
+        public NetPeer getPeer { get { return m_peer; } }
+        public NetServer PeerServer { get { return (NetServer)m_peer; } }
+        public NetClient PeerClient { get { return (NetClient)m_peer; } }
         public NetPeerStatistics NetworkStatistics { get { return _peerStatistics; } }
     }
 }
