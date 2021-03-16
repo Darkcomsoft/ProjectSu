@@ -44,6 +44,19 @@ namespace Projectsln.darkcomsoft.src.world
             }
         }
 
+        public static World GetWorld(Type type)
+        {
+            foreach (var item in instance.worldList)
+            {
+                if (item.GetType().Equals(type))
+                {
+                    return item;
+                }
+            }
+
+            throw new Exception("Don't found this world, is not loaded or have some error");
+        }
+
         public static WorldManager Instance { get { return instance; } }
     }
 }

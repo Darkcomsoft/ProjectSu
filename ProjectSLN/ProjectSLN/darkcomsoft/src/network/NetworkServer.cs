@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Net;
 using System.Text;
 using Lidgren.Network;
+using OpenTK.Mathematics;
 using Projectsln.darkcomsoft.src.engine;
 using Projectsln.darkcomsoft.src.entity;
 using Projectsln.darkcomsoft.src.entity.managers;
@@ -199,9 +200,10 @@ namespace Projectsln.darkcomsoft.src.network
                 case NetDataType.RPC_Owner:
                     break;
                 case NetDataType.Spawn:
-                    
+                    ReceiveSpawnData(inc);
                     break;
                 case NetDataType.Destroy:
+                    ReceiveDestroyData(inc);
                     break;
                 default:
                     break;
@@ -234,6 +236,8 @@ namespace Projectsln.darkcomsoft.src.network
             msg.Write(entity.transform.Rotation.Z);
 
             Server_SendToAll(msg, NetDeliveryMethod.ReliableOrdered);
+
+            entity.SetupEntityNetcode(viewid, m_peer.UniqueIdentifier);
             base.Spawn(entity);
         }
 
@@ -258,6 +262,35 @@ namespace Projectsln.darkcomsoft.src.network
 
             base.OnDispose();
         }
+
+        #region ReadReceiveData
+        private void ReceiveSpawnData(NetIncomingMessage inc)
+        {
+            var typeName = inc.ReadString();//Entity Type
+            var worldType = inc.ReadString();//Curret Entity World
+
+            var viewId = inc.ReadInt32();
+            var regionId = inc.ReadInt32();//Current region id
+            var ownerId = inc.ReadVariableInt64();//Netcode ID
+
+            Vector3d position = new Vector3d(inc.ReadDouble(), inc.ReadDouble(), inc.ReadDouble());
+            Quaterniond rotation = new Quaterniond(inc.ReadDouble(), inc.ReadDouble(), inc.ReadDouble(), Quaterniond.Identity.W);
+
+            //DISABILITA ESSE GODIGO EMBAIXO, APENAS PARA LEMBRETE, DEPOIS QUANDO TIVER PRONTO O NETCODE TALVEZ ATIVALO DENOVO
+            //if (Type.GetType(typeName) == null || Type.GetType(worldType) == null) { return; }//check if this type exist
+            //if (Type.GetType(typeName) != typeof(Entity).BaseType) { return; } // check if is derivated from the entity class
+
+            Entity entityBase = EntityManager.AddEntity(Type.GetType(typeName), WorldManager.GetWorld(Type.GetType(worldType)));
+            entityBase.SetupEntityNetcode(viewId, ownerId);
+            entityBase.transform.Position = position;
+            entityBase.transform.Rotation = rotation;
+        }
+
+        private void ReceiveDestroyData(NetIncomingMessage inc)
+        {
+
+        }
+        #endregion
 
         /// <summary>
         /// Get a connection over the id of the connection

@@ -18,42 +18,81 @@ namespace Projectsln.darkcomsoft.src.entity
         private bool m_removed = false;
         private bool m_visible = false;
         private bool m_usefrustum = true;
-        private bool m_IsEntityReady = false;
-        private bool m_isEntityNetSynce = false;//if the entity is ready for do send RPC, if the entity is spaned on the network
+        private bool m_IsEntityReady = false;//if the entity is ready for do send RPC, if the entity is spaned on the network
 
         private World m_world;//world of this entity is in
         protected int m_regionId = 0;//this the in world region, is use to save netbanda, because this sync only player inside the region withouthers
         private long m_Owner;
         private int m_ViewID = 0;
-        private NetDeliveryMethod _DefaultNetDeliveryMethod = NetDeliveryMethod.Unreliable;
-
-        private Dictionary<string, RPCALL> _methodlist = new Dictionary<string, RPCALL>();
+        private NetDeliveryMethod m_DefaultNetDeliveryMethod = NetDeliveryMethod.Unreliable;
+        private Dictionary<string, RPCALL> _methodlist;
 
         public Entity() { }
 
         public void Start(World world)
         {
-            OnBeforeStart();
-
             m_transform = new Transform();
             this.m_world = world;
 
+            _methodlist = new Dictionary<string, RPCALL>();
+
+            OnAwake();
+        }
+
+        public void SetupEntityNetcode(int id, long owner)
+        {
+            m_ViewID = id;
+            m_Owner = owner;
+
+            m_IsEntityReady = true;
             OnStart();
         }
 
-        public void SetupEntityNetcode()
-        {
-
-
-            m_isEntityNetSynce = true;
-        }
-
-        public void Tick() { if (m_isEntityNetSynce && !m_removed) { doTick(); } }
+        public void Tick() { if (m_IsEntityReady && !m_removed) { doTick(); } }
 
         public void DestroyThis()
         {
             m_removed = true;
-            m_isEntityNetSynce = false;
+            m_IsEntityReady = false;
+        }
+
+        private void doTick()
+        {
+            m_visible = false;
+
+            if (m_usefrustum)
+            {
+                DoCheckIfVisible();
+            }
+
+            OnTick();//call tick function anyway if is visible or not, let this to the entity to decide do what when is visible or not
+        }
+
+        private void DoCheckIfVisible()
+        {
+            if (Camera.main == null) { return; }
+
+            //I DONT KNOW BUT THIS FUNCTIONS FRUSTUM NEED SOME OPTIMIZATION, I DON'T KNOW DO A LOOK
+            Frustum.CalculateFrustum(Camera.main.GetProjectionMatrix(), transform.GetTransformWorld);
+
+            if (Frustum.VolumeVsFrustum(transform.Position, transform.VolumeSize))
+            {
+                m_visible = true;
+            }
+        }
+
+        protected override void OnDispose()
+        {
+            m_IsEntityReady = false;
+
+            transform.Dispose();
+
+            _methodlist.Clear();
+
+            m_transform = null;
+            m_world = null;
+            _methodlist = null;
+            base.OnDispose();
         }
 
         /// <summary>
@@ -70,13 +109,13 @@ namespace Projectsln.darkcomsoft.src.entity
         /// </summary>
         protected virtual void OnTick() { }
         /// <summary>
-        /// Called after OnBeforeStart, and all entity system. EX:transform set world var etc.
+        ///  Called when entity is setup in network, this set up the Network and Call this
         /// </summary>
         protected virtual void OnStart() { }
         /// <summary>
-        /// Called before OnStart, and before all entity start system, EX:transform set world var etc. use with carefully
+        /// Called when class instance is created, before this the net is setup and Call the OnStart, Use this if need to do before network entity start
         /// </summary>
-        protected virtual void OnBeforeStart() { }
+        protected virtual void OnAwake() { }
         /// <summary>
         /// When become visible to a camera, is visible in camera View port
         /// </summary>
@@ -85,54 +124,6 @@ namespace Projectsln.darkcomsoft.src.entity
         /// When become invisible to a camera, is not visible in camera View port anymore
         /// </summary>
         protected virtual void OnBecomeInvisible() { }
-
-        private void doTick()
-        {
-            m_visible = false;
-
-            if (m_usefrustum)
-            {
-                DoCheckIfVisible();
-            }
-
-            OnTick();//call tick function anyway if is visible or not, let this to the entity to decide do what when is visible or not
-        }
-
-        private void DoCheckIfVisible()
-        {
-            if (m_usefrustum)
-            {
-                if (Camera.main == null) { return; }
-
-                //I DONT KNOW BUT THIS FUNCTIONS FRUSTUM NEED SOME OPTIMIZATION, I DON'T KNOW DO A LOOK
-                Frustum.CalculateFrustum(Camera.main.GetProjectionMatrix(), transform.GetTransformWorld);
-
-                if (Frustum.VolumeVsFrustum(transform.Position, transform.VolumeSize))
-                {
-                    m_visible = true;
-                }
-                else
-                {
-                    m_visible = false;
-                }
-            }
-            else
-            {
-                m_visible = false;
-            }
-        }
-
-        protected override void OnDispose()
-        {
-            transform.Dispose();
-
-            _methodlist.Clear();
-
-            m_transform = null;
-            m_world = null;
-            _methodlist = null;
-            base.OnDispose();
-        }
 
         public Transform transform { get { return m_transform; } }
         public World GetWorld { get { return m_world; } }
