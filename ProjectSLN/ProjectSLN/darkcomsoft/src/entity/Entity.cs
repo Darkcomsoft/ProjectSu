@@ -6,6 +6,7 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 using Projectsln.darkcomsoft.src.network;
+using Projectsln.darkcomsoft.src.entity.managers;
 
 namespace Projectsln.darkcomsoft.src.entity
 {
@@ -45,6 +46,7 @@ namespace Projectsln.darkcomsoft.src.entity
             m_Owner = owner;
 
             m_IsEntityReady = true;
+            NetworkManager.AddEntityNet(this);
             OnStart();
         }
 
@@ -83,6 +85,8 @@ namespace Projectsln.darkcomsoft.src.entity
 
         protected override void OnDispose()
         {
+            NetworkManager.RemoveEntityNet(this);
+
             m_IsEntityReady = false;
 
             transform.Dispose();

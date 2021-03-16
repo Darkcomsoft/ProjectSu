@@ -17,6 +17,7 @@ namespace Projectsln.darkcomsoft.src.network
         /// This i the default NetDeliveryMethod, used for the netcode systems, all entitys have ther one NetDeliveryMethod
         /// </summary>
         public const NetDeliveryMethod NetBaseDeliveryMethod = NetDeliveryMethod.ReliableOrdered;
+        private Dictionary<int, Entity> m_netViewEntityList = new Dictionary<int, Entity>();
 
         private static NetworkManager m_instance;
         private NetworkType m_netType;
@@ -121,11 +122,23 @@ namespace Projectsln.darkcomsoft.src.network
         {
             Disconnect();//Call disconnect any way if the network is finished.
 
+            m_netViewEntityList.Clear();
+
+            m_netViewEntityList = null;
             m_instance = null;
             base.OnDispose();
         }
 
         #region NetUtilits
+        public static void AddEntityNet(Entity entity)
+        {
+            instance.m_netViewEntityList.Add(entity.getViewId, entity);
+        }
+
+        public static void RemoveEntityNet(Entity entity)
+        {
+            instance.m_netViewEntityList.Remove(entity.getViewId);
+        }
 
         /// <summary>
         /// Check if the Specified Id is my
@@ -182,6 +195,8 @@ namespace Projectsln.darkcomsoft.src.network
         public static bool IsRuning { get { if (instance.m_netType != NetworkType.none) { return true; } return false; } }
         public static bool IsServer { get { if (instance.m_netType == NetworkType.Server) { return true; } return false; } }
         public static bool IsClient { get { if (instance.m_netType == NetworkType.Client) { return true; } return false; } }
+
+        public Dictionary<int, Entity> getNetViewEntityList { get { return m_netViewEntityList; } }
     }
 
     public enum NetworkType : byte

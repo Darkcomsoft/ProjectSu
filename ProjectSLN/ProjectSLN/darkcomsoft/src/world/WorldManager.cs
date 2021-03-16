@@ -57,6 +57,19 @@ namespace Projectsln.darkcomsoft.src.world
             throw new Exception("Don't found this world, is not loaded or have some error");
         }
 
+        public static World GetWorld<T>()
+        {
+            foreach (var item in instance.worldList)
+            {
+                if (item.GetType().Equals(typeof(T)))
+                {
+                    return item;
+                }
+            }
+
+            throw new Exception("Don't found this world, is not loaded or have some error");
+        }
+
         public static WorldManager Instance { get { return instance; } }
     }
 }

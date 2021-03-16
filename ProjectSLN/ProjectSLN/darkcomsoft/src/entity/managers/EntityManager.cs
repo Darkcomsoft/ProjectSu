@@ -12,7 +12,6 @@ namespace Projectsln.darkcomsoft.src.entity.managers
     {
         private static EntityManager instance;
         private List<Entity> m_entityList = new List<Entity>();
-        private Dictionary<int, Entity> m_netViewEntityList = new Dictionary<int, Entity>();
 
         public EntityManager()
         {
@@ -25,11 +24,9 @@ namespace Projectsln.darkcomsoft.src.entity.managers
             {
                 NetworkManager.DestroyEntity(m_entityList[i], true);
             }
-            m_netViewEntityList.Clear();
             m_entityList.Clear();
 
             m_entityList = null;
-            m_netViewEntityList = null;
             instance = null;
             base.OnDispose();
         }
@@ -125,6 +122,5 @@ namespace Projectsln.darkcomsoft.src.entity.managers
         public static EntityManager Instance { get { return instance; } }
         public List<Entity> getEntityList { get { return m_entityList; } }
         public Entity[] getEntityArray { get { return m_entityList.ToArray(); } }
-        public Dictionary<int ,Entity> getNetViewEntityList { get { return m_netViewEntityList; } }
     }
 }
