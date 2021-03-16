@@ -288,7 +288,8 @@ namespace Projectsln.darkcomsoft.src.network
 
         private void ReceiveDestroyData(NetIncomingMessage inc)
         {
-
+            var veirId = inc.ReadInt32();
+            EntityManager.RemoveEntity(entity);
         }
         #endregion
 

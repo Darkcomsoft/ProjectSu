@@ -11,7 +11,8 @@ namespace Projectsln.darkcomsoft.src.entity.managers
     public class EntityManager : ClassBase
     {
         private static EntityManager instance;
-        private List<KeyValuePair<World, Entity>> entityList = new List<KeyValuePair<World, Entity>>();
+        private List<Entity> m_entityList = new List<Entity>();
+        private Dictionary<int, Entity> m_netViewEntityList = new Dictionary<int, Entity>();
 
         public EntityManager()
         {
@@ -20,27 +21,30 @@ namespace Projectsln.darkcomsoft.src.entity.managers
 
         protected override void OnDispose()
         {
-            for (int i = 0; i < Instance.entityList.Count; i++)
+            for (int i = 0; i < m_entityList.Count; i++)
             {
-                NetworkManager.DestroyEntity(Instance.entityList[i].Value, true);
+                NetworkManager.DestroyEntity(m_entityList[i], true);
             }
+            m_netViewEntityList.Clear();
+            m_entityList.Clear();
 
-            entityList = null;
+            m_entityList = null;
+            m_netViewEntityList = null;
             instance = null;
             base.OnDispose();
         }
 
         public void Tick()
         {
-            for (int i = 0; i < entityList.Count; i++)
+            for (int i = 0; i < m_entityList.Count; i++)
             {
-                Entity entityBase = entityList[i].Value;
+                Entity entityBase = m_entityList[i];
                 entityBase.Tick();
 
                 if (entityBase.isRemoved)
                 {
                     entityBase.Dispose();
-                    entityList.RemoveAt(--i);
+                    m_entityList.RemoveAt(--i);
                 }
             }
         }
@@ -56,14 +60,14 @@ namespace Projectsln.darkcomsoft.src.entity.managers
             Entity entityBase = Utilits.CreateInstance<Entity>(typeof(T));
             entityBase.Start(world);
 
-            Instance.entityList.Add(KeyValuePair.Create(entityBase.GetWorld, entityBase));
+            Instance.m_entityList.Add(entityBase);
             return entityBase;
         }
 
         /// <summary>
         /// Dont use this to Spawn Entitys(USE THIS -> NetworkManager.SpawnEntity ), thi is just to add and create a Entity instance to the list, but only the netcode call this
         /// </summary>
-        /// <typeparam name="T"></typeparam>
+        /// <param name="type"></param>
         /// <param name="world"></param>
         /// <returns></returns>
         public static Entity AddEntity(Type type, World world)
@@ -71,7 +75,7 @@ namespace Projectsln.darkcomsoft.src.entity.managers
             Entity entityBase = Utilits.CreateInstance<Entity>(type);
             entityBase.Start(world);
 
-            Instance.entityList.Add(KeyValuePair.Create(entityBase.GetWorld, entityBase));
+            Instance.m_entityList.Add(entityBase);
             return entityBase;
         }
 
@@ -87,7 +91,7 @@ namespace Projectsln.darkcomsoft.src.entity.managers
             {
                 if (insta)
                 {
-                    Instance.entityList.Remove(KeyValuePair.Create(entity.GetWorld, entity));
+                    Instance.m_entityList.Remove(entity);
                     entity.Dispose();
                 }
                 else
@@ -99,21 +103,28 @@ namespace Projectsln.darkcomsoft.src.entity.managers
 
         public static bool ContainsEntity(Entity entity)
         {
-            return Instance.entityList.Contains(KeyValuePair.Create(entity.GetWorld, entity));
+            return Instance.m_entityList.Contains(entity);
+        }
+
+        public static bool ContainsEntity(int entity)
+        {
+            return Instance.m_netViewEntityList.ContainsKey(entity);
         }
 
         public static void WorldCleared<T>(T world)
         {
-            for (int i = 0; i < Instance.entityList.Count; i++)
+            for (int i = 0; i < Instance.m_entityList.Count; i++)
             {
-                if (Instance.entityList[i].Key is T)
+                if (Instance.m_entityList[i].GetWorld is T)
                 {
-                    NetworkManager.DestroyEntity(Instance.entityList[i].Value, true);
+                    NetworkManager.DestroyEntity(Instance.m_entityList[i], true);
                 }
             }
         }
 
         public static EntityManager Instance { get { return instance; } }
-        public List<KeyValuePair<World, Entity>> getEntityList { get { return entityList; } }
+        public List<Entity> getEntityList { get { return m_entityList; } }
+        public Entity[] getEntityArray { get { return m_entityList.ToArray(); } }
+        public Dictionary<int ,Entity> getNetViewEntityList { get { return m_netViewEntityList; } }
     }
 }
