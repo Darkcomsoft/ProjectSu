@@ -5,6 +5,7 @@ using Lidgren.Network;
 using System;
 using System.Collections.Generic;
 using System.Text;
+using Projectsln.darkcomsoft.src.network;
 
 namespace Projectsln.darkcomsoft.src.entity
 {
@@ -14,16 +15,17 @@ namespace Projectsln.darkcomsoft.src.entity
     public class Entity : ClassBase
     {
         private Transform m_transform;
-        private bool removed = false;
-        private bool visible = false;
+        private bool m_removed = false;
+        private bool m_visible = false;
         private bool m_usefrustum = true;
-        private bool _IsEntityReady = false;
+        private bool m_IsEntityReady = false;
+        private bool m_isEntityNetSynce = false;//if the entity is ready for do send RPC, if the entity is spaned on the network
 
-        protected World world;
-        protected int m_regionId = 0;
-        protected long _Owner;
-        protected int _ViewID = 0;
-        protected NetDeliveryMethod _DefaultNetDeliveryMethod = NetDeliveryMethod.Unreliable;
+        private World m_world;//world of this entity is in
+        protected int m_regionId = 0;//this the in world region, is use to save netbanda, because this sync only player inside the region withouthers
+        private long m_Owner;
+        private int m_ViewID = 0;
+        private NetDeliveryMethod _DefaultNetDeliveryMethod = NetDeliveryMethod.Unreliable;
 
         private Dictionary<string, RPCALL> _methodlist = new Dictionary<string, RPCALL>();
 
@@ -34,16 +36,24 @@ namespace Projectsln.darkcomsoft.src.entity
             OnBeforeStart();
 
             m_transform = new Transform();
-            this.world = world;
+            this.m_world = world;
 
             OnStart();
         }
 
-        public void Tick() { if (!removed) { doTick(); } }
+        public void SetupEntityNetcode()
+        {
+
+
+            m_isEntityNetSynce = true;
+        }
+
+        public void Tick() { if (m_isEntityNetSynce && !m_removed) { doTick(); } }
 
         public void DestroyThis()
         {
-            removed = true;
+            m_removed = true;
+            m_isEntityNetSynce = false;
         }
 
         /// <summary>
@@ -78,7 +88,7 @@ namespace Projectsln.darkcomsoft.src.entity
 
         private void doTick()
         {
-            visible = false;
+            m_visible = false;
 
             if (m_usefrustum)
             {
@@ -99,16 +109,16 @@ namespace Projectsln.darkcomsoft.src.entity
 
                 if (Frustum.VolumeVsFrustum(transform.Position, transform.VolumeSize))
                 {
-                    visible = true;
+                    m_visible = true;
                 }
                 else
                 {
-                    visible = false;
+                    m_visible = false;
                 }
             }
             else
             {
-                visible = false;
+                m_visible = false;
             }
         }
 
@@ -116,32 +126,27 @@ namespace Projectsln.darkcomsoft.src.entity
         {
             transform.Dispose();
 
-            m_transform = null;
+            _methodlist.Clear();
 
-            world = null;
+            m_transform = null;
+            m_world = null;
+            _methodlist = null;
             base.OnDispose();
         }
 
         public Transform transform { get { return m_transform; } }
-        public World GetWorld { get { return world; } }
-        public bool isRemoved { get { return removed; } }
-        public bool isVisible { get { return visible; } }
-        public bool isReady { get { return _IsEntityReady; } }
-        public long getOwner { get { return _Owner; } }
-        public int getViewId { get { return _ViewID; } }
+        public World GetWorld { get { return m_world; } }
+        public bool isRemoved { get { return m_removed; } }
+        public bool isVisible { get { return m_visible; } }
+        public bool isReady { get { return m_IsEntityReady; } }
+        public long getOwner { get { return m_Owner; } }
+        public int getViewId { get { return m_ViewID; } }
         public int getRegionID { get { return m_regionId; } }
         public bool isMine
         {
             get
             {
-                if (Network.Runing)
-                {
-                    if (_Owner == Network.MyPeer.UniqueIdentifier)
-                    {
-                        return true;
-                    }
-                }
-                return false;
+                return NetworkManager.IsMine(m_Owner);
             }
         }
     }

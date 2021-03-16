@@ -45,14 +45,41 @@ namespace Projectsln.darkcomsoft.src.entity.managers
             }
         }
 
-        public static void AddEntity(Entity entity)
+        /// <summary>
+        /// Dont use this to Spawn Entitys(USE THIS -> NetworkManager.SpawnEntity ), thi is just to add and create a Entity instance to the list, but only the netcode call this
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <param name="world"></param>
+        /// <returns></returns>
+        public static Entity AddEntity<T>(World world)
         {
-            Instance.entityList.Add(KeyValuePair.Create(entity.GetWorld, entity));
+            Entity entityBase = Utilits.CreateInstance<Entity>(typeof(T));
+            entityBase.Start(world);
+
+            Instance.entityList.Add(KeyValuePair.Create(entityBase.GetWorld, entityBase));
+            return entityBase;
         }
 
-        public static void RemoveEntity(Entity entity)
+        /// <summary>
+        /// Dont use this to Destroy Entitys, "USE THIS -> NetworkManager.DestroyEntity ", thi is just to remove a Entity from the list, and dispose the entity, but only the netcode call this
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <param name="world"></param>
+        /// <returns></returns>
+        public static void RemoveEntity(Entity entity, bool insta = false)
         {
-            Instance.entityList.Remove(KeyValuePair.Create(entity.GetWorld, entity));
+            if (ContainsEntity(entity))
+            {
+                if (insta)
+                {
+                    Instance.entityList.Remove(KeyValuePair.Create(entity.GetWorld, entity));
+                    entity.Dispose();
+                }
+                else
+                {
+                    entity.DestroyThis();
+                }
+            }
         }
 
         public static bool ContainsEntity(Entity entity)

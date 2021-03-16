@@ -59,7 +59,6 @@ namespace Projectsln.darkcomsoft.src.network
             instance.doDisconnect();
         }
 
-
         /// <summary>
         /// Instantiate a entity set the Type <T>, and set world you are calling the function
         /// </summary>
@@ -70,11 +69,7 @@ namespace Projectsln.darkcomsoft.src.network
         {
             if (!IsRuning) { throw new Exception("You can't spawn a entity when you are disconnected or when server is not runing"); }
 
-            Entity entityBase = Utilits.CreateInstance<Entity>(typeof(T));
-            entityBase.Start(world);
-
-            EntityManager.AddEntity(entityBase);
-
+            Entity entityBase = EntityManager.AddEntity<T>(world);
             instance.m_network.Spawn(entityBase);
             return entityBase;
         }
@@ -83,20 +78,8 @@ namespace Projectsln.darkcomsoft.src.network
         {
             if (!IsRuning) { throw new Exception("You can't destroy a entity when you are disconnected or when server is not runing"); }
 
-            if (EntityManager.ContainsEntity(entity))
-            {
-                instance.m_network.Destroy(entity);
-
-                if (insta)
-                {
-                    EntityManager.RemoveEntity(entity);
-                    entity.Dispose();
-                }
-                else
-                {
-                    entity.DestroyThis();
-                }
-            }
+            instance.m_network.Destroy(entity);
+            EntityManager.RemoveEntity(entity);
         }
 
         public void Tick()
@@ -143,6 +126,20 @@ namespace Projectsln.darkcomsoft.src.network
         }
 
         #region NetUtilits
+
+        /// <summary>
+        /// Check if the Specified Id is my
+        /// </summary>
+        /// <param name="uniqId"></param>
+        /// <returns></returns>
+        public static bool IsMine(long uniqId)
+        {
+            if (uniqId.Equals(instance.m_network.getPeer.UniqueIdentifier))
+            {
+                return true;
+            }
+            return false;
+        }
 
         public static NetConnection GetMyConnection()
         {
@@ -200,7 +197,9 @@ namespace Projectsln.darkcomsoft.src.network
         RPC_Owner, //RPC from client asking to send some data to the owner
         Spawn, //Spawn a entity
         Destroy, //Destroy a entity
-        ConnectData, //Send all data when connect to server, EX:spawn all entitys 
+        ConnectData, //Send all data when connect to server, EX:spawn all entitys
+        RequestSpawn, //Client send a ask to server to Spawn a entity
+        RequestDestroy, //Client send a ask to server to Destroy a entity
 
     }
 
@@ -238,7 +237,7 @@ namespace Projectsln.darkcomsoft.src.network
         public string WorldType;
         public string EntityType;
 
-        public int ChannelID = 0;
+        public int RegionID = 0;
         public long Owner;
         public int ViewID = 0;
 

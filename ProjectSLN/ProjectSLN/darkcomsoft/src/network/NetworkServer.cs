@@ -7,6 +7,7 @@ using Projectsln.darkcomsoft.src.engine;
 using Projectsln.darkcomsoft.src.entity;
 using Projectsln.darkcomsoft.src.entity.managers;
 using Projectsln.darkcomsoft.src.misc;
+using Projectsln.darkcomsoft.src.world;
 
 namespace Projectsln.darkcomsoft.src.network
 {
@@ -122,7 +123,7 @@ namespace Projectsln.darkcomsoft.src.network
 
                                 neww.Owner = kvp.Value.getOwner;
                                 neww.ViewID = kvp.Value.getViewId;
-                                neww.ChannelID = kvp.Value._currentChannelID;
+                                neww.RegionID = kvp.Value.getRegionID;
 
                                 neww.p_x = kvp.Value.transform.Position.X;
                                 neww.p_y = kvp.Value.transform.Position.Y;
@@ -137,7 +138,7 @@ namespace Projectsln.darkcomsoft.src.network
 
                             //Write the data to send when client connect
                             string data = JsonHelper.ToJson(netvi.ToArray());
-                            string compressed = DataCompressor.CompressStringToByte(data);
+                            byte[] compressed = DataCompressor.CompressStringToByte(data);
 
                             OuMS.Write(compressed);
 
@@ -156,15 +157,15 @@ namespace Projectsln.darkcomsoft.src.network
                         {
                             networkCallBacks.OnPlayerDisconnect?.Invoke(inc.SenderConnection);
 
-                            NEntity[] obj = _NetviewList.Values.ToArray();
+                            KeyValuePair<World, Entity>[] entitys = EntityManager.Instance.getEntityList.ToArray();
 
-                            for (int i = 0; i < obj.Length; i++)
+                            for (int i = 0; i < entitys.Length; i++)
                             {
-                                Debug.Log("Entity : " + obj[i]._Owner, "NETWORK");
-                                if (obj[i]._Owner == inc.SenderConnection.RemoteUniqueIdentifier)
+                                Debug.Log("Entity : " + entitys[i].Value.getOwner, "NETWORK");
+                                if (entitys[i].Value.getOwner == inc.SenderConnection.RemoteUniqueIdentifier)
                                 {
-                                    Debug.Log("Entity Destroyed: " + obj[i]._Owner, "NETWORK");
-                                    Destroy(obj[i]);
+                                    Debug.Log("Entity Destroyed: " + entitys[i].Value.getOwner, "NETWORK");
+                                    NetworkManager.DestroyEntity(entitys[i].Value);
                                 }
                             }
 
@@ -198,6 +199,7 @@ namespace Projectsln.darkcomsoft.src.network
                 case NetDataType.RPC_Owner:
                     break;
                 case NetDataType.Spawn:
+                    
                     break;
                 case NetDataType.Destroy:
                     break;
@@ -237,6 +239,12 @@ namespace Projectsln.darkcomsoft.src.network
 
         public override void Destroy(Entity entity)
         {
+            var msg = m_peer.CreateMessage();
+
+            msg.Write((byte)NetDataType.Destroy);
+            msg.Write(entity.getViewId);
+
+            Server_SendToAll(msg, NetDeliveryMethod.ReliableOrdered);
             base.Destroy(entity);
         }
 
