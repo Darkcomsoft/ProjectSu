@@ -3,8 +3,12 @@ using System.Collections.Generic;
 using System.Net;
 using System.Text;
 using Lidgren.Network;
+using OpenTK.Mathematics;
 using Projectsln.darkcomsoft.src.engine;
 using Projectsln.darkcomsoft.src.entity;
+using Projectsln.darkcomsoft.src.entity.managers;
+using Projectsln.darkcomsoft.src.misc;
+using Projectsln.darkcomsoft.src.world;
 
 namespace Projectsln.darkcomsoft.src.network
 {
@@ -141,8 +145,10 @@ namespace Projectsln.darkcomsoft.src.network
                 case NetDataType.RPC:
                     break;
                 case NetDataType.Spawn:
+                    ReadSpawnData(inc);
                     break;
                 case NetDataType.Destroy:
+                    ReadDestroyData(inc);
                     break;
                 case NetDataType.ConnectData:
                     break;
@@ -153,11 +159,43 @@ namespace Projectsln.darkcomsoft.src.network
 
         public override void Spawn(Entity entity)
         {
+            int viewid = Utilits.UniqueID(5);
+
+            var msg = m_peer.CreateMessage();
+
+            msg.Write((byte)NetDataType.Spawn);
+
+            msg.Write(entity.GetType().Name);//Entity Type
+            msg.Write(entity.GetWorld.GetType().Name);//Curret Entity World
+
+            msg.Write(viewid);
+            msg.Write(entity.getRegionID);//Current region id
+            msg.WriteVariableInt64(m_peer.UniqueIdentifier);//Netcode ID
+
+            //Position
+            msg.Write(entity.transform.Position.X);
+            msg.Write(entity.transform.Position.Y);
+            msg.Write(entity.transform.Position.Z);
+
+            //Rotation
+            msg.Write(entity.transform.Rotation.X);
+            msg.Write(entity.transform.Rotation.Y);
+            msg.Write(entity.transform.Rotation.Z);
+
+            PeerClient.SendMessage(msg, NetDeliveryMethod.ReliableOrdered);
+
+            entity.SetupEntityNetcode(viewid, m_peer.UniqueIdentifier);
             base.Spawn(entity);
         }
 
         public override void Destroy(Entity entity)
         {
+            var msg = m_peer.CreateMessage();
+
+            msg.Write((byte)NetDataType.Destroy);
+            msg.Write(entity.getViewId);
+
+            PeerClient.SendMessage(msg, NetDeliveryMethod.ReliableOrdered);
             base.Destroy(entity);
         }
 
@@ -167,5 +205,36 @@ namespace Projectsln.darkcomsoft.src.network
             networkCallBacks = null;
             base.OnDispose();
         }
+
+        #region ReadReceviveDatas
+        private void ReadSpawnData(NetIncomingMessage inc)
+        {
+            var typeName = inc.ReadString();//Entity Type
+            var worldType = inc.ReadString();//Curret Entity World
+
+            var viewId = inc.ReadInt32();
+            var regionId = inc.ReadInt32();//Current region id
+            var ownerId = inc.ReadVariableInt64();//Netcode ID
+
+            Vector3d position = new Vector3d(inc.ReadDouble(), inc.ReadDouble(), inc.ReadDouble());
+            Quaterniond rotation = new Quaterniond(inc.ReadDouble(), inc.ReadDouble(), inc.ReadDouble(), Quaterniond.Identity.W);
+
+            if (EntityManager.ContainsEntity(NetworkManager.instance.getNetViewEntityList[viewId])) { return; }//Check if the entity is allready in the list
+
+            Entity entityBase = EntityManager.AddEntity(Type.GetType(typeName), WorldManager.GetWorld(Type.GetType(worldType)));
+            entityBase.SetupEntityNetcode(viewId, ownerId);
+            entityBase.transform.Position = position;
+            entityBase.transform.Rotation = rotation;
+        }
+
+        private void ReadDestroyData(NetIncomingMessage inc)
+        {
+            var viewId = inc.ReadInt32();
+
+            if (!EntityManager.ContainsEntity(NetworkManager.instance.getNetViewEntityList[viewId])) { return; }//Check if the entity is in the List
+
+            EntityManager.RemoveEntity(NetworkManager.instance.getNetViewEntityList[viewId]);//Destroy the entity in engine
+        }
+        #endregion
     }
 }

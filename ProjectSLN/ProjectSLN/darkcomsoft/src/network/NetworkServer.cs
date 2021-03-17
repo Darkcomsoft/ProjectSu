@@ -119,20 +119,20 @@ namespace Projectsln.darkcomsoft.src.network
                             {
                                 NetViewSerializer neww = new NetViewSerializer();
 
-                                neww.WorldType = kvp.Value.GetWorld.GetType().Name;
+                                neww.WorldType = kvp.GetWorld.GetType().Name;
                                 neww.EntityType = kvp.GetType().Name;
 
-                                neww.Owner = kvp.Value.getOwner;
-                                neww.ViewID = kvp.Value.getViewId;
-                                neww.RegionID = kvp.Value.getRegionID;
+                                neww.Owner = kvp.getOwner;
+                                neww.ViewID = kvp.getViewId;
+                                neww.RegionID = kvp.getRegionID;
 
-                                neww.p_x = kvp.Value.transform.Position.X;
-                                neww.p_y = kvp.Value.transform.Position.Y;
-                                neww.p_z = kvp.Value.transform.Position.Z;
+                                neww.p_x = kvp.transform.Position.X;
+                                neww.p_y = kvp.transform.Position.Y;
+                                neww.p_z = kvp.transform.Position.Z;
 
-                                neww.r_x = kvp.Value.transform.Rotation.X;
-                                neww.r_y = kvp.Value.transform.Rotation.Y;
-                                neww.r_z = kvp.Value.transform.Rotation.Z;
+                                neww.r_x = kvp.transform.Rotation.X;
+                                neww.r_y = kvp.transform.Rotation.Y;
+                                neww.r_z = kvp.transform.Rotation.Z;
 
                                 netvi.Add(neww);
                             }
@@ -158,15 +158,15 @@ namespace Projectsln.darkcomsoft.src.network
                         {
                             networkCallBacks.OnPlayerDisconnect?.Invoke(inc.SenderConnection);
 
-                            KeyValuePair<World, Entity>[] entitys = EntityManager.Instance.getEntityList.ToArray();
+                            Entity[] entitys = EntityManager.Instance.getEntityArray;
 
                             for (int i = 0; i < entitys.Length; i++)
                             {
-                                Debug.Log("Entity : " + entitys[i].Value.getOwner, "NETWORK");
-                                if (entitys[i].Value.getOwner == inc.SenderConnection.RemoteUniqueIdentifier)
+                                Debug.Log("Entity : " + entitys[i].getOwner, "NETWORK");
+                                if (entitys[i].getOwner == inc.SenderConnection.RemoteUniqueIdentifier)
                                 {
-                                    Debug.Log("Entity Destroyed: " + entitys[i].Value.getOwner, "NETWORK");
-                                    NetworkManager.DestroyEntity(entitys[i].Value);
+                                    Debug.Log("Entity Destroyed: " + entitys[i].getOwner, "NETWORK");
+                                    NetworkManager.DestroyEntity(entitys[i]);
                                 }
                             }
 
@@ -266,6 +266,7 @@ namespace Projectsln.darkcomsoft.src.network
         #region ReadReceiveData
         private void ReceiveSpawnData(NetIncomingMessage inc)
         {
+            #region ReadClientReceiveMSG
             var typeName = inc.ReadString();//Entity Type
             var worldType = inc.ReadString();//Curret Entity World
 
@@ -284,12 +285,52 @@ namespace Projectsln.darkcomsoft.src.network
             entityBase.SetupEntityNetcode(viewId, ownerId);
             entityBase.transform.Position = position;
             entityBase.transform.Rotation = rotation;
+            #endregion
+
+            //Send to every one but exclude the sender
+            #region ServerResend
+            int viewid = Utilits.UniqueID(5);
+
+            var msg = m_peer.CreateMessage();
+
+            msg.Write((byte)NetDataType.Spawn);
+
+            msg.Write(entityBase.GetType().Name);//Entity Type
+            msg.Write(entityBase.GetWorld.GetType().Name);//Curret Entity World
+
+            msg.Write(viewid);
+            msg.Write(entityBase.getRegionID);//Current region id
+            msg.WriteVariableInt64(m_peer.UniqueIdentifier);//Netcode ID
+
+            //Position
+            msg.Write(entityBase.transform.Position.X);
+            msg.Write(entityBase.transform.Position.Y);
+            msg.Write(entityBase.transform.Position.Z);
+
+            //Rotation
+            msg.Write(entityBase.transform.Rotation.X);
+            msg.Write(entityBase.transform.Rotation.Y);
+            msg.Write(entityBase.transform.Rotation.Z);
+
+            Server_SendToAll(msg, NetDeliveryMethod.ReliableOrdered, ownerId);
+            #endregion
         }
 
         private void ReceiveDestroyData(NetIncomingMessage inc)
         {
-            var veirId = inc.ReadInt32();
-            EntityManager.RemoveEntity(entity);
+            var viewId = inc.ReadInt32();
+            var owner = NetworkManager.instance.getNetViewEntityList[viewId].getOwner;
+
+            if (inc.SenderConnection.RemoteUniqueIdentifier != owner) { return; }//if the destroy sender don't own the entity return, only owner of the entity can destroy the entity or the server
+
+            var msg = m_peer.CreateMessage();
+
+            msg.Write((byte)NetDataType.Destroy);
+            msg.Write(viewId);
+
+            Server_SendToAll(msg, NetDeliveryMethod.ReliableOrdered, owner);//send to everyone to destroy this entity
+
+            EntityManager.RemoveEntity(NetworkManager.instance.getNetViewEntityList[viewId]);//Destroy the entity in engine
         }
         #endregion
 
