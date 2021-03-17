@@ -141,6 +141,7 @@ namespace Projectsln.darkcomsoft.src.network
                             string data = JsonHelper.ToJson(netvi.ToArray());
                             byte[] compressed = DataCompressor.CompressStringToByte(data);
 
+                            OuMS.Write(compressed.Length);//send the bytes count to the Reder know how many need to read
                             OuMS.Write(compressed);
 
                             Debug.Log("ConnectData(XML): " + data, "NETWORK");

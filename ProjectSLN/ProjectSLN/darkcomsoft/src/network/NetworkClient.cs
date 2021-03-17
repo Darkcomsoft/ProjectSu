@@ -151,6 +151,7 @@ namespace Projectsln.darkcomsoft.src.network
                     ReadDestroyData(inc);
                     break;
                 case NetDataType.ConnectData:
+                    ReadConnectData(inc);
                     break;
                 default:
                     break;
@@ -234,6 +235,27 @@ namespace Projectsln.darkcomsoft.src.network
             if (!EntityManager.ContainsEntity(NetworkManager.instance.getNetViewEntityList[viewId])) { return; }//Check if the entity is in the List
 
             EntityManager.RemoveEntity(NetworkManager.instance.getNetViewEntityList[viewId]);//Destroy the entity in engine
+        }
+
+        private void ReadConnectData(NetIncomingMessage inc)
+        {
+            int byteNumber = inc.ReadInt32();
+            byte[] compressed = inc.ReadBytes(byteNumber);
+
+            string json = DataCompressor.DecompressByteToString(compressed);
+
+            NetViewSerializer[] entitylist = JsonHelper.FromJson<NetViewSerializer>(json);
+
+            foreach (var kvp in entitylist)
+            {
+                Debug.Log("EntityReceived: " + kvp.ViewID);
+                Entity entityBase = EntityManager.AddEntity(Type.GetType(kvp.EntityType), WorldManager.GetWorld(Type.GetType(kvp.WorldType)));
+                entityBase.SetupEntityNetcode(kvp.ViewID, kvp.Owner);
+                entityBase.transform.Position = new Vector3d(kvp.p_x, kvp.p_y, kvp.p_z);
+                entityBase.transform.Rotation = new Quaterniond(kvp.r_x, kvp.r_y, kvp.r_z, Quaterniond.Identity.W);
+            }
+
+            networkCallBacks.OnReceivedServerData?.Invoke();
         }
         #endregion
     }
