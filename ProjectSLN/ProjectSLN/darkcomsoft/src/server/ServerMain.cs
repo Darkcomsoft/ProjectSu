@@ -58,7 +58,7 @@ namespace Projectsln.darkcomsoft.src.server
 				
 				if (_watchUpdate.ElapsedMilliseconds - lastTimer1 > 1000)
 				{
-					Application.windowsConsole?.SetTitleConsole("ProjectEvllyn-Server | " + ticks + " ticks, " + frames + " fps");
+					Application.windowsConsole?.SetTitleConsole("ProjectEvllyn-Server | " + l_ticks + " ticks, " + l_frames + " fps");
 					//Debug.Log(ticks + " ticks, " + frames + " fps");
 					lastTimer1 += 1000;
 					l_frames = 0;
