@@ -22,14 +22,14 @@ namespace Projectsln.darkcomsoft.src
             WorldManager.SpawnWorld<MainMenuWorld>();
         }
 
-        public void Tick(double time)
+        public override void Tick()
         {
-            
+            base.Tick();
         }
 
-        public void TickDraw(double time)
+        public override void TickDraw()
         {
-
+            base.TickDraw();
         }
 
         protected override void OnDispose()

@@ -152,6 +152,7 @@ namespace Projectsln.darkcomsoft.src.consolecli.systemconsole
 			System.Console.ForegroundColor = ConsoleColor.Green;
 			string[] textarray = inputString.Split(" "[0]);
 			//Commands.ReadInputCommand(textarray);
+			WriteLine(inputString);
 			System.Console.ForegroundColor = ConsoleColor.White;
 
 			var strtext = inputString;

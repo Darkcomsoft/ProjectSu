@@ -65,6 +65,7 @@ namespace Projectsln.darkcomsoft.src
 
         public void Tick(double time)
         {
+            engine.Debug.Log("Tick");
             if (entityManager != null)
             {
                 entityManager.Tick();
@@ -77,11 +78,12 @@ namespace Projectsln.darkcomsoft.src
 
             QueeSystem.Tick();
             windowsConsole?.Tick();
+            gameInstance?.Tick();
         }
 
         public void TickDraw(double time)
         {
-
+            gameInstance?.TickDraw();
         }
 
         protected override void OnDispose()
