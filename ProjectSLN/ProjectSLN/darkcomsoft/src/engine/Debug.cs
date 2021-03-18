@@ -1,4 +1,5 @@
 ﻿using OpenTK.Graphics.OpenGL4;
+using Projectsln.darkcomsoft.src.server;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -29,7 +30,7 @@ namespace Projectsln.darkcomsoft.src.engine
             System.Diagnostics.Debug.WriteLine( string.Format("{0} {1}LOG: {2}", GetPrintTime(), callerName, menssage));
 #endif
 #elif Server
-            System.Diagnostics.Debug.WriteLine( string.Format("{0} {1}LOG: {2}", GetPrintTime(), callerName, menssage));
+            Console.WriteLine(string.Format("{0} {1}LOG: {2}", GetPrintTime(), callerName, menssage));
 #endif
         }
 
@@ -47,8 +48,8 @@ namespace Projectsln.darkcomsoft.src.engine
 #else
             System.Diagnostics.Debug.WriteLine(string.Format("{0} {1}WARNING: {2}", GetPrintTime(), caller,menssage));
 #endif
-#elif  Server
-            System.Diagnostics.Debug.WriteLine(string.Format("{0} {1}WARNING: {2}", GetPrintTime(), caller,menssage));
+#elif Server
+            Console.WriteLine(string.Format("{0} {1}WARNING: {2}", GetPrintTime(), caller, menssage));
 #endif
         }
 
@@ -66,8 +67,8 @@ namespace Projectsln.darkcomsoft.src.engine
 #else
             System.Diagnostics.Debug.WriteLine(string.Format("{0} {1}ERROR: {2}", GetPrintTime(), caller, menssage));
 #endif
-#elif  Server
-            System.Diagnostics.Debug.WriteLine(string.Format("{0} {1}ERROR: {2}", GetPrintTime(), caller, menssage));
+#elif Server
+            Console.WriteLine(string.Format("{0} {1}ERROR: {2}", GetPrintTime(), caller, menssage));
 #endif
         }
 
@@ -82,7 +83,7 @@ namespace Projectsln.darkcomsoft.src.engine
             System.Diagnostics.Debug.Fail(menssage);
 #endif
 #elif Server
-            Server.Instance.WriteLine("ERROR: " + menssage);
+            Console.WriteLine("ERROR: " + menssage);
 #endif
         }
 
@@ -91,7 +92,7 @@ namespace Projectsln.darkcomsoft.src.engine
 #if Client
             throw new Exception(menssage);
 #elif Server
-            Server.Instance.WriteLine("Exception: " + menssage);
+            Console.WriteLine("Exception: " + menssage);
 #endif
         }
 

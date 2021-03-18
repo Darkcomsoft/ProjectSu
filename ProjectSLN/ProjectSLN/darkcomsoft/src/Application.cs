@@ -1,7 +1,10 @@
 ﻿using Projectsln.darkcomsoft.src.consolecli;
+using Projectsln.darkcomsoft.src.consolecli.systemconsole;
 using Projectsln.darkcomsoft.src.engine;
 using Projectsln.darkcomsoft.src.engine.render;
 using Projectsln.darkcomsoft.src.entity.managers;
+using Projectsln.darkcomsoft.src.enums;
+using Projectsln.darkcomsoft.src.network;
 using Projectsln.darkcomsoft.src.world;
 using System;
 using System.Collections.Generic;
@@ -11,6 +14,9 @@ using System.Text;
 
 namespace Projectsln.darkcomsoft.src
 {
+    /// <summary>
+    /// Application is the base class for the entity systesm, this is used by the server or client
+    /// </summary>
     public class Application : ClassBase
     {
         public const string AppName = "ProjectSLN";
@@ -19,24 +25,42 @@ namespace Projectsln.darkcomsoft.src
         public static readonly string BinaryPath = GetBinaryPath();
         public static readonly string AssetsPath = GetAssetsPath() + "\\Assets";
 
-        public static bool NoSoundMode = false;
+        public static ApplicationType AppType { get; private set; }
 
         public static BuildTypeBase gameInstance;// this is the game instance EX: Client or Server
 
         public static WorldManager worldManager;
         public static EntityManager entityManager;
+        public static NetworkManager networkManager;
 
-        public Application()
+        public static WindowsConsole windowsConsole;
+
+        public Application(ApplicationType applicationType)
         {
+            AppType = applicationType;
+
+            windowsConsole = new WindowsConsole();
+
             worldManager = new WorldManager();
             entityManager = new EntityManager();
+            networkManager = new NetworkManager();
 
             for (int i = 0; i < 100; i++)
             {
                 ConsoleCLI.Execute<TesteCvar>(i);
             }
 
-            StartGame();
+            switch (applicationType)
+            {
+                case ApplicationType.Client:
+                    StartGame();
+                    break;
+                case ApplicationType.Server:
+                    StartServer();
+                    break;
+                default:
+                    return;
+            }
         }
 
         public void Tick(double time)
@@ -46,7 +70,13 @@ namespace Projectsln.darkcomsoft.src
                 entityManager.Tick();
             }
 
+            if (networkManager != null)
+            {
+                networkManager.Tick();
+            }
+
             QueeSystem.Tick();
+            windowsConsole?.Tick();
         }
 
         public void TickDraw(double time)
@@ -62,11 +92,17 @@ namespace Projectsln.darkcomsoft.src
                 gameInstance = null;
             }
 
+            networkManager?.Dispose();
+            networkManager = null;
+
             worldManager?.Dispose();
             worldManager = null;
 
             entityManager?.Dispose();
             entityManager = null;
+
+            windowsConsole?.Dispose();
+            windowsConsole = null;
             base.OnDispose();
         }
 

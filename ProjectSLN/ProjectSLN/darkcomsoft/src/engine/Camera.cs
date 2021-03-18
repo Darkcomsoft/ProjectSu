@@ -17,7 +17,7 @@ namespace Projectsln.darkcomsoft.src.engine
     {
         private static Camera Main;
 
-        private EntityBase entityBase;
+        private Entity entityBase;
         public Vector3 position;
         public Quaternion rotation;
 
@@ -31,7 +31,7 @@ namespace Projectsln.darkcomsoft.src.engine
         private Matrix4 ViewMatrix;
         private Matrix4 ProjectionMatrix;
 
-        public Camera(EntityBase entity, float camHight)
+        public Camera(Entity entity, float camHight)
         {
             Main = this;
 

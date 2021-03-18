@@ -4,6 +4,7 @@ using OpenTK.Windowing.Common;
 using OpenTK.Windowing.Desktop;
 using OpenTK.Windowing.GraphicsLibraryFramework;
 using Projectsln.darkcomsoft.src.engine;
+using Projectsln.darkcomsoft.src.enums;
 using System;
 using System.Collections.Generic;
 using System.Drawing;
@@ -61,7 +62,7 @@ namespace Projectsln.darkcomsoft.src.engine.window
             if (!isRunning)
             {
                 isRunning = true;
-                application = new Application();
+                application = new Application(ApplicationType.Client);
                 Size = new Vector2i(800, 600);
             }
             else

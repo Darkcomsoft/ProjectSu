@@ -2,6 +2,7 @@
 using Projectsln.darkcomsoft.src;
 using Projectsln.darkcomsoft.src.engine;
 using Projectsln.darkcomsoft.src.engine.window;
+using Projectsln.darkcomsoft.src.server;
 using System;
 using System.Runtime.InteropServices;
 using System.Threading;
@@ -12,6 +13,16 @@ namespace Projectsln.darkcomsoft.src
     {
         [MTAThread]
         static void Main(string[] args)
+        {
+#if Client
+            StartClient();
+#endif
+#if Server
+            StartServer();
+#endif
+        }
+
+        private static void StartClient()
         {
             CheckOpenAL();
 
@@ -57,12 +68,14 @@ namespace Projectsln.darkcomsoft.src
                     Debug.LogFail(ex.Message + " StackTrace: " + ex.StackTrace);
                 }
             }
-#if Server
-            using (Server server = new Server())
+        }
+
+        private static void StartServer()
+        {
+            using (ServerLogic server = new ServerLogic())
             {
                 server.Run();
             }
-#endif
         }
 
         private static void CheckOpenAL()
@@ -70,14 +83,14 @@ namespace Projectsln.darkcomsoft.src
             if (CheckLibrary("openal32.dll"))
             {
                 Debug.Log("You Have OpenAL(Audio Library), you good to go!", "OpenAL");
-                Application.NoSoundMode = false;
+                //Application.NoSoundMode = false;
 
             }
             else
             {
                 Debug.LogError("You don't Have OpanAL(Audio Library), you need to Download: https://www.openal.org/", "OpenAL");
                 Debug.Log("Starting! No-Sound Mode ):", "OpenAL");
-                Application.NoSoundMode = true;
+                //Application.NoSoundMode = true;
             }
         }
 
