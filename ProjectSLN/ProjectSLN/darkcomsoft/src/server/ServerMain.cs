@@ -32,12 +32,14 @@ namespace Projectsln.darkcomsoft.src.server
 			var l_frames = 0;
 			var l_ticks = 0;
 			var lastTimer1 = _watchUpdate.ElapsedMilliseconds;
+			long now = 0;
+			var dorender = true;
 
 			//REMOVER A PARTE DE RENDER DESSE LOPPING, NO SERVER NAO A NECESSIDADE DE TER UM RENDER LOOP APENAS UM TICK LOOP
 			while (serverIsRuning)
             {
-				var dorender = true;
-				var now = _watchUpdate.ElapsedMilliseconds;
+				dorender = true;
+				now = _watchUpdate.ElapsedMilliseconds;
 				l_noprocess += (now - l_lastTime) / l_mspertick;
 				l_lastTime = now;
 				while (l_noprocess >= 1)

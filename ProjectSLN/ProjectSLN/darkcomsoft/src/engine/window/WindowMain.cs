@@ -45,6 +45,8 @@ namespace Projectsln.darkcomsoft.src.engine.window
 
             FrameRate = (int)gameWindowSettings.RenderFrequency;
             TickRate = (int)gameWindowSettings.UpdateFrequency;
+
+            VSync = VSyncMode.Off;//set the VSync on start, because fuck-it, nobody wants this (:
         }
 
         public void Run()
@@ -64,18 +66,24 @@ namespace Projectsln.darkcomsoft.src.engine.window
             _watchTick = new System.Diagnostics.Stopwatch();
             _watchDraw = new System.Diagnostics.Stopwatch();
 
+            _watchUpdate.Start();
+            _watchTick.Start();
+            _watchDraw.Start();
+
             var l_lastTime = _watchUpdate.ElapsedMilliseconds;
             var l_mspertick = 1000.0d / TickRate;
             var l_noprocess = 0d;
             var l_frames = 0;
             var l_ticks = 0;
             var lastTimer1 = _watchUpdate.ElapsedMilliseconds;
+            long now = 0;
+            var dorender = true;
 
             //REMOVER A PARTE DE RENDER DESSE LOPPING, NO SERVER NAO A NECESSIDADE DE TER UM RENDER LOOP APENAS UM TICK LOOP
             while (true)
             {
-                var dorender = true;
-                var now = _watchUpdate.ElapsedMilliseconds;
+                dorender = true;
+                now = _watchUpdate.ElapsedMilliseconds;
                 l_noprocess += (now - l_lastTime) / l_mspertick;
                 l_lastTime = now;
 
@@ -95,7 +103,7 @@ namespace Projectsln.darkcomsoft.src.engine.window
                     dorender = true;
                 }
 
-                Thread.Sleep(1);
+                Thread.Sleep(2);
 
                 if (dorender)
                 {
@@ -105,8 +113,8 @@ namespace Projectsln.darkcomsoft.src.engine.window
 
                 if (_watchUpdate.ElapsedMilliseconds - lastTimer1 > 1000)
                 {
-                    //Application.windowsConsole?.SetTitleConsole("ProjectEvllyn-Server | " + l_ticks + " ticks, " + l_frames + " fps");
                     Debug.Log(l_ticks + " ticks, " + l_frames + " fps");
+                    Title = l_ticks + " ticks, " + l_frames + " fps";
                     lastTimer1 += 1000;
                     l_frames = 0;
                     l_ticks = 0;
@@ -124,8 +132,12 @@ namespace Projectsln.darkcomsoft.src.engine.window
         {
             OnTickDraw(_watchDraw.Elapsed.TotalSeconds);
             _watchDraw.Restart();
-        }
 
+            if (_vSync == VSyncMode.Adaptive)
+            {
+                GLFW.SwapInterval(0);
+            }
+        }
 
         protected virtual void OnLoad()
         {
@@ -194,10 +206,10 @@ namespace Projectsln.darkcomsoft.src.engine.window
 
             if (Time._Time >= int.MaxValue)
             {
-                Time._Time = -Time._Time;
+                Time._Time = 0;
             }
 
-            Title = string.Format("UPS:{0} FPS:{1}", Time.UPS, Time.FPS);
+            //Title = string.Format("UPS:{0} FPS:{1}", Time.UPS, Time.FPS);
         }
 
         protected override void OnResize(ResizeEventArgs e)
@@ -299,6 +311,6 @@ namespace Projectsln.darkcomsoft.src.engine.window
         public int Width { get { return instance.width; } }
         public int Height { get { return instance.height; } }
 
-        public static WindowClass Instance { get => instance; private set { } }
+        public static WindowMain Instance { get => instance; private set { } }
     }
 }

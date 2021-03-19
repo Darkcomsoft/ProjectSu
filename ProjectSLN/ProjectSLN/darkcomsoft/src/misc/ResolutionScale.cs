@@ -19,8 +19,8 @@ namespace Projectsln.darkcomsoft.src.misc
 
         public ResolutionScale()
         {
-            this.scaledWidth = WindowClass.Instance.Width;
-            this.scaledHeight = WindowClass.Instance.Height;
+            this.scaledWidth = WindowMain.Instance.Width;
+            this.scaledHeight = WindowMain.Instance.Height;
             this.scaleFactor = 1;
             bool flag = false;
             int i = GameSettings.GuiScale;

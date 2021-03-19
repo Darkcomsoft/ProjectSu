@@ -65,7 +65,7 @@ namespace Projectsln.darkcomsoft.src
 
         public void Tick(double time)
         {
-            engine.Debug.Log("Tick");
+            //engine.Debug.Log("Tick");
             if (entityManager != null)
             {
                 entityManager.Tick();

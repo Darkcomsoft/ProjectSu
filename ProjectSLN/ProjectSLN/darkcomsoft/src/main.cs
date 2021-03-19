@@ -27,14 +27,14 @@ namespace Projectsln.darkcomsoft.src
             CheckOpenAL();
 
             GameWindowSettings gameWindowSettings = GameWindowSettings.Default;
-            gameWindowSettings.IsMultiThreaded = false;
-            gameWindowSettings.RenderFrequency = 60;
+            gameWindowSettings.IsMultiThreaded = false;//ISSO TAMBEM NAO ESTA SENDO USADO, SE PA NUNCA SERA NAO SEI
+            gameWindowSettings.RenderFrequency = 60;//POR EM QUANTO SETAR O FRAME RATE ESTA DISABILITADO
             gameWindowSettings.UpdateFrequency = 60;
 
             NativeWindowSettings nativeWindow = NativeWindowSettings.Default;
             nativeWindow.API = OpenTK.Windowing.Common.ContextAPI.OpenGL;
             nativeWindow.APIVersion = new Version(3, 3);
-            nativeWindow.Profile = OpenTK.Windowing.Common.ContextProfile.Core;
+            nativeWindow.Profile = OpenTK.Windowing.Common.ContextProfile.Core;//LEMBRAR DE SETAR NO SHADER A VERSAO CORE EX:#version 330 core
             nativeWindow.WindowState = OpenTK.Windowing.Common.WindowState.Normal;
             nativeWindow.WindowBorder = OpenTK.Windowing.Common.WindowBorder.Resizable;
             nativeWindow.Flags = OpenTK.Windowing.Common.ContextFlags.Default;
@@ -45,7 +45,7 @@ namespace Projectsln.darkcomsoft.src
 
             nativeWindow.Title = Application.AppName + " : " + Application.Version;
 
-            using (WindowClass game = new WindowClass(gameWindowSettings, nativeWindow))
+            using (WindowMain game = new WindowMain(gameWindowSettings, nativeWindow))
             {
                 try
                 {
@@ -72,9 +72,28 @@ namespace Projectsln.darkcomsoft.src
 
         private static void StartServer()
         {
-            using (ServerLogic server = new ServerLogic())
+            using (ServerMain server = new ServerMain())
             {
-                server.Run();
+                try
+                {
+                    server.Run();
+                }
+                catch (OutOfMemoryException memoryEx)
+                {
+                    Debug.LogWarning("GC: " + memoryEx.Message, "Main");
+                    for (int i = 0; i < 2; i++)
+                    {
+                        Debug.LogWarning("GC: Collecting Garbage!", "Main");
+                        GC.Collect();
+                        Debug.LogWarning("GC: Clean-up, waiting to clean again!", "Main");
+                        Thread.Sleep(1000);
+                    }
+                    return;
+                }
+                catch (Exception ex)
+                {
+                    Debug.LogFail(ex.Message + " StackTrace: " + ex.StackTrace);
+                }
             }
         }
 

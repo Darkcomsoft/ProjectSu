@@ -99,7 +99,7 @@ namespace Projectsln.darkcomsoft.src.engine
 
         private void UpdateProjection()
         {
-            _aspectRatio = (double)WindowClass.Instance.Width / (double)WindowClass.Instance.Height;
+            _aspectRatio = (double)WindowMain.Instance.Width / (double)WindowMain.Instance.Height;
             ProjectionMatrix = Matrix4.CreatePerspectiveFieldOfView(MathHelper.DegreesToRadians((float)_fildOfView), (float)_aspectRatio, (float)_nearPlane, (float)_farPlane);
         }
 
