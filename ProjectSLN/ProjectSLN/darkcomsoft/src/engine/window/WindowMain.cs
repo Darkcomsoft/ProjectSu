@@ -46,6 +46,8 @@ namespace Projectsln.darkcomsoft.src.engine.window
             FrameRate = (int)gameWindowSettings.RenderFrequency;
             TickRate = (int)gameWindowSettings.UpdateFrequency;
 
+            FrameRate = 200;
+
             VSync = VSyncMode.Off;//set the VSync on start, because fuck-it, nobody wants this (:
         }
 
@@ -72,19 +74,19 @@ namespace Projectsln.darkcomsoft.src.engine.window
 
             var l_lastTime = _watchUpdate.ElapsedMilliseconds;
             var l_mspertick = 1000.0d / TickRate;
+            var l_Dmspertick = 1000.0d / FrameRate;
             var l_noprocess = 0d;
+            var l_Dnoprocess = 0d;
             var l_frames = 0;
             var l_ticks = 0;
             var lastTimer1 = _watchUpdate.ElapsedMilliseconds;
             long now = 0;
-            var dorender = true;
 
-            //REMOVER A PARTE DE RENDER DESSE LOPPING, NO SERVER NAO A NECESSIDADE DE TER UM RENDER LOOP APENAS UM TICK LOOP
             while (true)
             {
-                dorender = true;
                 now = _watchUpdate.ElapsedMilliseconds;
                 l_noprocess += (now - l_lastTime) / l_mspertick;
+                l_Dnoprocess += (now - l_lastTime) / l_Dmspertick;
                 l_lastTime = now;
 
                 ProcessEvents();
@@ -100,16 +102,22 @@ namespace Projectsln.darkcomsoft.src.engine.window
                     l_ticks++;
                     Tick();
                     l_noprocess -= 1;
-                    dorender = true;
+                }
+
+                while (l_Dnoprocess >= 1)
+                {
+                    l_frames++;
+                    TickDraw();
+                    l_Dnoprocess -= 1;
                 }
 
                 Thread.Sleep(2);
 
-                if (dorender)
+                /*if (dorender)
                 {
                     l_frames++;
                     TickDraw();
-                }
+                }*/
 
                 if (_watchUpdate.ElapsedMilliseconds - lastTimer1 > 1000)
                 {

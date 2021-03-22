@@ -15,7 +15,6 @@ namespace Projectsln.darkcomsoft.src.server
 		private bool serverIsRuning = false;
 		private System.Diagnostics.Stopwatch _watchUpdate = new System.Diagnostics.Stopwatch();
 		private System.Diagnostics.Stopwatch _watchTick = new System.Diagnostics.Stopwatch();
-		private System.Diagnostics.Stopwatch _watchDrawn = new System.Diagnostics.Stopwatch();
 
 		public void Run()
         {
@@ -24,21 +23,16 @@ namespace Projectsln.darkcomsoft.src.server
 
 			_watchUpdate.Start();
 			_watchTick.Start();
-			_watchDrawn.Start();
 
 			var l_lastTime = _watchUpdate.ElapsedMilliseconds;
 			var l_mspertick = 1000.0d / 60;
 			var l_noprocess = 0d;
-			var l_frames = 0;
 			var l_ticks = 0;
 			var lastTimer1 = _watchUpdate.ElapsedMilliseconds;
 			long now = 0;
-			var dorender = true;
 
-			//REMOVER A PARTE DE RENDER DESSE LOPPING, NO SERVER NAO A NECESSIDADE DE TER UM RENDER LOOP APENAS UM TICK LOOP
 			while (serverIsRuning)
             {
-				dorender = true;
 				now = _watchUpdate.ElapsedMilliseconds;
 				l_noprocess += (now - l_lastTime) / l_mspertick;
 				l_lastTime = now;
@@ -47,23 +41,14 @@ namespace Projectsln.darkcomsoft.src.server
 					l_ticks++;
 					Tick();
 					l_noprocess -= 1;
-					dorender = true;
 				}
 
 				Thread.Sleep(1);
-
-				if (dorender)
-				{
-					l_frames++;
-					TickDraw();
-				}
-				
 				if (_watchUpdate.ElapsedMilliseconds - lastTimer1 > 1000)
 				{
-					Application.windowsConsole?.SetTitleConsole("ProjectEvllyn-Server | " + l_ticks + " ticks, " + l_frames + " fps");
+					Application.windowsConsole?.SetTitleConsole("ProjectEvllyn-Server | " + l_ticks + " ticks");
 					//Debug.Log(ticks + " ticks, " + frames + " fps");
 					lastTimer1 += 1000;
-					l_frames = 0;
 					l_ticks = 0;
 				}
 			}
@@ -88,12 +73,6 @@ namespace Projectsln.darkcomsoft.src.server
 			_watchTick.Restart();
 		}
 
-		private void TickDraw()
-        {
-
-			_watchDrawn.Restart();
-		}
-
         public void Exit()
         {
             serverIsRuning = false;
@@ -106,7 +85,6 @@ namespace Projectsln.darkcomsoft.src.server
 			application = null;
 			_watchUpdate = null;
 			_watchTick = null;
-			_watchDrawn = null;
 			base.OnDispose();
         }
 	}
