@@ -46,8 +46,6 @@ namespace Projectsln.darkcomsoft.src.engine.window
             FrameRate = (int)gameWindowSettings.RenderFrequency;
             TickRate = (int)gameWindowSettings.UpdateFrequency;
 
-            FrameRate = 200;
-
             VSync = VSyncMode.Off;//set the VSync on start, because fuck-it, nobody wants this (:
         }
 
@@ -80,7 +78,7 @@ namespace Projectsln.darkcomsoft.src.engine.window
             var l_frames = 0;
             var l_ticks = 0;
             var lastTimer1 = _watchUpdate.ElapsedMilliseconds;
-            long now = 0;
+            long now;
 
             while (true)
             {
@@ -111,6 +109,15 @@ namespace Projectsln.darkcomsoft.src.engine.window
                     l_Dnoprocess -= 1;
                 }
 
+                if (_watchUpdate.ElapsedMilliseconds - lastTimer1 > 1000)
+                {
+                    Debug.Log(l_ticks + " ticks, " + l_frames + " fps");
+                    //Title = l_ticks + " ticks, " + l_frames + " fps";
+                    lastTimer1 += 1000;
+                    l_frames = 0;
+                    l_ticks = 0;
+                }
+
                 Thread.Sleep(2);
 
                 /*if (dorender)
@@ -118,15 +125,6 @@ namespace Projectsln.darkcomsoft.src.engine.window
                     l_frames++;
                     TickDraw();
                 }*/
-
-                if (_watchUpdate.ElapsedMilliseconds - lastTimer1 > 1000)
-                {
-                    Debug.Log(l_ticks + " ticks, " + l_frames + " fps");
-                    Title = l_ticks + " ticks, " + l_frames + " fps";
-                    lastTimer1 += 1000;
-                    l_frames = 0;
-                    l_ticks = 0;
-                }
             }
         }
 
@@ -217,7 +215,7 @@ namespace Projectsln.darkcomsoft.src.engine.window
                 Time._Time = 0;
             }
 
-            //Title = string.Format("UPS:{0} FPS:{1}", Time.UPS, Time.FPS);
+            Title = string.Format("UPS:{0} FPS:{1}", Time.UPS, Time.FPS);
         }
 
         protected override void OnResize(ResizeEventArgs e)

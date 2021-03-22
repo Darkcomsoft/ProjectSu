@@ -2,6 +2,7 @@
 using Projectsln.darkcomsoft.src.consolecli.systemconsole;
 using Projectsln.darkcomsoft.src.engine;
 using Projectsln.darkcomsoft.src.engine.render;
+using Projectsln.darkcomsoft.src.engine.window;
 using Projectsln.darkcomsoft.src.entity.managers;
 using Projectsln.darkcomsoft.src.enums;
 using Projectsln.darkcomsoft.src.network;
@@ -25,14 +26,12 @@ namespace Projectsln.darkcomsoft.src
         public static readonly string BinaryPath = GetBinaryPath();
         public static readonly string AssetsPath = GetAssetsPath() + "\\Assets";
 
+
         public static ApplicationType AppType { get; private set; }
-
         public static BuildTypeBase gameInstance;// this is the game instance EX: Client or Server
-
         public static WorldManager worldManager;
         public static EntityManager entityManager;
         public static NetworkManager networkManager;
-
         public static WindowsConsole windowsConsole;
 
         public Application(ApplicationType applicationType)
