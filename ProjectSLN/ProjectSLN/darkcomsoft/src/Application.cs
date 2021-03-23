@@ -6,6 +6,7 @@ using Projectsln.darkcomsoft.src.engine.window;
 using Projectsln.darkcomsoft.src.entity.managers;
 using Projectsln.darkcomsoft.src.enums;
 using Projectsln.darkcomsoft.src.network;
+using Projectsln.darkcomsoft.src.resources;
 using Projectsln.darkcomsoft.src.world;
 using System;
 using System.Collections.Generic;
@@ -29,20 +30,23 @@ namespace Projectsln.darkcomsoft.src
 
         public static ApplicationType AppType { get; private set; }
         public static BuildTypeBase gameInstance;// this is the game instance EX: Client or Server
-        public static WorldManager worldManager;
-        public static EntityManager entityManager;
-        public static NetworkManager networkManager;
-        public static WindowsConsole windowsConsole;
+        public static ResourcesManager m_resourceManager;
+        public static WorldManager m_worldManager;
+        public static EntityManager m_entityManager;
+        public static NetworkManager m_networkManager;
+        public static WindowsConsole m_windowsConsole;
 
         public Application(ApplicationType applicationType)
         {
             AppType = applicationType;
 
-            windowsConsole = new WindowsConsole();
+            m_windowsConsole = new WindowsConsole();
 
-            worldManager = new WorldManager();
-            entityManager = new EntityManager();
-            networkManager = new NetworkManager();
+            m_resourceManager = new ResourcesManager(applicationType);
+
+            m_worldManager = new WorldManager();
+            m_entityManager = new EntityManager();
+            m_networkManager = new NetworkManager();
 
             for (int i = 0; i < 100; i++)
             {
@@ -65,18 +69,18 @@ namespace Projectsln.darkcomsoft.src
         public void Tick(double time)
         {
             //engine.Debug.Log("Tick");
-            if (entityManager != null)
+            if (m_entityManager != null)
             {
-                entityManager.Tick();
+                m_entityManager.Tick();
             }
 
-            if (networkManager != null)
+            if (m_networkManager != null)
             {
-                networkManager.Tick();
+                m_networkManager.Tick();
             }
 
             QueeSystem.Tick();
-            windowsConsole?.Tick();
+            m_windowsConsole?.Tick();
             gameInstance?.Tick();
         }
 
@@ -93,17 +97,20 @@ namespace Projectsln.darkcomsoft.src
                 gameInstance = null;
             }
 
-            networkManager?.Dispose();
-            networkManager = null;
+            m_networkManager?.Dispose();
+            m_networkManager = null;
 
-            worldManager?.Dispose();
-            worldManager = null;
+            m_worldManager?.Dispose();
+            m_worldManager = null;
 
-            entityManager?.Dispose();
-            entityManager = null;
+            m_entityManager?.Dispose();
+            m_entityManager = null;
 
-            windowsConsole?.Dispose();
-            windowsConsole = null;
+            m_windowsConsole?.Dispose();
+            m_windowsConsole = null;
+
+            m_resourceManager.Dispose();
+            m_resourceManager = null;
             base.OnDispose();
         }
 
