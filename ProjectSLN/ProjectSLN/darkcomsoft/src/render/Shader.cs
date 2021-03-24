@@ -71,12 +71,17 @@ namespace Projectsln.darkcomsoft.src.render
             m_isvalid = true;
         }
 
-        public void Use()
+        public void StartUsingShader()
         {
             if (m_isvalid)
             {
                 GL.UseProgram(m_shaderHandler);
             }
+        }
+
+        public void StopUsingShader()
+        {
+            GL.UseProgram(0);
         }
 
         protected override void OnDispose()
@@ -96,44 +101,51 @@ namespace Projectsln.darkcomsoft.src.render
 
         public void Set(string name, int value)
         {
-            Use();
+            StartUsingShader();
             GL.Uniform1(_uniformLocations[name], value);
+            StopUsingShader();
         }
 
         public void Set(string name, float value)
         {
-            Use();
+            StartUsingShader();
             GL.Uniform1(_uniformLocations[name], value);
+            StopUsingShader();
         }
 
         public void Set(string name, bool value)//REVER ISSO AQUI NAO SEI SE GLSL TEM BOOLEAN ENTAO USA INT, SE NAO TIVER VER SE DA PAARA MUDAR PARA BYTE
         {
-            Use();
+            StartUsingShader();
             GL.Uniform1(_uniformLocations[name], value ? 1 : 0);
+            StopUsingShader();
         }
 
         public void Set(string name, Color4 value)
         {
-            Use();
+            StartUsingShader();
             GL.Uniform4(_uniformLocations[name], value);
+            StopUsingShader();
         }
 
         public void Set(string name, Vector3 value)
         {
-            Use();
+            StartUsingShader();
             GL.Uniform3(_uniformLocations[name], value);
+            StopUsingShader();
         }
 
         public void Set(string name, Vector4 value)
         {
-            Use();
+            StartUsingShader();
             GL.Uniform4(_uniformLocations[name], value);
+            StopUsingShader();
         }
 
         public void Set(string name, Matrix4 value, bool transpose = true)
         {
-            Use();
+            StartUsingShader();
             GL.UniformMatrix4(_uniformLocations[name], transpose, ref value);
+            StopUsingShader();
         }
     }
 }

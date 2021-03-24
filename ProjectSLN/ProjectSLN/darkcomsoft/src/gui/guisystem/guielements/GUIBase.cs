@@ -18,7 +18,7 @@ namespace Projectsln.darkcomsoft.src.gui.guisystem.guielements
         public GUIBase()
         {
             transform = new Transform();
-            transform.Position = new Vector3d(WindowMain.Instance.Width / 2, WindowMain.Instance.Height / 2, 0);
+            transform.Position = new Vector3d(0, 0, 0);
             transform.Size = Vector3d.One;
             m_shader = ResourcesManager.GetShader("UI");
         }
@@ -30,13 +30,21 @@ namespace Projectsln.darkcomsoft.src.gui.guisystem.guielements
 
         public void Draw()
         {
-            m_shader.Use();
+            m_shader.StartUsingShader();
 
             if (Client.projection == null) { return; }
 
             m_shader.Set("world", transform.GetTransformWorld);
-            m_shader.Set("projection", Client.projection);
+            m_shader.Set("projection", Matrix4.CreateOrthographicOffCenter(WindowMain.Instance.WindowRectangle.Left, WindowMain.Instance.WindowRectangle.Right, WindowMain.Instance.WindowRectangle.Bottom, WindowMain.Instance.WindowRectangle.Top, 0f, 5.0f));
             m_shader.Set("uicolor", Color4.Yellow);
+
+            //m_shader.StopUsingShader();
+        }
+
+        //REMOVER ISSO DEPOIS APENAS PARA USO TEMPORARIO, USO PARA O DESENVOLVIMENTO APENAS
+        public void StopUseShader()
+        {
+            m_shader.StopUsingShader();
         }
 
         protected override void OnDispose()

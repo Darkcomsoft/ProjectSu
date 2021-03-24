@@ -16,7 +16,7 @@ vertex [
 		
 		vec4 worldPosition = position * world;
 		
-		gl_Position = projection * worldPosition;
+		gl_Position =  worldPosition * projection;
 		//gl_Position = vec4(position, 1.0);
 	}
 ];

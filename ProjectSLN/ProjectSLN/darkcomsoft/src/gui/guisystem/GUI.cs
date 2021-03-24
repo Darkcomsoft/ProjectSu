@@ -56,6 +56,7 @@ namespace Projectsln.darkcomsoft.src.gui.guisystem
             {
                 m_guiList[i].Draw();
                 GL.DrawElements(PrimitiveType.Triangles, m_rectangleIndices.Length, DrawElementsType.UnsignedInt, 0);
+                m_guiList[i].StopUseShader();
             }
 
             GL.BindBuffer(BufferTarget.ElementArrayBuffer, 0);
