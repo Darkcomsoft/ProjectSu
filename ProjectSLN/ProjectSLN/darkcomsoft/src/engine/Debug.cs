@@ -1,4 +1,4 @@
-﻿using OpenTK.Graphics.OpenGL4;
+﻿using OpenTK.Graphics.OpenGL;
 using Projectsln.darkcomsoft.src.server;
 using System;
 using System.Collections.Generic;

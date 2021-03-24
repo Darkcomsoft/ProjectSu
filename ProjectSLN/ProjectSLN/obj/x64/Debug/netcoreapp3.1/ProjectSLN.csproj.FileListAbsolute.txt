@@ -27,3 +27,4 @@ C:\Users\estev\Documents\GitHub\ProjectSu\ProjectSLN\ProjectSLN\obj\x64\Debug\ne
 C:\Users\estev\Documents\GitHub\ProjectSu\ProjectSLN\ProjectSLN\bin\x64\Debug\netcoreapp3.1\Lidgren.Network.dll
 C:\Users\estev\Documents\GitHub\ProjectSu\ProjectSLN\ProjectSLN\obj\x64\Debug\netcoreapp3.1\Projectsln.csproj.CoreCompileInputs.cache
 C:\Users\estev\Documents\GitHub\ProjectSu\ProjectSLN\ProjectSLN\bin\x64\Debug\netcoreapp3.1\Newtonsoft.Json.dll
+C:\Users\estev\Documents\GitHub\ProjectSu\ProjectSLN\ProjectSLN\bin\x64\Debug\netcoreapp3.1\System.Runtime.CompilerServices.Unsafe.dll

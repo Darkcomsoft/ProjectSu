@@ -1,0 +1,38 @@
+version:#version 330 core
+vertex [
+	$version
+	layout (location = 0) in vec4 position;
+	layout (location = 1) in vec2 aTexCoord;
+
+	out vec2 texCoord;
+
+	uniform mat4 world;
+	//uniform mat4 view;
+	uniform mat4 projection;
+
+	void main()
+	{
+		texCoord = aTexCoord;
+		
+		vec4 worldPosition = position * world;
+		
+		gl_Position = projection * worldPosition;
+		//gl_Position = vec4(position, 1.0);
+	}
+];
+
+fragment [
+	$version
+	layout(location = 0) out vec4 color;
+
+	in vec2 texCoord;
+
+	//uniform sampler2D texture0;
+	uniform vec4 uicolor;
+
+	void main()
+	{
+		//color = texture(texture0, texCoord);
+		color = uicolor;
+	}
+];

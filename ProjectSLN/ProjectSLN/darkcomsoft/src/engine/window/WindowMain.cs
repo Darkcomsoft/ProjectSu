@@ -79,12 +79,12 @@ namespace Projectsln.darkcomsoft.src.engine.window
             var l_ticks = 0;
             var lastTimer1 = _watchUpdate.ElapsedMilliseconds;
             long now;
-
+            bool dorender = true;
             while (true)
             {
                 now = _watchUpdate.ElapsedMilliseconds;
                 l_noprocess += (now - l_lastTime) / l_mspertick;
-                l_Dnoprocess += (now - l_lastTime) / l_Dmspertick;
+                //l_Dnoprocess += (now - l_lastTime) / l_Dmspertick;
                 l_lastTime = now;
 
                 ProcessEvents();
@@ -98,15 +98,25 @@ namespace Projectsln.darkcomsoft.src.engine.window
                 while (l_noprocess >= 1)
                 {
                     l_ticks++;
+                    
                     Tick();
                     l_noprocess -= 1;
+                    dorender = true;
                 }
 
-                while (l_Dnoprocess >= 1)
+                /*while (l_Dnoprocess >= 1)
                 {
                     l_frames++;
                     TickDraw();
                     l_Dnoprocess -= 1;
+                }*/
+
+                Thread.Sleep(1);
+
+                if (dorender)
+                {
+                    l_frames++;
+                    TickDraw();
                 }
 
                 if (_watchUpdate.ElapsedMilliseconds - lastTimer1 > 1000)
@@ -117,14 +127,6 @@ namespace Projectsln.darkcomsoft.src.engine.window
                     l_frames = 0;
                     l_ticks = 0;
                 }
-
-                Thread.Sleep(2);
-
-                /*if (dorender)
-                {
-                    l_frames++;
-                    TickDraw();
-                }*/
             }
         }
 
@@ -147,7 +149,7 @@ namespace Projectsln.darkcomsoft.src.engine.window
 
         protected virtual void OnLoad()
         {
-            GL.ClearColor(Color4.Black);
+            GL.ClearColor(Color4.Red);
 
             VSync = VSyncMode.Off;//set the VSync on start, because fuck-it, nobody wants this (:
             WindowBorder = WindowBorder.Resizable;
@@ -197,7 +199,7 @@ namespace Projectsln.darkcomsoft.src.engine.window
         protected virtual void OnTickDraw(double time)
         {
             GL.Clear(ClearBufferMask.ColorBufferBit | ClearBufferMask.DepthBufferBit);
-            GL.DepthFunc(DepthFunction.Lequal);
+            //GL.DepthFunc(DepthFunction.Lequal);
 
             if (application != null)
             {
@@ -229,7 +231,7 @@ namespace Projectsln.darkcomsoft.src.engine.window
             WindowRectangle.Height = height;
 
             GL.Viewport(0, 0, e.Width, e.Height);
-
+            application?.OnResize();
             //engineMain?.OnResize();
             base.OnResize(e);
         }

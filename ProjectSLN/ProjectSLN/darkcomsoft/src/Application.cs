@@ -5,6 +5,7 @@ using Projectsln.darkcomsoft.src.engine.render;
 using Projectsln.darkcomsoft.src.engine.window;
 using Projectsln.darkcomsoft.src.entity.managers;
 using Projectsln.darkcomsoft.src.enums;
+using Projectsln.darkcomsoft.src.gui.guisystem;
 using Projectsln.darkcomsoft.src.network;
 using Projectsln.darkcomsoft.src.resources;
 using Projectsln.darkcomsoft.src.world;
@@ -22,7 +23,7 @@ namespace Projectsln.darkcomsoft.src
     public class Application : ClassBase
     {
         public const string AppName = "ProjectSLN";
-        public const string Version = "PRE-ALPHA 21pa01";
+        public const string Version = "PRE-ALPHA y21w01a";
 
         public static readonly string BinaryPath = GetBinaryPath();
         public static readonly string AssetsPath = GetAssetsPath() + "\\Assets";
@@ -31,6 +32,7 @@ namespace Projectsln.darkcomsoft.src
         public static ApplicationType AppType { get; private set; }
         public static BuildTypeBase gameInstance;// this is the game instance EX: Client or Server
         public static ResourcesManager m_resourceManager;
+        public static GUI m_gui;
         public static WorldManager m_worldManager;
         public static EntityManager m_entityManager;
         public static NetworkManager m_networkManager;
@@ -43,6 +45,8 @@ namespace Projectsln.darkcomsoft.src
             m_windowsConsole = new WindowsConsole();
 
             m_resourceManager = new ResourcesManager(applicationType);
+            m_gui = new GUI();
+
 
             m_worldManager = new WorldManager();
             m_entityManager = new EntityManager();
@@ -80,6 +84,7 @@ namespace Projectsln.darkcomsoft.src
             }
 
             QueeSystem.Tick();
+            m_gui?.Tick(time);
             m_windowsConsole?.Tick();
             gameInstance?.Tick();
         }
@@ -87,6 +92,7 @@ namespace Projectsln.darkcomsoft.src
         public void TickDraw(double time)
         {
             gameInstance?.TickDraw();
+            m_gui?.Draw(time);
         }
 
         protected override void OnDispose()
@@ -109,7 +115,10 @@ namespace Projectsln.darkcomsoft.src
             m_windowsConsole?.Dispose();
             m_windowsConsole = null;
 
-            m_resourceManager.Dispose();
+            m_gui?.Dispose();
+            m_gui = null;
+
+            m_resourceManager?.Dispose();
             m_resourceManager = null;
             base.OnDispose();
         }
@@ -163,6 +172,11 @@ namespace Projectsln.darkcomsoft.src
         public static long GetVirtualMemory()
         {
             return Process.GetCurrentProcess().VirtualMemorySize64 / (1024 * 1024);
+        }
+
+        internal void OnResize()
+        {
+            gameInstance?.OnResize();
         }
 
         /*public static long GetCPUUsage()

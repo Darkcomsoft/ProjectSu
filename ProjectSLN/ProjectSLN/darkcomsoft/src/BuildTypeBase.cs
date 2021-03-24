@@ -8,5 +8,7 @@ namespace Projectsln.darkcomsoft.src
     {
         public virtual void Tick() { }
         public virtual void TickDraw() { }
+
+        public virtual void OnResize() { }
     }
 }

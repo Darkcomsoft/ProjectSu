@@ -68,6 +68,7 @@ namespace Projectsln.darkcomsoft.src.render
                 GL.DeleteProgram(program);
             }
             m_shaderHandler = program;
+            m_isvalid = true;
         }
 
         public void Use()
@@ -109,6 +110,12 @@ namespace Projectsln.darkcomsoft.src.render
         {
             Use();
             GL.Uniform1(_uniformLocations[name], value ? 1 : 0);
+        }
+
+        public void Set(string name, Color4 value)
+        {
+            Use();
+            GL.Uniform4(_uniformLocations[name], value);
         }
 
         public void Set(string name, Vector3 value)

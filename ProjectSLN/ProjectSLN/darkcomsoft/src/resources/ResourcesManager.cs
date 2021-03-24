@@ -1,5 +1,7 @@
-﻿using Projectsln.darkcomsoft.src.enums;
+﻿using Projectsln.darkcomsoft.src.engine;
+using Projectsln.darkcomsoft.src.enums;
 using Projectsln.darkcomsoft.src.render;
+using Projectsln.darkcomsoft.src.resources.resourcestype;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -8,10 +10,12 @@ namespace Projectsln.darkcomsoft.src.resources
 {
     public class ResourcesManager : ClassBase
     {
+        private static ResourcesManager m_instance;
         private Dictionary<string, Shader> m_shaderList;
 
         public ResourcesManager(ApplicationType apptype)
         {
+            m_instance = this;
             m_shaderList = new Dictionary<string, Shader>();
 
             LoadPreResources(apptype);
@@ -26,6 +30,8 @@ namespace Projectsln.darkcomsoft.src.resources
 
             m_shaderList.Clear();
             m_shaderList = null;
+
+            m_instance = null;
             base.OnDispose();
         }
 
@@ -37,7 +43,7 @@ namespace Projectsln.darkcomsoft.src.resources
             switch (apptype)
             {
                 case ApplicationType.Client:
-
+                    LoadShader("UI");
                     break;
                 case ApplicationType.Server:
 
@@ -77,9 +83,34 @@ namespace Projectsln.darkcomsoft.src.resources
 
         }
 
-        private void LoadShader()
+        public static Shader GetShader(string ShaderName)
         {
+            if (instance.m_shaderList.TryGetValue(ShaderName, out Shader shader))
+            {
+                return shader;
+            }
 
+            return null;
         }
+
+        #region LoadFunctions
+        private void LoadShader(string ShaderName)
+        {
+            try
+            {
+                ShaderFile shaderFile = GLSLFile.LoadShaderFile("/Shaders/", ShaderName);
+                Shader shader = new Shader(shaderFile);
+                if (m_shaderList.ContainsKey(ShaderName)) { return; }
+                m_shaderList.Add(ShaderName, shader);
+                Debug.Log("Shader Loaded : " + ShaderName, "RESOURCES-MANAGER");
+            }
+            catch (Exception e)
+            {
+                throw e;
+            }
+        }
+        #endregion
+
+        public static ResourcesManager instance { get { return m_instance; } }
     }
 }

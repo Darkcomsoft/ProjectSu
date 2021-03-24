@@ -1,0 +1,66 @@
+version:#version 330
+vertex [
+	$version
+	layout (location = 0) in vec4 position;
+	layout (location = 1) in vec4 colors;
+	layout (location = 2) in vec2 aTexCoord;
+	layout (location = 3) in vec3 Normals;
+
+	out vec4 frag_colors;
+	out vec2 texCoord;
+	out float visiblity;
+
+	uniform mat4 world;
+	uniform mat4 view;
+	uniform mat4 projection;
+
+	uniform float FOG_Density; 
+	uniform float FOG_Gradiante;
+
+	void main()
+	{
+		vec4 worldPosition = position * world;
+		vec4 posRelativeCamera = worldPosition * view;
+
+		vec4 finalposition = posRelativeCamera;
+		float radius = 500;
+		
+		float dis = length(worldPosition.xz);
+		float curvature = 1-cos(dis/radius);
+		
+		finalposition.y -= radius*curvature;
+
+		frag_colors = colors;
+		texCoord = aTexCoord;
+		
+		float distance = length(finalposition.xyz);
+		visiblity = exp(-pow((distance * FOG_Density), FOG_Gradiante));
+		visiblity = clamp(visiblity, 0.0, 1.0);
+		
+		gl_Position = finalposition * projection;
+	}
+];
+
+fragment [
+		$version
+
+		layout(location = 0) out vec4 color;
+
+		in vec4 frag_colors;
+		in vec2 texCoord;
+		in float visiblity;
+
+		uniform sampler2D texture0;
+		uniform vec4 FOG_Color;
+
+		uniform vec4 AmbienceColor;
+
+		void main()
+		{
+			color = texture(texture0, texCoord) * AmbienceColor;
+
+			if (color.a < 0.5) { discard; }//if the color alpha(Texture Alpha) is less of the 0.5, discard this fragment
+
+			color = mix(FOG_Color, color, visiblity);
+		}
+];
