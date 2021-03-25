@@ -3,6 +3,7 @@ using OpenTK.Windowing.GraphicsLibraryFramework;
 using Projectsln.darkcomsoft.src.engine.window;
 using System;
 using System.Collections.Generic;
+using System.Drawing;
 using System.Text;
 
 namespace Projectsln.darkcomsoft.src.engine
@@ -15,13 +16,19 @@ namespace Projectsln.darkcomsoft.src.engine
         private static List<CurrentKey> keyToggleList = new List<CurrentKey>();
         private static List<CurrentButtom> mouseButtomToggleList = new List<CurrentButtom>();
 
-        private static Vector2 _mousePosition;
+        private static Rectangle m_mousePositionRec = new Rectangle(0,0,1,1);
 
         public static KeyboardState keyboardState;
         public static MouseState mouseState;
 
         private static CurrentKey currentKey = new CurrentKey();
         private static CurrentButtom currentButtom = new CurrentButtom();
+
+        public static void Tick()
+        {
+            m_mousePositionRec.X = (int)mouseState.Position.X / 2;
+            m_mousePositionRec.Y = (int)mouseState.Position.Y / 2;
+        }
 
         internal static float ScrollWheelValue
         {
@@ -32,7 +39,7 @@ namespace Projectsln.darkcomsoft.src.engine
             }
         }
 
-        internal static Vector2 GetMousePosition { get { return _mousePosition; } }
+        internal static Rectangle GetMousePositionRec { get { return m_mousePositionRec; } }
 
         /// <summary>
         /// If KeyPressed is Down Once, Set a Key and a any number you want, any other input check can have the same number
@@ -189,11 +196,6 @@ namespace Projectsln.darkcomsoft.src.engine
             Input.mouseState = WindowMain.Instance.MouseState;
 
             return mouseState.IsButtonDown(buttom);
-        }
-
-        internal static void SetMousePos(Vector2 position)
-        {
-            _mousePosition = position;
         }
     }
 

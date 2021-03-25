@@ -1,6 +1,7 @@
 ﻿using OpenTK.Mathematics;
 using Projectsln.darkcomsoft.src.engine;
 using Projectsln.darkcomsoft.src.engine.window;
+using Projectsln.darkcomsoft.src.enums;
 using Projectsln.darkcomsoft.src.render;
 using Projectsln.darkcomsoft.src.resources;
 using System;
@@ -12,39 +13,57 @@ namespace Projectsln.darkcomsoft.src.gui.guisystem.guielements
 {
     public class GUIBase : ClassBase
     {
-        private Rectangle transform;
+        private Rectangle m_finalPosition;
+        private Rectangle m_startPosition;
+
+        private bool m_isEnabled = true;
+        private bool m_isInteractable = true;
+
+        private GUIDock m_dockType = GUIDock.RightBottom;
+
+        private bool m_mouseHover = false;
+
         private Shader m_shader;
 
         private Matrix4 worldPosition;
 
+
         public GUIBase()
         {
-            transform = new Rectangle(WindowMain.Instance.Width, 0,50,50);
+            m_startPosition = new Rectangle(0, 0, 50, 50);
             m_shader = ResourcesManager.GetShader("UI");
+
+            OnResize();
         }
 
-        private bool isHover = false;
+        public GUIBase(Rectangle positionSize)
+        {
+            m_startPosition = positionSize;
+            m_shader = ResourcesManager.GetShader("UI");
+
+            OnResize();
+        }
 
         public void Tick()
         {
-            if (transform.IntersectsWith(new Rectangle((int)Input.mouseState.Position.X / 2, (int)Input.mouseState.Position.Y / 2, 1, 1)))
+            if (m_finalPosition.IntersectsWith(Input.GetMousePositionRec))
             {
-                isHover = true;
+                m_mouseHover = true;
             }
             else {
-                isHover = false;
+                m_mouseHover = false;
             }
+
+            Debug.Log(Input.GetMousePositionRec.ToString());
         }
 
         public void Draw()
         {
             m_shader.Use();
 
-            if (Client.projection == null) { return; }
-
             m_shader.Set("world", worldPosition);
             m_shader.Set("projection", Matrix4.CreateOrthographic(WindowMain.Instance.Width, WindowMain.Instance.Height, 0f, 5.0f));
-            if (isHover)
+            if (m_mouseHover)
             {
                 m_shader.Set("uicolor", Color4.Blue);
             }
@@ -62,10 +81,56 @@ namespace Projectsln.darkcomsoft.src.gui.guisystem.guielements
 
         public virtual void OnResize()
         {
-            transform.X = (WindowMain.Instance.Width / 2) - transform.Width;
-            transform.Y = (WindowMain.Instance.Height / 2) - transform.Height;
+            RefreshTrnasform();
+        }
 
-            worldPosition = Matrix4.CreateScale(transform.Width, transform.Height, 0) * Matrix4.CreateTranslation(transform.X, -transform.Y, 0);
+        private void RefreshTrnasform()
+        {
+            switch (m_dockType)
+            {
+                case GUIDock.Free:
+                    m_finalPosition.X = m_startPosition.X;
+                    m_finalPosition.Y = m_startPosition.Y;
+
+                    m_finalPosition.Width = m_startPosition.Width;
+                    m_finalPosition.Height = m_startPosition.Height;
+                    break;
+                case GUIDock.Left:
+                    break;
+                case GUIDock.Right:
+                    break;
+                case GUIDock.Top:
+                    break;
+                case GUIDock.Bottom:
+                    break;
+                case GUIDock.LeftTop:
+                    break;
+                case GUIDock.LeftBottom:
+                    break;
+                case GUIDock.RightTop:
+                    break;
+                case GUIDock.RightBottom:
+                    m_finalPosition.X = (WindowMain.Instance.Width / 2) - m_finalPosition.Width;
+                    m_finalPosition.Y = (WindowMain.Instance.Height / 2) - m_finalPosition.Height;
+
+                    m_finalPosition.Width = m_startPosition.Width;
+                    m_finalPosition.Height = m_startPosition.Height;
+                    break;
+                default:
+                    break;
+            }
+
+            worldPosition = Matrix4.CreateScale(m_finalPosition.Width, m_finalPosition.Height, 0) * Matrix4.CreateTranslation(m_finalPosition.X, -m_finalPosition.Y, 0);
+        }
+
+        public void Enable()
+        {
+            m_isEnabled = true;
+        }
+
+        public void Disable()
+        {
+            m_isEnabled = false;
         }
     }
 }

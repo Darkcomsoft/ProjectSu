@@ -29,9 +29,11 @@ namespace Projectsln.darkcomsoft.src.gui.guisystem
 
             BindRectangleBuffers();//Bind the rectangle data to videoCard
 
+            Random rand = new Random();
+
             for (int i = 0; i < 1; i++)
             {
-                m_guiList.Add(new GUIBase());
+                m_guiList.Add(new GUIBase(new System.Drawing.Rectangle(0,0,50,50)));
             }
         }
 

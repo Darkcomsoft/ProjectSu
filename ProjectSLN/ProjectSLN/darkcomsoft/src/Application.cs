@@ -72,16 +72,11 @@ namespace Projectsln.darkcomsoft.src
 
         public void Tick(double time)
         {
-            //engine.Debug.Log("Tick");
-            if (m_entityManager != null)
-            {
-                m_entityManager.Tick();
-            }
+            Input.Tick();
 
-            if (m_networkManager != null)
-            {
-                m_networkManager.Tick();
-            }
+            //engine.Debug.Log("Tick");
+            m_entityManager?.Tick();
+            m_networkManager?.Tick();
 
             QueeSystem.Tick();
             m_gui?.Tick(time);

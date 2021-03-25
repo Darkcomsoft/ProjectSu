@@ -80,7 +80,7 @@ namespace Projectsln.darkcomsoft.src.network
             if (!IsRuning) { throw new Exception("You can't destroy a entity when you are disconnected or when server is not runing"); }
 
             instance.m_network.Destroy(entity);
-            EntityManager.RemoveEntity(entity);
+            EntityManager.RemoveEntity(entity, insta);
         }
 
         public void Tick()

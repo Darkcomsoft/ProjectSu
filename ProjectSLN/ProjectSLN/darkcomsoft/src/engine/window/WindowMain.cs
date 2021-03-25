@@ -122,7 +122,6 @@ namespace Projectsln.darkcomsoft.src.engine.window
                 if (_watchUpdate.ElapsedMilliseconds - lastTimer1 > 1000)
                 {
                     Debug.Log(l_ticks + " ticks, " + l_frames + " fps");
-                    //Title = l_ticks + " ticks, " + l_frames + " fps";
                     lastTimer1 += 1000;
                     l_frames = 0;
                     l_ticks = 0;
@@ -156,8 +155,6 @@ namespace Projectsln.darkcomsoft.src.engine.window
 
             Input.keyboardState = KeyboardState;
             Input.mouseState = MouseState;
-
-            Thread.CurrentThread.IsBackground = true;//REMOVER ISSO AQUI DEPOIS E PA, APENAS UM TESTE, TEM QUE VER O QUE ISSO FAZ PQ EU NAO SEI (:
         }
 
         protected virtual void OnUnload()
@@ -199,7 +196,7 @@ namespace Projectsln.darkcomsoft.src.engine.window
         protected virtual void OnTickDraw(double time)
         {
             GL.Clear(ClearBufferMask.ColorBufferBit | ClearBufferMask.DepthBufferBit);
-            //GL.DepthFunc(DepthFunction.Lequal);
+            //GL.DepthFunc(DepthFunction.Lequal);//VER SE ISSO E NECESSARIO, SE NAO REMOVER ESTA INCIVERL FUINÇAO
 
             if (application != null)
             {

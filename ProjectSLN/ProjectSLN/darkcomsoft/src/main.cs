@@ -33,15 +33,12 @@ namespace Projectsln.darkcomsoft.src
 
             NativeWindowSettings nativeWindow = NativeWindowSettings.Default;
             nativeWindow.API = OpenTK.Windowing.Common.ContextAPI.OpenGL;
-            //nativeWindow.APIVersion = new Version(3, 3);
-            //nativeWindow.Profile = OpenTK.Windowing.Common.ContextProfile.Any;//LEMBRAR DE SETAR NO SHADER A VERSAO CORE EX:#version 330 core
+            nativeWindow.APIVersion = new Version(3, 3);
+            nativeWindow.Profile = OpenTK.Windowing.Common.ContextProfile.Any;//LEMBRAR DE SETAR NO SHADER A VERSAO CORE EX:#version 330 core
             nativeWindow.WindowState = OpenTK.Windowing.Common.WindowState.Normal;
             nativeWindow.WindowBorder = OpenTK.Windowing.Common.WindowBorder.Resizable;
-            //nativeWindow.Flags = OpenTK.Windowing.Common.ContextFlags.ForwardCompatible;
-            nativeWindow.StartVisible = true;
-            nativeWindow.StartFocused = true;
+            nativeWindow.Flags = OpenTK.Windowing.Common.ContextFlags.ForwardCompatible;
 
-            //nativeWindow.IsFullscreen = true;
 
             nativeWindow.Title = Application.AppName + " : " + Application.Version;
 
