@@ -56,7 +56,6 @@ namespace Projectsln.darkcomsoft.src.gui.guisystem
             {
                 m_guiList[i].Draw();
                 GL.DrawElements(PrimitiveType.Triangles, m_rectangleIndices.Length, DrawElementsType.UnsignedInt, 0);
-                m_guiList[i].StopUseShader();
             }
 
             GL.BindBuffer(BufferTarget.ElementArrayBuffer, 0);
@@ -64,6 +63,14 @@ namespace Projectsln.darkcomsoft.src.gui.guisystem
 
             GL.Enable(EnableCap.DepthTest);
             GL.Disable(EnableCap.Blend);
+        }
+
+        public void OnResize()
+        {
+            for (int i = 0; i < m_guiList.Count; i++)
+            {
+                m_guiList[i].OnResize();
+            }
         }
 
         protected override void OnDispose()
@@ -89,10 +96,10 @@ namespace Projectsln.darkcomsoft.src.gui.guisystem
         {
             m_rectangleVertices = new Vector2[4]
             {
-                 new Vector2(0.5f,  0.5f), // top right
-                 new Vector2(0.5f, -0.5f), // bottom right
-                new Vector2(-0.5f, -0.5f), // bottom left
-                new Vector2(-0.5f,  0.5f) // top left
+                 new Vector2(1f,  1f), // top right
+                 new Vector2(1f, -1f), // bottom right
+                new Vector2(-1f, -1f), // bottom left
+                new Vector2(-1f,  1f) // top left
             };
 
             m_rectangleIndices = new int[6]

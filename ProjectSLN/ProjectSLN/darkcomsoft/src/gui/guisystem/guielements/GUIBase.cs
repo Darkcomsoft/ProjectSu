@@ -12,47 +12,60 @@ namespace Projectsln.darkcomsoft.src.gui.guisystem.guielements
 {
     public class GUIBase : ClassBase
     {
-        private Transform transform;
+        private Rectangle transform;
         private Shader m_shader;
+
+        private Matrix4 worldPosition;
 
         public GUIBase()
         {
-            transform = new Transform();
-            transform.Position = new Vector3d(0, 0, 0);
-            transform.Size = Vector3d.One;
+            transform = new Rectangle(WindowMain.Instance.Width, 0,50,50);
             m_shader = ResourcesManager.GetShader("UI");
         }
 
+        private bool isHover = false;
+
         public void Tick()
         {
-            transform.Tick();
+            if (transform.IntersectsWith(new Rectangle((int)Input.mouseState.Position.X / 2, (int)Input.mouseState.Position.Y / 2, 1, 1)))
+            {
+                isHover = true;
+            }
+            else {
+                isHover = false;
+            }
         }
 
         public void Draw()
         {
-            m_shader.StartUsingShader();
+            m_shader.Use();
 
             if (Client.projection == null) { return; }
 
-            m_shader.Set("world", transform.GetTransformWorld);
-            m_shader.Set("projection", Matrix4.CreateOrthographicOffCenter(WindowMain.Instance.WindowRectangle.Left, WindowMain.Instance.WindowRectangle.Right, WindowMain.Instance.WindowRectangle.Bottom, WindowMain.Instance.WindowRectangle.Top, 0f, 5.0f));
-            m_shader.Set("uicolor", Color4.Yellow);
-
-            //m_shader.StopUsingShader();
-        }
-
-        //REMOVER ISSO DEPOIS APENAS PARA USO TEMPORARIO, USO PARA O DESENVOLVIMENTO APENAS
-        public void StopUseShader()
-        {
-            m_shader.StopUsingShader();
+            m_shader.Set("world", worldPosition);
+            m_shader.Set("projection", Matrix4.CreateOrthographic(WindowMain.Instance.Width, WindowMain.Instance.Height, 0f, 5.0f));
+            if (isHover)
+            {
+                m_shader.Set("uicolor", Color4.Blue);
+            }
+            else
+            {
+                m_shader.Set("uicolor", Color4.Yellow);
+            }
         }
 
         protected override void OnDispose()
         {
-            transform?.Dispose();
-            transform = null;
             m_shader = null;
             base.OnDispose();
+        }
+
+        public virtual void OnResize()
+        {
+            transform.X = (WindowMain.Instance.Width / 2) - transform.Width;
+            transform.Y = (WindowMain.Instance.Height / 2) - transform.Height;
+
+            worldPosition = Matrix4.CreateScale(transform.Width, transform.Height, 0) * Matrix4.CreateTranslation(transform.X, -transform.Y, 0);
         }
     }
 }

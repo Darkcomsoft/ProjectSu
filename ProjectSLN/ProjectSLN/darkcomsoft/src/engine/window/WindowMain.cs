@@ -222,6 +222,8 @@ namespace Projectsln.darkcomsoft.src.engine.window
 
         protected override void OnResize(ResizeEventArgs e)
         {
+            GL.Viewport(0, 0, e.Width, e.Height);
+
             width = e.Width;
             height = e.Height;
 
@@ -230,7 +232,6 @@ namespace Projectsln.darkcomsoft.src.engine.window
             WindowRectangle.Width = width;
             WindowRectangle.Height = height;
 
-            GL.Viewport(0, 0, e.Width, e.Height);
             application?.OnResize();
             //engineMain?.OnResize();
             base.OnResize(e);

@@ -15,16 +15,12 @@ namespace Projectsln.darkcomsoft.src
     /// </summary>
     public class Client : BuildTypeBase
     {
-        public static Matrix4 projection;
-
         public Client()
         {
             Debug.Log("GameStarted!");
 
             WorldManager.SpawnWorld<SystemWorld>();
             WorldManager.SpawnWorld<MainMenuWorld>();
-
-            projection = Matrix4.CreateOrthographicOffCenter(WindowMain.Instance.WindowRectangle.Left, WindowMain.Instance.WindowRectangle.Right, WindowMain.Instance.WindowRectangle.Bottom, WindowMain.Instance.WindowRectangle.Top, 0f, 5.0f);
         }
 
         public override void Tick()
@@ -40,12 +36,6 @@ namespace Projectsln.darkcomsoft.src
         protected override void OnDispose()
         {
             base.OnDispose();
-        }
-
-        public override void OnResize()
-        {
-            projection = Matrix4.CreateOrthographicOffCenter(WindowMain.Instance.WindowRectangle.Left, WindowMain.Instance.WindowRectangle.Right, WindowMain.Instance.WindowRectangle.Bottom, WindowMain.Instance.WindowRectangle.Top, 0f, 5.0f);
-            base.OnResize();
         }
     }
 }

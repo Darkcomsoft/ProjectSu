@@ -138,6 +138,11 @@ namespace Projectsln.darkcomsoft.src
             //gameInstance = new Server();
         }
 
+        public void OnResize()
+        {
+            m_gui?.OnResize();
+        }
+
         private static string GetBinaryPath()
         {
 #if DEBUG
@@ -172,11 +177,6 @@ namespace Projectsln.darkcomsoft.src
         public static long GetVirtualMemory()
         {
             return Process.GetCurrentProcess().VirtualMemorySize64 / (1024 * 1024);
-        }
-
-        internal void OnResize()
-        {
-            gameInstance?.OnResize();
         }
 
         /*public static long GetCPUUsage()
