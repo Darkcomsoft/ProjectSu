@@ -16,7 +16,7 @@ namespace Projectsln.darkcomsoft.src.engine
         private static List<CurrentKey> keyToggleList = new List<CurrentKey>();
         private static List<CurrentButtom> mouseButtomToggleList = new List<CurrentButtom>();
 
-        private static Rectangle m_mousePositionRec = new Rectangle(0,0,1,1);
+        private static RectangleF m_mousePositionRec = new Rectangle(0,0,1,1);
 
         public static KeyboardState keyboardState;
         public static MouseState mouseState;
@@ -26,8 +26,8 @@ namespace Projectsln.darkcomsoft.src.engine
 
         public static void Tick()
         {
-            m_mousePositionRec.X = (int)mouseState.Position.X / 2;
-            m_mousePositionRec.Y = (int)mouseState.Position.Y / 2;
+            m_mousePositionRec.X = mouseState.Position.X;
+            m_mousePositionRec.Y = mouseState.Position.Y;
         }
 
         internal static float ScrollWheelValue
@@ -39,7 +39,7 @@ namespace Projectsln.darkcomsoft.src.engine
             }
         }
 
-        internal static Rectangle GetMousePositionRec { get { return m_mousePositionRec; } }
+        internal static RectangleF GetMousePositionRec { get { return m_mousePositionRec; } }
 
         /// <summary>
         /// If KeyPressed is Down Once, Set a Key and a any number you want, any other input check can have the same number

@@ -1,4 +1,5 @@
-﻿using OpenTK.Mathematics;
+﻿using OpenTK.Graphics.OpenGL;
+using OpenTK.Mathematics;
 using Projectsln.darkcomsoft.src.engine;
 using Projectsln.darkcomsoft.src.engine.window;
 using Projectsln.darkcomsoft.src.enums;
@@ -13,30 +14,27 @@ namespace Projectsln.darkcomsoft.src.gui.guisystem.guielements
 {
     public class GUIBase : ClassBase
     {
-        private Rectangle m_finalPosition;
-        private Rectangle m_startPosition;
+        private RectangleF m_finalPosition;
+        private RectangleF m_startPosition;
 
         private bool m_isEnabled = true;
         private bool m_isInteractable = true;
-
-        private GUIDock m_dockType = GUIDock.RightBottom;
-
         private bool m_mouseHover = false;
 
+        private GUIDock m_dockType = GUIDock.RightBottom;
         private Shader m_shader;
-
         private Matrix4 worldPosition;
 
 
         public GUIBase()
         {
-            m_startPosition = new Rectangle(0, 0, 50, 50);
+            m_startPosition = new RectangleF(0, 0, 50, 50);
             m_shader = ResourcesManager.GetShader("UI");
 
             OnResize();
         }
 
-        public GUIBase(Rectangle positionSize)
+        public GUIBase(RectangleF positionSize)
         {
             m_startPosition = positionSize;
             m_shader = ResourcesManager.GetShader("UI");
@@ -44,8 +42,20 @@ namespace Projectsln.darkcomsoft.src.gui.guisystem.guielements
             OnResize();
         }
 
+        public GUIBase(RectangleF positionSize, GUIDock gUIDock)
+        {
+            m_startPosition = positionSize;
+            m_shader = ResourcesManager.GetShader("UI");
+
+            m_dockType = gUIDock;
+
+            OnResize();
+        }
+
         public void Tick()
         {
+            if (!m_isEnabled) { return; }
+
             if (m_finalPosition.IntersectsWith(Input.GetMousePositionRec))
             {
                 m_mouseHover = true;
@@ -53,16 +63,17 @@ namespace Projectsln.darkcomsoft.src.gui.guisystem.guielements
             else {
                 m_mouseHover = false;
             }
-
-            Debug.Log(Input.GetMousePositionRec.ToString());
         }
 
         public void Draw()
         {
+            if (!m_isEnabled) { return; }
+
             m_shader.Use();
 
             m_shader.Set("world", worldPosition);
-            m_shader.Set("projection", Matrix4.CreateOrthographic(WindowMain.Instance.Width, WindowMain.Instance.Height, 0f, 5.0f));
+            m_shader.Set("projection", Matrix4.CreateOrthographicOffCenter(0.0f, WindowMain.Instance.Width, WindowMain.Instance.Height,0.0f, -1.0f, 1.0f));
+         
             if (m_mouseHover)
             {
                 m_shader.Set("uicolor", Color4.Blue);
@@ -110,8 +121,8 @@ namespace Projectsln.darkcomsoft.src.gui.guisystem.guielements
                 case GUIDock.RightTop:
                     break;
                 case GUIDock.RightBottom:
-                    m_finalPosition.X = (WindowMain.Instance.Width / 2) - m_finalPosition.Width;
-                    m_finalPosition.Y = (WindowMain.Instance.Height / 2) - m_finalPosition.Height;
+                    m_finalPosition.X = (WindowMain.Instance.Width) - m_finalPosition.Width;
+                    m_finalPosition.Y = (WindowMain.Instance.Height) - m_finalPosition.Height;
 
                     m_finalPosition.Width = m_startPosition.Width;
                     m_finalPosition.Height = m_startPosition.Height;
@@ -120,17 +131,28 @@ namespace Projectsln.darkcomsoft.src.gui.guisystem.guielements
                     break;
             }
 
-            worldPosition = Matrix4.CreateScale(m_finalPosition.Width, m_finalPosition.Height, 0) * Matrix4.CreateTranslation(m_finalPosition.X, -m_finalPosition.Y, 0);
+            worldPosition = Matrix4.CreateScale(m_finalPosition.Width / 2, m_finalPosition.Height / 2, 0) * Matrix4.CreateTranslation(m_finalPosition.X + m_finalPosition.Width /2, m_finalPosition.Y + m_finalPosition.Height /2, 0);
+        }
+
+        public void Dock(GUIDock gUIDock)
+        {
+            m_dockType = gUIDock;
+
+            OnResize();
         }
 
         public void Enable()
         {
             m_isEnabled = true;
+            GUI.instance.s_EnableGUI(this);
         }
 
         public void Disable()
         {
             m_isEnabled = false;
+            GUI.instance.s_DisableGUI(this);
         }
+
+        public bool isEnabled { get { return m_isEnabled; } }
     }
 }

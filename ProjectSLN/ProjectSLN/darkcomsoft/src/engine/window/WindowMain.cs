@@ -219,18 +219,21 @@ namespace Projectsln.darkcomsoft.src.engine.window
 
         protected override void OnResize(ResizeEventArgs e)
         {
-            GL.Viewport(0, 0, e.Width, e.Height);
+            for (int i = 0; i < 2; i++)
+            {
+                GL.Viewport(0, 0, e.Width, e.Height);
 
-            width = e.Width;
-            height = e.Height;
+                width = e.Width;
+                height = e.Height;
 
-            WindowRectangle.X = 0;
-            WindowRectangle.Y = 0;
-            WindowRectangle.Width = width;
-            WindowRectangle.Height = height;
+                WindowRectangle.X = 0;
+                WindowRectangle.Y = 0;
+                WindowRectangle.Width = width;
+                WindowRectangle.Height = height;
 
-            application?.OnResize();
-            //engineMain?.OnResize();
+                application?.OnResize();
+                //engineMain?.OnResize();
+            }
             base.OnResize(e);
         }
 

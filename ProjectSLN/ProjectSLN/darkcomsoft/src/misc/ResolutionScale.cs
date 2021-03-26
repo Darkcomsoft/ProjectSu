@@ -11,14 +11,18 @@ namespace Projectsln.darkcomsoft.src.misc
     /// </summary>
     public class ResolutionScale
     {
-        private double scaledWidthD;
-        private double scaledHeightD;
-        private int scaledWidth;
-        private int scaledHeight;
-        private int scaleFactor;
+        public static ResolutionScale instance;
+
+        public double scaledWidthD;
+        public double scaledHeightD;
+        public int scaledWidth;
+        public int scaledHeight;
+        public int scaleFactor;
 
         public ResolutionScale()
         {
+            instance = this;
+
             this.scaledWidth = WindowMain.Instance.Width;
             this.scaledHeight = WindowMain.Instance.Height;
             this.scaleFactor = 1;
@@ -46,29 +50,33 @@ namespace Projectsln.darkcomsoft.src.misc
             this.scaledHeight = (int)MathHelper.Ceiling(this.scaledHeightD);
         }
 
-        public int getScaledWidth()
+        public void OnResize()
         {
-            return this.scaledWidth;
-        }
+            this.scaledWidth = WindowMain.Instance.Width;
+            this.scaledHeight = WindowMain.Instance.Height;
+            this.scaleFactor = 1;
+            bool flag = true;
+            int i = 0;
 
-        public int getScaledHeight()
-        {
-            return this.scaledHeight;
-        }
+            if (i == 0)
+            {
+                i = 1000;
+            }
 
-        public double getScaledWidth_double()
-        {
-            return this.scaledWidthD;
-        }
+            while (this.scaleFactor < i && this.scaledWidth / (this.scaleFactor + 1) >= 320 && this.scaledHeight / (this.scaleFactor + 1) >= 240)
+            {
+                ++this.scaleFactor;
+            }
 
-        public double getScaledHeight_double()
-        {
-            return this.scaledHeightD;
-        }
+            if (flag && this.scaleFactor % 2 != 0 && this.scaleFactor != 1)
+            {
+                --this.scaleFactor;
+            }
 
-        public int getScaleFactor()
-        {
-            return this.scaleFactor;
+            this.scaledWidthD = (double)this.scaledWidth / (double)this.scaleFactor;
+            this.scaledHeightD = (double)this.scaledHeight / (double)this.scaleFactor;
+            this.scaledWidth = (int)MathHelper.Ceiling(this.scaledWidthD);
+            this.scaledHeight = (int)MathHelper.Ceiling(this.scaledHeightD);
         }
     }
 }

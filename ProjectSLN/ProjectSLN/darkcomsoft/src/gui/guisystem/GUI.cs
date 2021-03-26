@@ -5,6 +5,10 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 using Projectsln.darkcomsoft.src.engine.window;
+using Projectsln.darkcomsoft.src.engine;
+using Projectsln.darkcomsoft.src.misc;
+using Projectsln.darkcomsoft.src.enums;
+using System.Drawing;
 
 namespace Projectsln.darkcomsoft.src.gui.guisystem
 {
@@ -13,6 +17,7 @@ namespace Projectsln.darkcomsoft.src.gui.guisystem
         private static GUI m_instance;
 
         private List<GUIBase> m_guiList;
+        private List<GUIBase> m_guiDisabledList;
 
         private int[] m_rectangleIndices;
         private Vector2[] m_rectangleVertices;
@@ -25,29 +30,35 @@ namespace Projectsln.darkcomsoft.src.gui.guisystem
             m_instance = this;
 
             m_guiList = new List<GUIBase>();
+            m_guiDisabledList = new List<GUIBase>();
+
             StartRectangleMesh();
 
             BindRectangleBuffers();//Bind the rectangle data to videoCard
 
             Random rand = new Random();
 
-            for (int i = 0; i < 1; i++)
+            for (int i = 0; i < 1000; i++)
             {
-                m_guiList.Add(new GUIBase(new System.Drawing.Rectangle(0,0,50,50)));
+                m_guiList.Add(new GUIBase(new System.Drawing.RectangleF(rand.Next(0, 3000), rand.Next(0, 3000), 50f, 50f), GUIDock.Free));
             }
+            m_guiList.Add(new GUIBase(new System.Drawing.RectangleF(0, 0, 50f, 50f)));
         }
 
         public void Tick(double time)
         { 
             for (int i = 0; i < m_guiList.Count; i++)
             {
-                m_guiList[i].Tick();
+                if (m_guiList[i].isEnabled)
+                {
+                    m_guiList[i].Tick();
+                }
             }
         }
 
         public void Draw(double time)
         {
-             GL.Enable(EnableCap.Blend);
+            GL.Enable(EnableCap.Blend);
             GL.Disable(EnableCap.DepthTest);
             GL.BlendFunc(BlendingFactor.SrcAlpha, BlendingFactor.OneMinusSrcAlpha);
 
@@ -56,8 +67,11 @@ namespace Projectsln.darkcomsoft.src.gui.guisystem
 
             for (int i = 0; i < m_guiList.Count; i++)
             {
-                m_guiList[i].Draw();
-                GL.DrawElements(PrimitiveType.Triangles, m_rectangleIndices.Length, DrawElementsType.UnsignedInt, 0);
+                if (m_guiList[i].isEnabled)
+                {
+                    m_guiList[i].Draw();
+                    GL.DrawElements(PrimitiveType.Triangles, m_rectangleIndices.Length, DrawElementsType.UnsignedInt, 0);
+                }
             }
 
             GL.BindBuffer(BufferTarget.ElementArrayBuffer, 0);
@@ -162,6 +176,17 @@ namespace Projectsln.darkcomsoft.src.gui.guisystem
             GL.DeleteVertexArray(VAO);
         }
 
+        public void s_EnableGUI(GUIBase gUI)
+        {
+            m_guiDisabledList.Add(gUI);
+            m_guiList.Remove(gUI);
+        }
+
+        public void s_DisableGUI(GUIBase gUI)
+        {
+            m_guiDisabledList.Remove(gUI);
+            m_guiList.Add(gUI);
+        }
 
         public static GUI instance { get { return m_instance; } }
     }
