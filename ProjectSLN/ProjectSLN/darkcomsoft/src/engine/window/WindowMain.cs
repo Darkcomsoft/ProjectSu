@@ -1,6 +1,7 @@
 ﻿using OpenTK.Graphics.OpenGL;
 using OpenTK.Mathematics;
 using OpenTK.Windowing.Common;
+using OpenTK.Windowing.Common.Input;
 using OpenTK.Windowing.Desktop;
 using OpenTK.Windowing.GraphicsLibraryFramework;
 using Projectsln.darkcomsoft.src.enums;
@@ -170,6 +171,8 @@ namespace Projectsln.darkcomsoft.src.engine.window
         {
             Time._DeltaTime = time;
             Time._DTime += time;
+
+            CursorManager.Tick();
 
             if (Input.GetKeyDown(Keys.F11, 0))
             {

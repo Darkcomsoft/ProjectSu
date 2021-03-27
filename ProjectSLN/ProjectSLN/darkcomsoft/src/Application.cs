@@ -74,6 +74,18 @@ namespace Projectsln.darkcomsoft.src
         {
             Input.Tick();
 
+            if (Input.GetKeyDown(OpenTK.Windowing.GraphicsLibraryFramework.Keys.P, 0))
+            {
+                if (!CursorManager.isLocked)
+                {
+                    CursorManager.Lock();
+                }
+                else
+                {
+                    CursorManager.UnLock();
+                }
+            }
+
             //engine.Debug.Log("Tick");
             m_entityManager?.Tick();
             m_networkManager?.Tick();

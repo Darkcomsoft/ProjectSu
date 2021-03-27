@@ -18,6 +18,7 @@ namespace Projectsln.darkcomsoft.src.gui.guisystem
 
         private List<GUIBase> m_guiList;
         private List<GUIBase> m_guiDisabledList;
+        private GUIBase GUIUP;
 
         private int[] m_rectangleIndices;
         private Vector2[] m_rectangleVertices;
@@ -40,7 +41,7 @@ namespace Projectsln.darkcomsoft.src.gui.guisystem
 
             for (int i = 0; i < 1000; i++)
             {
-                m_guiList.Add(new GUIBase(new System.Drawing.RectangleF(rand.Next(0, 3000), rand.Next(0, 3000), 50f, 50f), GUIDock.Free));
+                m_guiList.Add(new GUIBase(new System.Drawing.RectangleF(rand.Next(0, 3000), rand.Next(0, 3000), rand.Next(10, 500), rand.Next(10, 500)), GUIDock.Free));
             }
             m_guiList.Add(new GUIBase(new System.Drawing.RectangleF(0, 0, 50f, 50f)));
         }
@@ -52,6 +53,8 @@ namespace Projectsln.darkcomsoft.src.gui.guisystem
                 if (m_guiList[i].isEnabled)
                 {
                     m_guiList[i].Tick();
+
+                    TickGuiInput(m_guiList[i]);
                 }
             }
         }
@@ -89,6 +92,53 @@ namespace Projectsln.darkcomsoft.src.gui.guisystem
             }
         }
 
+        public void OnMouseMove()
+        {
+            /*if (!MouseCursor.MouseLocked)
+            {
+                Point point = new Point((int)e.X, (int)e.Y);
+
+                foreach (var item in m_guiList)
+                {
+                    if (item.IsInteract)
+                    {
+                        if (item.isEnabled)
+                        {
+                            if (item.GetRectangle.Contains(point))
+                            {
+                                GUIUP = item;
+
+                                item.UnHover();
+                                //item.UnFocus();
+                            }
+                            else
+                            {
+                                item.UnHover();
+                                //item.UnFocus();
+                            }
+                        }
+                    }
+                    else
+                    {
+                        item.UnHover();
+                        item.UnFocus();
+                    }
+                }
+
+                if (GUIUP != null)
+                {
+                    if (GUIUP.GetRectangle.Contains(point))
+                    {
+                        GUIUP.Hover();
+                    }
+                    else
+                    {
+                        GUIUP.UnHover();
+                    }
+                }
+            }*/
+        }
+
         protected override void OnDispose()
         {
             foreach (var item in m_guiList)
@@ -106,6 +156,11 @@ namespace Projectsln.darkcomsoft.src.gui.guisystem
             m_rectangleIndices = null;
             m_rectangleUv = null;
             base.OnDispose();
+        }
+
+        private void TickGuiInput(GUIBase gUI)
+        {
+
         }
 
         private void StartRectangleMesh()
