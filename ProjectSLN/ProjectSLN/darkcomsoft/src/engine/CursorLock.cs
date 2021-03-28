@@ -5,7 +5,7 @@ using System.Text;
 
 namespace Projectsln.darkcomsoft.src.engine
 {
-    public static class CursorManager
+    public static class CursorManager//Need fix the cursor is not being stuck on the center of the screen
     {
         private static bool m_isLocked;
 

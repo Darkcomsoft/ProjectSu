@@ -39,15 +39,35 @@ namespace Projectsln.darkcomsoft.src.gui.guisystem
 
             Random rand = new Random();
 
-            for (int i = 0; i < 1000; i++)
-            {
-                m_guiList.Add(new GUIBase(new System.Drawing.RectangleF(rand.Next(0, 3000), rand.Next(0, 3000), rand.Next(10, 500), rand.Next(10, 500)), GUIDock.Free));
-            }
-            m_guiList.Add(new GUIBase(new System.Drawing.RectangleF(0, 0, 50f, 50f)));
+            
+            m_guiList.Add(new GUIBase(new System.Drawing.RectangleF(0, 0, 50f, 50f), GUIDock.RightBottom));
+            m_guiList.Add(new GUIBase(new System.Drawing.RectangleF(0, 0, 50f, 50f), GUIDock.RightTop));
+            m_guiList.Add(new GUIBase(new System.Drawing.RectangleF(0, 0, 50f, 50f), GUIDock.LeftBottom));
+            m_guiList.Add(new GUIBase(new System.Drawing.RectangleF(0, 0, 50f, 50f), GUIDock.LeftTop));
+
+            m_guiList.Add(new GUIBase(new System.Drawing.RectangleF(0, 0, 50f, 50f), GUIDock.Top));
+            m_guiList.Add(new GUIBase(new System.Drawing.RectangleF(0, 0, 50f, 50f), GUIDock.Bottom));
+
+            m_guiList.Add(new GUIBase(new System.Drawing.RectangleF(0, 0, 50f, 50f), GUIDock.Left));
+            m_guiList.Add(new GUIBase(new System.Drawing.RectangleF(0, 0, 50f, 50f), GUIDock.Right));
+
+            m_guiList.Add(new GUIBase(new System.Drawing.RectangleF(0, 0, 50f, 50f), GUIDock.Center));
         }
 
         public void Tick(double time)
-        { 
+        {
+            if (Input.GetKeyDown(OpenTK.Windowing.GraphicsLibraryFramework.Keys.I, 566))
+            {
+                GameSettings.GuiScale += 50;
+                OnResize();
+            }
+
+            if (Input.GetKeyDown(OpenTK.Windowing.GraphicsLibraryFramework.Keys.O, 234))
+            {
+                GameSettings.GuiScale -= 50;
+                OnResize();
+            }
+
             for (int i = 0; i < m_guiList.Count; i++)
             {
                 if (m_guiList[i].isEnabled)
@@ -94,49 +114,22 @@ namespace Projectsln.darkcomsoft.src.gui.guisystem
 
         public void OnMouseMove()
         {
-            /*if (!MouseCursor.MouseLocked)
+            if (!CursorManager.isLocked)
             {
-                Point point = new Point((int)e.X, (int)e.Y);
-
-                foreach (var item in m_guiList)
+                for (int i = m_guiList.Count - 1; i >= 0; i--)
                 {
-                    if (item.IsInteract)
-                    {
-                        if (item.isEnabled)
-                        {
-                            if (item.GetRectangle.Contains(point))
-                            {
-                                GUIUP = item;
-
-                                item.UnHover();
-                                //item.UnFocus();
-                            }
-                            else
-                            {
-                                item.UnHover();
-                                //item.UnFocus();
-                            }
-                        }
-                    }
-                    else
-                    {
-                        item.UnHover();
-                        item.UnFocus();
-                    }
+                    m_guiList[i].UnHover();
                 }
 
-                if (GUIUP != null)
+                for (int i = m_guiList.Count - 1; i >= 0; i--)
                 {
-                    if (GUIUP.GetRectangle.Contains(point))
+                    if (m_guiList[i].IsMouseOn())
                     {
-                        GUIUP.Hover();
-                    }
-                    else
-                    {
-                        GUIUP.UnHover();
+                        m_guiList[i].Hover();
+                        return;
                     }
                 }
-            }*/
+            }
         }
 
         protected override void OnDispose()

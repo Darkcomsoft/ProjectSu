@@ -248,7 +248,7 @@ namespace Projectsln.darkcomsoft.src.engine.window
 
         protected override void OnMouseMove(MouseMoveEventArgs e)
         {
-            //engineMain?.OnMouseMove(e);
+            application?.OnMouseMove();
         }
 
         protected override void OnClosed()

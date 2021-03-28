@@ -5,11 +5,12 @@ using System.Text;
 namespace Projectsln.darkcomsoft.src.enums
 {
     /// <summary>
-    /// Gui Dock Type, EX: LeftTop, gui pivot is on the topleft of the screen
+    /// Gui Dock Type, EX: LeftTop of the screen
     /// </summary>
     public enum GUIDock : byte
     {
         Free, 
+        Center,
         Left, 
         Right, 
         Top, 

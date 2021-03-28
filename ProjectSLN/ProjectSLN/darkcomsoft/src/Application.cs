@@ -150,6 +150,11 @@ namespace Projectsln.darkcomsoft.src
             m_gui?.OnResize();
         }
 
+        public void OnMouseMove()
+        {
+            m_gui?.OnMouseMove();
+        }
+
         private static string GetBinaryPath()
         {
 #if DEBUG

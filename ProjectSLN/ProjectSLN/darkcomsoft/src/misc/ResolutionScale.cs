@@ -27,7 +27,7 @@ namespace Projectsln.darkcomsoft.src.misc
             this.scaledHeight = WindowMain.Instance.Height;
             this.scaleFactor = 1;
             bool flag = false;
-            int i = GameSettings.GuiScale;
+            int i = (int)GameSettings.GuiScale;
 
             if (i == 0)
             {
