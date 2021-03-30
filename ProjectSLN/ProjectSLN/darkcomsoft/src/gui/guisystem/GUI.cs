@@ -51,7 +51,7 @@ namespace Projectsln.darkcomsoft.src.gui.guisystem
             m_guiList.Add(new GUIBase(new System.Drawing.RectangleF(0, 0, 50f, 50f), GUIDock.Left));
             m_guiList.Add(new GUIBase(new System.Drawing.RectangleF(0, 0, 50f, 50f), GUIDock.Right));
 
-            m_guiList.Add(new GUIBase(new System.Drawing.RectangleF(0, 0, 50f, 50f), GUIDock.Center));
+            m_guiList.Add(new GUIBase(new System.Drawing.RectangleF(0, 0, 50f, 50f), GUIDock.Center, GUIPivot.LeftTop));
         }
 
         public void Tick(double time)
@@ -73,8 +73,6 @@ namespace Projectsln.darkcomsoft.src.gui.guisystem
                 if (m_guiList[i].isEnabled)
                 {
                     m_guiList[i].Tick();
-
-                    TickGuiInput(m_guiList[i]);
                 }
             }
         }
@@ -110,26 +108,13 @@ namespace Projectsln.darkcomsoft.src.gui.guisystem
             {
                 m_guiList[i].OnResize();
             }
+
+            RefreshInput();
         }
 
         public void OnMouseMove()
         {
-            if (!CursorManager.isLocked)
-            {
-                for (int i = m_guiList.Count - 1; i >= 0; i--)
-                {
-                    m_guiList[i].UnHover();
-                }
-
-                for (int i = m_guiList.Count - 1; i >= 0; i--)
-                {
-                    if (m_guiList[i].IsMouseOn())
-                    {
-                        m_guiList[i].Hover();
-                        return;
-                    }
-                }
-            }
+            RefreshInput();
         }
 
         protected override void OnDispose()
@@ -149,11 +134,6 @@ namespace Projectsln.darkcomsoft.src.gui.guisystem
             m_rectangleIndices = null;
             m_rectangleUv = null;
             base.OnDispose();
-        }
-
-        private void TickGuiInput(GUIBase gUI)
-        {
-
         }
 
         private void StartRectangleMesh()
@@ -234,6 +214,26 @@ namespace Projectsln.darkcomsoft.src.gui.guisystem
         {
             m_guiDisabledList.Remove(gUI);
             m_guiList.Add(gUI);
+        }
+
+        public static void RefreshInput()
+        {
+            if (!CursorManager.isLocked)
+            {
+                for (int i = instance.m_guiList.Count - 1; i >= 0; i--)
+                {
+                    instance.m_guiList[i].UnHover();
+                }
+
+                for (int i = instance.m_guiList.Count - 1; i >= 0; i--)
+                {
+                    if (instance.m_guiList[i].IsMouseOn())
+                    {
+                        instance.m_guiList[i].Hover();
+                        return;
+                    }
+                }
+            }
         }
 
         public static GUI instance { get { return m_instance; } }

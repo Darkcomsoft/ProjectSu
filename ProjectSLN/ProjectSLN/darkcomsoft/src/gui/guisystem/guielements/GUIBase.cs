@@ -23,7 +23,7 @@ namespace Projectsln.darkcomsoft.src.gui.guisystem.guielements
         private bool m_Focused = false;
 
         private Shader m_shader;
-        private GUIDock m_dockType = GUIDock.RightBottom;
+        private GUIDock m_dockType = GUIDock.Center;
         private GUIPivot m_guiPivot = GUIPivot.Default;
         private Matrix4 m_worldPosition;
         private Matrix4 m_projection;
@@ -51,6 +51,17 @@ namespace Projectsln.darkcomsoft.src.gui.guisystem.guielements
             m_shader = ResourcesManager.GetShader("UI");
 
             m_dockType = gUIDock;
+
+            OnResize();
+        }
+
+        public GUIBase(RectangleF positionSize, GUIDock gUIDock, GUIPivot gUIPivot)
+        {
+            m_startPosition = positionSize;
+            m_shader = ResourcesManager.GetShader("UI");
+
+            m_dockType = gUIDock;
+            m_guiPivot = gUIPivot;
 
             OnResize();
         }
@@ -106,55 +117,153 @@ namespace Projectsln.darkcomsoft.src.gui.guisystem.guielements
             m_finalPosition.Width = m_startPosition.Width + GameSettings.GuiScale;
             m_finalPosition.Height = m_startPosition.Height + GameSettings.GuiScale;
 
-            switch (m_dockType)
+            if (m_guiPivot != GUIPivot.Default)
             {
-                case GUIDock.Free:
-                    m_finalPosition.X = m_startPosition.X;
-                    m_finalPosition.Y = m_startPosition.Y;
-                    break;
-                case GUIDock.Center:
-                    m_finalPosition.X = (WindowMain.Instance.Width /2) - (m_finalPosition.Width / 2);
-                    m_finalPosition.Y = (WindowMain.Instance.Height/2) - (m_finalPosition.Height /2);
-                    break;
-                case GUIDock.Left:
-                    m_finalPosition.X = 0;
-                    m_finalPosition.Y = (WindowMain.Instance.Height / 2) - (m_finalPosition.Width / 2);
-                    break;
-                case GUIDock.Right:
-                    m_finalPosition.X = (WindowMain.Instance.Width) - m_finalPosition.Width;
-                    m_finalPosition.Y = (WindowMain.Instance.Height / 2) - (m_finalPosition.Height / 2);
-                    break;
-                case GUIDock.Top:
-                    m_finalPosition.X = (WindowMain.Instance.Width / 2) - (m_finalPosition.Width /2);
-                    m_finalPosition.Y = 0;
-                    break;
-                case GUIDock.Bottom:
-                    m_finalPosition.X = (WindowMain.Instance.Width/2) - (m_finalPosition.Width / 2);
-                    m_finalPosition.Y = (WindowMain.Instance.Height) - m_finalPosition.Height;
-                    break;
-                case GUIDock.LeftTop:
-                    m_finalPosition.X = 0;
-                    m_finalPosition.Y = 0;
-                    break;
-                case GUIDock.LeftBottom:
-                    m_finalPosition.X = 0;
-                    m_finalPosition.Y = (WindowMain.Instance.Height) - m_finalPosition.Height;
-                    break;
-                case GUIDock.RightTop:
-                    m_finalPosition.X = (WindowMain.Instance.Width) - m_finalPosition.Width;
-                    m_finalPosition.Y = 0;
-                    break;
-                case GUIDock.RightBottom:
-                    m_finalPosition.X = (WindowMain.Instance.Width) - m_finalPosition.Width;
-                    m_finalPosition.Y = (WindowMain.Instance.Height) - m_finalPosition.Height;
-                    break;
-                default:
-                    m_finalPosition.X = m_startPosition.X;
-                    m_finalPosition.Y = m_startPosition.Y;
-                    break;
+                switch (m_dockType)
+                {
+                    case GUIDock.Free:
+                        m_finalPosition.X = m_startPosition.X;
+                        m_finalPosition.Y = m_startPosition.Y;
+                        break;
+                    case GUIDock.Center:
+                        m_finalPosition.X = (WindowMain.Instance.Width / 2);
+                        m_finalPosition.Y = (WindowMain.Instance.Height / 2);
+                        break;
+                    case GUIDock.Left:
+                        m_finalPosition.X = 0;
+                        m_finalPosition.Y = (WindowMain.Instance.Height / 2);
+                        break;
+                    case GUIDock.Right:
+                        m_finalPosition.X = (WindowMain.Instance.Width);
+                        m_finalPosition.Y = (WindowMain.Instance.Height / 2);
+                        break;
+                    case GUIDock.Top:
+                        m_finalPosition.X = (WindowMain.Instance.Width / 2);
+                        m_finalPosition.Y = 0;
+                        break;
+                    case GUIDock.Bottom:
+                        m_finalPosition.X = (WindowMain.Instance.Width / 2);
+                        m_finalPosition.Y = (WindowMain.Instance.Height);
+                        break;
+                    case GUIDock.LeftTop:
+                        m_finalPosition.X = 0;
+                        m_finalPosition.Y = 0;
+                        break;
+                    case GUIDock.LeftBottom:
+                        m_finalPosition.X = 0;
+                        m_finalPosition.Y = (WindowMain.Instance.Height);
+                        break;
+                    case GUIDock.RightTop:
+                        m_finalPosition.X = (WindowMain.Instance.Width);
+                        m_finalPosition.Y = 0;
+                        break;
+                    case GUIDock.RightBottom:
+                        m_finalPosition.X = (WindowMain.Instance.Width);
+                        m_finalPosition.Y = (WindowMain.Instance.Height);
+                        break;
+                    default:
+                        m_finalPosition.X = m_startPosition.X;
+                        m_finalPosition.Y = m_startPosition.Y;
+                        break;
+                }
+            }
+            else
+            {
+                switch (m_dockType)
+                {
+                    case GUIDock.Free:
+                        m_finalPosition.X = m_startPosition.X;
+                        m_finalPosition.Y = m_startPosition.Y;
+                        break;
+                    case GUIDock.Center:
+                        m_finalPosition.X = (WindowMain.Instance.Width / 2) - (m_finalPosition.Width / 2);
+                        m_finalPosition.Y = (WindowMain.Instance.Height / 2) - (m_finalPosition.Height / 2);
+                        break;
+                    case GUIDock.Left:
+                        m_finalPosition.X = 0;
+                        m_finalPosition.Y = (WindowMain.Instance.Height / 2) - (m_finalPosition.Width / 2);
+                        break;
+                    case GUIDock.Right:
+                        m_finalPosition.X = (WindowMain.Instance.Width) - m_finalPosition.Width;
+                        m_finalPosition.Y = (WindowMain.Instance.Height / 2) - (m_finalPosition.Height / 2);
+                        break;
+                    case GUIDock.Top:
+                        m_finalPosition.X = (WindowMain.Instance.Width / 2) - (m_finalPosition.Width / 2);
+                        m_finalPosition.Y = 0;
+                        break;
+                    case GUIDock.Bottom:
+                        m_finalPosition.X = (WindowMain.Instance.Width / 2) - (m_finalPosition.Width / 2);
+                        m_finalPosition.Y = (WindowMain.Instance.Height) - m_finalPosition.Height;
+                        break;
+                    case GUIDock.LeftTop:
+                        m_finalPosition.X = 0;
+                        m_finalPosition.Y = 0;
+                        break;
+                    case GUIDock.LeftBottom:
+                        m_finalPosition.X = 0;
+                        m_finalPosition.Y = (WindowMain.Instance.Height) - m_finalPosition.Height;
+                        break;
+                    case GUIDock.RightTop:
+                        m_finalPosition.X = (WindowMain.Instance.Width) - m_finalPosition.Width;
+                        m_finalPosition.Y = 0;
+                        break;
+                    case GUIDock.RightBottom:
+                        m_finalPosition.X = (WindowMain.Instance.Width) - m_finalPosition.Width;
+                        m_finalPosition.Y = (WindowMain.Instance.Height) - m_finalPosition.Height;
+                        break;
+                    default:
+                        m_finalPosition.X = m_startPosition.X;
+                        m_finalPosition.Y = m_startPosition.Y;
+                        break;
+                }
             }
 
+            CalculatePivot();//Calaculate the guii pivot, if is using default pivot this dont do nothing
+
             m_worldPosition = Matrix4.CreateScale(m_finalPosition.Width / 2, m_finalPosition.Height / 2, 0) * Matrix4.CreateTranslation(m_finalPosition.X + m_finalPosition.Width / 2, m_finalPosition.Y + m_finalPosition.Height / 2, 0);
+        }
+
+        private void CalculatePivot()
+        {
+            switch (m_guiPivot)
+            {
+                case GUIPivot.Center:
+                    m_finalPosition.X = m_finalPosition.X - (m_finalPosition.Width / 2);
+                    m_finalPosition.Y = m_finalPosition.Y - (m_finalPosition.Height / 2);
+                    break;
+                case GUIPivot.Left:
+                    m_finalPosition.X = m_finalPosition.X - 0;
+                    m_finalPosition.Y = m_finalPosition.Y - (m_finalPosition.Width / 2);
+                    break;
+                case GUIPivot.Right:
+                    m_finalPosition.X = m_finalPosition.X - (m_finalPosition.Width);
+                    m_finalPosition.Y = m_finalPosition.Y - (m_finalPosition.Height / 2);
+                    break;
+                case GUIPivot.Top:
+                    m_finalPosition.X = m_finalPosition.X - (m_finalPosition.Width / 2);
+                    m_finalPosition.Y = m_finalPosition.Y - 0;
+                    break;
+                case GUIPivot.Bottom:
+                   m_finalPosition.X = m_finalPosition.X - (m_finalPosition.Width / 2);
+                    m_finalPosition.Y = m_finalPosition.Y - (m_finalPosition.Height);
+                    break;
+                case GUIPivot.LeftTop:
+                    m_finalPosition.X = m_finalPosition.X - 0;
+                    m_finalPosition.Y = m_finalPosition.Y - 0;
+                    break;
+                case GUIPivot.LeftBottom:
+                    m_finalPosition.X = m_finalPosition.X - 0;
+                    m_finalPosition.Y = m_finalPosition.Y - (m_finalPosition.Height);
+                    break;
+                case GUIPivot.RightTop:
+                    m_finalPosition.X = m_finalPosition.X - (m_finalPosition.Width);
+                    m_finalPosition.Y = m_finalPosition.Y - 0;
+                    break;
+                case GUIPivot.RightBottom:
+                    m_finalPosition.X = m_finalPosition.X - (m_finalPosition.Width);
+                    m_finalPosition.Y = m_finalPosition.Y - (m_finalPosition.Height);
+                    break;
+            }
         }
 
         public void Dock(GUIDock gUIDock)
