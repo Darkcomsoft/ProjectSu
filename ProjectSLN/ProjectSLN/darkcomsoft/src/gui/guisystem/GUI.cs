@@ -16,14 +16,18 @@ namespace Projectsln.darkcomsoft.src.gui.guisystem
     {
         private static GUI m_instance;
 
+        /// <summary>
+        /// This list is used to tick and draw all activated guielements
+        /// </summary>
         private List<GUIBase> m_guiList;
+        /// <summary>
+        /// This list is used for store all disabled gui elements
+        /// </summary>
         private List<GUIBase> m_guiDisabledList;
-        private GUIBase GUIUP;
 
         private int[] m_rectangleIndices;
         private Vector2[] m_rectangleVertices;
         private Vector2[] m_rectangleUv;
-
         private int IBO, VAO, VBO, UBO;
 
         public GUI()
@@ -37,21 +41,18 @@ namespace Projectsln.darkcomsoft.src.gui.guisystem
 
             BindRectangleBuffers();//Bind the rectangle data to videoCard
 
-            Random rand = new Random();
+            m_guiList.Add(new GUIBase(new RectangleF(0, 0, 50f, 50f), GUIDock.RightBottom));
+            m_guiList.Add(new GUIBase(new RectangleF(0, 0, 50f, 50f), GUIDock.RightTop));
+            m_guiList.Add(new GUIBase(new RectangleF(0, 0, 50f, 50f), GUIDock.LeftBottom));
+            m_guiList.Add(new GUIBase(new RectangleF(0, 0, 50f, 50f), GUIDock.LeftTop));
 
-            
-            m_guiList.Add(new GUIBase(new System.Drawing.RectangleF(0, 0, 50f, 50f), GUIDock.RightBottom));
-            m_guiList.Add(new GUIBase(new System.Drawing.RectangleF(0, 0, 50f, 50f), GUIDock.RightTop));
-            m_guiList.Add(new GUIBase(new System.Drawing.RectangleF(0, 0, 50f, 50f), GUIDock.LeftBottom));
-            m_guiList.Add(new GUIBase(new System.Drawing.RectangleF(0, 0, 50f, 50f), GUIDock.LeftTop));
+            m_guiList.Add(new GUIBase(new RectangleF(0, 0, 50f, 50f), GUIDock.Top));
+            m_guiList.Add(new GUIBase(new RectangleF(0, 0, 50f, 50f), GUIDock.Bottom));
 
-            m_guiList.Add(new GUIBase(new System.Drawing.RectangleF(0, 0, 50f, 50f), GUIDock.Top));
-            m_guiList.Add(new GUIBase(new System.Drawing.RectangleF(0, 0, 50f, 50f), GUIDock.Bottom));
+            m_guiList.Add(new GUIBase(new RectangleF(0, 0, 50f, 50f), GUIDock.Left));
+            m_guiList.Add(new GUIBase(new RectangleF(0, 0, 50f, 50f), GUIDock.Right));
 
-            m_guiList.Add(new GUIBase(new System.Drawing.RectangleF(0, 0, 50f, 50f), GUIDock.Left));
-            m_guiList.Add(new GUIBase(new System.Drawing.RectangleF(0, 0, 50f, 50f), GUIDock.Right));
-
-            m_guiList.Add(new GUIBase(new System.Drawing.RectangleF(0, 0, 50f, 50f), GUIDock.Center, GUIPivot.LeftTop));
+            m_guiList.Add(new GUIBase(new RectangleF(0, 0, 50f, 50f), GUIDock.Center, GUIPivot.Center));
         }
 
         public void Tick(double time)
@@ -106,7 +107,7 @@ namespace Projectsln.darkcomsoft.src.gui.guisystem
         {
             for (int i = 0; i < m_guiList.Count; i++)
             {
-                m_guiList[i].OnResize();
+                m_guiList[i].Resize();
             }
 
             RefreshInput();
@@ -216,20 +217,38 @@ namespace Projectsln.darkcomsoft.src.gui.guisystem
             m_guiList.Add(gUI);
         }
 
+        public void DrawRec(GUIBase gUIBase)
+        {
+            GL.Enable(EnableCap.Blend);
+            GL.Disable(EnableCap.DepthTest);
+            GL.BlendFunc(BlendingFactor.SrcAlpha, BlendingFactor.OneMinusSrcAlpha);
+
+            GL.BindVertexArray(VAO);
+            GL.BindBuffer(BufferTarget.ElementArrayBuffer, IBO);
+
+            GL.DrawElements(PrimitiveType.Triangles, m_rectangleIndices.Length, DrawElementsType.UnsignedInt, 0);
+
+            GL.BindBuffer(BufferTarget.ElementArrayBuffer, 0);
+            GL.BindVertexArray(0);
+
+            GL.Enable(EnableCap.DepthTest);
+            GL.Disable(EnableCap.Blend);
+        }
+
         public static void RefreshInput()
         {
             if (!CursorManager.isLocked)
             {
                 for (int i = instance.m_guiList.Count - 1; i >= 0; i--)
                 {
-                    instance.m_guiList[i].UnHover();
+                    instance.m_guiList[i].UpdateMouseStatus(GUIMouseState.UnHover);
                 }
 
                 for (int i = instance.m_guiList.Count - 1; i >= 0; i--)
                 {
                     if (instance.m_guiList[i].IsMouseOn())
                     {
-                        instance.m_guiList[i].Hover();
+                        instance.m_guiList[i].UpdateMouseStatus(GUIMouseState.Hover);
                         return;
                     }
                 }

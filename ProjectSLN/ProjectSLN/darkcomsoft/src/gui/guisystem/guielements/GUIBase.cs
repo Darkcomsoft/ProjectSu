@@ -14,166 +14,89 @@ namespace Projectsln.darkcomsoft.src.gui.guisystem.guielements
 {
     public class GUIBase : ClassBase
     {
-        private RectangleF m_finalPosition;
-        private RectangleF m_startPosition;
+        protected RectangleF m_finalPosition;
+        protected RectangleF m_startPosition;
 
-        private bool m_isEnabled = true;
-        private bool m_isInteractable = true;
-        private bool m_mouseHover = false;
-        private bool m_Focused = false;
+        protected bool m_isEnabled = true;
+        protected bool m_isInteractable = true;
+        protected bool m_mouseHover = false;
+        protected bool m_Focused = false;
 
-        private Shader m_shader;
-        private GUIDock m_dockType = GUIDock.Center;
-        private GUIPivot m_guiPivot = GUIPivot.Default;
-        private Matrix4 m_worldPosition;
-        private Matrix4 m_projection;
-
+        protected GUIDock m_dockType = GUIDock.Center;
+        protected GUIPivot m_guiPivot = GUIPivot.Default;
+        protected Matrix4 m_worldPosition;
+        protected Matrix4 m_projection;
 
         public GUIBase()
         {
             m_startPosition = new RectangleF(0, 0, 50, 50);
-            m_shader = ResourcesManager.GetShader("UI");
-
-            OnResize();
+            Resize();
         }
 
         public GUIBase(RectangleF positionSize)
         {
             m_startPosition = positionSize;
-            m_shader = ResourcesManager.GetShader("UI");
-
-            OnResize();
+            Resize();
         }
 
         public GUIBase(RectangleF positionSize, GUIDock gUIDock)
         {
             m_startPosition = positionSize;
-            m_shader = ResourcesManager.GetShader("UI");
-
             m_dockType = gUIDock;
 
-            OnResize();
+            Resize();
         }
 
         public GUIBase(RectangleF positionSize, GUIDock gUIDock, GUIPivot gUIPivot)
         {
             m_startPosition = positionSize;
-            m_shader = ResourcesManager.GetShader("UI");
-
             m_dockType = gUIDock;
             m_guiPivot = gUIPivot;
 
-            OnResize();
+            Resize();
         }
 
         public void Tick()
         {
             if (!m_isEnabled) { return; }
-
-            /*if (m_finalPosition.IntersectsWith(Input.GetMousePositionRec))
-            {
-                m_mouseHover = true;
-            }
-            else {
-                m_mouseHover = false;
-            }*/
+            OnTick();
         }
 
         public void Draw()
         {
             if (!m_isEnabled) { return; }
-
-            m_shader.Use();
-
-            m_shader.Set("world", m_worldPosition);
-            m_shader.Set("projection", m_projection);
-
-            if (m_mouseHover)
-            {
-                m_shader.Set("uicolor", Color4.Blue);
-            }
-            else
-            {
-                m_shader.Set("uicolor", Color4.Yellow);
-            }
+            UseUniforms();
+            OnDraw();
         }
 
         protected override void OnDispose()
         {
-            m_shader = null;
             base.OnDispose();
         }
 
-        public virtual void OnResize()
+        public void Resize()
         {
+            OnResize(false);
             m_projection = Matrix4.CreateOrthographicOffCenter(0.0f, WindowMain.Instance.Width, WindowMain.Instance.Height, 0.0f, -1.0f, 1.0f);
-            RefreshTrnasform();
+            UpdateTransform();
+            OnResize(true);
         }
 
-        private void RefreshTrnasform()
+        #region TrnasformStuff
+        private void UpdateTransform()
         {
             if (GameSettings.GuiScale <= 0) { GameSettings.GuiScale = 1; }
 
             m_finalPosition.Width = m_startPosition.Width + GameSettings.GuiScale;
             m_finalPosition.Height = m_startPosition.Height + GameSettings.GuiScale;
 
-            if (m_guiPivot != GUIPivot.Default)
+            if (m_guiPivot == GUIPivot.Default)//If is default, use the preset pivot, down below
             {
                 switch (m_dockType)
                 {
                     case GUIDock.Free:
-                        m_finalPosition.X = m_startPosition.X;
-                        m_finalPosition.Y = m_startPosition.Y;
-                        break;
-                    case GUIDock.Center:
-                        m_finalPosition.X = (WindowMain.Instance.Width / 2);
-                        m_finalPosition.Y = (WindowMain.Instance.Height / 2);
-                        break;
-                    case GUIDock.Left:
-                        m_finalPosition.X = 0;
-                        m_finalPosition.Y = (WindowMain.Instance.Height / 2);
-                        break;
-                    case GUIDock.Right:
-                        m_finalPosition.X = (WindowMain.Instance.Width);
-                        m_finalPosition.Y = (WindowMain.Instance.Height / 2);
-                        break;
-                    case GUIDock.Top:
-                        m_finalPosition.X = (WindowMain.Instance.Width / 2);
-                        m_finalPosition.Y = 0;
-                        break;
-                    case GUIDock.Bottom:
-                        m_finalPosition.X = (WindowMain.Instance.Width / 2);
-                        m_finalPosition.Y = (WindowMain.Instance.Height);
-                        break;
-                    case GUIDock.LeftTop:
-                        m_finalPosition.X = 0;
-                        m_finalPosition.Y = 0;
-                        break;
-                    case GUIDock.LeftBottom:
-                        m_finalPosition.X = 0;
-                        m_finalPosition.Y = (WindowMain.Instance.Height);
-                        break;
-                    case GUIDock.RightTop:
-                        m_finalPosition.X = (WindowMain.Instance.Width);
-                        m_finalPosition.Y = 0;
-                        break;
-                    case GUIDock.RightBottom:
-                        m_finalPosition.X = (WindowMain.Instance.Width);
-                        m_finalPosition.Y = (WindowMain.Instance.Height);
-                        break;
-                    default:
-                        m_finalPosition.X = m_startPosition.X;
-                        m_finalPosition.Y = m_startPosition.Y;
-                        break;
-                }
-            }
-            else
-            {
-                switch (m_dockType)
-                {
-                    case GUIDock.Free:
-                        m_finalPosition.X = m_startPosition.X;
-                        m_finalPosition.Y = m_startPosition.Y;
+                        m_finalPosition.X = m_startPosition.X - (m_finalPosition.Width / 2);
+                        m_finalPosition.Y = m_startPosition.Y - (m_finalPosition.Height / 2);
                         break;
                     case GUIDock.Center:
                         m_finalPosition.X = (WindowMain.Instance.Width / 2) - (m_finalPosition.Width / 2);
@@ -217,13 +140,63 @@ namespace Projectsln.darkcomsoft.src.gui.guisystem.guielements
                         break;
                 }
             }
+            else//if not default, use pivot set
+            {
+                switch (m_dockType)
+                {
+                    case GUIDock.Free:
+                        m_finalPosition.X = m_startPosition.X;
+                        m_finalPosition.Y = m_startPosition.Y;
+                        break;
+                    case GUIDock.Center:
+                        m_finalPosition.X = WindowMain.Instance.Width / 2;
+                        m_finalPosition.Y = WindowMain.Instance.Height / 2;
+                        break;
+                    case GUIDock.Left:
+                        m_finalPosition.X = 0;
+                        m_finalPosition.Y = WindowMain.Instance.Height / 2;
+                        break;
+                    case GUIDock.Right:
+                        m_finalPosition.X = WindowMain.Instance.Width;
+                        m_finalPosition.Y = WindowMain.Instance.Height / 2;
+                        break;
+                    case GUIDock.Top:
+                        m_finalPosition.X = WindowMain.Instance.Width / 2;
+                        m_finalPosition.Y = 0;
+                        break;
+                    case GUIDock.Bottom:
+                        m_finalPosition.X = WindowMain.Instance.Width / 2;
+                        m_finalPosition.Y = WindowMain.Instance.Height;
+                        break;
+                    case GUIDock.LeftTop:
+                        m_finalPosition.X = 0;
+                        m_finalPosition.Y = 0;
+                        break;
+                    case GUIDock.LeftBottom:
+                        m_finalPosition.X = 0;
+                        m_finalPosition.Y = WindowMain.Instance.Height;
+                        break;
+                    case GUIDock.RightTop:
+                        m_finalPosition.X = WindowMain.Instance.Width;
+                        m_finalPosition.Y = 0;
+                        break;
+                    case GUIDock.RightBottom:
+                        m_finalPosition.X = WindowMain.Instance.Width;
+                        m_finalPosition.Y = WindowMain.Instance.Height;
+                        break;
+                    default:
+                        m_finalPosition.X = m_startPosition.X;
+                        m_finalPosition.Y = m_startPosition.Y;
+                        break;
+                }
 
-            CalculatePivot();//Calaculate the guii pivot, if is using default pivot this dont do nothing
+                UpdatePivot();//Calaculate the guii pivot, if is using default pivot this dont do nothing
+            }
 
             m_worldPosition = Matrix4.CreateScale(m_finalPosition.Width / 2, m_finalPosition.Height / 2, 0) * Matrix4.CreateTranslation(m_finalPosition.X + m_finalPosition.Width / 2, m_finalPosition.Y + m_finalPosition.Height / 2, 0);
         }
 
-        private void CalculatePivot()
+        private void UpdatePivot()
         {
             switch (m_guiPivot)
             {
@@ -244,7 +217,7 @@ namespace Projectsln.darkcomsoft.src.gui.guisystem.guielements
                     m_finalPosition.Y = m_finalPosition.Y - 0;
                     break;
                 case GUIPivot.Bottom:
-                   m_finalPosition.X = m_finalPosition.X - (m_finalPosition.Width / 2);
+                    m_finalPosition.X = m_finalPosition.X - (m_finalPosition.Width / 2);
                     m_finalPosition.Y = m_finalPosition.Y - (m_finalPosition.Height);
                     break;
                 case GUIPivot.LeftTop:
@@ -265,53 +238,111 @@ namespace Projectsln.darkcomsoft.src.gui.guisystem.guielements
                     break;
             }
         }
+        #endregion
 
         public void Dock(GUIDock gUIDock)
         {
             m_dockType = gUIDock;
-            OnResize();
+            Resize();
         }
 
         public void Pivot(GUIPivot gUIPivot)
         {
             m_guiPivot = gUIPivot;
-            OnResize();
+            Resize();
         }
 
         public void Enable()
         {
             m_isEnabled = true;
             GUI.instance.s_EnableGUI(this);
+            OnEnable();
         }
 
         public void Disable()
         {
             m_isEnabled = false;
             GUI.instance.s_DisableGUI(this);
+            OnDisable();
         }
 
         public void Interact()
         {
             m_isInteractable = true;
+            OnInteractable(true);
         }
 
         public void NoInteract()
         {
             m_isInteractable = false;
+            OnInteractable(false);
         }
 
-        public void Hover()
+        public void UseUniforms()
         {
-            m_mouseHover = true;
+            OnUseUniforms();
         }
 
-        public void UnHover()
+        public void StopUseUniforms()
         {
-            m_mouseHover = false;
+            OnStopUseUniforms();
         }
+
+        public void UpdateMouseStatus(GUIMouseState gUIMouseState)
+        {
+            switch (gUIMouseState)
+            {
+                case GUIMouseState.Hover:
+                    m_mouseHover = true;
+                    break;
+                case GUIMouseState.UnHover:
+                    m_mouseHover = false;
+                    break;
+                case GUIMouseState.Click:
+                    
+                    break;
+                case GUIMouseState.ClickHold:
+                    break;
+                case GUIMouseState.ClickRelease:
+                    break;
+                case GUIMouseState.Focus:
+                    m_Focused = true;
+                    break;
+                case GUIMouseState.UnFocus:
+                    m_Focused = false;
+                    break;
+            }
+
+            OnMouseStateUpdate(gUIMouseState);
+        }
+
+        /// <summary>
+        /// Refresh some stuff
+        /// </summary>
+        public void Refresh()
+        {
+            OnRefresh(false);
+
+            GUI.RefreshInput();
+
+            OnRefresh(true);
+        }
+
+        protected virtual void OnTick() { }
+        protected virtual void OnDraw() { }
+        protected virtual void OnRefresh(bool after) { }
+        protected virtual void OnResize(bool after) { }
+        protected virtual void OnEnable() { }
+        protected virtual void OnDisable() { }
+        protected virtual void OnInteractable(bool isInteractable) { }
+        protected virtual void OnMouseStateUpdate(GUIMouseState gUIMouseState) { }
+        protected virtual void OnUseUniforms() { }
+        protected virtual void OnStopUseUniforms() { }
 
         public bool IsMouseOn() { return m_finalPosition.IntersectsWith(Input.GetMousePositionRec); }
         public bool isEnabled { get { return m_isEnabled; } }
         public bool isInteractable { get { return m_isInteractable; } }
+        public bool isMouseHover { get { return m_mouseHover; } }
+        public bool isFocused { get { return m_Focused; } }
     }
 }
