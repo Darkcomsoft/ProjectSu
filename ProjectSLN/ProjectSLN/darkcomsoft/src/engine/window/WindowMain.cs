@@ -172,19 +172,9 @@ namespace Projectsln.darkcomsoft.src.engine.window
 
             CursorManager.Tick();
 
-            if (Input.GetKeyDown(Keys.F11, 657))
+            if (Input.GetKeyDown(Keys.F11))
             {
                 SetFullScreen();
-            }
-
-            if (Input.GetKeyDown(Keys.L, 85))
-            {
-                Debug.Log("L Pressed!");
-            }
-
-            if (Input.GetKeyUp(Keys.L, 85))
-            {
-                Debug.Log("L Release!");
             }
 
             if (!isRunning)

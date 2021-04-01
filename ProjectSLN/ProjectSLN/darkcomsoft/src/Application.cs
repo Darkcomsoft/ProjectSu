@@ -70,9 +70,7 @@ namespace Projectsln.darkcomsoft.src
 
         public void Tick(double time)
         {
-            input.Tick();
-
-            if (Input.GetKeyDown(OpenTK.Windowing.GraphicsLibraryFramework.Keys.P, 654))
+            if (Input.GetKeyDown(OpenTK.Windowing.GraphicsLibraryFramework.Keys.P))
             {
                 if (!CursorManager.isLocked)
                 {

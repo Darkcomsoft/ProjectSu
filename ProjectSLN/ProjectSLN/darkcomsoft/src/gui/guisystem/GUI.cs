@@ -25,7 +25,8 @@ namespace Projectsln.darkcomsoft.src.gui.guisystem
         /// This list is used for store all disabled gui elements
         /// </summary>
         private List<GUIBase> m_guiDisabledList;
-        
+
+        private bool m_debugMode = false;
 
         private GUIBase m_currentFocusedGui;
         private GUIBase m_currentGuiHoverd;
@@ -62,13 +63,13 @@ namespace Projectsln.darkcomsoft.src.gui.guisystem
 
         public void Tick(double time)
         {
-            if (Input.GetKeyDown(Keys.I, 487))
+            if (Input.GetKeyDown(Keys.I))
             {
                 GameSettings.GuiScale += 50;
                 OnResize();
             }
 
-            if (Input.GetKeyDown(Keys.O, 86))
+            if (Input.GetKeyDown(Keys.O))
             {
                 GameSettings.GuiScale -= 50;
                 OnResize();
@@ -102,6 +103,11 @@ namespace Projectsln.darkcomsoft.src.gui.guisystem
             {
                 if (m_guiList[i].isEnabled)
                 {
+                    if (m_debugMode)
+                    {
+                        Debug_DrawRec(m_guiList[i]);
+                    }
+
                     m_guiList[i].Draw();
                 }
             }
@@ -209,6 +215,7 @@ namespace Projectsln.darkcomsoft.src.gui.guisystem
             GL.DeleteVertexArray(VAO);
         }
 
+
         public void s_EnableGUI(GUIBase gUI)
         {
             m_guiDisabledList.Add(gUI);
@@ -237,6 +244,34 @@ namespace Projectsln.darkcomsoft.src.gui.guisystem
 
             GL.Enable(EnableCap.DepthTest);
             GL.Disable(EnableCap.Blend);
+        }
+
+        public void Debug_DrawRec(GUIBase gUIBase)
+        {
+            GL.Enable(EnableCap.Blend);
+            GL.Disable(EnableCap.DepthTest);
+            GL.BlendFunc(BlendingFactor.SrcAlpha, BlendingFactor.OneMinusSrcAlpha);
+
+            GL.BindVertexArray(VAO);
+            GL.BindBuffer(BufferTarget.ElementArrayBuffer, IBO);
+
+            GL.DrawElements(PrimitiveType.LineLoop, m_rectangleIndices.Length, DrawElementsType.UnsignedInt, 0);
+
+            GL.BindBuffer(BufferTarget.ElementArrayBuffer, 0);
+            GL.BindVertexArray(0);
+
+            GL.Enable(EnableCap.DepthTest);
+            GL.Disable(EnableCap.Blend);
+        }
+
+        public static void EnableDebug()
+        {
+            instance.m_debugMode = true;
+        }
+
+        public static void DisableDebug()
+        {
+            instance.m_debugMode = false;
         }
 
         public static void TickInput()
