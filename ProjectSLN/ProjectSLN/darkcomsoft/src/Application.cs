@@ -1,4 +1,5 @@
-﻿using Projectsln.darkcomsoft.src.consolecli;
+﻿using OpenTK.Windowing.Common;
+using Projectsln.darkcomsoft.src.consolecli;
 using Projectsln.darkcomsoft.src.consolecli.systemconsole;
 using Projectsln.darkcomsoft.src.engine;
 using Projectsln.darkcomsoft.src.engine.render;
@@ -156,6 +157,16 @@ namespace Projectsln.darkcomsoft.src
         public void OnMouseMove()
         {
             m_gui?.OnMouseMove();
+        }
+
+        public void OnMouseDown(MouseButtonEventArgs e)
+        {
+            m_gui?.OnMousePress(e);
+        }
+
+        public void OnMouseUp(MouseButtonEventArgs e)
+        {
+            m_gui?.OnMouseRelease(e);
         }
 
         private static string GetBinaryPath()

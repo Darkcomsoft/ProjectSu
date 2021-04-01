@@ -10,6 +10,7 @@ using Projectsln.darkcomsoft.src.engine;
 using Projectsln.darkcomsoft.src.misc;
 using Projectsln.darkcomsoft.src.enums;
 using System.Drawing;
+using OpenTK.Windowing.Common;
 
 namespace Projectsln.darkcomsoft.src.gui.guisystem
 {
@@ -75,19 +76,6 @@ namespace Projectsln.darkcomsoft.src.gui.guisystem
                 OnResize();
             }
 
-            if (m_currentGuiHoverd != null)
-            {
-                /*if (Input.GetKeyDown(MouseButton.Left, 582))
-                {
-                    m_currentGuiHoverd.UpdateMouseStatus(GUIMouseState.Click);
-                }
-                else if (Input.GetKeyUp(MouseButton.Left, 582))
-                {
-                    m_currentGuiHoverd.UpdateMouseStatus(GUIMouseState.ClickRelease);
-                }*/
-            }
-            
-
             for (int i = 0; i < m_guiList.Count; i++)
             {
                 if (m_guiList[i].isEnabled)
@@ -126,6 +114,44 @@ namespace Projectsln.darkcomsoft.src.gui.guisystem
         public void OnMouseMove()
         {
             TickInput();
+        }
+
+        public void OnMousePress(MouseButtonEventArgs e)
+        {
+            if (!CursorManager.isLocked) { return; }
+            if (!WindowMain.Instance.IsFocused) { return; }
+
+            if (m_currentGuiHoverd != null)
+            {
+                if (e.Button == MouseButton.Left)
+                {
+                    m_currentGuiHoverd.UpdateMouseStatus(GUIMouseState.Click);
+                }
+            }
+        }
+
+        public void OnMouseRelease(MouseButtonEventArgs e)
+        {
+            if (!CursorManager.isLocked) { return; }
+            if (!WindowMain.Instance.IsFocused) { return; }
+
+            if (m_currentGuiHoverd != null)
+            {
+                if (e.Button == MouseButton.Left)
+                {
+                    m_currentGuiHoverd.UpdateMouseStatus(GUIMouseState.ClickRelease);
+                }
+            }
+            else
+            {
+                foreach (var item in m_guiList)
+                {
+                    if (e.Button == MouseButton.Left)
+                    {
+                        item.UpdateMouseStatus(GUIMouseState.ClickRelease);
+                    }
+                }
+            }
         }
 
         protected override void OnDispose()

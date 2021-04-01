@@ -251,14 +251,13 @@ namespace Projectsln.darkcomsoft.src.engine.window
 
         protected override void OnMouseDown(MouseButtonEventArgs e)
         {
-            
-            Debug.Log("Buttom Pressed!");    
+            application?.OnMouseDown(e);
             base.OnMouseDown(e);
         }
 
         protected override void OnMouseUp(MouseButtonEventArgs e)
         {
-            Debug.Log("Buttom Release!");
+            application?.OnMouseUp(e);
             base.OnMouseUp(e);
         }
 
