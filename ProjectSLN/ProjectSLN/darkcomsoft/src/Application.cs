@@ -32,6 +32,7 @@ namespace Projectsln.darkcomsoft.src
         public static ApplicationType AppType { get; private set; }
         public static BuildTypeBase gameInstance;// this is the game instance EX: Client or Server
         public static ResourcesManager m_resourceManager;
+        public static Input input;
         public static GUI m_gui;
         public static WorldManager m_worldManager;
         public static EntityManager m_entityManager;
@@ -43,9 +44,6 @@ namespace Projectsln.darkcomsoft.src
             AppType = applicationType;
 
             m_windowsConsole = new WindowsConsole();
-
-            m_resourceManager = new ResourcesManager(applicationType);
-            m_gui = new GUI();
 
 
             m_worldManager = new WorldManager();
@@ -72,9 +70,9 @@ namespace Projectsln.darkcomsoft.src
 
         public void Tick(double time)
         {
-            Input.Tick();
+            input.Tick();
 
-            if (Input.GetKeyDown(OpenTK.Windowing.GraphicsLibraryFramework.Keys.P, 0))
+            if (Input.GetKeyDown(OpenTK.Windowing.GraphicsLibraryFramework.Keys.P, 654))
             {
                 if (!CursorManager.isLocked)
                 {
@@ -127,6 +125,9 @@ namespace Projectsln.darkcomsoft.src
 
             m_resourceManager?.Dispose();
             m_resourceManager = null;
+
+            input?.Dispose();
+            input = null;
             base.OnDispose();
         }
 
@@ -137,6 +138,10 @@ namespace Projectsln.darkcomsoft.src
 
         private void StartGame()
         {
+            input = new Input();
+            m_resourceManager = new ResourcesManager(AppType);
+            m_gui = new GUI();
+
             gameInstance = new Client();
         }
 

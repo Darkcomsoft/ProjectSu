@@ -1,6 +1,7 @@
 ﻿using OpenTK.Mathematics;
 using Projectsln.darkcomsoft.src.gui.guisystem.guielements;
 using OpenTK.Graphics.OpenGL;
+using OpenTK.Windowing.GraphicsLibraryFramework;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -24,6 +25,10 @@ namespace Projectsln.darkcomsoft.src.gui.guisystem
         /// This list is used for store all disabled gui elements
         /// </summary>
         private List<GUIBase> m_guiDisabledList;
+        
+
+        private GUIBase m_currentFocusedGui;
+        private GUIBase m_currentGuiHoverd;
 
         private int[] m_rectangleIndices;
         private Vector2[] m_rectangleVertices;
@@ -41,7 +46,7 @@ namespace Projectsln.darkcomsoft.src.gui.guisystem
 
             BindRectangleBuffers();//Bind the rectangle data to videoCard
 
-            m_guiList.Add(new GUIBase(new RectangleF(0, 0, 50f, 50f), GUIDock.RightBottom));
+            /*m_guiList.Add(new GUIBase(new RectangleF(0, 0, 50f, 50f), GUIDock.RightBottom));
             m_guiList.Add(new GUIBase(new RectangleF(0, 0, 50f, 50f), GUIDock.RightTop));
             m_guiList.Add(new GUIBase(new RectangleF(0, 0, 50f, 50f), GUIDock.LeftBottom));
             m_guiList.Add(new GUIBase(new RectangleF(0, 0, 50f, 50f), GUIDock.LeftTop));
@@ -50,24 +55,37 @@ namespace Projectsln.darkcomsoft.src.gui.guisystem
             m_guiList.Add(new GUIBase(new RectangleF(0, 0, 50f, 50f), GUIDock.Bottom));
 
             m_guiList.Add(new GUIBase(new RectangleF(0, 0, 50f, 50f), GUIDock.Left));
-            m_guiList.Add(new GUIBase(new RectangleF(0, 0, 50f, 50f), GUIDock.Right));
+            m_guiList.Add(new GUIBase(new RectangleF(0, 0, 50f, 50f), GUIDock.Right));*/
 
-            m_guiList.Add(new GUIBase(new RectangleF(0, 0, 50f, 50f), GUIDock.Center, GUIPivot.Center));
+            m_guiList.Add(new Buttom(new RectangleF(0, 0, 50f, 50f), GUIDock.Center, GUIPivot.Center));
         }
 
         public void Tick(double time)
         {
-            if (Input.GetKeyDown(OpenTK.Windowing.GraphicsLibraryFramework.Keys.I, 566))
+            if (Input.GetKeyDown(Keys.I, 487))
             {
                 GameSettings.GuiScale += 50;
                 OnResize();
             }
 
-            if (Input.GetKeyDown(OpenTK.Windowing.GraphicsLibraryFramework.Keys.O, 234))
+            if (Input.GetKeyDown(Keys.O, 86))
             {
                 GameSettings.GuiScale -= 50;
                 OnResize();
             }
+
+            if (m_currentGuiHoverd != null)
+            {
+                /*if (Input.GetKeyDown(MouseButton.Left, 582))
+                {
+                    m_currentGuiHoverd.UpdateMouseStatus(GUIMouseState.Click);
+                }
+                else if (Input.GetKeyUp(MouseButton.Left, 582))
+                {
+                    m_currentGuiHoverd.UpdateMouseStatus(GUIMouseState.ClickRelease);
+                }*/
+            }
+            
 
             for (int i = 0; i < m_guiList.Count; i++)
             {
@@ -80,27 +98,13 @@ namespace Projectsln.darkcomsoft.src.gui.guisystem
 
         public void Draw(double time)
         {
-            GL.Enable(EnableCap.Blend);
-            GL.Disable(EnableCap.DepthTest);
-            GL.BlendFunc(BlendingFactor.SrcAlpha, BlendingFactor.OneMinusSrcAlpha);
-
-            GL.BindVertexArray(VAO);
-            GL.BindBuffer(BufferTarget.ElementArrayBuffer, IBO);
-
             for (int i = 0; i < m_guiList.Count; i++)
             {
                 if (m_guiList[i].isEnabled)
                 {
                     m_guiList[i].Draw();
-                    GL.DrawElements(PrimitiveType.Triangles, m_rectangleIndices.Length, DrawElementsType.UnsignedInt, 0);
                 }
             }
-
-            GL.BindBuffer(BufferTarget.ElementArrayBuffer, 0);
-            GL.BindVertexArray(0);
-
-            GL.Enable(EnableCap.DepthTest);
-            GL.Disable(EnableCap.Blend);
         }
 
         public void OnResize()
@@ -110,12 +114,12 @@ namespace Projectsln.darkcomsoft.src.gui.guisystem
                 m_guiList[i].Resize();
             }
 
-            RefreshInput();
+            TickInput();
         }
 
         public void OnMouseMove()
         {
-            RefreshInput();
+            TickInput();
         }
 
         protected override void OnDispose()
@@ -235,10 +239,19 @@ namespace Projectsln.darkcomsoft.src.gui.guisystem
             GL.Disable(EnableCap.Blend);
         }
 
-        public static void RefreshInput()
+        public static void TickInput()
         {
             if (!CursorManager.isLocked)
             {
+                if (instance.m_currentGuiHoverd != null && instance.m_currentGuiHoverd.IsMouseOn())
+                {
+                    return;
+                }
+                else
+                {
+                    instance.m_currentGuiHoverd = null;
+                }
+
                 for (int i = instance.m_guiList.Count - 1; i >= 0; i--)
                 {
                     instance.m_guiList[i].UpdateMouseStatus(GUIMouseState.UnHover);
@@ -249,6 +262,7 @@ namespace Projectsln.darkcomsoft.src.gui.guisystem
                     if (instance.m_guiList[i].IsMouseOn())
                     {
                         instance.m_guiList[i].UpdateMouseStatus(GUIMouseState.Hover);
+                        instance.m_currentGuiHoverd = instance.m_guiList[i];
                         return;
                     }
                 }

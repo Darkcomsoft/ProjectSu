@@ -6,6 +6,6 @@ namespace Projectsln.darkcomsoft.src.enums
 {
     public enum GUIMouseState : byte
     {
-        none, Hover, UnHover, Click, ClickHold, ClickRelease, Focus, UnFocus
+        none, Hover, UnHover, Click, ClickRelease, Focus, UnFocus
     }
 }

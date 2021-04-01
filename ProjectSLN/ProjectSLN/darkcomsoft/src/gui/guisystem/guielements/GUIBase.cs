@@ -12,7 +12,7 @@ using System.Text;
 
 namespace Projectsln.darkcomsoft.src.gui.guisystem.guielements
 {
-    public class GUIBase : ClassBase
+    public abstract class GUIBase : ClassBase
     {
         protected RectangleF m_finalPosition;
         protected RectangleF m_startPosition;
@@ -301,9 +301,8 @@ namespace Projectsln.darkcomsoft.src.gui.guisystem.guielements
                 case GUIMouseState.Click:
                     
                     break;
-                case GUIMouseState.ClickHold:
-                    break;
                 case GUIMouseState.ClickRelease:
+
                     break;
                 case GUIMouseState.Focus:
                     m_Focused = true;
@@ -323,7 +322,7 @@ namespace Projectsln.darkcomsoft.src.gui.guisystem.guielements
         {
             OnRefresh(false);
 
-            GUI.RefreshInput();
+            GUI.TickInput();
 
             OnRefresh(true);
         }

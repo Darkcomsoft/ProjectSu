@@ -88,8 +88,6 @@ namespace Projectsln.darkcomsoft.src.engine.window
                 //l_Dnoprocess += (now - l_lastTime) / l_Dmspertick;
                 l_lastTime = now;
 
-                ProcessEvents();
-
                 if (!Exists || IsExiting)
                 {
                     DestroyWindow();
@@ -99,7 +97,7 @@ namespace Projectsln.darkcomsoft.src.engine.window
                 while (l_noprocess >= 1)
                 {
                     l_ticks++;
-                    
+                    ProcessEvents();
                     Tick();
                     l_noprocess -= 1;
                     dorender = true;
@@ -154,8 +152,8 @@ namespace Projectsln.darkcomsoft.src.engine.window
             VSync = VSyncMode.Off;//set the VSync on start, because fuck-it, nobody wants this (:
             WindowBorder = WindowBorder.Resizable;
 
-            Input.keyboardState = KeyboardState;
-            Input.mouseState = MouseState;
+            /*Input.keyboardState = KeyboardState;
+            Input.mouseState = MouseState;*/
         }
 
         protected virtual void OnUnload()
@@ -174,9 +172,19 @@ namespace Projectsln.darkcomsoft.src.engine.window
 
             CursorManager.Tick();
 
-            if (Input.GetKeyDown(Keys.F11, 0))
+            if (Input.GetKeyDown(Keys.F11, 657))
             {
                 SetFullScreen();
+            }
+
+            if (Input.GetKeyDown(Keys.L, 85))
+            {
+                Debug.Log("L Pressed!");
+            }
+
+            if (Input.GetKeyUp(Keys.L, 85))
+            {
+                Debug.Log("L Release!");
             }
 
             if (!isRunning)
@@ -249,6 +257,19 @@ namespace Projectsln.darkcomsoft.src.engine.window
         protected override void OnMouseMove(MouseMoveEventArgs e)
         {
             application?.OnMouseMove();
+        }
+
+        protected override void OnMouseDown(MouseButtonEventArgs e)
+        {
+            
+            Debug.Log("Buttom Pressed!");    
+            base.OnMouseDown(e);
+        }
+
+        protected override void OnMouseUp(MouseButtonEventArgs e)
+        {
+            Debug.Log("Buttom Release!");
+            base.OnMouseUp(e);
         }
 
         protected override void OnClosed()

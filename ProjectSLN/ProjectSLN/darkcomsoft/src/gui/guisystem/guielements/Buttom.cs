@@ -1,4 +1,5 @@
 ﻿using OpenTK.Mathematics;
+using Projectsln.darkcomsoft.src.engine;
 using Projectsln.darkcomsoft.src.enums;
 using Projectsln.darkcomsoft.src.render;
 using Projectsln.darkcomsoft.src.resources;
@@ -36,6 +37,34 @@ namespace Projectsln.darkcomsoft.src.gui.guisystem.guielements
             m_shader = ResourcesManager.GetShader("UI");
         }
 
+        protected override void OnTick()
+        {
+            
+            base.OnTick();
+        }
+
+        protected override void OnMouseStateUpdate(GUIMouseState gUIMouseState)
+        {
+            switch (gUIMouseState)
+            {
+                case GUIMouseState.Hover:
+                    break;
+                case GUIMouseState.UnHover:
+                    break;
+                case GUIMouseState.Click:
+                    Debug.Log("Buttom Click!");
+                    break;
+                case GUIMouseState.ClickRelease:
+                    Debug.Log("Buttom ClickRelease!");
+                    break;
+                case GUIMouseState.Focus:
+                    break;
+                case GUIMouseState.UnFocus:
+                    break;
+            }
+            base.OnMouseStateUpdate(gUIMouseState);
+        }
+
         protected override void OnDraw()
         {
             m_shader.Use();
@@ -51,6 +80,8 @@ namespace Projectsln.darkcomsoft.src.gui.guisystem.guielements
             {
                 m_shader.Set("uicolor", Color4.Yellow);
             }
+
+            GUI.instance.DrawRec(this);
             base.OnDraw();
         }
 
