@@ -1,5 +1,6 @@
 ﻿using OpenTK.Graphics.OpenGL;
 using OpenTK.Mathematics;
+using OpenTK.Windowing.Common;
 using Projectsln.darkcomsoft.src.engine;
 using Projectsln.darkcomsoft.src.engine.window;
 using Projectsln.darkcomsoft.src.enums;
@@ -288,31 +289,31 @@ namespace Projectsln.darkcomsoft.src.gui.guisystem.guielements
             OnStopUseUniforms();
         }
 
-        public void UpdateMouseStatus(GUIMouseState gUIMouseState)
+        public void SetStatus(GUIElementStatus gUIElementStatus, params object[] parame)
         {
-            switch (gUIMouseState)
+            switch (gUIElementStatus)
             {
-                case GUIMouseState.Hover:
-                    m_mouseHover = true;
+                case GUIElementStatus.none:
                     break;
-                case GUIMouseState.UnHover:
-                    m_mouseHover = false;
+                case GUIElementStatus.Hover:
+                    m_mouseHover = (bool)parame[0];
                     break;
-                case GUIMouseState.Click:
-                    
-                    break;
-                case GUIMouseState.ClickRelease:
-
-                    break;
-                case GUIMouseState.Focus:
-                    m_Focused = true;
-                    break;
-                case GUIMouseState.UnFocus:
-                    m_Focused = false;
+                case GUIElementStatus.Focus:
+                    m_Focused = (bool)parame[0];
                     break;
             }
 
-            OnMouseStateUpdate(gUIMouseState);
+            OnStatusChange(gUIElementStatus, parame);
+        }
+
+        public void MouseClick(MouseButtonEventArgs e)
+        {
+            OnMouseClick(e);
+        }
+
+        public void MouseRelease(MouseButtonEventArgs e)
+        {
+            OnMouseRelease(e);
         }
 
         /// <summary>
@@ -334,9 +335,11 @@ namespace Projectsln.darkcomsoft.src.gui.guisystem.guielements
         protected virtual void OnEnable() { }
         protected virtual void OnDisable() { }
         protected virtual void OnInteractable(bool isInteractable) { }
-        protected virtual void OnMouseStateUpdate(GUIMouseState gUIMouseState) { }
+        protected virtual void OnStatusChange(GUIElementStatus gUIElementStatus, params object[] parame) { }
         protected virtual void OnUseUniforms() { }
         protected virtual void OnStopUseUniforms() { }
+        protected virtual void OnMouseClick(MouseButtonEventArgs e) { }
+        protected virtual void OnMouseRelease(MouseButtonEventArgs e) { }
 
         public bool IsMouseOn() { return m_finalPosition.IntersectsWith(Input.GetMousePositionRec); }
         public bool isEnabled { get { return m_isEnabled; } }

@@ -48,17 +48,6 @@ namespace Projectsln.darkcomsoft.src.gui.guisystem
 
             BindRectangleBuffers();//Bind the rectangle data to videoCard
 
-            /*m_guiList.Add(new GUIBase(new RectangleF(0, 0, 50f, 50f), GUIDock.RightBottom));
-            m_guiList.Add(new GUIBase(new RectangleF(0, 0, 50f, 50f), GUIDock.RightTop));
-            m_guiList.Add(new GUIBase(new RectangleF(0, 0, 50f, 50f), GUIDock.LeftBottom));
-            m_guiList.Add(new GUIBase(new RectangleF(0, 0, 50f, 50f), GUIDock.LeftTop));
-
-            m_guiList.Add(new GUIBase(new RectangleF(0, 0, 50f, 50f), GUIDock.Top));
-            m_guiList.Add(new GUIBase(new RectangleF(0, 0, 50f, 50f), GUIDock.Bottom));
-
-            m_guiList.Add(new GUIBase(new RectangleF(0, 0, 50f, 50f), GUIDock.Left));
-            m_guiList.Add(new GUIBase(new RectangleF(0, 0, 50f, 50f), GUIDock.Right));*/
-
             m_guiList.Add(new Buttom(new RectangleF(0, 0, 50f, 50f), GUIDock.Center, GUIPivot.Center));
         }
 
@@ -83,6 +72,15 @@ namespace Projectsln.darkcomsoft.src.gui.guisystem
                     m_guiList[i].Tick();
                 }
             }
+
+            if (Input.GetKeyDown(Keys.Escape))
+            {
+                if (m_currentFocusedGui != null)
+                {
+                    m_currentFocusedGui = null;
+                    m_currentFocusedGui.SetStatus(GUIElementStatus.Focus, false);
+                }
+            }
         }
 
         public void Draw(double time)
@@ -91,12 +89,12 @@ namespace Projectsln.darkcomsoft.src.gui.guisystem
             {
                 if (m_guiList[i].isEnabled)
                 {
+                    m_guiList[i].Draw();
+
                     if (m_debugMode)
                     {
                         Debug_DrawRec(m_guiList[i]);
                     }
-
-                    m_guiList[i].Draw();
                 }
             }
         }
@@ -118,39 +116,33 @@ namespace Projectsln.darkcomsoft.src.gui.guisystem
 
         public void OnMousePress(MouseButtonEventArgs e)
         {
-            if (!CursorManager.isLocked) { return; }
+            if (CursorManager.isLocked) { return; }
             if (!WindowMain.Instance.IsFocused) { return; }
 
             if (m_currentGuiHoverd != null)
             {
-                if (e.Button == MouseButton.Left)
+                m_currentFocusedGui = m_currentGuiHoverd;
+                m_currentGuiHoverd.SetStatus(GUIElementStatus.Focus, true);
+                m_currentGuiHoverd.MouseClick(e);
+            }
+            else
+            {
+                if (m_currentFocusedGui!=null)
                 {
-                    m_currentGuiHoverd.UpdateMouseStatus(GUIMouseState.Click);
+                    m_currentFocusedGui = null;
+                    m_currentFocusedGui.SetStatus(GUIElementStatus.Focus, false);
                 }
             }
         }
 
         public void OnMouseRelease(MouseButtonEventArgs e)
         {
-            if (!CursorManager.isLocked) { return; }
+            if (CursorManager.isLocked) { return; }
             if (!WindowMain.Instance.IsFocused) { return; }
 
             if (m_currentGuiHoverd != null)
             {
-                if (e.Button == MouseButton.Left)
-                {
-                    m_currentGuiHoverd.UpdateMouseStatus(GUIMouseState.ClickRelease);
-                }
-            }
-            else
-            {
-                foreach (var item in m_guiList)
-                {
-                    if (e.Button == MouseButton.Left)
-                    {
-                        item.UpdateMouseStatus(GUIMouseState.ClickRelease);
-                    }
-                }
+                m_currentGuiHoverd.MouseRelease(e);
             }
         }
 
@@ -308,21 +300,22 @@ namespace Projectsln.darkcomsoft.src.gui.guisystem
                 {
                     return;
                 }
-                else
+                else if (instance.m_currentGuiHoverd != null)
                 {
+                    instance.m_currentGuiHoverd.SetStatus(GUIElementStatus.Click, false);
                     instance.m_currentGuiHoverd = null;
                 }
 
                 for (int i = instance.m_guiList.Count - 1; i >= 0; i--)
                 {
-                    instance.m_guiList[i].UpdateMouseStatus(GUIMouseState.UnHover);
+                    instance.m_guiList[i].SetStatus(GUIElementStatus.Hover, false);
                 }
 
                 for (int i = instance.m_guiList.Count - 1; i >= 0; i--)
                 {
                     if (instance.m_guiList[i].IsMouseOn())
                     {
-                        instance.m_guiList[i].UpdateMouseStatus(GUIMouseState.Hover);
+                        instance.m_guiList[i].SetStatus(GUIElementStatus.Hover, true);
                         instance.m_currentGuiHoverd = instance.m_guiList[i];
                         return;
                     }

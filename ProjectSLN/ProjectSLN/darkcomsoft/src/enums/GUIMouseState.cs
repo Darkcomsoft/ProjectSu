@@ -4,8 +4,8 @@ using System.Text;
 
 namespace Projectsln.darkcomsoft.src.enums
 {
-    public enum GUIMouseState : byte
+    public enum GUIElementStatus : byte
     {
-        none, Hover, UnHover, Click, ClickRelease, Focus, UnFocus
+        none, Hover, Focus
     }
 }

@@ -61,7 +61,7 @@ namespace Projectsln.darkcomsoft.src.engine
             return instance.keyboardState.IsKeyReleased(key);
         }
 
-        public static bool GetKey(MouseButton mouseButton)
+        public static bool GetButtom(MouseButton mouseButton)
         {
             if (instance == null) { return false; }
             if (!WindowMain.Instance.IsFocused) { return false; }
