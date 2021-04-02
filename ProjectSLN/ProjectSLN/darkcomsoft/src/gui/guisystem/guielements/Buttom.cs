@@ -1,4 +1,5 @@
 ﻿using OpenTK.Mathematics;
+using OpenTK.Windowing.Common;
 using Projectsln.darkcomsoft.src.engine;
 using Projectsln.darkcomsoft.src.enums;
 using Projectsln.darkcomsoft.src.render;
@@ -16,6 +17,7 @@ namespace Projectsln.darkcomsoft.src.gui.guisystem.guielements
     public class Buttom : GUIBase
     {
         private Shader m_shader;
+        private bool m_isclick = false;
 
         public Buttom()
         {
@@ -43,28 +45,6 @@ namespace Projectsln.darkcomsoft.src.gui.guisystem.guielements
             base.OnTick();
         }
 
-        protected override void OnMouseStateUpdate(GUIMouseState gUIMouseState)
-        {
-            switch (gUIMouseState)
-            {
-                case GUIMouseState.Hover:
-                    break;
-                case GUIMouseState.UnHover:
-                    break;
-                case GUIMouseState.Click:
-                    Debug.Log("Buttom Click!");
-                    break;
-                case GUIMouseState.ClickRelease:
-                    Debug.Log("Buttom ClickRelease!");
-                    break;
-                case GUIMouseState.Focus:
-                    break;
-                case GUIMouseState.UnFocus:
-                    break;
-            }
-            base.OnMouseStateUpdate(gUIMouseState);
-        }
-
         protected override void OnDraw()
         {
             m_shader.Use();
@@ -74,15 +54,53 @@ namespace Projectsln.darkcomsoft.src.gui.guisystem.guielements
 
             if (isMouseHover)
             {
-                m_shader.Set("uicolor", Color4.Blue);
+                if (m_isclick)
+                {
+                    m_shader.Set("uicolor", Color4.DarkOliveGreen);
+                }
+                else
+                {
+                    m_shader.Set("uicolor", Color4.Blue);
+                }
             }
             else
             {
-                m_shader.Set("uicolor", Color4.Yellow);
+                if (m_Focused)
+                {
+                    m_shader.Set("uicolor", Color4.Bisque);
+                }
+                else
+                {
+                    m_shader.Set("uicolor", Color4.Yellow);
+                }
             }
 
             GUI.instance.DrawRec(this);
             base.OnDraw();
+        }
+
+        protected override void OnMouseClick(MouseButtonEventArgs e)
+        {
+            m_isclick = true;
+            AddSize(10, 10);
+            base.OnMouseClick(e);
+        }
+
+        protected override void OnMouseRelease(MouseButtonEventArgs e)
+        {
+            m_isclick = false;
+            RemoveSize(10,10);
+            base.OnMouseRelease(e);
+        }
+
+        protected override void OnStatusChange(GUIElementStatus gUIElementStatus, params object[] parame)
+        {
+            if (!m_mouseHover && m_isclick)
+            {
+                m_isclick = false;
+                RemoveSize(10, 10);
+            }
+            base.OnStatusChange(gUIElementStatus, parame);
         }
 
         protected override void OnDispose()

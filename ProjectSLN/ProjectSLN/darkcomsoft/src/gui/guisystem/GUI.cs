@@ -77,8 +77,8 @@ namespace Projectsln.darkcomsoft.src.gui.guisystem
             {
                 if (m_currentFocusedGui != null)
                 {
-                    m_currentFocusedGui = null;
                     m_currentFocusedGui.SetStatus(GUIElementStatus.Focus, false);
+                    m_currentFocusedGui = null;
                 }
             }
         }
@@ -106,12 +106,12 @@ namespace Projectsln.darkcomsoft.src.gui.guisystem
                 m_guiList[i].Resize();
             }
 
-            TickInput();
+            TickMouseHover();
         }
 
         public void OnMouseMove()
         {
-            TickInput();
+            TickMouseHover();
         }
 
         public void OnMousePress(MouseButtonEventArgs e)
@@ -129,8 +129,8 @@ namespace Projectsln.darkcomsoft.src.gui.guisystem
             {
                 if (m_currentFocusedGui!=null)
                 {
-                    m_currentFocusedGui = null;
                     m_currentFocusedGui.SetStatus(GUIElementStatus.Focus, false);
+                    m_currentFocusedGui = null;
                 }
             }
         }
@@ -292,7 +292,7 @@ namespace Projectsln.darkcomsoft.src.gui.guisystem
             instance.m_debugMode = false;
         }
 
-        public static void TickInput()
+        public static void TickMouseHover()
         {
             if (!CursorManager.isLocked)
             {
@@ -302,13 +302,15 @@ namespace Projectsln.darkcomsoft.src.gui.guisystem
                 }
                 else if (instance.m_currentGuiHoverd != null)
                 {
-                    instance.m_currentGuiHoverd.SetStatus(GUIElementStatus.Click, false);
                     instance.m_currentGuiHoverd = null;
                 }
 
                 for (int i = instance.m_guiList.Count - 1; i >= 0; i--)
                 {
-                    instance.m_guiList[i].SetStatus(GUIElementStatus.Hover, false);
+                    if (instance.m_guiList[i].isMouseHover)
+                    {
+                        instance.m_guiList[i].SetStatus(GUIElementStatus.Hover, false);
+                    }
                 }
 
                 for (int i = instance.m_guiList.Count - 1; i >= 0; i--)

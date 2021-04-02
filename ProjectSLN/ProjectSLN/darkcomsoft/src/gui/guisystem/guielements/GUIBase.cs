@@ -81,6 +81,7 @@ namespace Projectsln.darkcomsoft.src.gui.guisystem.guielements
             m_projection = Matrix4.CreateOrthographicOffCenter(0.0f, WindowMain.Instance.Width, WindowMain.Instance.Height, 0.0f, -1.0f, 1.0f);
             UpdateTransform();
             OnResize(true);
+            Refresh();
         }
 
         #region TrnasformStuff
@@ -253,6 +254,56 @@ namespace Projectsln.darkcomsoft.src.gui.guisystem.guielements
             Resize();
         }
 
+
+        public void SetPosition(float x, float y)
+        {
+            m_startPosition.X = x;
+            m_startPosition.Y = y;
+
+            Resize();
+        }
+
+        public void AddPosition(float x, float y)
+        {
+            m_startPosition.X += x;
+            m_startPosition.Y += y;
+
+            Resize();
+        }
+
+        public void RemovePosition(float x, float y)
+        {
+            m_startPosition.X -= x;
+            m_startPosition.Y -= y;
+
+            Resize();
+        }
+
+        public void SetSize(float w, float h)
+        {
+            m_startPosition.Width = w;
+            m_startPosition.Height = h;
+
+            Resize();
+        }
+
+        public void AddSize(float w, float h)
+        {
+            m_startPosition.Width += w;
+            m_startPosition.Height += h;
+
+            Resize();
+        }
+
+        public void RemoveSize(float w, float h)
+        {
+            m_startPosition.Width -= w;
+            m_startPosition.Height -= h;
+
+            Resize();
+        }
+
+
         public void Enable()
         {
             m_isEnabled = true;
@@ -297,6 +348,7 @@ namespace Projectsln.darkcomsoft.src.gui.guisystem.guielements
                     break;
                 case GUIElementStatus.Hover:
                     m_mouseHover = (bool)parame[0];
+                    Debug.Log("Hover: " + m_mouseHover);
                     break;
                 case GUIElementStatus.Focus:
                     m_Focused = (bool)parame[0];
@@ -316,21 +368,13 @@ namespace Projectsln.darkcomsoft.src.gui.guisystem.guielements
             OnMouseRelease(e);
         }
 
-        /// <summary>
-        /// Refresh some stuff
-        /// </summary>
-        public void Refresh()
+        private void Refresh()
         {
-            OnRefresh(false);
-
-            GUI.TickInput();
-
-            OnRefresh(true);
+            GUI.TickMouseHover();
         }
 
         protected virtual void OnTick() { }
         protected virtual void OnDraw() { }
-        protected virtual void OnRefresh(bool after) { }
         protected virtual void OnResize(bool after) { }
         protected virtual void OnEnable() { }
         protected virtual void OnDisable() { }
