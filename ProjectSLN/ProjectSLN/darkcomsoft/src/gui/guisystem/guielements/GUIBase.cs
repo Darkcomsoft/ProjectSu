@@ -22,6 +22,7 @@ namespace Projectsln.darkcomsoft.src.gui.guisystem.guielements
         protected bool m_isInteractable = true;
         protected bool m_mouseHover = false;
         protected bool m_Focused = false;
+        protected bool m_inputEnable = false;
 
         protected GUIDock m_dockType = GUIDock.Center;
         protected GUIPivot m_guiPivot = GUIPivot.Default;
@@ -32,12 +33,14 @@ namespace Projectsln.darkcomsoft.src.gui.guisystem.guielements
         {
             m_startPosition = new RectangleF(0, 0, 50, 50);
             Resize();
+            GUI.AddGUI(this);
         }
 
         public GUIBase(RectangleF positionSize)
         {
             m_startPosition = positionSize;
             Resize();
+            GUI.AddGUI(this);
         }
 
         public GUIBase(RectangleF positionSize, GUIDock gUIDock)
@@ -46,6 +49,7 @@ namespace Projectsln.darkcomsoft.src.gui.guisystem.guielements
             m_dockType = gUIDock;
 
             Resize();
+            GUI.AddGUI(this);
         }
 
         public GUIBase(RectangleF positionSize, GUIDock gUIDock, GUIPivot gUIPivot)
@@ -55,6 +59,7 @@ namespace Projectsln.darkcomsoft.src.gui.guisystem.guielements
             m_guiPivot = gUIPivot;
 
             Resize();
+            GUI.AddGUI(this);
         }
 
         public void Tick()
@@ -72,6 +77,7 @@ namespace Projectsln.darkcomsoft.src.gui.guisystem.guielements
 
         protected override void OnDispose()
         {
+            GUI.RemoveGUI(this);
             base.OnDispose();
         }
 
@@ -348,7 +354,6 @@ namespace Projectsln.darkcomsoft.src.gui.guisystem.guielements
                     break;
                 case GUIElementStatus.Hover:
                     m_mouseHover = (bool)parame[0];
-                    Debug.Log("Hover: " + m_mouseHover);
                     break;
                 case GUIElementStatus.Focus:
                     m_Focused = (bool)parame[0];
@@ -390,5 +395,6 @@ namespace Projectsln.darkcomsoft.src.gui.guisystem.guielements
         public bool isInteractable { get { return m_isInteractable; } }
         public bool isMouseHover { get { return m_mouseHover; } }
         public bool isFocused { get { return m_Focused; } }
+        public bool isInputEnabled { get { return m_inputEnable; } }
     }
 }

@@ -11,6 +11,7 @@ namespace Projectsln.darkcomsoft.src
 {
     class main
     {
+
         [MTAThread]
         static void Main(string[] args)
         {
@@ -41,57 +42,59 @@ namespace Projectsln.darkcomsoft.src
 
 
             nativeWindow.Title = Application.AppName + " : " + Application.Version;
+            WindowMain game = new WindowMain(gameWindowSettings, nativeWindow);
 
-            using (WindowMain game = new WindowMain(gameWindowSettings, nativeWindow))
+            try
             {
-                try
+                game.Run();
+            }
+            catch (OutOfMemoryException memoryEx)
+            {
+                Debug.LogWarning("GC: " + memoryEx.Message, "Main");
+                for (int i = 0; i < 2; i++)
                 {
-                    game.Run();
+                    Debug.LogWarning("GC: Collecting Garbage!", "Main");
+                    GC.Collect();
+                    Debug.LogWarning("GC: Clean-up, waiting to clean again!", "Main");
+                    Thread.Sleep(1000);
                 }
-                catch (OutOfMemoryException memoryEx)
-                {
-                    Debug.LogWarning("GC: " + memoryEx.Message, "Main");
-                    for (int i = 0; i < 2; i++)
-                    {
-                        Debug.LogWarning("GC: Collecting Garbage!", "Main");
-                        GC.Collect();
-                        Debug.LogWarning("GC: Clean-up, waiting to clean again!", "Main");
-                        Thread.Sleep(1000);
-                    }
-                    return;
-                }
-                catch (Exception ex)
-                {
-                    Debug.LogFail(ex.Message + " StackTrace: " + ex.StackTrace);
-                }
+                return;
+            }
+            catch (Exception ex)
+            {
+                Debug.LogFail(ex.Message + " StackTrace: " + ex.StackTrace);
             }
         }
 
         private static void StartServer()
         {
-            using (ServerMain server = new ServerMain())
+            ServerMain server = new ServerMain();
+
+             try
             {
-                try
-                {
-                    server.Run();
-                }
-                catch (OutOfMemoryException memoryEx)
-                {
-                    Debug.LogWarning("GC: " + memoryEx.Message, "Main");
-                    for (int i = 0; i < 2; i++)
-                    {
-                        Debug.LogWarning("GC: Collecting Garbage!", "Main");
-                        GC.Collect();
-                        Debug.LogWarning("GC: Clean-up, waiting to clean again!", "Main");
-                        Thread.Sleep(1000);
-                    }
-                    return;
-                }
-                catch (Exception ex)
-                {
-                    Debug.LogFail(ex.Message + " StackTrace: " + ex.StackTrace);
-                }
+                server.Run();
             }
+            catch (OutOfMemoryException memoryEx)
+            {
+                Debug.LogWarning("GC: " + memoryEx.Message, "Main");
+                for (int i = 0; i < 2; i++)
+                {
+                    Debug.LogWarning("GC: Collecting Garbage!", "Main");
+                    GC.Collect();
+                    Debug.LogWarning("GC: Clean-up, waiting to clean again!", "Main");
+                    Thread.Sleep(1000);
+                }
+                return;
+            }
+            catch (Exception ex)
+            {
+                Debug.LogFail(ex.Message + " StackTrace: " + ex.StackTrace);
+            }
+        }
+
+        public void ReloadGame()
+        {
+
         }
 
         private static void CheckOpenAL()

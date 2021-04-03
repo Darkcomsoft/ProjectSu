@@ -16,7 +16,7 @@ namespace Projectsln.darkcomsoft.src.world
             worldList = new List<World>();
         }
 
-        protected override void Dispose(bool disposing)
+        protected override void OnDispose()
         {
             foreach (var item in worldList)
             {
@@ -24,7 +24,7 @@ namespace Projectsln.darkcomsoft.src.world
             }
 
             worldList = null;
-            base.Dispose(disposing);
+            base.OnDispose();
         }
 
         public static World SpawnWorld<T>()

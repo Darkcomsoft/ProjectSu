@@ -22,21 +22,25 @@ namespace Projectsln.darkcomsoft.src.gui.guisystem.guielements
         public Buttom()
         {
             m_shader = ResourcesManager.GetShader("UI");
+            m_inputEnable = true;
         }
 
         public Buttom(RectangleF positionSize) : base(positionSize)
         {
             m_shader = ResourcesManager.GetShader("UI");
+            m_inputEnable = true;
         }
 
         public Buttom(RectangleF positionSize, GUIDock gUIDock) : base(positionSize, gUIDock)
         {
             m_shader = ResourcesManager.GetShader("UI");
+            m_inputEnable = true;
         }
 
         public Buttom(RectangleF positionSize, GUIDock gUIDock, GUIPivot gUIPivot): base(positionSize, gUIDock, gUIPivot)
         {
             m_shader = ResourcesManager.GetShader("UI");
+            m_inputEnable = true;
         }
 
         protected override void OnTick()

@@ -1,14 +1,15 @@
-﻿using System;
+﻿using Projectsln.darkcomsoft.src.engine;
+using System;
 using System.Collections.Generic;
 using System.Text;
 
 namespace Projectsln.darkcomsoft.src
 {
-    public class ClassBase : IDisposable
+    public abstract class ClassBase : IDisposable
     {
         public ClassBase()
         {
-            GC.KeepAlive(this);
+            //GC.KeepAlive(this);
         }
 
         // To detect redundant calls
@@ -21,7 +22,7 @@ namespace Projectsln.darkcomsoft.src
         }
 
         // Protected implementation of Dispose pattern.
-        protected virtual void Dispose(bool disposing)
+        private void Dispose(bool disposing)
         {
             if (_disposed)
             {
@@ -30,9 +31,11 @@ namespace Projectsln.darkcomsoft.src
 
             if (disposing)
             {
-                OnDispose();
                 GC.SuppressFinalize(this);
             }
+
+            OnDispose();
+
             _disposed = true;
         }
 
@@ -43,7 +46,7 @@ namespace Projectsln.darkcomsoft.src
         /// </summary>
         protected virtual void OnDispose()
         {
-            //Debug.Log("DISPOSED: " + this.GetType() + " (HASH: " + this.GetHashCode() + ")");
+            Debug.Log("DISPOSED: " + this.GetType() + " (HASH: " + this.GetHashCode() + ")", "DISPOSESYSTEM");
         }
     }
 }

@@ -46,7 +46,6 @@ namespace Projectsln.darkcomsoft.src
 
             m_windowsConsole = new WindowsConsole();
 
-
             m_worldManager = new WorldManager();
             m_entityManager = new EntityManager();
             m_networkManager = new NetworkManager();
