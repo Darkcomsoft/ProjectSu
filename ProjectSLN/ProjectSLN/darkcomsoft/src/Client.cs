@@ -17,7 +17,7 @@ namespace Projectsln.darkcomsoft.src
     {
         public Client()
         {
-            Debug.Log("GameStarted!");
+            Debug.Log("GameStarted!", "CLIENT");
 
             WorldManager.SpawnWorld<SystemWorld>();
             WorldManager.SpawnWorld<MainMenuWorld>();
@@ -25,6 +25,17 @@ namespace Projectsln.darkcomsoft.src
 
         public override void Tick()
         {
+            if (Input.GetKeyDown(OpenTK.Windowing.GraphicsLibraryFramework.Keys.P))
+            {
+                if (!CursorManager.isLocked)
+                {
+                    CursorManager.Lock();
+                }
+                else
+                {
+                    CursorManager.UnLock();
+                }
+            }
             base.Tick();
         }
 

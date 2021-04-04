@@ -24,7 +24,7 @@ namespace Projectsln.darkcomsoft.src
     public class Application : ClassBase
     {
         public const string AppName = "ProjectSLN";
-        public const string Version = "PRE-ALPHA y21w01a";
+        public const string Version = "InDev w21m4w2";
 
         public static readonly string BinaryPath = GetBinaryPath();
         public static readonly string AssetsPath = GetAssetsPath() + "\\Assets";
@@ -50,11 +50,6 @@ namespace Projectsln.darkcomsoft.src
             m_entityManager = new EntityManager();
             m_networkManager = new NetworkManager();
 
-            for (int i = 0; i < 100; i++)
-            {
-                ConsoleCLI.Execute<TesteCvar>(i);
-            }
-
             switch (applicationType)
             {
                 case ApplicationType.Client:
@@ -70,19 +65,6 @@ namespace Projectsln.darkcomsoft.src
 
         public void Tick(double time)
         {
-            if (Input.GetKeyDown(OpenTK.Windowing.GraphicsLibraryFramework.Keys.P))
-            {
-                if (!CursorManager.isLocked)
-                {
-                    CursorManager.Lock();
-                }
-                else
-                {
-                    CursorManager.UnLock();
-                }
-            }
-
-            //engine.Debug.Log("Tick");
             m_entityManager?.Tick();
             m_networkManager?.Tick();
 
@@ -167,6 +149,7 @@ namespace Projectsln.darkcomsoft.src
         {
             m_gui?.OnMouseRelease(e);
         }
+
 
         private static string GetBinaryPath()
         {

@@ -63,4 +63,8 @@
     </Reference>
   </ItemGroup>
 
+  <Target Name="PostBuild" AfterTargets="PostBuildEvent">
+    <Exec Command="if $(ConfigurationName) == Debug goto :debug&#xD;&#xA;if $(ConfigurationName) == Debug-Server goto :debug-server&#xD;&#xA;if $(ConfigurationName) == Release goto :release&#xD;&#xA;if $(ConfigurationName) == Release-Server goto :release-server&#xD;&#xA;&#xD;&#xA;:release&#xD;&#xA;echo &quot;Release&quot;&#xD;&#xA;goto :exit&#xD;&#xA;&#xD;&#xA;:release-server&#xD;&#xA;echo &quot;Release-Server&quot;&#xD;&#xA;goto :exit&#xD;&#xA;&#xD;&#xA;:debug-server&#xD;&#xA;echo &quot;Debug-Server&quot;&#xD;&#xA;goto :exit&#xD;&#xA;&#xD;&#xA;:debug&#xD;&#xA;echo &quot;Debug&quot;&#xD;&#xA;:exit" />
+  </Target>
+
 </Project>
