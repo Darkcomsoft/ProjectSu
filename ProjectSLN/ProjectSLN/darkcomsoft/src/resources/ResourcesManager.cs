@@ -4,6 +4,8 @@ using Projectsln.darkcomsoft.src.render;
 using Projectsln.darkcomsoft.src.resources.resourcestype;
 using System;
 using System.Collections.Generic;
+using System.Drawing;
+using System.IO;
 using System.Text;
 
 namespace Projectsln.darkcomsoft.src.resources
@@ -12,11 +14,13 @@ namespace Projectsln.darkcomsoft.src.resources
     {
         private static ResourcesManager m_instance;
         private Dictionary<string, Shader> m_shaderList;
+        private Dictionary<string, Texture> m_textureList;
 
         public ResourcesManager(ApplicationType apptype)
         {
             m_instance = this;
             m_shaderList = new Dictionary<string, Shader>();
+            m_textureList = new Dictionary<string, Texture>();
 
             LoadPreResources(apptype);
         }
@@ -28,9 +32,16 @@ namespace Projectsln.darkcomsoft.src.resources
                 item.Value.Dispose();
             }
 
-            m_shaderList.Clear();
-            m_shaderList = null;
+            foreach (var item in m_textureList)
+            {
+                item.Value.Dispose();
+            }
 
+            m_textureList.Clear();
+            m_shaderList.Clear();
+
+            m_textureList = null;
+            m_shaderList = null;
             m_instance = null;
             base.OnDispose();
         }
@@ -102,7 +113,23 @@ namespace Projectsln.darkcomsoft.src.resources
                 Shader shader = new Shader(shaderFile);
                 if (m_shaderList.ContainsKey(ShaderName)) { return; }
                 m_shaderList.Add(ShaderName, shader);
-                Debug.Log("Shader Loaded : " + ShaderName, "RESOURCES-MANAGER");
+                Debug.Log("Shader Loaded! : " + ShaderName, "RESOURCES-MANAGER");
+            }
+            catch (Exception e)
+            {
+                throw e;
+            }
+        }
+
+        public void LoadTexture(string TextureName)
+        {
+            try
+            {
+                ImageFile imageFile = ImageFile.LoadImage("/Texture/", TextureName);
+                Texture texture = new Texture(imageFile);
+                if (m_textureList.ContainsKey(TextureName)) { return; }
+                m_textureList.Add(TextureName,texture);
+                Debug.Log("Texture Loaded! : " + TextureName, "RESOURCES-MANAGER");
             }
             catch (Exception e)
             {

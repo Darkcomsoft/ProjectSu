@@ -1,5 +1,9 @@
-﻿using System;
+﻿using Projectsln.darkcomsoft.src.engine;
+using System;
 using System.Collections.Generic;
+using System.Drawing;
+using System.Drawing.Imaging;
+using System.IO;
 using System.Text;
 
 namespace Projectsln.darkcomsoft.src.resources.resourcestype
@@ -15,6 +19,33 @@ namespace Projectsln.darkcomsoft.src.resources.resourcestype
             this._ImgData = scan0;
             this._width = width;
             this._height = height;
+        }
+
+        public static ImageFile LoadImage(string path, string filename)
+        {
+            try
+            {
+                string filePath = string.Concat(Application.AssetsPath, path, filename, ".png");
+
+                if (!File.Exists(filePath))
+                {
+                    Debug.LogError("Texture Files Can't be found At: " + filePath);
+                    throw new Exception("Texture Files Can't be found At: " + filePath);
+                }
+
+                using (var image = new Bitmap(filePath))
+                {
+                    image.RotateFlip(RotateFlipType.RotateNoneFlipY);
+
+                    var data = image.LockBits(new Rectangle(0, 0, image.Width, image.Height), ImageLockMode.ReadOnly, PixelFormat.Format32bppPArgb);
+
+                    return new ImageFile(data.Scan0, data.Width, data.Height);
+                }
+            }
+            catch (Exception e)
+            {
+                throw e;
+            }
         }
     }
 }
