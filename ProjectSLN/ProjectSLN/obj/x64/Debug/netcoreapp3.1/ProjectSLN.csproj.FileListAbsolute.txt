@@ -27,3 +27,9 @@ C:\Users\estev\Documents\GitHub\ProjectSu\ProjectSLN\ProjectSLN\obj\x64\Debug\ne
 C:\Users\estev\Documents\GitHub\ProjectSu\ProjectSLN\ProjectSLN\bin\x64\Debug\netcoreapp3.1\Lidgren.Network.dll
 C:\Users\estev\Documents\GitHub\ProjectSu\ProjectSLN\ProjectSLN\bin\x64\Debug\netcoreapp3.1\Newtonsoft.Json.dll
 C:\Users\estev\Documents\GitHub\ProjectSu\ProjectSLN\ProjectSLN\bin\x64\Debug\netcoreapp3.1\System.Runtime.CompilerServices.Unsafe.dll
+C:\Users\estev\Documents\GitHub\ProjectSu\ProjectSLN\ProjectSLN\bin\x64\Debug\netcoreapp3.1\Microsoft.Win32.SystemEvents.dll
+C:\Users\estev\Documents\GitHub\ProjectSu\ProjectSLN\ProjectSLN\bin\x64\Debug\netcoreapp3.1\System.Drawing.Common.dll
+C:\Users\estev\Documents\GitHub\ProjectSu\ProjectSLN\ProjectSLN\bin\x64\Debug\netcoreapp3.1\runtimes\win\lib\netcoreapp3.0\Microsoft.Win32.SystemEvents.dll
+C:\Users\estev\Documents\GitHub\ProjectSu\ProjectSLN\ProjectSLN\bin\x64\Debug\netcoreapp3.1\runtimes\unix\lib\netcoreapp3.0\System.Drawing.Common.dll
+C:\Users\estev\Documents\GitHub\ProjectSu\ProjectSLN\ProjectSLN\bin\x64\Debug\netcoreapp3.1\runtimes\win\lib\netcoreapp3.0\System.Drawing.Common.dll
+C:\Users\estev\Documents\GitHub\ProjectSu\ProjectSLN\ProjectSLN\obj\x64\Debug\netcoreapp3.1\Projectsln.csproj.CoreCompileInputs.cache

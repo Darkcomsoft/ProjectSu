@@ -48,7 +48,7 @@ namespace Projectsln.darkcomsoft.src.gui.guisystem.font
 
             aspectRatio = (float)WindowMain.Instance.Width / (float)WindowMain.Instance.Height;
 
-            AtlasTexture = new Texture(ImageFile.LoadImage(Application.AssetsPath + "/Font/", FontName), TextureMinFilter.Linear, TextureMagFilter.Linear);
+            AtlasTexture = new Texture(ImageFile.LoadImage("/Font/", FontName), TextureMinFilter.Linear, TextureMagFilter.Linear);
             lines = File.ReadAllLines(fontFilePath);
 
             loadPaddingData();

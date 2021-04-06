@@ -1,5 +1,6 @@
 ﻿using Projectsln.darkcomsoft.src.engine;
 using Projectsln.darkcomsoft.src.enums;
+using Projectsln.darkcomsoft.src.gui.guisystem.font;
 using Projectsln.darkcomsoft.src.render;
 using Projectsln.darkcomsoft.src.resources.resourcestype;
 using System;
@@ -15,12 +16,14 @@ namespace Projectsln.darkcomsoft.src.resources
         private static ResourcesManager m_instance;
         private Dictionary<string, Shader> m_shaderList;
         private Dictionary<string, Texture> m_textureList;
+        private Dictionary<string, FontType> m_fontList;
 
         public ResourcesManager(ApplicationType apptype)
         {
             m_instance = this;
             m_shaderList = new Dictionary<string, Shader>();
             m_textureList = new Dictionary<string, Texture>();
+            m_fontList = new Dictionary<string, FontType>();
 
             LoadPreResources(apptype);
         }
@@ -37,11 +40,18 @@ namespace Projectsln.darkcomsoft.src.resources
                 item.Value.Dispose();
             }
 
+            foreach (var item in m_fontList)
+            {
+                item.Value.Dispose();
+            }
+
             m_textureList.Clear();
             m_shaderList.Clear();
+            m_fontList.Clear();
 
             m_textureList = null;
             m_shaderList = null;
+            m_fontList = null;
             m_instance = null;
             base.OnDispose();
         }
@@ -55,6 +65,8 @@ namespace Projectsln.darkcomsoft.src.resources
             {
                 case ApplicationType.Client:
                     LoadShader("UI");
+                    LoadFont("PixelFont");
+                    LoadFont("PixelFont2");
                     break;
                 case ApplicationType.Server:
 
@@ -102,7 +114,7 @@ namespace Projectsln.darkcomsoft.src.resources
             }
 
             return null;
-        }
+        } 
 
         #region LoadFunctions
         private void LoadShader(string ShaderName)
@@ -130,6 +142,20 @@ namespace Projectsln.darkcomsoft.src.resources
                 if (m_textureList.ContainsKey(TextureName)) { return; }
                 m_textureList.Add(TextureName,texture);
                 Debug.Log("Texture Loaded! : " + TextureName, "RESOURCES-MANAGER");
+            }
+            catch (Exception e)
+            {
+                throw e;
+            }
+        }
+
+        public void LoadFont(string FontName)
+        {
+            try
+            {
+                if (m_fontList.ContainsKey(FontName)) { return; }
+                m_fontList.Add(FontName, new FontType(FontName));
+                Debug.Log("Font Loaded! : " + FontName, "RESOURCES-MANAGER");
             }
             catch (Exception e)
             {
