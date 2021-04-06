@@ -98,7 +98,7 @@ namespace Projectsln.darkcomsoft.src.resources
         {
             try
             {
-                ShaderFile shaderFile = GLSLFile.LoadShaderFile("/Shaders/", ShaderName);
+                ShaderFile shaderFile = GLSLLoad.LoadShaderFile("/Shaders/", ShaderName);
                 Shader shader = new Shader(shaderFile);
                 if (m_shaderList.ContainsKey(ShaderName)) { return; }
                 m_shaderList.Add(ShaderName, shader);

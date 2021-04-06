@@ -9,7 +9,7 @@ namespace Projectsln.darkcomsoft.src.resources.resourcestype
     /// <summary>
     /// Load a custom GLSL file, dglsl is a file group of vertex shader and fragment shader
     /// </summary>
-    public static class GLSLFile
+    public static class GLSLLoad
     {
         public static ShaderFile LoadShaderFile(string path, string filename)
         {

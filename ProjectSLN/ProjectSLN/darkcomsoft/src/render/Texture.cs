@@ -32,8 +32,6 @@ namespace Projectsln.darkcomsoft.src.render
 
             GL.TexParameter(TextureTarget.Texture2D, TextureParameterName.TextureWrapS, (int)TextureWrapMode.Repeat);
             GL.TexParameter(TextureTarget.Texture2D, TextureParameterName.TextureWrapT, (int)TextureWrapMode.Repeat);
-
-            //GL.GenerateMipmap(GenerateMipmapTarget.Texture2D);
         }
 
         public Texture(ImageFile imageData, TextureMinFilter textureMinFilter, TextureMagFilter textureMagFilter)
@@ -52,8 +50,6 @@ namespace Projectsln.darkcomsoft.src.render
 
             GL.TexParameter(TextureTarget.Texture2D, TextureParameterName.TextureWrapS, (int)TextureWrapMode.Repeat);
             GL.TexParameter(TextureTarget.Texture2D, TextureParameterName.TextureWrapT, (int)TextureWrapMode.Repeat);
-
-            //GL.GenerateMipmap(GenerateMipmapTarget.Texture2D);
         }
 
         public void Use(TextureUnit textunit = TextureUnit.Texture0)
@@ -64,6 +60,7 @@ namespace Projectsln.darkcomsoft.src.render
 
         protected override void OnDispose()
         {
+            GL.DeleteTexture(m_handler);
             base.OnDispose();
         }
 
