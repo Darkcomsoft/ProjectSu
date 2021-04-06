@@ -7,7 +7,6 @@ vertex [
 	out vec2 texCoord;
 
 	uniform mat4 world;
-	//uniform mat4 view;
 	uniform mat4 projection;
 
 	void main()
@@ -24,12 +23,10 @@ fragment [
 
 	in vec2 texCoord;
 
-	//uniform sampler2D texture0;
 	uniform vec4 uicolor;
 
 	void main()
 	{
-		//color = texture(texture0, texCoord);
 		color = uicolor;
 	}
 ];
