@@ -10,7 +10,7 @@ using Projectsln.darkcomsoft.src.resources.resourcestype;
 
 namespace Projectsln.darkcomsoft.src.gui.guisystem.font
 {
-    public class FontType: ClassBase
+    public class Font: ClassBase
     {
         private float aspectRatio;
 
@@ -42,7 +42,7 @@ namespace Projectsln.darkcomsoft.src.gui.guisystem.font
 
         public Texture AtlasTexture;
 
-        public FontType(string FontName)
+        public Font(string FontName)
         {
             string fontFilePath = string.Concat(Application.AssetsPath, "/Font/", FontName, ".fnt");
 

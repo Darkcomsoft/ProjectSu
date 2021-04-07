@@ -5,7 +5,6 @@ using Projectsln.darkcomsoft.src.render;
 using Projectsln.darkcomsoft.src.resources.resourcestype;
 using System;
 using System.Collections.Generic;
-using System.Drawing;
 using System.IO;
 using System.Text;
 
@@ -16,14 +15,14 @@ namespace Projectsln.darkcomsoft.src.resources
         private static ResourcesManager m_instance;
         private Dictionary<string, Shader> m_shaderList;
         private Dictionary<string, Texture> m_textureList;
-        private Dictionary<string, FontType> m_fontList;
+        private Dictionary<string, Font> m_fontList;
 
         public ResourcesManager()
         {
             m_instance = this;
             m_shaderList = new Dictionary<string, Shader>();
             m_textureList = new Dictionary<string, Texture>();
-            m_fontList = new Dictionary<string, FontType>();
+            m_fontList = new Dictionary<string, Font>();
         }
 
         protected override void OnDispose()
@@ -152,7 +151,7 @@ namespace Projectsln.darkcomsoft.src.resources
             try
             {
                 if (m_fontList.ContainsKey(FontName)) { return; }
-                m_fontList.Add(FontName, new FontType(FontName));
+                m_fontList.Add(FontName, new Font(FontName));
                 Debug.Log("Font Loaded! : " + FontName, "RESOURCES-MANAGER");
             }
             catch (Exception e)
