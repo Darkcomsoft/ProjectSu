@@ -44,6 +44,7 @@ namespace Projectsln.darkcomsoft.src
         {
             AppType = applicationType;
 
+            m_resourceManager = new ResourcesManager();
             m_windowsConsole = new WindowsConsole();
 
             m_worldManager = new WorldManager();
@@ -118,8 +119,9 @@ namespace Projectsln.darkcomsoft.src
 
         private void StartGame()
         {
+            m_resourceManager.LoadPreResources(AppType);
+
             input = new Input();
-            m_resourceManager = new ResourcesManager(AppType);
             m_gui = new GUI();
 
             gameInstance = new Client();

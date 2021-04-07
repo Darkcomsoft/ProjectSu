@@ -6,9 +6,13 @@ using System.Text;
 using Newtonsoft.Json;
 using System.IO;
 using System.IO.Compression;
+using OpenTK.Graphics.OpenGL;
 
 namespace Projectsln.darkcomsoft.src.misc
 {
+    /// <summary>
+    /// All cool Utilitis stuff
+    /// </summary>
     public static class Utilits
     {
         /// <summary>
@@ -64,6 +68,19 @@ namespace Projectsln.darkcomsoft.src.misc
             {
                 Debug.LogError("Could not get IP for URL " + url + " ERROR: " + e.StackTrace);
                 return string.Empty;
+            }
+        }
+
+        /// <summary>
+        /// Check if the openGL return a erro, if return a error print to console
+        /// </summary>
+        /// <param name="msg"></param>
+        public static void CheckGLError(string msg)
+        {
+            ErrorCode error = GL.GetError();
+            if (error != ErrorCode.NoError)
+            {
+                Debug.LogError("[" + msg + "] " + error.ToString(), "OpenGL");
             }
         }
     }
@@ -162,8 +179,8 @@ namespace Projectsln.darkcomsoft.src.misc
             memoryStream.Read(compressedData, 0, compressedData.Length);
 
             var gZipBuffer = new byte[compressedData.Length + 4];
-            Buffer.BlockCopy(compressedData, 0, gZipBuffer, 4, compressedData.Length);
-            Buffer.BlockCopy(BitConverter.GetBytes(buffer.Length), 0, gZipBuffer, 0, 4);
+            System.Buffer.BlockCopy(compressedData, 0, gZipBuffer, 4, compressedData.Length);
+            System.Buffer.BlockCopy(BitConverter.GetBytes(buffer.Length), 0, gZipBuffer, 0, 4);
             return Convert.ToBase64String(gZipBuffer);
         }
 
@@ -212,8 +229,8 @@ namespace Projectsln.darkcomsoft.src.misc
             memoryStream.Read(compressedData, 0, compressedData.Length);
 
             var gZipBuffer = new byte[compressedData.Length + 4];
-            Buffer.BlockCopy(compressedData, 0, gZipBuffer, 4, compressedData.Length);
-            Buffer.BlockCopy(BitConverter.GetBytes(buffer.Length), 0, gZipBuffer, 0, 4);
+            System.Buffer.BlockCopy(compressedData, 0, gZipBuffer, 4, compressedData.Length);
+            System.Buffer.BlockCopy(BitConverter.GetBytes(buffer.Length), 0, gZipBuffer, 0, 4);
             return gZipBuffer;
         }
 

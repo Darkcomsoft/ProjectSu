@@ -18,14 +18,12 @@ namespace Projectsln.darkcomsoft.src.resources
         private Dictionary<string, Texture> m_textureList;
         private Dictionary<string, FontType> m_fontList;
 
-        public ResourcesManager(ApplicationType apptype)
+        public ResourcesManager()
         {
             m_instance = this;
             m_shaderList = new Dictionary<string, Shader>();
             m_textureList = new Dictionary<string, Texture>();
             m_fontList = new Dictionary<string, FontType>();
-
-            LoadPreResources(apptype);
         }
 
         protected override void OnDispose()
@@ -59,7 +57,7 @@ namespace Projectsln.darkcomsoft.src.resources
         /// <summary>
         /// Used for load resources for the pre systems, Like splashScreen
         /// </summary>
-        private void LoadPreResources(ApplicationType apptype)
+        public void LoadPreResources(ApplicationType apptype)
         {
             switch (apptype)
             {
