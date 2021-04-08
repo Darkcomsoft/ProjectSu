@@ -64,6 +64,10 @@ namespace Projectsln.darkcomsoft.src
             {
                 Debug.LogFail(ex.Message + " StackTrace: " + ex.StackTrace);
             }
+            finally
+            {
+                game.Close();
+            }
         }
 
         private static void StartServer()
@@ -89,6 +93,10 @@ namespace Projectsln.darkcomsoft.src
             catch (Exception ex)
             {
                 Debug.LogFail(ex.Message + " StackTrace: " + ex.StackTrace);
+            }
+            finally
+            {
+                server.Exit();
             }
         }
 

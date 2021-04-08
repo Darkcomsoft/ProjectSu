@@ -113,6 +113,24 @@ namespace Projectsln.darkcomsoft.src.resources
             return null;
         } 
 
+        public static Texture GetTexture(string TextureName)
+        {
+            if (instance.m_textureList.TryGetValue(TextureName, out Texture texture))
+            {
+                return texture;
+            }
+            return null;
+        }
+
+        public static Font GetFont(string FontName)
+        {
+            if (instance.m_fontList.TryGetValue(FontName, out Font font))
+            {
+                return font;
+            }
+            return null;
+        }
+
         #region LoadFunctions
         private void LoadShader(string ShaderName)
         {
