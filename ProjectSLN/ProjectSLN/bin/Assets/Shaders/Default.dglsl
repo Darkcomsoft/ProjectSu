@@ -1,4 +1,4 @@
-version:#version 330
+version:#version 330 core
 vertex [
 	$version
 	layout (location = 0) in vec4 position;

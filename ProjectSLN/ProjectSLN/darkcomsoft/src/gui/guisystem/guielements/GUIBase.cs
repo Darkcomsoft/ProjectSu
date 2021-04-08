@@ -390,6 +390,9 @@ namespace Projectsln.darkcomsoft.src.gui.guisystem.guielements
         protected virtual void OnMouseClick(MouseButtonEventArgs e) { }
         protected virtual void OnMouseRelease(MouseButtonEventArgs e) { }
 
+        public Matrix4 GetWorldMatrix { get { return m_worldPosition; } }
+        public Matrix4 GetProjectionMatrix { get { return m_projection; } }
+
         public bool IsMouseOn() { return m_finalPosition.IntersectsWith(Input.GetMousePositionRec); }
         public bool isEnabled { get { return m_isEnabled; } }
         public bool isInteractable { get { return m_isInteractable; } }

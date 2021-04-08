@@ -41,9 +41,12 @@ namespace Projectsln.darkcomsoft.src.gui.guisystem.font
         private Dictionary<int, Character> metaData = new Dictionary<int, Character>();
 
         public Texture AtlasTexture;
+        public Shader Shader;
 
-        public Font(string FontName)
+        public Font(string FontName, Shader shader)
         {
+            Shader = shader;
+
             string fontFilePath = string.Concat(Application.AssetsPath, "/Font/", FontName, ".fnt");
 
             aspectRatio = (float)WindowMain.Instance.Width / (float)WindowMain.Instance.Height;
