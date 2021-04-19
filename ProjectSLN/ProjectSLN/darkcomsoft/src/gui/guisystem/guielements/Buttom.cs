@@ -3,6 +3,7 @@ using OpenTK.Windowing.Common;
 using OpenTK.Windowing.GraphicsLibraryFramework;
 using Projectsln.darkcomsoft.src.engine;
 using Projectsln.darkcomsoft.src.enums;
+using Projectsln.darkcomsoft.src.gui.guisystem.font;
 using Projectsln.darkcomsoft.src.render;
 using Projectsln.darkcomsoft.src.resources;
 using System;
@@ -27,29 +28,35 @@ namespace Projectsln.darkcomsoft.src.gui.guisystem.guielements
         private Color4 m_focusColor = Color4.DarkGray;
         private Color4 m_disableColor = Color4.DarkSlateGray;
 
+        private FontRender m_fontRender;
+
         public Action OnClick;
 
         public Buttom()
         {
             m_shader = ResourcesManager.GetShader("UI");
+            m_fontRender = new FontRender("Text Teste ?!*:;@%#$%R0123456789", 50, 100, new RectangleF(0,0,100,100), this,ResourcesManager.GetFont("PixelFont"), ResourcesManager.GetShader("Font"));
             m_inputEnable = true;
         }
 
         public Buttom(RectangleF positionSize) : base(positionSize)
         {
             m_shader = ResourcesManager.GetShader("UI");
+            m_fontRender = new FontRender("Text Teste ?!*:;@%#$%R0123456789", 50, 100, new RectangleF(0, 0, 100, 100), this, ResourcesManager.GetFont("PixelFont"), ResourcesManager.GetShader("Font"));
             m_inputEnable = true;
         }
 
         public Buttom(RectangleF positionSize, GUIDock gUIDock) : base(positionSize, gUIDock)
         {
             m_shader = ResourcesManager.GetShader("UI");
+            m_fontRender = new FontRender("Text Teste ?!*:;@%#$%R0123456789", 50, 100, new RectangleF(0, 0, 100, 100), this, ResourcesManager.GetFont("PixelFont"), ResourcesManager.GetShader("Font"));
             m_inputEnable = true;
         }
 
         public Buttom(RectangleF positionSize, GUIDock gUIDock, GUIPivot gUIPivot): base(positionSize, gUIDock, gUIPivot)
         {
             m_shader = ResourcesManager.GetShader("UI");
+            m_fontRender = new FontRender("Text Teste ?!*:;@%#$%R0123456789", 50, 100, new RectangleF(0, 0, 100, 100), this, ResourcesManager.GetFont("PixelFont"), ResourcesManager.GetShader("Font"));
             m_inputEnable = true;
         }
 
@@ -97,7 +104,15 @@ namespace Projectsln.darkcomsoft.src.gui.guisystem.guielements
             }
 
             GUI.instance.DrawRec(this);
+
+            m_fontRender.Draw();
             base.OnDraw();
+        }
+
+        protected override void OnResize(bool after)
+        {
+            
+            base.OnResize(after);
         }
 
         protected override void OnMouseClick(MouseButtonEventArgs e)
@@ -134,6 +149,9 @@ namespace Projectsln.darkcomsoft.src.gui.guisystem.guielements
 
         protected override void OnDispose()
         {
+            m_fontRender.Dispose();
+
+            m_fontRender = null;
             m_shader = null;
             OnClick = null;
             base.OnDispose();

@@ -26,7 +26,7 @@ namespace Projectsln.darkcomsoft.src.gui.guisystem.font
 
 		private Shader m_shader;
 
-		private int VAO, IBO, vbo, ubo;
+		private int VAO, vbo, ubo;
 
 		public FontRender(string text, float fontSize, float maxLine, RectangleF rectangle, GUIBase gUIBase, Font font, Shader shader)
 		{
@@ -41,6 +41,8 @@ namespace Projectsln.darkcomsoft.src.gui.guisystem.font
 			m_font = font;
 
 			m_textMeshData = createTextMesh();
+
+			SetUpBuffers();
 		}
 
 		protected override void OnDispose()
@@ -83,12 +85,12 @@ namespace Projectsln.darkcomsoft.src.gui.guisystem.font
 				GL.BindVertexArray(VAO);
 				GL.BindBuffer(BufferTarget.ArrayBuffer, vbo);
 
-				m_font.Shader.Use();
+				m_shader.Use();
 				m_font.AtlasTexture.Use();
 
-				m_font.Shader.Set("MainColor", m_color);
-				m_font.Shader.Set("world", m_gUIBase.GetWorldMatrix);
-				m_font.Shader.Set("projection", m_gUIBase.GetProjectionMatrix);
+				m_shader.Set("fontColor", m_color);
+				m_shader.Set("world", m_gUIBase.GetWorldMatrix);
+				m_shader.Set("projection", m_gUIBase.GetProjectionMatrix);
 
 				GL.DrawArrays(PrimitiveType.Triangles, 0, m_textMeshData.getVertexLength());
 
@@ -229,12 +231,12 @@ namespace Projectsln.darkcomsoft.src.gui.guisystem.font
 					{
 						addVerticesForCharacter(curserX, curserY, letter, m_fontSize, vertices);
 						addTexCoords(textureCoords, letter.getxTextureCoord(), letter.getyTextureCoord(), letter.getXMaxTextureCoord(), letter.getYMaxTextureCoord());
-						curserX += letter.getxAdvance() * m_fontSize * 1.3f;
+						curserX += letter.getxAdvance() * m_fontSize;
 					}
-					curserX += m_font.getSpaceWidth() * m_fontSize * 1.3f;
+					curserX += m_font.getSpaceWidth() * m_fontSize;
 				}
 				curserX = 0;
-				curserY += Font.LINE_HEIGHT * m_fontSize * 1.3f;
+				curserY += Font.LINE_HEIGHT * m_fontSize;
 			}
 
 			return new TextMeshData(vertices.ToArray(), textureCoords.ToArray());
@@ -250,7 +252,7 @@ namespace Projectsln.darkcomsoft.src.gui.guisystem.font
 			float properY = (-2 * y);
 			float properMaxX = (2 * maxX);
 			float properMaxY = (-2 * maxY);
-			addVertices(vertices, properX * fontSize, properY * fontSize / 1.5f, properMaxX * fontSize, properMaxY * fontSize / 1.5f);
+			addVertices(vertices, properX * fontSize, properY * fontSize, properMaxX * fontSize, properMaxY * fontSize);
 		}
 
 		private void addVertices(List<Vector2> vertices, float x, float y, float maxX, float maxY)

@@ -64,8 +64,8 @@ namespace Projectsln.darkcomsoft.src.resources
                     LoadShader("UI");
                     LoadShader("Font");
 
-                    LoadFont("PixelFont", "Font");
-                    LoadFont("PixelFont2", "Font");
+                    LoadFont("PixelFont");
+                    LoadFont("PixelFont2");
                     break;
                 case ApplicationType.Server:
 
@@ -166,12 +166,12 @@ namespace Projectsln.darkcomsoft.src.resources
             }
         }
 
-        public void LoadFont(string FontName, string ShaderName)
+        public void LoadFont(string FontName)
         {
             try
             {
                 if (m_fontList.ContainsKey(FontName)) { return; }
-                m_fontList.Add(FontName, new Font(FontName, GetShader(ShaderName)));
+                m_fontList.Add(FontName, new Font(FontName));
                 Debug.Log("Font Loaded! : " + FontName, "RESOURCES-MANAGER");
             }
             catch (Exception e)

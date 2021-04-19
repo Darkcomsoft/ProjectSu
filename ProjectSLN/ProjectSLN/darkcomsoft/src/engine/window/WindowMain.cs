@@ -102,6 +102,7 @@ namespace Projectsln.darkcomsoft.src.engine.window
                     l_noprocess -= 1;
                     dorender = true;
                 }
+                _watchTick.Restart();
 
                 /*while (l_Dnoprocess >= 1)
                 {
@@ -117,6 +118,7 @@ namespace Projectsln.darkcomsoft.src.engine.window
                     l_frames++;
                     TickDraw();
                 }
+                _watchDraw.Restart();
 
                 if (_watchUpdate.ElapsedMilliseconds - lastTimer1 > 1000)
                 {
@@ -131,13 +133,13 @@ namespace Projectsln.darkcomsoft.src.engine.window
         private void Tick()
         {
             OnTick(_watchTick.Elapsed.TotalSeconds);
-            _watchTick.Restart();
+            //_watchTick.Restart();
         }
 
         private void TickDraw()
         {
             OnTickDraw(_watchDraw.Elapsed.TotalSeconds);
-            _watchDraw.Restart();
+            //_watchDraw.Restart();
 
             if (_vSync == VSyncMode.Adaptive)
             {
@@ -215,7 +217,10 @@ namespace Projectsln.darkcomsoft.src.engine.window
                 Time._Time = 0;
             }
 
-            Title = string.Format("UPS:{0} FPS:{1}", Time.UPS, Time.FPS);
+            if (Time._Tick == 0)
+            {
+                Title = string.Format("UPS:{0} FPS:{1}", Time.UPS, Time.FPS);
+            }
         }
 
         protected override void OnResize(ResizeEventArgs e)

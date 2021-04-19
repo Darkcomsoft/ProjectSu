@@ -12,12 +12,14 @@ namespace Projectsln.darkcomsoft.src.world
     public class MainMenuWorld : World
     {
         public Buttom m_singlePlayerButtom;
+        public Text m_textTeste;
 
         public override void Start()
         {
             Debug.Log("MainMenu Started!");
 
-            m_singlePlayerButtom = new Buttom(new RectangleF(0,0,100,50), enums.GUIDock.Center, enums.GUIPivot.Center);
+            m_singlePlayerButtom = new Buttom(new RectangleF(0,0,100,50), enums.GUIDock.Bottom, enums.GUIPivot.Bottom);
+            m_textTeste = new Text(new RectangleF(0, 0, 100, 50), enums.GUIDock.Top, enums.GUIPivot.Top);
 
             base.Start();
         }
@@ -25,6 +27,10 @@ namespace Projectsln.darkcomsoft.src.world
         protected override void OnDispose()
         {
             Debug.Log("MainMenu Disposed!");
+
+            m_textTeste?.Dispose();
+            m_textTeste = null;
+
             m_singlePlayerButtom?.Dispose();
             m_singlePlayerButtom = null;
             base.OnDispose();

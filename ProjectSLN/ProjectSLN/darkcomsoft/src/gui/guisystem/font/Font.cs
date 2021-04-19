@@ -41,17 +41,14 @@ namespace Projectsln.darkcomsoft.src.gui.guisystem.font
         private Dictionary<int, Character> metaData = new Dictionary<int, Character>();
 
         public Texture AtlasTexture;
-        public Shader Shader;
 
-        public Font(string FontName, Shader shader)
+        public Font(string FontName)
         {
-            Shader = shader;
-
             string fontFilePath = string.Concat(Application.AssetsPath, "/Font/", FontName, ".fnt");
 
             aspectRatio = (float)WindowMain.Instance.Width / (float)WindowMain.Instance.Height;
 
-            AtlasTexture = new Texture(ImageFile.LoadImage("/Font/", FontName), TextureMinFilter.Linear, TextureMagFilter.Linear);
+            AtlasTexture = new Texture(ImageFile.FontLoadImage("/Font/", FontName), TextureMinFilter.Nearest, TextureMagFilter.Nearest);
             lines = File.ReadAllLines(fontFilePath);
 
             loadPaddingData();
