@@ -1,8 +1,8 @@
 ﻿using OpenTK.Graphics.OpenGL;
 using OpenTK.Mathematics;
 using OpenTK.Windowing.Common;
-using Projectsln.darkcomsoft.src.engine;
-using Projectsln.darkcomsoft.src.engine.window;
+using Projectsln.darkcomsoft.src.debug;
+using Projectsln.darkcomsoft.src.debug.window;
 using Projectsln.darkcomsoft.src.enums;
 using Projectsln.darkcomsoft.src.render;
 using Projectsln.darkcomsoft.src.resources;

@@ -3,7 +3,7 @@ using OpenTK.Graphics.OpenGL;
 using System;
 using System.Collections.Generic;
 using System.Text;
-using Projectsln.darkcomsoft.src.engine;
+using Projectsln.darkcomsoft.src.debug;
 using OpenTK.Mathematics;
 
 namespace Projectsln.darkcomsoft.src.render

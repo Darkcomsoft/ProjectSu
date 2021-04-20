@@ -1,6 +1,6 @@
 ﻿using OpenTK.Mathematics;
-using Projectsln.darkcomsoft.src.engine;
-using Projectsln.darkcomsoft.src.engine.window;
+using Projectsln.darkcomsoft.src.debug;
+using Projectsln.darkcomsoft.src.debug.window;
 using Projectsln.darkcomsoft.src.entity;
 using Projectsln.darkcomsoft.src.entity.managers;
 using Projectsln.darkcomsoft.src.world;

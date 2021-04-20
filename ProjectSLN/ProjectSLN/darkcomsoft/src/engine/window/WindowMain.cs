@@ -11,7 +11,7 @@ using System.Drawing;
 using System.Text;
 using System.Threading;
 
-namespace Projectsln.darkcomsoft.src.engine.window
+namespace Projectsln.darkcomsoft.src.debug.window
 {
     /// <summary>
     /// my implementation of the OpenTk GameWindow class

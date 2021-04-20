@@ -4,7 +4,7 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 
-namespace Projectsln.darkcomsoft.src.engine
+namespace Projectsln.darkcomsoft.src.debug
 {
     public static class Debug
     {

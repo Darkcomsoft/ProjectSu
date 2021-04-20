@@ -1,4 +1,4 @@
-﻿using Projectsln.darkcomsoft.src.engine;
+﻿using Projectsln.darkcomsoft.src.debug;
 using Projectsln.darkcomsoft.src.enums;
 using Projectsln.darkcomsoft.src.gui.guisystem.font;
 using Projectsln.darkcomsoft.src.render;
@@ -64,7 +64,6 @@ namespace Projectsln.darkcomsoft.src.resources
                     LoadShader("UI");
                     LoadShader("Font");
 
-                    LoadFont("PixelFont");
                     LoadFont("PixelFont2");
                     break;
                 case ApplicationType.Server:

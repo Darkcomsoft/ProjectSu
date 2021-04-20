@@ -1,5 +1,5 @@
 ﻿using OpenTK.Mathematics;
-using Projectsln.darkcomsoft.src.engine.window;
+using Projectsln.darkcomsoft.src.debug.window;
 using System;
 using System.Collections.Generic;
 using System.Text;

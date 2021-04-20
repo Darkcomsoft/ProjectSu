@@ -1,9 +1,9 @@
 ﻿using OpenTK.Windowing.Common;
 using Projectsln.darkcomsoft.src.consolecli;
 using Projectsln.darkcomsoft.src.consolecli.systemconsole;
-using Projectsln.darkcomsoft.src.engine;
-using Projectsln.darkcomsoft.src.engine.render;
-using Projectsln.darkcomsoft.src.engine.window;
+using Projectsln.darkcomsoft.src.debug;
+using Projectsln.darkcomsoft.src.debug.render;
+using Projectsln.darkcomsoft.src.debug.window;
 using Projectsln.darkcomsoft.src.entity.managers;
 using Projectsln.darkcomsoft.src.enums;
 using Projectsln.darkcomsoft.src.gui.guisystem;

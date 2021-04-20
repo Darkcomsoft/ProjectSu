@@ -1,7 +1,7 @@
 ﻿using OpenTK.Windowing.Desktop;
 using Projectsln.darkcomsoft.src;
-using Projectsln.darkcomsoft.src.engine;
-using Projectsln.darkcomsoft.src.engine.window;
+using Projectsln.darkcomsoft.src.debug;
+using Projectsln.darkcomsoft.src.debug.window;
 using Projectsln.darkcomsoft.src.server;
 using System;
 using System.Runtime.InteropServices;

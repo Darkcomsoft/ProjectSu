@@ -4,7 +4,7 @@ using System.Net;
 using System.Text;
 using Lidgren.Network;
 using OpenTK.Mathematics;
-using Projectsln.darkcomsoft.src.engine;
+using Projectsln.darkcomsoft.src.debug;
 using Projectsln.darkcomsoft.src.entity;
 using Projectsln.darkcomsoft.src.entity.managers;
 using Projectsln.darkcomsoft.src.misc;

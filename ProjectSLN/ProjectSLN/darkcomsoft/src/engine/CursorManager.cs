@@ -1,9 +1,9 @@
-﻿using Projectsln.darkcomsoft.src.engine.window;
+﻿using Projectsln.darkcomsoft.src.debug.window;
 using System;
 using System.Collections.Generic;
 using System.Text;
 
-namespace Projectsln.darkcomsoft.src.engine
+namespace Projectsln.darkcomsoft.src.debug
 {
     public static class CursorManager//Need fix the cursor is not being stuck on the center of the screen
     {

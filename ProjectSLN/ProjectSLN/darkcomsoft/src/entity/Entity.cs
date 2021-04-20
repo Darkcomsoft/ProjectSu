@@ -1,5 +1,5 @@
-﻿using Projectsln.darkcomsoft.src.engine;
-using Projectsln.darkcomsoft.src.engine.render;
+﻿using Projectsln.darkcomsoft.src.debug;
+using Projectsln.darkcomsoft.src.debug.render;
 using Projectsln.darkcomsoft.src.world;
 using Lidgren.Network;
 using System;

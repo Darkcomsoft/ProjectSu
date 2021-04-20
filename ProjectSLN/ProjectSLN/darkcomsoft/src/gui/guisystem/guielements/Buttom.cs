@@ -1,7 +1,7 @@
 ﻿using OpenTK.Mathematics;
 using OpenTK.Windowing.Common;
 using OpenTK.Windowing.GraphicsLibraryFramework;
-using Projectsln.darkcomsoft.src.engine;
+using Projectsln.darkcomsoft.src.debug;
 using Projectsln.darkcomsoft.src.enums;
 using Projectsln.darkcomsoft.src.gui.guisystem.font;
 using Projectsln.darkcomsoft.src.render;
@@ -35,28 +35,28 @@ namespace Projectsln.darkcomsoft.src.gui.guisystem.guielements
         public Buttom()
         {
             m_shader = ResourcesManager.GetShader("UI");
-            m_fontRender = new FontRender("Text Teste ?!*:;@%#$%R0123456789", 50, 100, new RectangleF(0,0,100,100), this,ResourcesManager.GetFont("PixelFont"), ResourcesManager.GetShader("Font"));
+            m_fontRender = new FontRender("Text Teste ?!*:;@%#$%R0123456789", 50, 100, new RectangleF(0,0,100,100), this,ResourcesManager.GetFont("PixelFont2"), ResourcesManager.GetShader("Font"));
             m_inputEnable = true;
         }
 
         public Buttom(RectangleF positionSize) : base(positionSize)
         {
             m_shader = ResourcesManager.GetShader("UI");
-            m_fontRender = new FontRender("Text Teste ?!*:;@%#$%R0123456789", 50, 100, new RectangleF(0, 0, 100, 100), this, ResourcesManager.GetFont("PixelFont"), ResourcesManager.GetShader("Font"));
+            m_fontRender = new FontRender("Text Teste ?!*:;@%#$%R0123456789", 50, 100, new RectangleF(0, 0, 100, 100), this, ResourcesManager.GetFont("PixelFont2"), ResourcesManager.GetShader("Font"));
             m_inputEnable = true;
         }
 
         public Buttom(RectangleF positionSize, GUIDock gUIDock) : base(positionSize, gUIDock)
         {
             m_shader = ResourcesManager.GetShader("UI");
-            m_fontRender = new FontRender("Text Teste ?!*:;@%#$%R0123456789", 50, 100, new RectangleF(0, 0, 100, 100), this, ResourcesManager.GetFont("PixelFont"), ResourcesManager.GetShader("Font"));
+            m_fontRender = new FontRender("Text Teste ?!*:;@%#$%R0123456789", 50, 100, new RectangleF(0, 0, 100, 100), this, ResourcesManager.GetFont("PixelFont2"), ResourcesManager.GetShader("Font"));
             m_inputEnable = true;
         }
 
         public Buttom(RectangleF positionSize, GUIDock gUIDock, GUIPivot gUIPivot): base(positionSize, gUIDock, gUIPivot)
         {
             m_shader = ResourcesManager.GetShader("UI");
-            m_fontRender = new FontRender("Text Teste ?!*:;@%#$%R0123456789", 50, 100, new RectangleF(0, 0, 100, 100), this, ResourcesManager.GetFont("PixelFont"), ResourcesManager.GetShader("Font"));
+            m_fontRender = new FontRender("Text Teste ?!*:;@%#$%R0123456789", 50, 100, new RectangleF(0, 0, 100, 100), this, ResourcesManager.GetFont("PixelFont2"), ResourcesManager.GetShader("Font"));
             m_inputEnable = true;
         }
 
