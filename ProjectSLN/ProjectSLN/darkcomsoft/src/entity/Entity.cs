@@ -1,5 +1,5 @@
 ﻿using Projectsln.darkcomsoft.src.debug;
-using Projectsln.darkcomsoft.src.debug.render;
+using Projectsln.darkcomsoft.src.engine.render;
 using Projectsln.darkcomsoft.src.world;
 using Lidgren.Network;
 using System;
@@ -7,6 +7,7 @@ using System.Collections.Generic;
 using System.Text;
 using Projectsln.darkcomsoft.src.network;
 using Projectsln.darkcomsoft.src.entity.managers;
+using Projectsln.darkcomsoft.src.engine;
 
 namespace Projectsln.darkcomsoft.src.entity
 {

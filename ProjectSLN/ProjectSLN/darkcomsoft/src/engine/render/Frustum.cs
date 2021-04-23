@@ -3,7 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 
-namespace Projectsln.darkcomsoft.src.debug.render
+namespace Projectsln.darkcomsoft.src.engine.render
 {
     //I DONT KNOW BUT THIS FUNCTIONS FRUSTUM NEED SOME OPTIMIZATION, I DON'T KNOW DO A LOOK
     public static class Frustum

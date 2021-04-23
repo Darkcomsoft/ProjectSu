@@ -3,7 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 using System.IO;
-using Projectsln.darkcomsoft.src.debug.window;
+using Projectsln.darkcomsoft.src.engine.window;
 using OpenTK.Graphics.OpenGL;
 using Projectsln.darkcomsoft.src.resources;
 using Projectsln.darkcomsoft.src.resources.resourcestype;

@@ -6,6 +6,7 @@ using System.Collections.Generic;
 using System.Drawing;
 using System.Text;
 using Projectsln.darkcomsoft.src.render;
+using Projectsln.darkcomsoft.src.enums;
 
 namespace Projectsln.darkcomsoft.src.gui.guisystem.font
 {
@@ -19,12 +20,16 @@ namespace Projectsln.darkcomsoft.src.gui.guisystem.font
 
 		private bool m_Ready;
 
+		private TextAling m_TextAling = TextAling.Center;
+
 		private Color4 m_color = Color4.White;
 		private Font m_font;
 		private GUIBase m_gUIBase;
 		private TextMeshData m_textMeshData;
 
 		private Shader m_shader;
+
+		private Matrix4 m_WorldMatrix;
 
 		private int VAO, vbo, ubo;
 
@@ -43,6 +48,7 @@ namespace Projectsln.darkcomsoft.src.gui.guisystem.font
 			m_textMeshData = createTextMesh();
 
 			SetUpBuffers();
+			UpdateTransform();
 		}
 
 		protected override void OnDispose()
@@ -77,7 +83,6 @@ namespace Projectsln.darkcomsoft.src.gui.guisystem.font
         {
 			if (m_Ready)
 			{
-				//GL.Scissor();
 				GL.Enable(EnableCap.Blend);
 				GL.Disable(EnableCap.DepthTest);
 				GL.BlendFunc(BlendingFactor.SrcAlpha, BlendingFactor.OneMinusSrcAlpha);
@@ -89,7 +94,7 @@ namespace Projectsln.darkcomsoft.src.gui.guisystem.font
 				m_font.AtlasTexture.Use();
 
 				m_shader.Set("fontColor", m_color);
-				m_shader.Set("world", m_gUIBase.GetWorldMatrix);
+				m_shader.Set("world", m_WorldMatrix);
 				m_shader.Set("projection", m_gUIBase.GetProjectionMatrix);
 
 				GL.DrawArrays(PrimitiveType.Triangles, 0, m_textMeshData.getVertexLength());
@@ -102,9 +107,15 @@ namespace Projectsln.darkcomsoft.src.gui.guisystem.font
 			}
 		}
 
+		public void OnResize()
+        {
+			Refresh();
+		}
+
 		private void Refresh()
         {
 			m_Ready = false;
+
 			m_textMeshData.Clear();
 			m_textMeshData = createTextMesh();
 
@@ -119,6 +130,8 @@ namespace Projectsln.darkcomsoft.src.gui.guisystem.font
 			GL.BufferData(BufferTarget.ArrayBuffer, m_textMeshData.getTextureCoordsLength() * Vector2.SizeInBytes, m_textMeshData.getTextureCoords(), BufferUsageHint.DynamicDraw);
 			GL.VertexAttribPointer(1, 2, VertexAttribPointerType.Float, false, 0, 0);
 			GL.EnableVertexAttribArray(1);
+
+			UpdateTransform();
 
 			m_Ready = true;
 		}
@@ -142,6 +155,36 @@ namespace Projectsln.darkcomsoft.src.gui.guisystem.font
 			GL.EnableVertexAttribArray(1);
 
 			m_Ready = true;
+		}
+
+		private void UpdateTransform()
+        {
+			Vector2 textPosition = new Vector2();
+
+			switch (m_TextAling)
+            {
+                case TextAling.Center:
+					textPosition.X = -1;
+					textPosition.Y = 0;
+					break;
+                case TextAling.Left:
+					textPosition.X = -m_gUIBase.GetFinalPosition.Width / 2f;
+					textPosition.Y = 0;
+					break;
+                case TextAling.Right:
+					textPosition.X = m_gUIBase.GetFinalPosition.Width / 2f;
+					textPosition.Y = 0;
+					break;
+                case TextAling.Top:
+					textPosition.X = 0;
+					textPosition.Y = -m_gUIBase.GetFinalPosition.Width / 2f;
+					break;
+                case TextAling.Bottom:
+					textPosition.X = 0;
+					textPosition.Y = m_gUIBase.GetFinalPosition.Width / 2f;
+					break;
+            }
+            m_WorldMatrix = Matrix4.CreateScale(m_gUIBase.GetFinalPosition.Width / 2f, m_gUIBase.GetFinalPosition.Height /2f, 0) * Matrix4.CreateTranslation((m_gUIBase.GetFinalPosition.X + m_gUIBase.GetFinalPosition.Width / 2) + textPosition.X, (m_gUIBase.GetFinalPosition.Y + m_gUIBase.GetFinalPosition.Height / 2) + textPosition.Y, 0);
 		}
 
 		private TextMeshData createTextMesh()
@@ -205,25 +248,25 @@ namespace Projectsln.darkcomsoft.src.gui.guisystem.font
 
 			foreach (var line in lines)
 			{
-				/*switch (textAling)
+				switch (m_TextAling)
 				{
 					case TextAling.Center:
-						curserX = (font.getSpaceWidth() * fontSize) - (line.getLineLength() / 2f);
-						curserY = (FontType.LINE_HEIGHT * fontSize) / 2f;
+						curserX = (m_font.getSpaceWidth() * m_fontSize) - (line.getLineLength() / 2f);
+						curserY = (Font.LINE_HEIGHT * m_fontSize) / 2f;
 						break;
 					case TextAling.Left:
-						curserX = (font.getSpaceWidth() * fontSize) / 2f;
-						curserY = (FontType.LINE_HEIGHT * fontSize) / 2f;
+						curserX = (m_font.getSpaceWidth() * m_fontSize) / 2f;
+						curserY = (Font.LINE_HEIGHT * m_fontSize) / 2f;
 						break;
 					case TextAling.Right:
-						curserX = (font.getSpaceWidth() * fontSize) - (line.getLineLength());
-						curserY = (FontType.LINE_HEIGHT * fontSize) / 2f;
+						curserX = (m_font.getSpaceWidth() * m_fontSize) - (line.getLineLength());
+						curserY = (Font.LINE_HEIGHT * m_fontSize) / 2f;
 						break;
 					default:
-						curserX = (font.getSpaceWidth() * fontSize) - (line.getLineLength() / 2f);
-						curserY = (FontType.LINE_HEIGHT * fontSize) / 2f;
+						curserX = (m_font.getSpaceWidth() * m_fontSize) - (line.getLineLength() / 2f);
+						curserY = (Font.LINE_HEIGHT * m_fontSize) / 2f;
 						break;
-				}*/
+				}
 
 				foreach (var word in line.getWords())
 				{

@@ -61,6 +61,7 @@ namespace Projectsln.darkcomsoft.src.resources
             switch (apptype)
             {
                 case ApplicationType.Client:
+                    LoadShader("Gizmo");
                     LoadShader("UI");
                     LoadShader("Font");
 

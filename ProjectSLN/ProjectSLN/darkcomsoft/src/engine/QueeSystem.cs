@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace Projectsln.darkcomsoft.src.debug
+namespace Projectsln.darkcomsoft.src.engine
 {
     public static class QueeSystem
     {

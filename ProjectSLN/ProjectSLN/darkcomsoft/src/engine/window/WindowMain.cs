@@ -4,14 +4,16 @@ using OpenTK.Windowing.Common;
 using OpenTK.Windowing.Common.Input;
 using OpenTK.Windowing.Desktop;
 using OpenTK.Windowing.GraphicsLibraryFramework;
+using Projectsln.darkcomsoft.src.debug;
 using Projectsln.darkcomsoft.src.enums;
 using System;
 using System.Collections.Generic;
 using System.Drawing;
 using System.Text;
 using System.Threading;
+using System.Threading.Tasks;
 
-namespace Projectsln.darkcomsoft.src.debug.window
+namespace Projectsln.darkcomsoft.src.engine.window
 {
     /// <summary>
     /// my implementation of the OpenTk GameWindow class
@@ -81,6 +83,7 @@ namespace Projectsln.darkcomsoft.src.debug.window
             var lastTimer1 = _watchUpdate.ElapsedMilliseconds;
             long now;
             bool dorender = true;
+
             while (true)
             {
                 now = _watchUpdate.ElapsedMilliseconds;
@@ -149,7 +152,7 @@ namespace Projectsln.darkcomsoft.src.debug.window
 
         protected virtual void OnLoad()
         {
-            GL.ClearColor(Color4.Red);
+            GL.ClearColor(Color4.Black);
 
             VSync = VSyncMode.Off;//set the VSync on start, because fuck-it, nobody wants this (:
             WindowBorder = WindowBorder.Resizable;

@@ -2,10 +2,13 @@
 using Projectsln.darkcomsoft.src.enums;
 using Projectsln.darkcomsoft.src.gui.guisystem.font;
 using Projectsln.darkcomsoft.src.resources;
+using OpenTK.Mathematics;
+using OpenTK.Graphics.OpenGL;
 using System;
 using System.Collections.Generic;
 using System.Drawing;
 using System.Text;
+using Projectsln.darkcomsoft.src.engine;
 
 namespace Projectsln.darkcomsoft.src.gui.guisystem.guielements
 {
@@ -39,14 +42,24 @@ namespace Projectsln.darkcomsoft.src.gui.guisystem.guielements
 
         protected override void OnTick()
         {
-            //m_fontRender?.SetText(string.Format("FPS:{0}", Time._DeltaTime * 20));
+            m_fontRender?.SetText(string.Format("FPS:{0}", Time._Time));
             base.OnTick();
         }
 
         protected override void OnDraw()
         {
             m_fontRender?.Draw();
+            Gizmo.DrawRectangle(m_worldPosition, m_projection, Color4.Red,PrimitiveType.LineLoop);
             base.OnDraw();
+        }
+
+        protected override void OnResize(bool after)
+        {
+            if (!after)
+            {
+                m_fontRender?.OnResize();
+            }
+            base.OnResize(after);
         }
 
         protected override void OnDispose()

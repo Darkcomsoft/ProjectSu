@@ -79,11 +79,13 @@ namespace Projectsln.darkcomsoft.src.debug
 
 #if Release
             Console.WriteLine("ERROR: " + menssage);
+            System.Diagnostics.Debug.Fail(menssage);
 #else
             System.Diagnostics.Debug.Fail(menssage);
 #endif
 #elif Server
             Console.WriteLine("ERROR: " + menssage);
+            System.Diagnostics.Debug.Fail(menssage);
 #endif
         }
 

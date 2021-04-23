@@ -2,8 +2,8 @@
 using Projectsln.darkcomsoft.src.consolecli;
 using Projectsln.darkcomsoft.src.consolecli.systemconsole;
 using Projectsln.darkcomsoft.src.debug;
-using Projectsln.darkcomsoft.src.debug.render;
-using Projectsln.darkcomsoft.src.debug.window;
+using Projectsln.darkcomsoft.src.engine;
+using Projectsln.darkcomsoft.src.engine.render;
 using Projectsln.darkcomsoft.src.entity.managers;
 using Projectsln.darkcomsoft.src.enums;
 using Projectsln.darkcomsoft.src.gui.guisystem;
@@ -31,14 +31,17 @@ namespace Projectsln.darkcomsoft.src
 
 
         public static ApplicationType AppType { get; private set; }
-        public static BuildTypeBase gameInstance;// this is the game instance EX: Client or Server
-        public static ResourcesManager m_resourceManager;
-        public static Input input;
-        public static GUI m_gui;
-        public static WorldManager m_worldManager;
-        public static EntityManager m_entityManager;
-        public static NetworkManager m_networkManager;
-        public static WindowsConsole m_windowsConsole;
+        public static BuildTypeBase gameInstance { get; private set; }// this is the game instance EX: Client or Server
+        public static ResourcesManager m_resourceManager { get; private set; }
+        public static WorldManager m_worldManager { get; private set; }
+        public static EntityManager m_entityManager { get; private set; }
+        public static NetworkManager m_networkManager { get; private set; }
+        public static WindowsConsole m_windowsConsole { get; private set; }
+
+        public static Input input { get; private set; }
+        public static Gizmo m_gizmos { get; private set; }
+        public static GUI m_gui { get; private set; }
+
 
         public Application(ApplicationType applicationType)
         {
@@ -81,6 +84,7 @@ namespace Projectsln.darkcomsoft.src
             m_gui?.Draw(time);
         }
 
+        //DAR UMA OLHADA NA ORDEM DE DISPOSE, POR QUE ESTOU FAZENDO DE QUALQUER GEITO
         protected override void OnDispose()
         {
             if (gameInstance != null)
@@ -104,6 +108,9 @@ namespace Projectsln.darkcomsoft.src
             m_gui?.Dispose();
             m_gui = null;
 
+            m_gizmos?.Dispose();
+            m_gizmos = null;
+
             m_resourceManager?.Dispose();
             m_resourceManager = null;
 
@@ -121,6 +128,7 @@ namespace Projectsln.darkcomsoft.src
         {
             m_resourceManager.LoadPreResources(AppType);
 
+            m_gizmos = new Gizmo();//This is only for debug
             input = new Input();
             m_gui = new GUI();
 

@@ -1,7 +1,7 @@
 ﻿using OpenTK.Windowing.Desktop;
 using Projectsln.darkcomsoft.src;
 using Projectsln.darkcomsoft.src.debug;
-using Projectsln.darkcomsoft.src.debug.window;
+using Projectsln.darkcomsoft.src.engine.window;
 using Projectsln.darkcomsoft.src.server;
 using System;
 using System.Runtime.InteropServices;
@@ -42,61 +42,64 @@ namespace Projectsln.darkcomsoft.src
 
 
             nativeWindow.Title = Application.AppName + " : " + Application.Version;
-            WindowMain game = new WindowMain(gameWindowSettings, nativeWindow);
 
-            try
+            using (WindowMain game = new WindowMain(gameWindowSettings, nativeWindow))
             {
-                game.Run();
-            }
-            catch (OutOfMemoryException memoryEx)
-            {
-                Debug.LogWarning("GC: " + memoryEx.Message, "Main");
-                for (int i = 0; i < 2; i++)
+                try
                 {
-                    Debug.LogWarning("GC: Collecting Garbage!", "Main");
-                    GC.Collect();
-                    Debug.LogWarning("GC: Clean-up, waiting to clean again!", "Main");
-                    Thread.Sleep(1000);
+                    game.Run();
                 }
-                return;
-            }
-            catch (Exception ex)
-            {
-                Debug.LogFail(ex.Message + " StackTrace: " + ex.StackTrace);
-            }
-            finally
-            {
-                game.Close();
+                catch (OutOfMemoryException memoryEx)
+                {
+                    Debug.LogWarning("GC: " + memoryEx.Message, "Main");
+                    for (int i = 0; i < 2; i++)
+                    {
+                        Debug.LogWarning("GC: Collecting Garbage!", "Main");
+                        GC.Collect();
+                        Debug.LogWarning("GC: Clean-up, waiting to clean again!", "Main");
+                        Thread.Sleep(1000);
+                    }
+                    return;
+                }
+                catch (Exception ex)
+                {
+                    Debug.LogFail(ex.Message + " StackTrace: " + ex.StackTrace);
+                }
+                finally
+                {
+                    game.Close();
+                }
             }
         }
 
         private static void StartServer()
         {
-            ServerMain server = new ServerMain();
-
-             try
+            using (ServerMain server = new ServerMain())
             {
-                server.Run();
-            }
-            catch (OutOfMemoryException memoryEx)
-            {
-                Debug.LogWarning("GC: " + memoryEx.Message, "Main");
-                for (int i = 0; i < 2; i++)
+                try
                 {
-                    Debug.LogWarning("GC: Collecting Garbage!", "Main");
-                    GC.Collect();
-                    Debug.LogWarning("GC: Clean-up, waiting to clean again!", "Main");
-                    Thread.Sleep(1000);
+                    server.Run();
                 }
-                return;
-            }
-            catch (Exception ex)
-            {
-                Debug.LogFail(ex.Message + " StackTrace: " + ex.StackTrace);
-            }
-            finally
-            {
-                server.Exit();
+                catch (OutOfMemoryException memoryEx)
+                {
+                    Debug.LogWarning("GC: " + memoryEx.Message, "Main");
+                    for (int i = 0; i < 2; i++)
+                    {
+                        Debug.LogWarning("GC: Collecting Garbage!", "Main");
+                        GC.Collect();
+                        Debug.LogWarning("GC: Clean-up, waiting to clean again!", "Main");
+                        Thread.Sleep(1000);
+                    }
+                    return;
+                }
+                catch (Exception ex)
+                {
+                    Debug.LogFail(ex.Message + " StackTrace: " + ex.StackTrace);
+                }
+                finally
+                {
+                    server.Exit();
+                }
             }
         }
 

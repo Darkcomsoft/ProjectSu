@@ -5,12 +5,13 @@ using OpenTK.Windowing.GraphicsLibraryFramework;
 using System;
 using System.Collections.Generic;
 using System.Text;
-using Projectsln.darkcomsoft.src.debug.window;
 using Projectsln.darkcomsoft.src.debug;
 using Projectsln.darkcomsoft.src.misc;
 using Projectsln.darkcomsoft.src.enums;
 using System.Drawing;
 using OpenTK.Windowing.Common;
+using Projectsln.darkcomsoft.src.engine.window;
+using Projectsln.darkcomsoft.src.engine;
 
 namespace Projectsln.darkcomsoft.src.gui.guisystem
 {

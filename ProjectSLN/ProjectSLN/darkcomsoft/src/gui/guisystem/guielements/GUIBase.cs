@@ -2,7 +2,8 @@
 using OpenTK.Mathematics;
 using OpenTK.Windowing.Common;
 using Projectsln.darkcomsoft.src.debug;
-using Projectsln.darkcomsoft.src.debug.window;
+using Projectsln.darkcomsoft.src.engine;
+using Projectsln.darkcomsoft.src.engine.window;
 using Projectsln.darkcomsoft.src.enums;
 using Projectsln.darkcomsoft.src.render;
 using Projectsln.darkcomsoft.src.resources;
@@ -392,6 +393,7 @@ namespace Projectsln.darkcomsoft.src.gui.guisystem.guielements
 
         public Matrix4 GetWorldMatrix { get { return m_worldPosition; } }
         public Matrix4 GetProjectionMatrix { get { return m_projection; } }
+        public RectangleF GetFinalPosition { get { return m_finalPosition; } }
 
         public bool IsMouseOn() { return m_finalPosition.IntersectsWith(Input.GetMousePositionRec); }
         public bool isEnabled { get { return m_isEnabled; } }
