@@ -95,11 +95,9 @@ namespace Projectsln.darkcomsoft.src.gui.guisystem.font
         {
 			if (m_Ready)
 			{
-				GL.Enable(EnableCap.ScissorTest);
+				GL.Scissor((int)m_gUIBase.GetFinalPosition.X, (int)m_gUIBase.GetFinalPosition.Y, (int)m_gUIBase.GetFinalPosition.Width, (int)m_gUIBase.GetFinalPosition.Height);
 
-				Vector2 teste = new Vector2(m_gUIBase.GetFinalPosition.X, m_gUIBase.GetFinalPosition.Y);
-				//teste.Normalize();
-				GL.Scissor((int)teste.X, (int)teste.Y, (int)m_gUIBase.GetFinalPosition.Width, (int)m_gUIBase.GetFinalPosition.Height);
+				GL.Enable(EnableCap.ScissorTest);
 				GL.Enable(EnableCap.Blend);
 				GL.Disable(EnableCap.DepthTest);
 				GL.BlendFunc(BlendingFactor.SrcAlpha, BlendingFactor.OneMinusSrcAlpha);

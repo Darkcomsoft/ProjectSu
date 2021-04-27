@@ -69,6 +69,9 @@ namespace Projectsln.darkcomsoft.src.engine
             return instance.mouseState.IsButtonDown(mouseButton);
         }
 
+        /// <summary>
+        /// Get mouse position RectangleF relative to bottom-left of the screen 
+        /// </summary>
         public static RectangleF GetMousePositionRec { get { instance.m_mousePositionRec.X = instance.mouseState.Position.X; instance.m_mousePositionRec.Y = WindowMain.Instance.Height - instance.mouseState.Position.Y; return instance.m_mousePositionRec; } }
         public static Input instance { get { return m_instance; } }
     }

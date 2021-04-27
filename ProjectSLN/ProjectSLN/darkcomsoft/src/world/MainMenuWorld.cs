@@ -18,7 +18,7 @@ namespace Projectsln.darkcomsoft.src.world
         {
             Debug.Log("MainMenu Started!");
 
-            m_singlePlayerButtom = new Buttom(new RectangleF(0,0,100,50), enums.GUIDock.Bottom, enums.GUIPivot.Bottom);
+            m_singlePlayerButtom = new Buttom(new RectangleF(0,0,100,50), enums.GUIDock.Top, enums.GUIPivot.Top);
             m_textTeste = new Text(new RectangleF(20, 20, 100, 20), enums.GUIDock.LeftTop, enums.GUIPivot.LeftTop, 25);
 
             base.Start();
