@@ -14,6 +14,9 @@ using System.Text;
 
 namespace Projectsln.darkcomsoft.src.gui.guisystem.guielements
 {
+    /// <summary>
+    /// Base of all GuiElements
+    /// </summary>
     public abstract class GUIBase : ClassBase
     {
         protected RectangleF m_finalPosition;
@@ -85,7 +88,7 @@ namespace Projectsln.darkcomsoft.src.gui.guisystem.guielements
         public void Resize()
         {
             OnResize(false);
-            m_projection = Matrix4.CreateOrthographicOffCenter(0.0f, WindowMain.Instance.Width, WindowMain.Instance.Height, 0.0f, -1.0f, 1.0f);
+            m_projection = Matrix4.CreateOrthographicOffCenter(0.0f, WindowMain.Instance.Width, 0.0f, WindowMain.Instance.Height, -1.0f, 1.0f);
             UpdateTransform();
             OnResize(true);
             Refresh();
@@ -201,6 +204,9 @@ namespace Projectsln.darkcomsoft.src.gui.guisystem.guielements
 
                 UpdatePivot();//Calaculate the guii pivot, if is using default pivot this dont do nothing
             }
+
+            m_finalPosition.X += m_startPosition.X;
+            m_finalPosition.Y += m_startPosition.Y;
 
             m_worldPosition = Matrix4.CreateScale(m_finalPosition.Width / 2, m_finalPosition.Height / 2, 0) * Matrix4.CreateTranslation(m_finalPosition.X + m_finalPosition.Width / 2, m_finalPosition.Y + m_finalPosition.Height / 2, 0);
         }

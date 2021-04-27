@@ -18,32 +18,42 @@ namespace Projectsln.darkcomsoft.src.gui.guisystem.guielements
 
         public Text()
         {
-            m_fontRender = new FontRender("Text Teste ?!*:;@%#$%R0123456789一種", 3, 100, new RectangleF(0, 0, 100, 100), this, ResourcesManager.GetFont("PixelFont2"), ResourcesManager.GetShader("Font"));
+            m_fontRender = new FontRender("Text Teste ?!*:;@%#$%R0123456789一種", 25, 1,  this, ResourcesManager.GetFont("PixelFont2"), ResourcesManager.GetShader("Font"));
             m_inputEnable = true;
         }
 
-        public Text(RectangleF positionSize) : base(positionSize)
+        public Text(RectangleF positionSize, float fontSize) : base(positionSize)
         {
-            m_fontRender = new FontRender("Text Teste ?!*:;@%#$%R0123456789一種", 3, 100, new RectangleF(0, 0, 100, 100), this, ResourcesManager.GetFont("PixelFont2"), ResourcesManager.GetShader("Font"));
+            m_fontRender = new FontRender("Text Teste ?!*:;@%#$%R0123456789一種", fontSize, 1,  this, ResourcesManager.GetFont("PixelFont2"), ResourcesManager.GetShader("Font"));
             m_inputEnable = false;
         }
 
-        public Text(RectangleF positionSize, GUIDock gUIDock) : base(positionSize, gUIDock)
+        public Text(RectangleF positionSize, GUIDock gUIDock, float fontSize) : base(positionSize, gUIDock)
         {
-            m_fontRender = new FontRender("Text Teste ?!*:;@%#$%R0123456789一種", 3, 100, new RectangleF(0, 0, 100, 100), this, ResourcesManager.GetFont("PixelFont2"), ResourcesManager.GetShader("Font"));
+            m_fontRender = new FontRender("Text Teste ?!*:;@%#$%R0123456789一種", fontSize, 1,  this, ResourcesManager.GetFont("PixelFont2"), ResourcesManager.GetShader("Font"));
             m_inputEnable = true;
         }
 
-        public Text(RectangleF positionSize, GUIDock gUIDock, GUIPivot gUIPivot) : base(positionSize, gUIDock, gUIPivot)
+        public Text(RectangleF positionSize, GUIDock gUIDock, GUIPivot gUIPivot, float fontSize) : base(positionSize, gUIDock, gUIPivot)
         {
-            m_fontRender = new FontRender("Text Teste ?!*:;@%#$%R0123456789一種", 3, 100, new RectangleF(0, 0, 100, 100), this, ResourcesManager.GetFont("PixelFont2"), ResourcesManager.GetShader("Font"));
+
+            m_fontRender = new FontRender("Text Teste ?!*:;@%#$%R0123456789一種", fontSize, 1,  this, ResourcesManager.GetFont("PixelFont2"), ResourcesManager.GetShader("Font"));
             m_inputEnable = true;
         }
 
-        protected override void OnTick()
+        public void SetText(string text)
         {
-            m_fontRender?.SetText(string.Format("FPS:{0}", Time._Time));
-            base.OnTick();
+            m_fontRender?.SetText(text);
+        }
+
+        public void SetTextAling(TextAling textAling)
+        {
+            m_fontRender?.SetTextPivot(textAling);
+        }
+
+        public void SetTextColor(Color4 color)
+        {
+            m_fontRender?.SetColor(color);
         }
 
         protected override void OnDraw()
@@ -55,10 +65,7 @@ namespace Projectsln.darkcomsoft.src.gui.guisystem.guielements
 
         protected override void OnResize(bool after)
         {
-            if (!after)
-            {
-                m_fontRender?.OnResize();
-            }
+            m_fontRender?.OnResize();
             base.OnResize(after);
         }
 

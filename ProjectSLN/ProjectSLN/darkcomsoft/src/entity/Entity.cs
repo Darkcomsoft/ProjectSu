@@ -14,7 +14,7 @@ namespace Projectsln.darkcomsoft.src.entity
     /// <summary>
     /// Entity is the base entity class for all entity, All entity is sync in network.
     /// </summary>
-    public class Entity : ClassBase
+    public abstract class Entity : ClassBase
     {
         private Transform m_transform;
         private bool m_removed = false;

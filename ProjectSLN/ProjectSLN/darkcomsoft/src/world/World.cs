@@ -5,7 +5,10 @@ using System.Text;
 
 namespace Projectsln.darkcomsoft.src.world
 {
-    public class World : ClassBase
+    /// <summary>
+    /// Base class of all Worlds, Worlds is "like" scenes in Unity3D
+    /// </summary>
+    public abstract class World : ClassBase
     {
        public virtual void Start()
         {

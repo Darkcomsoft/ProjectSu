@@ -7,6 +7,7 @@ using System.Drawing;
 using System.Text;
 using Projectsln.darkcomsoft.src.render;
 using Projectsln.darkcomsoft.src.enums;
+using Projectsln.darkcomsoft.src.engine.window;
 
 namespace Projectsln.darkcomsoft.src.gui.guisystem.font
 {
@@ -14,13 +15,13 @@ namespace Projectsln.darkcomsoft.src.gui.guisystem.font
 	{
 		private string m_text = "";
 
-		private float m_fontSize;
+		private float m_fontSizee;
 		private float m_lineMaxSize;
 		private int m_numberOfLines;
 
 		private bool m_Ready;
 
-		private TextAling m_TextAling = TextAling.Center;
+		private TextAling m_TextAling = TextAling.Left;
 
 		private Color4 m_color = Color4.White;
 		private Font m_font;
@@ -33,12 +34,12 @@ namespace Projectsln.darkcomsoft.src.gui.guisystem.font
 
 		private int VAO, vbo, ubo;
 
-		public FontRender(string text, float fontSize, float maxLine, RectangleF rectangle, GUIBase gUIBase, Font font, Shader shader)
+		public FontRender(string text, float fontSize, float maxLine, GUIBase gUIBase, Font font, Shader shader)
 		{
 			m_Ready = false;
 
 			m_text = text;
-			m_fontSize = fontSize;
+			m_fontSizee = fontSize;
 			m_gUIBase = gUIBase;
 			m_lineMaxSize = maxLine;
 
@@ -79,10 +80,26 @@ namespace Projectsln.darkcomsoft.src.gui.guisystem.font
 			Refresh();
 		}
 
+		public void SetTextPivot(TextAling textAling)
+        {
+			m_TextAling = textAling;
+			Refresh();
+		}
+
+		public void SetColor(Color4 color)
+        {
+			m_color = color;
+        }
+
 		public void Draw()
         {
 			if (m_Ready)
 			{
+				GL.Enable(EnableCap.ScissorTest);
+
+				Vector2 teste = new Vector2(m_gUIBase.GetFinalPosition.X, m_gUIBase.GetFinalPosition.Y);
+				//teste.Normalize();
+				GL.Scissor((int)teste.X, (int)teste.Y, (int)m_gUIBase.GetFinalPosition.Width, (int)m_gUIBase.GetFinalPosition.Height);
 				GL.Enable(EnableCap.Blend);
 				GL.Disable(EnableCap.DepthTest);
 				GL.BlendFunc(BlendingFactor.SrcAlpha, BlendingFactor.OneMinusSrcAlpha);
@@ -104,6 +121,7 @@ namespace Projectsln.darkcomsoft.src.gui.guisystem.font
 
 				GL.Enable(EnableCap.DepthTest);
 				GL.Disable(EnableCap.Blend);
+				GL.Disable(EnableCap.ScissorTest);
 			}
 		}
 
@@ -161,7 +179,7 @@ namespace Projectsln.darkcomsoft.src.gui.guisystem.font
         {
 			Vector2 textPosition = new Vector2();
 
-			switch (m_TextAling)
+            switch (m_TextAling)
             {
                 case TextAling.Center:
 					textPosition.X = -1;
@@ -184,7 +202,7 @@ namespace Projectsln.darkcomsoft.src.gui.guisystem.font
 					textPosition.Y = m_gUIBase.GetFinalPosition.Width / 2f;
 					break;
             }
-            m_WorldMatrix = Matrix4.CreateScale(m_gUIBase.GetFinalPosition.Width / 2f, m_gUIBase.GetFinalPosition.Height /2f, 0) * Matrix4.CreateTranslation((m_gUIBase.GetFinalPosition.X + m_gUIBase.GetFinalPosition.Width / 2) + textPosition.X, (m_gUIBase.GetFinalPosition.Y + m_gUIBase.GetFinalPosition.Height / 2) + textPosition.Y, 0);
+            m_WorldMatrix = Matrix4.CreateScale(m_fontSizee * m_fontSizee) * Matrix4.CreateTranslation((m_gUIBase.GetFinalPosition.X + m_gUIBase.GetFinalPosition.Width / 2) + textPosition.X, (m_gUIBase.GetFinalPosition.Y + m_gUIBase.GetFinalPosition.Height / 2) + textPosition.Y, 0);
 		}
 
 		private TextMeshData createTextMesh()
@@ -198,8 +216,8 @@ namespace Projectsln.darkcomsoft.src.gui.guisystem.font
 		{
 			char[] chars = m_text.ToCharArray();
 			List<Line> lines = new List<Line>();
-			Line currentLine = new Line(m_font.getSpaceWidth(), m_fontSize, m_lineMaxSize);
-			Word currentWord = new Word(m_fontSize);
+			Line currentLine = new Line(m_font.getSpaceWidth(), m_lineMaxSize);
+			Word currentWord = new Word(0);
 
 			for (int i = 0; i < chars.Length; i++)
 			{
@@ -210,10 +228,10 @@ namespace Projectsln.darkcomsoft.src.gui.guisystem.font
 					if (!added)
 					{
 						lines.Add(currentLine);
-						currentLine = new Line(m_font.getSpaceWidth(), m_fontSize, m_lineMaxSize);
+						currentLine = new Line(m_font.getSpaceWidth(), m_lineMaxSize);
 						currentLine.attemptToAddWord(currentWord);
 					}
-					currentWord = new Word(m_fontSize);
+					currentWord = new Word(0);
 					continue;
 				}
 				Character character = m_font.getCharacter(ascii);
@@ -231,7 +249,7 @@ namespace Projectsln.darkcomsoft.src.gui.guisystem.font
 			if (!added)
 			{
 				lines.Add(currentLine);
-				currentLine = new Line(m_font.getSpaceWidth(), m_fontSize, m_lineMaxSize);
+				currentLine = new Line(m_font.getSpaceWidth(), m_lineMaxSize);
 				currentLine.attemptToAddWord(currentWord);
 			}
 			lines.Add(currentLine);
@@ -251,20 +269,20 @@ namespace Projectsln.darkcomsoft.src.gui.guisystem.font
 				switch (m_TextAling)
 				{
 					case TextAling.Center:
-						curserX = (m_font.getSpaceWidth() * m_fontSize) - (line.getLineLength() / 2f);
-						curserY = (Font.LINE_HEIGHT * m_fontSize) / 2f;
+						curserX = (m_font.getSpaceWidth()) - (line.getLineLength() / 2f);
+						curserY = (Font.LINE_HEIGHT) / 2f;
 						break;
 					case TextAling.Left:
-						curserX = (m_font.getSpaceWidth() * m_fontSize) / 2f;
-						curserY = (Font.LINE_HEIGHT * m_fontSize) / 2f;
+						curserX = (m_font.getSpaceWidth()) / 2f;
+						curserY = (Font.LINE_HEIGHT) / 2f;
 						break;
 					case TextAling.Right:
-						curserX = (m_font.getSpaceWidth() * m_fontSize) - (line.getLineLength());
-						curserY = (Font.LINE_HEIGHT * m_fontSize) / 2f;
+						curserX = (m_font.getSpaceWidth()) - (line.getLineLength());
+						curserY = (Font.LINE_HEIGHT) / 2f;
 						break;
 					default:
-						curserX = (m_font.getSpaceWidth() * m_fontSize) - (line.getLineLength() / 2f);
-						curserY = (Font.LINE_HEIGHT * m_fontSize) / 2f;
+						curserX = (m_font.getSpaceWidth()) - (line.getLineLength() / 2f);
+						curserY = (Font.LINE_HEIGHT) / 2f;
 						break;
 				}
 
@@ -272,30 +290,30 @@ namespace Projectsln.darkcomsoft.src.gui.guisystem.font
 				{
 					foreach (var letter in word.getCharacters())
 					{
-						addVerticesForCharacter(curserX, curserY, letter, m_fontSize, vertices);
+						addVerticesForCharacter(curserX, curserY, letter, vertices);
 						addTexCoords(textureCoords, letter.getxTextureCoord(), letter.getyTextureCoord(), letter.getXMaxTextureCoord(), letter.getYMaxTextureCoord());
-						curserX += letter.getxAdvance() * m_fontSize;
+						curserX += letter.getxAdvance();
 					}
-					curserX += m_font.getSpaceWidth() * m_fontSize;
+					curserX += m_font.getSpaceWidth();
 				}
 				curserX = 0;
-				curserY += Font.LINE_HEIGHT * m_fontSize;
+				curserY += Font.LINE_HEIGHT;
 			}
 
 			return new TextMeshData(vertices.ToArray(), textureCoords.ToArray());
 		}
 
-		private void addVerticesForCharacter(float curserX, float curserY, Character character, float fontSize, List<Vector2> vertices)
+		private void addVerticesForCharacter(float curserX, float curserY, Character character, List<Vector2> vertices)
 		{
-			float x = curserX + (character.getxOffset() * fontSize);
-			float y = curserY - (character.getyOffset() * fontSize);
-			float maxX = x + (character.getSizeX() * fontSize);
-			float maxY = y - (character.getSizeY() * fontSize);
+			float x = curserX + (character.getxOffset());
+			float y = curserY - (character.getyOffset());
+			float maxX = x + (character.getSizeX());
+			float maxY = y - (character.getSizeY());
 			float properX = (2 * x);
 			float properY = (-2 * y);
 			float properMaxX = (2 * maxX);
 			float properMaxY = (-2 * maxY);
-			addVertices(vertices, properX * fontSize, properY * fontSize, properMaxX * fontSize, properMaxY * fontSize);
+			addVertices(vertices, properX, -properY, properMaxX, -properMaxY);
 		}
 
 		private void addVertices(List<Vector2> vertices, float x, float y, float maxX, float maxY)
@@ -327,12 +345,12 @@ namespace Projectsln.darkcomsoft.src.gui.guisystem.font
 		private List<Word> words;
 		private float currentLineLength;
 
-		public Line(float spaceWidth, float fontSize, float maxLength)
+		public Line(float spaceWidth, float maxLength)
 		{
 			words = new List<Word>();
 			currentLineLength = 0;
 
-			this.spaceSize = spaceWidth * fontSize;
+			this.spaceSize = spaceWidth;
 			this.maxLength = maxLength;
 		}
 
@@ -381,19 +399,17 @@ namespace Projectsln.darkcomsoft.src.gui.guisystem.font
 	{
 		private List<Character> characters;
 		private float width;
-		private float fontSize;
 
-		public Word(float fontSize)
+		public Word(float w)
 		{
-			width = 0;
+			width = w;
 			characters = new List<Character>();
-			this.fontSize = fontSize;
 		}
 
 		public void addCharacter(Character character)
 		{
 			characters.Add(character);
-			width += character.getxAdvance() * fontSize;
+			width += character.getxAdvance();
 		}
 
 		public List<Character> getCharacters()

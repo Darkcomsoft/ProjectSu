@@ -4,7 +4,7 @@ using System.Text;
 
 namespace Projectsln.darkcomsoft.src
 {
-    public class BuildTypeBase : ClassBase
+    public abstract class BuildTypeBase : ClassBase
     {
         public virtual void Tick() { }
         public virtual void TickDraw() { }

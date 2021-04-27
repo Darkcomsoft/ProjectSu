@@ -117,11 +117,23 @@ namespace Projectsln.darkcomsoft.src.debug
 
         public static void DrawCube()
         {
+            if (!Debug.isDebugEnabled) { return; }
+            if (m_instance == null) { return; }
+            if (!m_instance.m_gizmoDisponivel) { return; }
+
 
         }
 
+        /// <summary>
+        /// Draw a 2d Rectangle using a world matrix and a projection, its commom used on the ui debug
+        /// </summary>
+        /// <param name="world"></param>
+        /// <param name="projection"></param>
+        /// <param name="color"></param>
+        /// <param name="primitiveType"></param>
         public static void DrawRectangle(Matrix4 world, Matrix4 projection, Color4 color, PrimitiveType primitiveType)
         {
+            if (!Debug.isDebugEnabled) { return; }
             if (m_instance == null) { return; }
             if (!m_instance.m_gizmoDisponivel) { return; }
 
@@ -153,7 +165,7 @@ namespace Projectsln.darkcomsoft.src.debug
 
         public static void DrawRectangle(float x, float y, float w, float h, Matrix4 projection, Color4 color, PrimitiveType primitiveType)
         {
-
+            DrawRectangle(Matrix4.CreateScale(w,h,0) * Matrix4.CreateTranslation(x,y,0), projection, color, primitiveType);
         }
     }
 

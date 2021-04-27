@@ -35,29 +35,29 @@ namespace Projectsln.darkcomsoft.src.gui.guisystem.guielements
         public Buttom()
         {
             m_shader = ResourcesManager.GetShader("UI");
-            m_fontRender = new FontRender("Text Teste ?!*:;@%#$%R0123456789", 2, 100, new RectangleF(0,0,100,100), this,ResourcesManager.GetFont("PixelFont2"), ResourcesManager.GetShader("Font"));
+            m_fontRender = new FontRender("Text Teste ?!*:;@%#$%R0123456789一種", 25, 1,  this, ResourcesManager.GetFont("PixelFont2"), ResourcesManager.GetShader("Font"));
             m_inputEnable = true;
         }
 
         public Buttom(RectangleF positionSize) : base(positionSize)
         {
             m_shader = ResourcesManager.GetShader("UI");
-            m_fontRender = new FontRender("Text Teste ?!*:;@%#$%R0123456789", 2, 100, new RectangleF(0, 0, 100, 100), this, ResourcesManager.GetFont("PixelFont2"), ResourcesManager.GetShader("Font"));
+            m_fontRender = new FontRender("Text Teste ?!*:;@%#$%R0123456789一種", 25, 1, this, ResourcesManager.GetFont("PixelFont2"), ResourcesManager.GetShader("Font"));
             m_inputEnable = true;
         }
 
         public Buttom(RectangleF positionSize, GUIDock gUIDock) : base(positionSize, gUIDock)
         {
             m_shader = ResourcesManager.GetShader("UI");
-            m_fontRender = new FontRender("Text Teste ?!*:;@%#$%R0123456789", 2, 100, new RectangleF(0, 0, 100, 100), this, ResourcesManager.GetFont("PixelFont2"), ResourcesManager.GetShader("Font"));
+            m_fontRender = new FontRender("Text Teste ?!*:;@%#$%R0123456789一種", 25, 1,  this, ResourcesManager.GetFont("PixelFont2"), ResourcesManager.GetShader("Font"));
             m_inputEnable = true;
         }
 
         public Buttom(RectangleF positionSize, GUIDock gUIDock, GUIPivot gUIPivot): base(positionSize, gUIDock, gUIPivot)
         {
             m_shader = ResourcesManager.GetShader("UI");
-            m_fontRender = new FontRender("Text Teste ?!*:;@%#$%R0123456789", 2, 100, new RectangleF(0, 0, 100, 100), this, ResourcesManager.GetFont("PixelFont2"), ResourcesManager.GetShader("Font"));
-            
+            m_fontRender = new FontRender("Text Teste ?!*:;@%#$%R0123456789一種", 25, 1, this, ResourcesManager.GetFont("PixelFont2"), ResourcesManager.GetShader("Font"));
+
             m_inputEnable = true;
         }
 
@@ -112,7 +112,7 @@ namespace Projectsln.darkcomsoft.src.gui.guisystem.guielements
 
         protected override void OnResize(bool after)
         {
-            
+            m_fontRender?.OnResize();
             base.OnResize(after);
         }
 

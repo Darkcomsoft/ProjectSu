@@ -4,6 +4,7 @@ using Projectsln.darkcomsoft.src.engine;
 using Projectsln.darkcomsoft.src.entity;
 using Projectsln.darkcomsoft.src.entity.managers;
 using Projectsln.darkcomsoft.src.world;
+using OpenTK.Windowing.GraphicsLibraryFramework;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -25,7 +26,7 @@ namespace Projectsln.darkcomsoft.src
 
         public override void Tick()
         {
-            if (Input.GetKeyDown(OpenTK.Windowing.GraphicsLibraryFramework.Keys.P))
+            if (Input.GetKeyDown(Keys.P))
             {
                 if (!CursorManager.isLocked)
                 {
@@ -34,6 +35,18 @@ namespace Projectsln.darkcomsoft.src
                 else
                 {
                     CursorManager.UnLock();
+                }
+            }
+
+            if (Input.GetKeyDown(Keys.F2))
+            {
+                if (Debug.isDebugEnabled)
+                {
+                    Debug.DisableDebug();
+                }
+                else
+                {
+                    Debug.EnableDebug();
                 }
             }
             base.Tick();

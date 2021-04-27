@@ -9,6 +9,17 @@ namespace Projectsln.darkcomsoft.src.debug
     public static class Debug
     {
         public static BeginMode GLBeginMode = BeginMode.Triangles;
+        private static bool m_debugMode = false;
+
+        public static void EnableDebug()
+        {
+            m_debugMode = true;
+        }
+
+        public static void DisableDebug()
+        {
+            m_debugMode = false;
+        }
 
         private static string GetPrintTime()
         {
@@ -126,5 +137,7 @@ namespace Projectsln.darkcomsoft.src.debug
 #endif
         }
         #endregion
+
+        public static bool isDebugEnabled { get { return m_debugMode; } }
     }
 }
