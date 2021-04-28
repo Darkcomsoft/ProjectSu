@@ -20,6 +20,6 @@ fragment [
 
 	void main()
 	{
-		color = gizmoColor;
+		color = vec4(gizmoColor.xyz, 0.9);
 	}
 ];

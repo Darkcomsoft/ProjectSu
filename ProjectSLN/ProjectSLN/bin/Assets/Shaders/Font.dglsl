@@ -30,6 +30,5 @@ fragment [
 	void main()
 	{
 		color = vec4(fontColor.xyz, texture(texture0, texCoord).a);
-		//color = vec4(1,1,1,1);
 	}
 ];
