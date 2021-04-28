@@ -97,10 +97,8 @@ namespace Projectsln.darkcomsoft.src.gui.guisystem.guielements
         #region TrnasformStuff
         private void UpdateTransform()
         {
-            if (GameSettings.GuiScale <= 0) { GameSettings.GuiScale = 1; }
-
-            m_finalPosition.Width = m_startPosition.Width + GameSettings.GuiScale;
-            m_finalPosition.Height = m_startPosition.Height + GameSettings.GuiScale;
+            m_finalPosition.Width = m_startPosition.Width * GameSettings.GuiScale;
+            m_finalPosition.Height = m_startPosition.Height * GameSettings.GuiScale;
 
             if (m_guiPivot == GUIPivot.Default)//If is default, use the preset pivot, down below
             {

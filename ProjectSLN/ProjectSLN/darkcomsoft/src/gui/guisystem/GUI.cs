@@ -54,13 +54,13 @@ namespace Projectsln.darkcomsoft.src.gui.guisystem
         {
             if (Input.GetKeyDown(Keys.I))
             {
-                GameSettings.GuiScale += 50;
+                GameSettings.GuiScale += 0.1f;
                 OnResize();
             }
 
             if (Input.GetKeyDown(Keys.O))
             {
-                GameSettings.GuiScale -= 50;
+                GameSettings.GuiScale -= 0.1f;
                 OnResize();
             }
 
