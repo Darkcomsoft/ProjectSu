@@ -19,6 +19,7 @@ namespace Projectsln.darkcomsoft.src
         public void Dispose()
         {
             Dispose(true);
+            GC.SuppressFinalize(this);
         }
 
         // Protected implementation of Dispose pattern.
@@ -31,18 +32,19 @@ namespace Projectsln.darkcomsoft.src
 
             if (disposing)
             {
-                GC.SuppressFinalize(this);
+                //Dispose managed resources
+                OnDispose();
             }
 
-            OnDispose();
+            /// TODO: free unmanaged resources (unmanaged objects) and override a finalizer below.
+            /// TODO: set large fields to null.
+            /// HERE
 
             _disposed = true;
         }
 
         /// <summary>
         /// Called when is disposed.
-        /// TODO: free unmanaged resources (unmanaged objects) and override a finalizer below.
-        /// TODO: set large fields to null.
         /// </summary>
         protected virtual void OnDispose()
         {

@@ -7,6 +7,7 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 using OpenTK.Mathematics;
+using Projectsln.darkcomsoft.src.gui.guisystem.font;
 
 namespace Projectsln.darkcomsoft.src.world
 {
@@ -21,6 +22,7 @@ namespace Projectsln.darkcomsoft.src.world
 
             m_singlePlayerButtom = new Buttom("Buttom Teste", new RectangleF(0, 0, 100, 50), enums.GUIDock.Top, enums.GUIPivot.Top);
             m_singlePlayerButtom.SetTextColor(Color4.Black);
+            m_singlePlayerButtom.SetTextAling(TextAling.Center);
             m_textTeste = new Text("Text Teste", new RectangleF(20, 20, 100, 20), enums.GUIDock.LeftTop, enums.GUIPivot.LeftTop, 25);
 
             base.Start();

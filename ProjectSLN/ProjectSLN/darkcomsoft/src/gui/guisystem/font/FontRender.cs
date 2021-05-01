@@ -180,7 +180,7 @@ namespace Projectsln.darkcomsoft.src.gui.guisystem.font
             switch (m_TextAling)
             {
                 case TextAling.Center:
-					textPosition.X = -1;
+					textPosition.X = 0;
 					textPosition.Y = 0;
 					break;
                 case TextAling.Left:
