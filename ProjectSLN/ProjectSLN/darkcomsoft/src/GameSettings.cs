@@ -17,7 +17,10 @@ namespace Projectsln.darkcomsoft.src
         public static Keys INVENTORY_KEY = Keys.I;
 
         //Movements
-        public static Keys MOVEFOWARD_KEY = Keys.W;
+        public static Keys MOVEFRONT_KEY = Keys.W;
+        public static Keys MOVEBACK_KEY = Keys.S;
+        public static Keys MOVELEFT_KEY = Keys.A;
+        public static Keys MOVERIGHT_KEY = Keys.D;
 
 
         //Misc

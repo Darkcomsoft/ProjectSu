@@ -14,7 +14,7 @@ using System.Text;
 namespace Projectsln.darkcomsoft.src.gui.guisystem.guielements
 {
     /// <summary>
-    /// Buttom is a simple gui buttom
+    /// A simple gui buttom, only one function click
     /// </summary>
     public class Buttom : GUIBase
     {
@@ -35,36 +35,37 @@ namespace Projectsln.darkcomsoft.src.gui.guisystem.guielements
         public Buttom()
         {
             m_shader = ResourcesManager.GetShader("UI");
-            m_fontRender = new FontRender("Text Teste ?!*:;@%#$%R0123456789一種", 25, 1,  this, ResourcesManager.GetFont("PixelFont2"), ResourcesManager.GetShader("Font"));
+            m_fontRender = new FontRender("Buttom Text", 25, 1, this, ResourcesManager.GetFont("PixelFont2"), ResourcesManager.GetShader("Font"));
             m_inputEnable = true;
         }
 
-        public Buttom(RectangleF positionSize) : base(positionSize)
+        public Buttom(string buttomText)
         {
             m_shader = ResourcesManager.GetShader("UI");
-            m_fontRender = new FontRender("Text Teste ?!*:;@%#$%R0123456789一種", 25, 1, this, ResourcesManager.GetFont("PixelFont2"), ResourcesManager.GetShader("Font"));
+            m_fontRender = new FontRender(buttomText, 25, 1, this, ResourcesManager.GetFont("PixelFont2"), ResourcesManager.GetShader("Font"));
             m_inputEnable = true;
         }
 
-        public Buttom(RectangleF positionSize, GUIDock gUIDock) : base(positionSize, gUIDock)
+        public Buttom(string buttomText, RectangleF positionSize) : base(positionSize)
         {
             m_shader = ResourcesManager.GetShader("UI");
-            m_fontRender = new FontRender("Text Teste ?!*:;@%#$%R0123456789一種", 25, 1,  this, ResourcesManager.GetFont("PixelFont2"), ResourcesManager.GetShader("Font"));
+            m_fontRender = new FontRender(buttomText, 25, 1, this, ResourcesManager.GetFont("PixelFont2"), ResourcesManager.GetShader("Font"));
             m_inputEnable = true;
         }
 
-        public Buttom(RectangleF positionSize, GUIDock gUIDock, GUIPivot gUIPivot): base(positionSize, gUIDock, gUIPivot)
+        public Buttom(string buttomText, RectangleF positionSize, GUIDock gUIDock) : base(positionSize, gUIDock)
         {
             m_shader = ResourcesManager.GetShader("UI");
-            m_fontRender = new FontRender("Text Teste ?!*:;@%#$%R0123456789一種", 25, 1, this, ResourcesManager.GetFont("PixelFont2"), ResourcesManager.GetShader("Font"));
-
+            m_fontRender = new FontRender(buttomText, 25, 1, this, ResourcesManager.GetFont("PixelFont2"), ResourcesManager.GetShader("Font"));
             m_inputEnable = true;
         }
 
-        protected override void OnTick()
+        public Buttom(string buttomText, RectangleF positionSize, GUIDock gUIDock, GUIPivot gUIPivot) : base(positionSize, gUIDock, gUIPivot)
         {
-            
-            base.OnTick();
+            m_shader = ResourcesManager.GetShader("UI");
+            m_fontRender = new FontRender(buttomText, 25, 1, this, ResourcesManager.GetFont("PixelFont2"), ResourcesManager.GetShader("Font"));
+
+            m_inputEnable = true;
         }
 
         protected override void OnDraw()
@@ -121,10 +122,9 @@ namespace Projectsln.darkcomsoft.src.gui.guisystem.guielements
             if (e.Button == m_mouseKey)
             {
                 m_isclick = true;
-                AddSize(10, 10);
                 OnClick?.Invoke();
             }
-            
+
             base.OnMouseClick(e);
         }
 
@@ -133,7 +133,6 @@ namespace Projectsln.darkcomsoft.src.gui.guisystem.guielements
             if (e.Button == m_mouseKey)
             {
                 m_isclick = false;
-                RemoveSize(10, 10);
             }
             base.OnMouseRelease(e);
         }
@@ -143,7 +142,6 @@ namespace Projectsln.darkcomsoft.src.gui.guisystem.guielements
             if (!m_mouseHover && m_isclick)
             {
                 m_isclick = false;
-                RemoveSize(10, 10);
             }
             base.OnStatusChange(gUIElementStatus, parame);
         }
@@ -156,6 +154,41 @@ namespace Projectsln.darkcomsoft.src.gui.guisystem.guielements
             m_shader = null;
             OnClick = null;
             base.OnDispose();
+        }
+
+        public void SetText(string text)
+        {
+            m_fontRender?.SetText(text);
+        }
+
+        public void SetTextAling(TextAling textAling)
+        {
+            m_fontRender?.SetTextPivot(textAling);
+        }
+
+        public void SetTextColor(Color4 color)
+        {
+            m_fontRender?.SetColor(color);
+        }
+
+        /// <summary>
+        /// Set all buttom colors, NormalColor, ClickColor, HoverColor, FocusColor
+        /// </summary>
+        /// <param name="normalColor">When buttom is in neutral state, any input. hover, click, or focused</param>
+        /// <param name="clickColor">when click with the mouse buttom, on the buttom</param>
+        /// <param name="hoverColor">when mouse is hover the buttom</param>
+        /// <param name="focusColor">when you click and release mouse buttom, this buttom is gona be focused by the ui system</param>
+        public void SetButtomColors(Color4 normalColor, Color4 clickColor, Color4 hoverColor, Color4 focusColor)
+        {
+            m_normalColor = normalColor;
+            m_clickColor = clickColor;
+            m_hoverColor = hoverColor;
+            m_focusColor = focusColor;
+        }
+
+        public void SetButtomDisableColor(Color4 disableColor)
+        {
+            m_disableColor = disableColor;
         }
 
         /// <summary>

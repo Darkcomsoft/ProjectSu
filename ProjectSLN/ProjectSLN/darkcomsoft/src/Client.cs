@@ -38,7 +38,7 @@ namespace Projectsln.darkcomsoft.src
                 }
             }
 
-            if (Input.GetKeyDown(Keys.F2))
+            if (Input.GetKeyDown(GameSettings.DEBUGSCREEN_KEY))
             {
                 if (Debug.isDebugEnabled)
                 {

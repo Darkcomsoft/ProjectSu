@@ -6,6 +6,7 @@ using System.Drawing;
 using System;
 using System.Collections.Generic;
 using System.Text;
+using OpenTK.Mathematics;
 
 namespace Projectsln.darkcomsoft.src.world
 {
@@ -18,8 +19,9 @@ namespace Projectsln.darkcomsoft.src.world
         {
             Debug.Log("MainMenu Started!");
 
-            m_singlePlayerButtom = new Buttom(new RectangleF(0,0,100,50), enums.GUIDock.Top, enums.GUIPivot.Top);
-            m_textTeste = new Text(new RectangleF(20, 20, 100, 20), enums.GUIDock.LeftTop, enums.GUIPivot.LeftTop, 25);
+            m_singlePlayerButtom = new Buttom("Buttom Teste", new RectangleF(0, 0, 100, 50), enums.GUIDock.Top, enums.GUIPivot.Top);
+            m_singlePlayerButtom.SetTextColor(Color4.Black);
+            m_textTeste = new Text("Text Teste", new RectangleF(20, 20, 100, 20), enums.GUIDock.LeftTop, enums.GUIPivot.LeftTop, 25);
 
             base.Start();
         }

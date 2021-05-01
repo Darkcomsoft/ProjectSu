@@ -48,6 +48,48 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Content Include="bin\Assets\Font\PixelFont2.png" />
+    <Content Include="bin\Assets\Font\TTF\Comfortaa-Regular.ttf" />
+    <Content Include="bin\Assets\Font\TTF\FreePixel.ttf" />
+    <Content Include="bin\Assets\Font\TTF\Pixeled.ttf" />
+    <Content Include="bin\Assets\Images\BackGround.png" />
+    <Content Include="bin\Assets\Images\Darkcomsoft.png" />
+    <Content Include="bin\Assets\Images\gameicon.ico" />
+    <Content Include="bin\Assets\Images\VaKLogoYellow.png" />
+    <Content Include="bin\Assets\Models\Trees\oak.png" />
+    <Content Include="bin\Assets\Sound\Teste.wav" />
+    <Content Include="bin\Assets\Texture\Cloud.png" />
+    <Content Include="bin\Assets\Texture\CubeMap\Example\Example_bk.png" />
+    <Content Include="bin\Assets\Texture\CubeMap\Example\Example_dn.png" />
+    <Content Include="bin\Assets\Texture\CubeMap\Example\Example_ft.png" />
+    <Content Include="bin\Assets\Texture\CubeMap\Example\Example_lf.png" />
+    <Content Include="bin\Assets\Texture\CubeMap\Example\Example_rt.png" />
+    <Content Include="bin\Assets\Texture\CubeMap\Example\Example_up.png" />
+    <Content Include="bin\Assets\Texture\devTexture.jpg" />
+    <Content Include="bin\Assets\Texture\devTexture2.png" />
+    <Content Include="bin\Assets\Texture\MetalSword.png" />
+    <Content Include="bin\Assets\Texture\oak.png" />
+    <Content Include="bin\Assets\Texture\SpritesTreeHigt.png" />
+    <Content Include="bin\Assets\Texture\SpritesTreeHigt_Snow.png" />
+    <Content Include="bin\Assets\Texture\sword.png" />
+    <Content Include="bin\Assets\Texture\teste.png" />
+    <Content Include="bin\Assets\Texture\TextureTeste01.png" />
+    <Content Include="bin\Assets\Texture\TextureTeste02.png" />
+    <Content Include="bin\Assets\Texture\TextureTeste03.png" />
+    <Content Include="bin\Assets\Texture\TextureTeste04.png" />
+    <Content Include="bin\Assets\Texture\TileAtlas.png" />
+    <Content Include="bin\Assets\Texture\TileAtlasBCK.png" />
+    <Content Include="bin\Assets\Texture\TileTransitionAtlas.png" />
+    <Content Include="bin\Assets\Texture\Water.png" />
+    <Content Include="bin\Assets\Texture\Water2.png" />
+    <Content Include="bin\Assets\Texture\Wood01.png" />
+    <Content Include="bin\Assets\Texture\Wood02.png" />
+    <Content Include="bin\Assets\UI\Buttom.png" />
+    <Content Include="bin\Assets\UI\Panel01.png" />
+    <Content Include="bin\Assets\UI\SidePanel.png" />
+  </ItemGroup>
+
+  <ItemGroup>
     <PackageReference Include="Newtonsoft.Json" Version="13.0.1" />
     <PackageReference Include="OpenTK" Version="4.6.3" />
     <PackageReference Include="System.Drawing.Common" Version="5.0.2" />
@@ -56,6 +98,27 @@
   <ItemGroup>
     <Folder Include="darkcomsoft\src\gui\gamegui\" />
     <Folder Include="darkcomsoft\src\mod\api\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Include="bin\Assets\Font\PixelFont2.fnt" />
+    <None Include="bin\Assets\Models\SkyCube.dae" />
+    <None Include="bin\Assets\Models\skysphere.obj" />
+    <None Include="bin\Assets\Models\sword.mtl" />
+    <None Include="bin\Assets\Models\sword.obj" />
+    <None Include="bin\Assets\Models\Trees\oak.mtl" />
+    <None Include="bin\Assets\Models\Trees\oak.obj" />
+    <None Include="bin\Assets\Models\Trees\Pine01.mtl" />
+    <None Include="bin\Assets\Models\Trees\Pine01.obj" />
+    <None Include="bin\Assets\Shaders\Cloud.dglsl" />
+    <None Include="bin\Assets\Shaders\Default.dglsl" />
+    <None Include="bin\Assets\Shaders\Font.dglsl" />
+    <None Include="bin\Assets\Shaders\Gizmo.dglsl" />
+    <None Include="bin\Assets\Shaders\GUI.dglsl" />
+    <None Include="bin\Assets\Shaders\Sky.dglsl" />
+    <None Include="bin\Assets\Shaders\TerrainDefault.dglsl" />
+    <None Include="bin\Assets\Shaders\UI.dglsl" />
+    <None Include="bin\Assets\Shaders\Water.dglsl" />
   </ItemGroup>
 
   <ItemGroup>

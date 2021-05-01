@@ -12,32 +12,34 @@ using Projectsln.darkcomsoft.src.engine;
 
 namespace Projectsln.darkcomsoft.src.gui.guisystem.guielements
 {
+    /// <summary>
+    /// Simple Gui Text, used for display text on the screen, with a font
+    /// </summary>
     public class Text : GUIBase
     {
         private FontRender m_fontRender;
 
         public Text()
         {
-            m_fontRender = new FontRender("Text Teste ?!*:;@%#$%R0123456789一種", 25, 1,  this, ResourcesManager.GetFont("PixelFont2"), ResourcesManager.GetShader("Font"));
+            m_fontRender = new FontRender("Texte Sample", 25, 1,  this, ResourcesManager.GetFont("PixelFont2"), ResourcesManager.GetShader("Font"));
             m_inputEnable = true;
         }
 
-        public Text(RectangleF positionSize, float fontSize) : base(positionSize)
+        public Text(string text,RectangleF positionSize, float fontSize) : base(positionSize)
         {
-            m_fontRender = new FontRender("Text Teste ?!*:;@%#$%R0123456789一種", fontSize, 1,  this, ResourcesManager.GetFont("PixelFont2"), ResourcesManager.GetShader("Font"));
+            m_fontRender = new FontRender(text, fontSize, 1,  this, ResourcesManager.GetFont("PixelFont2"), ResourcesManager.GetShader("Font"));
             m_inputEnable = false;
         }
 
-        public Text(RectangleF positionSize, GUIDock gUIDock, float fontSize) : base(positionSize, gUIDock)
+        public Text(string text, RectangleF positionSize, GUIDock gUIDock, float fontSize) : base(positionSize, gUIDock)
         {
-            m_fontRender = new FontRender("Text Teste ?!*:;@%#$%R0123456789一種", fontSize, 1,  this, ResourcesManager.GetFont("PixelFont2"), ResourcesManager.GetShader("Font"));
+            m_fontRender = new FontRender(text, fontSize, 1,  this, ResourcesManager.GetFont("PixelFont2"), ResourcesManager.GetShader("Font"));
             m_inputEnable = true;
         }
 
-        public Text(RectangleF positionSize, GUIDock gUIDock, GUIPivot gUIPivot, float fontSize) : base(positionSize, gUIDock, gUIPivot)
+        public Text(string text, RectangleF positionSize, GUIDock gUIDock, GUIPivot gUIPivot, float fontSize) : base(positionSize, gUIDock, gUIPivot)
         {
-
-            m_fontRender = new FontRender("Text Teste ?!*:;@%#$%R0123456789一種", fontSize, 1,  this, ResourcesManager.GetFont("PixelFont2"), ResourcesManager.GetShader("Font"));
+            m_fontRender = new FontRender(text, fontSize, 1,  this, ResourcesManager.GetFont("PixelFont2"), ResourcesManager.GetShader("Font"));
             m_inputEnable = true;
         }
 
