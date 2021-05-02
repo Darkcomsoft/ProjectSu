@@ -28,8 +28,6 @@ namespace Projectsln.darkcomsoft.src.gui.guisystem
         /// </summary>
         private List<GUIBase> m_guiDisabledList;
 
-        private bool m_debugMode = false;
-
         private GUIBase m_currentFocusedGui;
         private GUIBase m_currentGuiHoverd;
 
@@ -89,11 +87,6 @@ namespace Projectsln.darkcomsoft.src.gui.guisystem
                 if (m_guiList[i].isEnabled)
                 {
                     m_guiList[i].Draw();
-
-                    if (m_debugMode)
-                    {
-                        Debug_DrawRec(m_guiList[i]);
-                    }
                 }
             }
         }
@@ -263,24 +256,6 @@ namespace Projectsln.darkcomsoft.src.gui.guisystem
             GL.Disable(EnableCap.Blend);
         }
 
-        public void Debug_DrawRec(GUIBase gUIBase)
-        {
-            GL.Enable(EnableCap.Blend);
-            GL.Disable(EnableCap.DepthTest);
-            GL.BlendFunc(BlendingFactor.SrcAlpha, BlendingFactor.OneMinusSrcAlpha);
-
-            GL.BindVertexArray(VAO);
-            GL.BindBuffer(BufferTarget.ElementArrayBuffer, IBO);
-
-            GL.DrawElements(PrimitiveType.LineLoop, m_rectangleIndices.Length, DrawElementsType.UnsignedInt, 0);
-
-            GL.BindBuffer(BufferTarget.ElementArrayBuffer, 0);
-            GL.BindVertexArray(0);
-
-            GL.Enable(EnableCap.DepthTest);
-            GL.Disable(EnableCap.Blend);
-        }
-
         public static void AddGUI(GUIBase gUIBase)
         {
             instance.m_guiList.Add(gUIBase);
@@ -309,16 +284,6 @@ namespace Projectsln.darkcomsoft.src.gui.guisystem
                 instance.m_currentGuiHoverd.SetStatus(GUIElementStatus.Hover, false);
                 instance.m_currentGuiHoverd = null;
             }
-        }
-
-        public static void EnableDebug()
-        {
-            instance.m_debugMode = true;
-        }
-
-        public static void DisableDebug()
-        {
-            instance.m_debugMode = false;
         }
 
         public static void TickMouseHover()

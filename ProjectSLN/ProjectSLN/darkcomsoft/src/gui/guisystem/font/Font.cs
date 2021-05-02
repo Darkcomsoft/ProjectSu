@@ -125,7 +125,7 @@ namespace Projectsln.darkcomsoft.src.gui.guisystem.font
             while (NextLine())
             {
                 Character c = loadCharacter(imageWidth);
-                if (c != null)
+                if (!c.Equals(Character.Null))
                 {
                     metaData.Add(c.getId(), c);
                 }
@@ -138,7 +138,7 @@ namespace Projectsln.darkcomsoft.src.gui.guisystem.font
             if (id == SPACE_ASCII)
             {
                 this.spaceWidth = (getValueOfVariable("xadvance") - paddingWidth) * horizontalPerPixelSize;
-                return null;
+                return new Character();
             }
             float xTex = ((float)getValueOfVariable("x") + (padding[PAD_LEFT] - DESIRED_PADDING)) / imageSize;
             float yTex = ((float)getValueOfVariable("y") + (padding[PAD_TOP] - DESIRED_PADDING)) / imageSize;
@@ -193,8 +193,10 @@ namespace Projectsln.darkcomsoft.src.gui.guisystem.font
         }
     }
 
-    public class Character
+    public struct Character
     {
+        public static Character Null { get { return new Character(); } }
+
         private int id;
         private float xTextureCoord;
         private float yTextureCoord;

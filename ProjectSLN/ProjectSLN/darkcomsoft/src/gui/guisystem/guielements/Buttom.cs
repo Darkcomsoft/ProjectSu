@@ -150,6 +150,8 @@ namespace Projectsln.darkcomsoft.src.gui.guisystem.guielements
         {
             m_fontRender.Dispose();
 
+            OnClick = null;
+
             m_fontRender = null;
             m_shader = null;
             OnClick = null;

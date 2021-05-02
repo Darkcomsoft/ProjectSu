@@ -80,10 +80,8 @@ namespace Projectsln.darkcomsoft.src
 
         public void TickDraw(double time)
         {
-            PerformanceProfiler.Start("ApplicationDrawLoop");
             gameInstance?.TickDraw();
             m_gui?.Draw(time);
-            PerformanceProfiler.Stop("ApplicationDrawLoop");
         }
 
         //DAR UMA OLHADA NA ORDEM DE DISPOSE, POR QUE ESTOU FAZENDO DE QUALQUER GEITO

@@ -8,6 +8,7 @@ using System.Text;
 using Projectsln.darkcomsoft.src.render;
 using Projectsln.darkcomsoft.src.enums;
 using Projectsln.darkcomsoft.src.engine.window;
+using Projectsln.darkcomsoft.src.debug;
 
 namespace Projectsln.darkcomsoft.src.gui.guisystem.font
 {
