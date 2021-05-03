@@ -12,6 +12,7 @@ using System.Drawing;
 using OpenTK.Windowing.Common;
 using Projectsln.darkcomsoft.src.engine.window;
 using Projectsln.darkcomsoft.src.engine;
+using Projectsln.darkcomsoft.src.client;
 
 namespace Projectsln.darkcomsoft.src.gui.guisystem
 {

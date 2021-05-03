@@ -13,7 +13,7 @@ using OpenTK.Windowing.Common;
 using Projectsln.darkcomsoft.src.network;
 using Lidgren.Network;
 
-namespace Projectsln.darkcomsoft.src
+namespace Projectsln.darkcomsoft.src.client
 {
     /// <summary>
     /// is the client, this is the class start the game stuff, like graphics, and other things

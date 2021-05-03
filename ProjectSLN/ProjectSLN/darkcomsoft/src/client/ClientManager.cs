@@ -5,7 +5,7 @@ using System.Text;
 namespace Projectsln.darkcomsoft.src.client
 {
     /// <summary>
-    /// Client Manager used to controll the game logic, like join a world, etc. <see cref="Client"/> is more for the Client Engine stuff like rendering
+    /// <see cref="ClientManager"/> used to controll the game logic, like join a world, etc. <see cref="Client"/> is more for the Client Engine stuff like rendering
     /// </summary>
     public class ClientManager : ClassBase
     {

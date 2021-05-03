@@ -1,4 +1,5 @@
 ﻿using OpenTK.Windowing.Common;
+using Projectsln.darkcomsoft.src.client;
 using Projectsln.darkcomsoft.src.consolecli;
 using Projectsln.darkcomsoft.src.consolecli.systemconsole;
 using Projectsln.darkcomsoft.src.debug;
