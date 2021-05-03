@@ -98,19 +98,22 @@ namespace Projectsln.darkcomsoft.src
             base.OnResize();
         }
 
-        public void OnMouseMove()
+        public override void OnMouseMove()
         {
             m_gui?.OnMouseMove();
+            base.OnMouseMove();
         }
 
-        public void OnMouseDown(MouseButtonEventArgs e)
+        public override void OnMouseDown(MouseButtonEventArgs e)
         {
             m_gui?.OnMousePress(e);
+            base.OnMouseDown(e);
         }
 
-        public void OnMouseUp(MouseButtonEventArgs e)
+        public override void OnMouseUp(MouseButtonEventArgs e)
         {
             m_gui?.OnMouseRelease(e);
+            base.OnMouseUp(e);
         }
 
         public Client instance { get { return m_instance; } }

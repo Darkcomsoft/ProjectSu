@@ -9,6 +9,7 @@ using Projectsln.darkcomsoft.src.enums;
 using Projectsln.darkcomsoft.src.gui.guisystem;
 using Projectsln.darkcomsoft.src.network;
 using Projectsln.darkcomsoft.src.resources;
+using Projectsln.darkcomsoft.src.server;
 using Projectsln.darkcomsoft.src.world;
 using System;
 using System.Collections.Generic;
@@ -29,7 +30,6 @@ namespace Projectsln.darkcomsoft.src
         public static readonly string BinaryPath = GetBinaryPath();
         public static readonly string AssetsPath = GetAssetsPath() + "\\Assets";
 
-
         public static ApplicationType AppType { get; private set; }
         public static BuildTypeBase gameInstance { get; private set; }// this is the game instance EX: Client or Server
         public static ResourcesManager m_resourceManager { get; private set; }
@@ -37,7 +37,6 @@ namespace Projectsln.darkcomsoft.src
         public static EntityManager m_entityManager { get; private set; }
         public static NetworkManager m_networkManager { get; private set; }
         public static WindowsConsole m_windowsConsole { get; private set; }
-
 
         public Application(ApplicationType applicationType)
         {
@@ -118,9 +117,10 @@ namespace Projectsln.darkcomsoft.src
 
         private void StartServer()
         {
-            //gameInstance = new Server();
+            gameInstance = new Server();
         }
 
+        #region CLIENT-Input for GUI
         public void OnResize()
         {
             gameInstance?.OnResize();
@@ -128,18 +128,19 @@ namespace Projectsln.darkcomsoft.src
 
         public void OnMouseMove()
         {
-            m_gui?.OnMouseMove();
+            gameInstance?.OnMouseMove();
         }
 
         public void OnMouseDown(MouseButtonEventArgs e)
         {
-            m_gui?.OnMousePress(e);
+            gameInstance?.OnMouseDown(e);
         }
 
         public void OnMouseUp(MouseButtonEventArgs e)
         {
-            m_gui?.OnMouseRelease(e);
+            gameInstance?.OnMouseUp(e);
         }
+        #endregion
 
 
         private static string GetBinaryPath()
