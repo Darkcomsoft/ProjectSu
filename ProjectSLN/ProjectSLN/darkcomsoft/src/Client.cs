@@ -20,7 +20,7 @@ namespace Projectsln.darkcomsoft.src
     {
         private Client m_instance;
 
-        public static Input input { get; private set; }
+        public static Input m_input { get; private set; }
         public static Gizmo m_gizmos { get; private set; }
         public static GUI m_gui { get; private set; }
 
@@ -29,7 +29,7 @@ namespace Projectsln.darkcomsoft.src
             m_instance = this;
 
             m_gizmos = new Gizmo();//This is only for debug
-            input = new Input();
+            m_input = new Input();
             m_gui = new GUI();
 
             Debug.Log("GameStarted!", "CLIENT");
@@ -85,8 +85,8 @@ namespace Projectsln.darkcomsoft.src
             m_gizmos?.Dispose();
             m_gizmos = null;
 
-            input?.Dispose();
-            input = null;
+            m_input?.Dispose();
+            m_input = null;
 
             m_instance = null;
             base.OnDispose();

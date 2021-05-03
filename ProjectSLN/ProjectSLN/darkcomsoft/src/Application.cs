@@ -31,6 +31,7 @@ namespace Projectsln.darkcomsoft.src
         public static readonly string AssetsPath = GetAssetsPath() + "\\Assets";
 
         public static ApplicationType AppType { get; private set; }
+        public static AppNetworkType NetworkType { get; private set; }
         public static BuildTypeBase gameInstance { get; private set; }// this is the game instance EX: Client or Server
         public static ResourcesManager m_resourceManager { get; private set; }
         public static WorldManager m_worldManager { get; private set; }
@@ -58,6 +59,7 @@ namespace Projectsln.darkcomsoft.src
                     StartServer();
                     break;
                 default:
+                    Projectsln.darkcomsoft.src.debug.Debug.Log("I don't know what you trying to do, but this is no a app!");
                     return;
             }
         }
@@ -118,6 +120,11 @@ namespace Projectsln.darkcomsoft.src
         private void StartServer()
         {
             gameInstance = new Server();
+        }
+
+        public static void SetNetworkType(AppNetworkType appNetworkType)
+        {
+            NetworkType = appNetworkType;
         }
 
         #region CLIENT-Input for GUI
@@ -183,5 +190,10 @@ namespace Projectsln.darkcomsoft.src
         {
             return Process.GetCurrentProcess().;
         }*/
+
+        /// <summary>
+        /// Check if the app is runing a network Server-Dedicated or Client Hosting a Server
+        /// </summary>
+        public static bool IsServer { get { if (NetworkType == AppNetworkType.Server || NetworkType == AppNetworkType.ClientSinglePlayerServer) { return true; } return false; } }
     }
 }
