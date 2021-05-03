@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Projectsln.darkcomsoft.src.world;
+using System;
 using System.Collections.Generic;
 using System.Text;
 
@@ -8,6 +9,7 @@ namespace Projectsln.darkcomsoft.src.server
     {
         public Server()
         {
+            WorldManager.SpawnWorld<SystemWorld>();
 
         }
 

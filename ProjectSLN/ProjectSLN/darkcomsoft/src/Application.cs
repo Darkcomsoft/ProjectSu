@@ -38,10 +38,6 @@ namespace Projectsln.darkcomsoft.src
         public static NetworkManager m_networkManager { get; private set; }
         public static WindowsConsole m_windowsConsole { get; private set; }
 
-        public static Input input { get; private set; }
-        public static Gizmo m_gizmos { get; private set; }
-        public static GUI m_gui { get; private set; }
-
 
         public Application(ApplicationType applicationType)
         {
@@ -72,8 +68,7 @@ namespace Projectsln.darkcomsoft.src
             m_entityManager?.Tick();
             m_networkManager?.Tick();
 
-            QueeSystem.Tick();
-            m_gui?.Tick(time);
+            FrameQueeSystem.Tick();
             m_windowsConsole?.Tick();
             gameInstance?.Tick();
         }
@@ -81,7 +76,6 @@ namespace Projectsln.darkcomsoft.src
         public void TickDraw(double time)
         {
             gameInstance?.TickDraw();
-            m_gui?.Draw(time);
         }
 
         //DAR UMA OLHADA NA ORDEM DE DISPOSE, POR QUE ESTOU FAZENDO DE QUALQUER GEITO
@@ -105,17 +99,8 @@ namespace Projectsln.darkcomsoft.src
             m_windowsConsole?.Dispose();
             m_windowsConsole = null;
 
-            m_gui?.Dispose();
-            m_gui = null;
-
-            m_gizmos?.Dispose();
-            m_gizmos = null;
-
             m_resourceManager?.Dispose();
             m_resourceManager = null;
-
-            input?.Dispose();
-            input = null;
             base.OnDispose();
         }
 
@@ -128,10 +113,6 @@ namespace Projectsln.darkcomsoft.src
         {
             m_resourceManager.LoadPreResources(AppType);
 
-            m_gizmos = new Gizmo();//This is only for debug
-            input = new Input();
-            m_gui = new GUI();
-
             gameInstance = new Client();
         }
 
@@ -142,7 +123,7 @@ namespace Projectsln.darkcomsoft.src
 
         public void OnResize()
         {
-            m_gui?.OnResize();
+            gameInstance?.OnResize();
         }
 
         public void OnMouseMove()

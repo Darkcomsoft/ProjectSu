@@ -48,7 +48,7 @@ namespace Projectsln.darkcomsoft.src.gui.guisystem
             BindRectangleBuffers();//Bind the rectangle data to videoCard
         }
 
-        public void Tick(double time)
+        public void Tick()
         {
             if (Input.GetKeyDown(Keys.I))
             {
@@ -80,7 +80,7 @@ namespace Projectsln.darkcomsoft.src.gui.guisystem
             }
         }
 
-        public void Draw(double time)
+        public void Draw()
         {
             for (int i = 0; i < m_guiList.Count; i++)
             {

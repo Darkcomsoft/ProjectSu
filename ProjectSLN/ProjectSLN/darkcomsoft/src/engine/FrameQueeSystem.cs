@@ -12,8 +12,8 @@ namespace Projectsln.darkcomsoft.src.engine
         /// <summary>
         /// if the queue count pass this number, is claer every thing on it, in one tick, Default: 200
         /// </summary>
-        public static int QueueCache = 200;
-        private static Queue<Action> actionList = new Queue<Action>();
+        public const int QueueCache = 300;
+        private static Queue<Action> actionList = new Queue<Action>(QueueCache);
 
         public static void Tick()
         {

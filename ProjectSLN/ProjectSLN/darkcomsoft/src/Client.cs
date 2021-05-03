@@ -8,6 +8,8 @@ using OpenTK.Windowing.GraphicsLibraryFramework;
 using System;
 using System.Collections.Generic;
 using System.Text;
+using Projectsln.darkcomsoft.src.gui.guisystem;
+using OpenTK.Windowing.Common;
 
 namespace Projectsln.darkcomsoft.src
 {
@@ -16,8 +18,20 @@ namespace Projectsln.darkcomsoft.src
     /// </summary>
     public class Client : BuildTypeBase
     {
+        private Client m_instance;
+
+        public static Input input { get; private set; }
+        public static Gizmo m_gizmos { get; private set; }
+        public static GUI m_gui { get; private set; }
+
         public Client()
         {
+            m_instance = this;
+
+            m_gizmos = new Gizmo();//This is only for debug
+            input = new Input();
+            m_gui = new GUI();
+
             Debug.Log("GameStarted!", "CLIENT");
 
             WorldManager.SpawnWorld<SystemWorld>();
@@ -49,17 +63,56 @@ namespace Projectsln.darkcomsoft.src
                     Debug.EnableDebug();
                 }
             }
+
+            m_gui?.Tick();
             base.Tick();
         }
 
         public override void TickDraw()
         {
+            //DrawStuuff Like 3d
+
+            //DrawGUI
+            m_gui?.Draw();
             base.TickDraw();
         }
 
         protected override void OnDispose()
         {
+            m_gui?.Dispose();
+            m_gui = null;
+
+            m_gizmos?.Dispose();
+            m_gizmos = null;
+
+            input?.Dispose();
+            input = null;
+
+            m_instance = null;
             base.OnDispose();
         }
+
+        public override void OnResize()
+        {
+            m_gui?.OnResize();
+            base.OnResize();
+        }
+
+        public void OnMouseMove()
+        {
+            m_gui?.OnMouseMove();
+        }
+
+        public void OnMouseDown(MouseButtonEventArgs e)
+        {
+            m_gui?.OnMousePress(e);
+        }
+
+        public void OnMouseUp(MouseButtonEventArgs e)
+        {
+            m_gui?.OnMouseRelease(e);
+        }
+
+        public Client instance { get { return m_instance; } }
     }
 }
