@@ -91,7 +91,7 @@ namespace Projectsln.darkcomsoft.src.network
                         string s = inc.ReadString();
                         if (networkCallBacks.PlayerApproval != null)
                         {
-                            networkCallBacks.PlayerApproval?.Invoke(s, inc.SenderConnection);
+                            networkCallBacks.PlayerApproval.Invoke(s, inc.SenderConnection);
                         }
                         else
                         {

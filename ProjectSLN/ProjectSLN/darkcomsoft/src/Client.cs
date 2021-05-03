@@ -10,6 +10,8 @@ using System.Collections.Generic;
 using System.Text;
 using Projectsln.darkcomsoft.src.gui.guisystem;
 using OpenTK.Windowing.Common;
+using Projectsln.darkcomsoft.src.network;
+using Lidgren.Network;
 
 namespace Projectsln.darkcomsoft.src
 {
@@ -31,6 +33,16 @@ namespace Projectsln.darkcomsoft.src
             m_gizmos = new Gizmo();//This is only for debug
             m_input = new Input();
             m_gui = new GUI();
+
+            NetworkCallBacks.instance.OnClientStart += OnClientStart;
+            NetworkCallBacks.instance.OnConnect += OnConnect;
+            NetworkCallBacks.instance.OnDisconnect += OnDisconnect;
+            NetworkCallBacks.instance.OnPlayerConnect += OnPlayerConnect;
+            NetworkCallBacks.instance.OnPlayerDisconnect += OnPlayerDisconnect;
+            NetworkCallBacks.instance.OnReceivedServerData += OnReceivedServerData;
+            NetworkCallBacks.instance.OnServerStart += OnServerStart;
+            NetworkCallBacks.instance.OnServerStop += OnServerStop;
+            NetworkCallBacks.instance.PlayerApproval += PlayerApproval;
 
             Debug.Log("GameStarted!", "CLIENT");
 
@@ -79,6 +91,16 @@ namespace Projectsln.darkcomsoft.src
 
         protected override void OnDispose()
         {
+            NetworkCallBacks.instance.OnClientStart -= OnClientStart;
+            NetworkCallBacks.instance.OnConnect -= OnConnect;
+            NetworkCallBacks.instance.OnDisconnect -= OnDisconnect;
+            NetworkCallBacks.instance.OnPlayerConnect -= OnPlayerConnect;
+            NetworkCallBacks.instance.OnPlayerDisconnect -= OnPlayerDisconnect;
+            NetworkCallBacks.instance.OnReceivedServerData -= OnReceivedServerData;
+            NetworkCallBacks.instance.OnServerStart -= OnServerStart;
+            NetworkCallBacks.instance.OnServerStop -= OnServerStop;
+            NetworkCallBacks.instance.PlayerApproval -= PlayerApproval;
+
             m_gui?.Dispose();
             m_gui = null;
 
@@ -114,6 +136,67 @@ namespace Projectsln.darkcomsoft.src
         {
             m_gui?.OnMouseRelease(e);
             base.OnMouseUp(e);
+        }
+
+        #region NetWork-Stuff
+        public void StartSinglePlayer()
+        {
+            NetworkManager.CreateServer(long.Parse("127.0.0.1"), 25000, 10);
+        }
+
+        public void Connect(string ip, int port)
+        {
+            NetworkManager.Connect(int.Parse(ip), port);
+        }
+
+        public void OnPlayerDisconnect(NetConnection netConnection)
+        {
+
+        }
+        public void OnPlayerConnect(NetConnection netConnection)
+        {
+
+        }
+        public void PlayerApproval(string naosei, NetConnection netConnection)
+        {
+
+        }
+        public void OnDisconnect()
+        {
+
+        }
+        public void OnConnect()
+        {
+            JoinGameWorld();
+        }
+        public void OnServerStart()
+        {
+            JoinGameWorld();
+        }
+        public void OnServerStop()
+        {
+
+        }
+        public void OnClientStart()
+        {
+
+        }
+        public void OnReceivedServerData()
+        {
+
+        }
+        #endregion
+
+        private void JoinGameWorld()
+        {
+            WorldManager.DestroyWorld(WorldManager.GetWorld<MainMenuWorld>());
+            WorldManager.SpawnWorld<SatrillesWorld>();
+        }
+
+        private void JoinMainMenu()
+        {
+            WorldManager.DestroyWorld(WorldManager.GetWorld<SatrillesWorld>());
+            WorldManager.SpawnWorld<MainMenuWorld>();
         }
 
         public Client instance { get { return m_instance; } }
