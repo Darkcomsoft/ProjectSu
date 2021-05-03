@@ -4,7 +4,10 @@ using System.Text;
 
 namespace Projectsln.darkcomsoft.src.engine
 {
-    public static class QueeSystem
+    /// <summary>
+    /// Queue Called Frame by Frame
+    /// </summary>
+    public static class FrameQueeSystem
     {
         /// <summary>
         /// if the queue count pass this number, is claer every thing on it, in one tick, Default: 200
