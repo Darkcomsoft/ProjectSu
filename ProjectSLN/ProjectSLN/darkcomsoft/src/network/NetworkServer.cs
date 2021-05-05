@@ -251,8 +251,17 @@ namespace Projectsln.darkcomsoft.src.network
             base.Destroy(entity);
         }
 
+        private void Disconnect()
+        {
+            PeerServer.Shutdown("The Server-System Requested to Shutdown!");
+        }
+
         protected override void OnDispose()
         {
+            Disconnect();
+
+            NetworkCallBacks.OnServerStop?.Invoke();
+
             _connectionList?.Clear();
             _connectionList = null;
 

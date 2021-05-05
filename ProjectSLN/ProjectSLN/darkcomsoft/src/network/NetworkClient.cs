@@ -196,8 +196,15 @@ namespace Projectsln.darkcomsoft.src.network
             base.Destroy(entity);
         }
 
+        private void Disconnect()
+        {
+            PeerClient.Disconnect("Client Requested to Disconnect!");
+        }
+
         protected override void OnDispose()
         {
+            Disconnect();
+            NetworkCallBacks.OnDisconnect?.Invoke();
             base.OnDispose();
         }
 

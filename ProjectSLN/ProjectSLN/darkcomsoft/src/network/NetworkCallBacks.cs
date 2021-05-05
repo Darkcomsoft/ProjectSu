@@ -14,7 +14,7 @@ namespace Projectsln.darkcomsoft.src.network
         public static Action<string, NetConnection> PlayerApproval;
         public static Action OnDisconnect;
         public static Action OnConnect;
-        public static Action OnServerStart { get; private set; }
+        public static Action OnServerStart;
         public static Action OnServerStop;
         public static Action OnClientStart;
         /// <summary>

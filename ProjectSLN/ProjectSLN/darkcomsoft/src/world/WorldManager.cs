@@ -22,8 +22,6 @@ namespace Projectsln.darkcomsoft.src.world
             {
                 item.Dispose();
             }
-
-            worldList = null;
             base.OnDispose();
         }
 
@@ -49,20 +47,22 @@ namespace Projectsln.darkcomsoft.src.world
         /// <param name="except">if you define a world, this world is not be destroyed</param>
         public static void DestroyAllWorlds(World except = null)
         {
-            foreach (var world in instance.worldList)
+            for (int i = 0; i < instance.worldList.Count; i++)
             {
+                World world = instance.worldList[i];
+
                 if (except != null)
                 {
                     if (world != except)
                     {
+                        world.Dispose();
                         Instance.worldList.Remove(world);
-                        Instance.Dispose();
                     }
                 }
                 else
                 {
+                    world.Dispose();
                     Instance.worldList.Remove(world);
-                    Instance.Dispose();
                 }
             }
         }
@@ -71,8 +71,8 @@ namespace Projectsln.darkcomsoft.src.world
         {
             if (Instance.worldList.Contains(world))
             {
+                world.Dispose();
                 Instance.worldList.Remove(world);
-                Instance.Dispose();
             }
         }
 

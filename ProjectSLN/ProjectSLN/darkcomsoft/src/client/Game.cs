@@ -73,16 +73,14 @@ namespace Projectsln.darkcomsoft.src.client
 
         public void StartSinglePlayer()
         {
-            NetworkManager.CreateServer(127001, 25000, 10);
-
             LinkNetworkCallBacks();
+            NetworkManager.CreateServer(127001, 25000, 10);
         }
 
         public void Connect(string ip, int port)
         {
-            NetworkManager.Connect(int.Parse(ip), port);
-
             LinkNetworkCallBacks();
+            NetworkManager.Connect(int.Parse(ip), port);
         }
 
         public void OnPlayerDisconnect(NetConnection netConnection)

@@ -5,6 +5,7 @@ using Projectsln.darkcomsoft.src.consolecli.systemconsole;
 using Projectsln.darkcomsoft.src.debug;
 using Projectsln.darkcomsoft.src.engine;
 using Projectsln.darkcomsoft.src.engine.render;
+using Projectsln.darkcomsoft.src.engine.window;
 using Projectsln.darkcomsoft.src.entity.managers;
 using Projectsln.darkcomsoft.src.enums;
 using Projectsln.darkcomsoft.src.gui.guisystem;
@@ -31,6 +32,8 @@ namespace Projectsln.darkcomsoft.src
         public static readonly string BinaryPath = GetBinaryPath();
         public static readonly string AssetsPath = GetAssetsPath() + "\\Assets";
 
+        public static Application instance { get; private set; }
+
         public static ApplicationType AppType { get; private set; }
         public static AppNetworkType NetworkType { get; private set; }
         public static BuildTypeBase gameInstance { get; private set; }// this is the game instance EX: Client or Server
@@ -40,8 +43,12 @@ namespace Projectsln.darkcomsoft.src
         public static NetworkManager m_networkManager { get; private set; }
         public static WindowsConsole m_windowsConsole { get; private set; }
 
+        private bool m_appIsClosing = false;
+
         public Application(ApplicationType applicationType)
         {
+            instance = this;
+
             AppType = applicationType;
 
             m_resourceManager = new ResourcesManager();
@@ -67,18 +74,22 @@ namespace Projectsln.darkcomsoft.src
 
         public void Tick(double time)
         {
-            m_worldManager?.Tick();
-            m_entityManager?.Tick();
-            m_networkManager?.Tick();
+            if (!m_appIsClosing)
+            {
+                FrameQueeSystem.Tick();
+                m_windowsConsole?.Tick();
+                gameInstance?.Tick();
 
-            FrameQueeSystem.Tick();
-            m_windowsConsole?.Tick();
-            gameInstance?.Tick();
+                m_entityManager?.Tick();
+                m_networkManager?.Tick();
+                m_worldManager?.Tick();
+            }
         }
 
         public void TickDraw(double time)
         {
-            gameInstance?.TickDraw();
+            if (!m_appIsClosing)
+                gameInstance?.TickDraw();
         }
 
         //DAR UMA OLHADA NA ORDEM DE DISPOSE, POR QUE ESTOU FAZENDO DE QUALQUER GEITO
@@ -104,6 +115,8 @@ namespace Projectsln.darkcomsoft.src
 
             m_resourceManager?.Dispose();
             m_resourceManager = null;
+
+            instance = null;
             base.OnDispose();
         }
 
@@ -151,6 +164,21 @@ namespace Projectsln.darkcomsoft.src
         }
         #endregion
 
+
+        public static void CloseApp()
+        {
+            instance.m_appIsClosing = true;
+
+            switch (AppType)
+            {
+                case ApplicationType.Client:
+                    WindowMain.Instance.Close();
+                    break;
+                case ApplicationType.Server:
+                    ServerMain.Exit();
+                    break;
+            }
+        }
 
         private static string GetBinaryPath()
         {

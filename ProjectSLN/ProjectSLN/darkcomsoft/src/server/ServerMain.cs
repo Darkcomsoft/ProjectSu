@@ -12,6 +12,8 @@ namespace Projectsln.darkcomsoft.src.server
 {
     public class ServerMain : ClassBase
     {
+		public static ServerMain instance { get; private set; }
+
 		private Application application;
 		private bool serverIsRuning = false;
 		private System.Diagnostics.Stopwatch _watchUpdate = new System.Diagnostics.Stopwatch();
@@ -19,6 +21,8 @@ namespace Projectsln.darkcomsoft.src.server
 
 		public void Run()
         {
+			instance = this;
+
 			application = new Application(ApplicationType.Server);
 			serverIsRuning = true;
 
@@ -74,9 +78,9 @@ namespace Projectsln.darkcomsoft.src.server
 			_watchTick.Restart();
 		}
 
-        public void Exit()
+        public static void Exit()
         {
-            serverIsRuning = false;
+			instance.serverIsRuning = false;
         }
 
         protected override void OnDispose()
@@ -86,6 +90,8 @@ namespace Projectsln.darkcomsoft.src.server
 			application = null;
 			_watchUpdate = null;
 			_watchTick = null;
+
+			instance = null;
 			base.OnDispose();
         }
 	}

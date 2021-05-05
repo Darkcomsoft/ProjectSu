@@ -98,7 +98,7 @@ namespace Projectsln.darkcomsoft.src
                 }
                 finally
                 {
-                    server.Exit();
+                    ServerMain.Exit();
                 }
             }
         }

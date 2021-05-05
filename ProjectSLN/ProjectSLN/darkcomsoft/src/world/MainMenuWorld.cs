@@ -9,6 +9,9 @@ using System.Text;
 using OpenTK.Mathematics;
 using Projectsln.darkcomsoft.src.gui.guisystem.font;
 using Projectsln.darkcomsoft.src.client;
+using Projectsln.darkcomsoft.src.engine.window;
+using Projectsln.darkcomsoft.src.engine;
+using OpenTK.Windowing.GraphicsLibraryFramework;
 
 namespace Projectsln.darkcomsoft.src.world
 {
@@ -52,6 +55,15 @@ namespace Projectsln.darkcomsoft.src.world
             m_multiPlayerButtom?.Dispose();
             m_multiPlayerButtom = null;
             base.OnDispose();
+        }
+
+        public override void Tick()
+        {
+            if (Input.GetKeyDown(Keys.Escape))
+            {
+                Application.CloseApp();
+            }
+            base.Tick();
         }
 
         private void OnSingleClick()

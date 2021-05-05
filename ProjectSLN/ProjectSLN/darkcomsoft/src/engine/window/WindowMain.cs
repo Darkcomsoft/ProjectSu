@@ -163,15 +163,14 @@ namespace Projectsln.darkcomsoft.src.engine.window
 
         protected virtual void OnUnload()
         {
-            if (application != null)
-            {
-                application.Dispose();
-                application = null;
-            }
+            application?.Dispose();
+            application = null;
         }
 
         protected virtual void OnTick(double time)
         {
+            if (IsExiting) { return; }
+
             Time._DeltaTime = time;
             Time._DTime += time;
 
@@ -201,6 +200,8 @@ namespace Projectsln.darkcomsoft.src.engine.window
 
         protected virtual void OnTickDraw(double time)
         {
+            if (IsExiting) { return; }
+
             GL.Clear(ClearBufferMask.ColorBufferBit | ClearBufferMask.DepthBufferBit);
             //GL.DepthFunc(DepthFunction.Lequal);//VER SE ISSO E NECESSARIO, SE NAO REMOVER ESTA INCIVERL FUINÇAO
 
