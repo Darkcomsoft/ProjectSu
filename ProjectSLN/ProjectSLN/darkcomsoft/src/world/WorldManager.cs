@@ -27,12 +27,44 @@ namespace Projectsln.darkcomsoft.src.world
             base.OnDispose();
         }
 
+        public void Tick()
+        {
+            for (int i = 0; i < worldList.Count; i++)
+            {
+                worldList[i].Tick();
+            }
+        }
+
         public static World SpawnWorld<T>()
         {
             World world = Utilits.CreateInstance<World>(typeof(T));
             Instance.worldList.Add(world);
             world.Start();
             return world;
+        }
+
+        /// <summary>
+        /// This destroy all worlds is corrent Spawned
+        /// </summary>
+        /// <param name="except">if you define a world, this world is not be destroyed</param>
+        public static void DestroyAllWorlds(World except = null)
+        {
+            foreach (var world in instance.worldList)
+            {
+                if (except != null)
+                {
+                    if (world != except)
+                    {
+                        Instance.worldList.Remove(world);
+                        Instance.Dispose();
+                    }
+                }
+                else
+                {
+                    Instance.worldList.Remove(world);
+                    Instance.Dispose();
+                }
+            }
         }
 
         public static void DestroyWorld(World world)

@@ -20,38 +20,44 @@ namespace Projectsln.darkcomsoft.src.client
     /// </summary>
     public class Client : BuildTypeBase
     {
-        private Client m_instance;
+        public static Client instance { get; private set; }
+
+        private Game m_clientManager;
 
         public static Input m_input { get; private set; }
         public static Gizmo m_gizmos { get; private set; }
         public static GUI m_gui { get; private set; }
 
+        private bool m_restartGame = false;
+
         public Client()
         {
-            m_instance = this;
+            instance = this;
 
             m_gizmos = new Gizmo();//This is only for debug
             m_input = new Input();
             m_gui = new GUI();
 
-            NetworkCallBacks.instance.OnClientStart += OnClientStart;
-            NetworkCallBacks.instance.OnConnect += OnConnect;
-            NetworkCallBacks.instance.OnDisconnect += OnDisconnect;
-            NetworkCallBacks.instance.OnPlayerConnect += OnPlayerConnect;
-            NetworkCallBacks.instance.OnPlayerDisconnect += OnPlayerDisconnect;
-            NetworkCallBacks.instance.OnReceivedServerData += OnReceivedServerData;
-            NetworkCallBacks.instance.OnServerStart += OnServerStart;
-            NetworkCallBacks.instance.OnServerStop += OnServerStop;
-            NetworkCallBacks.instance.PlayerApproval += PlayerApproval;
+            m_clientManager = new Game();
 
-            Debug.Log("GameStarted!", "CLIENT");
-
-            WorldManager.SpawnWorld<SystemWorld>();
-            WorldManager.SpawnWorld<MainMenuWorld>();
+            Debug.Log("ClientStart!", "CLIENT");
         }
 
         public override void Tick()
         {
+            if (m_restartGame)
+            {
+                if (m_clientManager != null)
+                {
+                    m_clientManager.Dispose();
+                    m_clientManager = null;
+
+                    m_clientManager = new Game();
+                }
+
+                m_restartGame = false;
+            }
+
             if (Input.GetKeyDown(Keys.P))
             {
                 if (!CursorManager.isLocked)
@@ -91,15 +97,11 @@ namespace Projectsln.darkcomsoft.src.client
 
         protected override void OnDispose()
         {
-            NetworkCallBacks.instance.OnClientStart -= OnClientStart;
-            NetworkCallBacks.instance.OnConnect -= OnConnect;
-            NetworkCallBacks.instance.OnDisconnect -= OnDisconnect;
-            NetworkCallBacks.instance.OnPlayerConnect -= OnPlayerConnect;
-            NetworkCallBacks.instance.OnPlayerDisconnect -= OnPlayerDisconnect;
-            NetworkCallBacks.instance.OnReceivedServerData -= OnReceivedServerData;
-            NetworkCallBacks.instance.OnServerStart -= OnServerStart;
-            NetworkCallBacks.instance.OnServerStop -= OnServerStop;
-            NetworkCallBacks.instance.PlayerApproval -= PlayerApproval;
+            if (m_clientManager != null)
+            {
+                m_clientManager.Dispose();
+                m_clientManager = null;
+            }
 
             m_gui?.Dispose();
             m_gui = null;
@@ -110,7 +112,7 @@ namespace Projectsln.darkcomsoft.src.client
             m_input?.Dispose();
             m_input = null;
 
-            m_instance = null;
+            instance = null;
             base.OnDispose();
         }
 
@@ -138,67 +140,9 @@ namespace Projectsln.darkcomsoft.src.client
             base.OnMouseUp(e);
         }
 
-        #region NetWork-Stuff
-        public void StartSinglePlayer()
+        public void RestartGame()
         {
-            NetworkManager.CreateServer(long.Parse("127.0.0.1"), 25000, 10);
+            m_restartGame = true;
         }
-
-        public void Connect(string ip, int port)
-        {
-            NetworkManager.Connect(int.Parse(ip), port);
-        }
-
-        public void OnPlayerDisconnect(NetConnection netConnection)
-        {
-
-        }
-        public void OnPlayerConnect(NetConnection netConnection)
-        {
-
-        }
-        public void PlayerApproval(string naosei, NetConnection netConnection)
-        {
-
-        }
-        public void OnDisconnect()
-        {
-
-        }
-        public void OnConnect()
-        {
-            JoinGameWorld();
-        }
-        public void OnServerStart()
-        {
-            JoinGameWorld();
-        }
-        public void OnServerStop()
-        {
-
-        }
-        public void OnClientStart()
-        {
-
-        }
-        public void OnReceivedServerData()
-        {
-
-        }
-        #endregion
-
-        private void JoinGameWorld()
-        {
-            WorldManager.DestroyWorld(WorldManager.GetWorld<MainMenuWorld>());
-            WorldManager.SpawnWorld<SatrillesWorld>();
-        }
-
-        private void JoinMainMenu()
-        {
-            WorldManager.DestroyWorld(WorldManager.GetWorld<SatrillesWorld>());
-            WorldManager.SpawnWorld<MainMenuWorld>();
-        }
-
-        public Client instance { get { return m_instance; } }
     }
 }

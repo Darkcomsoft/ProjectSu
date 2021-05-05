@@ -67,6 +67,7 @@ namespace Projectsln.darkcomsoft.src
 
         public void Tick(double time)
         {
+            m_worldManager?.Tick();
             m_entityManager?.Tick();
             m_networkManager?.Tick();
 

@@ -10,15 +10,13 @@ namespace Projectsln.darkcomsoft.src.world
     /// </summary>
     public abstract class World : ClassBase
     {
-       public virtual void Start()
-        {
-
-        }
-
         protected override void OnDispose()
         {
-            EntityManager.WorldCleared(this);
+            EntityManager.WorldClear(this);
             base.OnDispose();
         }
+
+        public virtual void Start() { }
+        public virtual void Tick() { }
     }
 }

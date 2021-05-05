@@ -103,7 +103,7 @@ namespace Projectsln.darkcomsoft.src.entity.managers
             return Instance.m_entityList.Contains(entity);
         }
 
-        public static void WorldCleared<T>(T world)
+        public static void WorldClear<T>(T world)
         {
             for (int i = 0; i < Instance.m_entityList.Count; i++)
             {
