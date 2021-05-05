@@ -9,13 +9,17 @@ namespace Projectsln.darkcomsoft.src.server
     {
         public Server()
         {
-            WorldManager.SpawnWorld<SystemWorld>();
-
+            StartGameServer();
         }
 
         protected override void OnDispose()
         {
             base.OnDispose();
+        }
+
+        private void StartGameServer()
+        {
+            WorldManager.SpawnWorld<SatrillesWorld>();
         }
     }
 }

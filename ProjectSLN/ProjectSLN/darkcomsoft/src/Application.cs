@@ -67,7 +67,7 @@ namespace Projectsln.darkcomsoft.src
                     StartServer();
                     break;
                 default:
-                    Projectsln.darkcomsoft.src.debug.Debug.Log("I don't know what you trying to do, but this is no a app!");
+                    Projectsln.darkcomsoft.src.debug.Debug.Log("I don't know what you trying to do, but this is not a app, to start-up!");
                     return;
             }
         }
@@ -164,7 +164,6 @@ namespace Projectsln.darkcomsoft.src
         }
         #endregion
 
-
         public static void CloseApp()
         {
             instance.m_appIsClosing = true;
@@ -215,11 +214,6 @@ namespace Projectsln.darkcomsoft.src
         {
             return Process.GetCurrentProcess().VirtualMemorySize64 / (1024 * 1024);
         }
-
-        /*public static long GetCPUUsage()
-        {
-            return Process.GetCurrentProcess().;
-        }*/
 
         /// <summary>
         /// Check if the app is runing a network Server-Dedicated or Client Hosting a Server

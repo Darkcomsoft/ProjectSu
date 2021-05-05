@@ -39,8 +39,6 @@ namespace Projectsln.darkcomsoft.src.client
             m_gui = new GUI();
 
             m_clientManager = new Game();
-
-            Debug.Log("ClientStart!", "CLIENT");
         }
 
         public override void Tick()
@@ -58,7 +56,7 @@ namespace Projectsln.darkcomsoft.src.client
                 m_restartGame = false;
             }
 
-            if (Input.GetKeyDown(Keys.P))
+            /*if (Input.GetKeyDown(Keys.P))
             {
                 if (!CursorManager.isLocked)
                 {
@@ -68,7 +66,7 @@ namespace Projectsln.darkcomsoft.src.client
                 {
                     CursorManager.UnLock();
                 }
-            }
+            }*/
 
             if (Input.GetKeyDown(GameSettings.DEBUGSCREEN_KEY))
             {

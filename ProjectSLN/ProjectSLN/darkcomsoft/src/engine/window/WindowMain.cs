@@ -75,9 +75,9 @@ namespace Projectsln.darkcomsoft.src.engine.window
 
             var l_lastTime = _watchUpdate.ElapsedMilliseconds;
             var l_mspertick = 1000.0d / TickRate;
-            var l_Dmspertick = 1000.0d / FrameRate;
+            //var l_Dmspertick = 1000.0d / FrameRate;
             var l_noprocess = 0d;
-            var l_Dnoprocess = 0d;
+            //var l_Dnoprocess = 0d;
             var l_frames = 0;
             var l_ticks = 0;
             var lastTimer1 = _watchUpdate.ElapsedMilliseconds;
@@ -125,7 +125,7 @@ namespace Projectsln.darkcomsoft.src.engine.window
 
                 if (_watchUpdate.ElapsedMilliseconds - lastTimer1 > 1000)
                 {
-                    Debug.Log(l_ticks + " ticks, " + l_frames + " fps");
+                    Debug.Log(l_ticks + " ticks, " + l_frames + " fps", "GAMELOOP");
                     lastTimer1 += 1000;
                     l_frames = 0;
                     l_ticks = 0;
@@ -156,9 +156,6 @@ namespace Projectsln.darkcomsoft.src.engine.window
 
             VSync = VSyncMode.Off;//set the VSync on start, because fuck-it, nobody wants this (:
             WindowBorder = WindowBorder.Resizable;
-
-            /*Input.keyboardState = KeyboardState;
-            Input.mouseState = MouseState;*/
         }
 
         protected virtual void OnUnload()
@@ -221,7 +218,7 @@ namespace Projectsln.darkcomsoft.src.engine.window
                 Time._Time = 0;
             }
 
-            if (Time._Tick == 0)
+            if (Time._Tick == 0 || Time._Tick == 60)
             {
                 Title = string.Format("UPS:{0} FPS:{1}", Time.UPS, Time.FPS);
             }

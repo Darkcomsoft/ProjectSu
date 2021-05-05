@@ -68,7 +68,28 @@ namespace Projectsln.darkcomsoft.src.entity
                 DoCheckIfVisible();
             }
 
-            OnTick();//call tick function anyway if is visible or not, let this to the entity to decide do what when is visible or not
+            //call tick function anyway if is visible or not, let this to the entity to decide do what when is visible or not
+            if (!Application.IsServer)
+            {
+                TickClient();
+            }
+            else if (Application.IsServer)
+            {
+                TickServer();
+            }
+            else
+            {
+                if (Application.AppType == enums.ApplicationType.Client)
+                {
+                    TickClient();
+                }
+                else if (Application.AppType == enums.ApplicationType.Server)
+                {
+                    TickServer();
+                }
+            }
+
+            TickServerClient();
         }
 
         private void DoCheckIfVisible()
@@ -110,9 +131,18 @@ namespace Projectsln.darkcomsoft.src.entity
         }
 
         /// <summary>
-        /// Called every frame
+        /// This is called everyFrame by the Client
         /// </summary>
-        protected virtual void OnTick() { }
+        protected virtual void TickClient() { }
+        /// <summary>
+        /// This is only called everyFrame by the server
+        /// </summary>
+        protected virtual void TickServer() { }
+        /// <summary>
+        /// This is called everyFrame by Client and Server
+        /// </summary>
+        protected virtual void TickServerClient() { }
+
         /// <summary>
         ///  Called when entity is setup in network, this set up the Network and Call this
         /// </summary>

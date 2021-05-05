@@ -57,18 +57,18 @@ namespace Projectsln.darkcomsoft.src.world
             base.OnDispose();
         }
 
-        public override void Tick()
+        private void OnSingleClick()
+        {
+            Game.instance.StartSinglePlayer();
+        }
+
+        protected override void TickServerClient()
         {
             if (Input.GetKeyDown(Keys.Escape))
             {
                 Application.CloseApp();
             }
-            base.Tick();
-        }
-
-        private void OnSingleClick()
-        {
-            Game.instance.StartSinglePlayer();
+            base.TickServerClient();
         }
     }
 }

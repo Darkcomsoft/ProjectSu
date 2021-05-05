@@ -74,12 +74,14 @@ namespace Projectsln.darkcomsoft.src.client
         public void StartSinglePlayer()
         {
             LinkNetworkCallBacks();
+            Application.SetNetworkType(enums.AppNetworkType.ClientSinglePlayerServer);
             NetworkManager.CreateServer(127001, 25000, 10);
         }
 
         public void Connect(string ip, int port)
         {
             LinkNetworkCallBacks();
+            Application.SetNetworkType(enums.AppNetworkType.Client);
             NetworkManager.Connect(int.Parse(ip), port);
         }
 
@@ -100,14 +102,14 @@ namespace Projectsln.darkcomsoft.src.client
 
         public void OnConnect()
         {
-            Debug.Log("Client Connect!", "GAME");
             JoinGameWorld();
+            Debug.Log("Client Connect!", "GAME");
         }
 
         public void OnServerStart()
         {
-            Debug.Log("Client Server Started!", "GAME");
             JoinGameWorld();
+            Debug.Log("Client Server Started!", "GAME");
         }
 
         public void OnClientStart()

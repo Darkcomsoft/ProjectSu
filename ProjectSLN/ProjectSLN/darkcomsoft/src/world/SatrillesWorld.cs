@@ -14,22 +14,29 @@ namespace Projectsln.darkcomsoft.src.world
     {
         public override void Start()
         {
-
-            base.Start();
-        }
-
-        public override void Tick()
-        {
-            if (Input.GetKeyDown(Keys.Escape))
+            if (!Application.IsServer)
             {
-                Game.Disconnect();
+                debug.Debug.Log("SatrillesWorld Is Created!", "CLIENT");
             }
-            base.Tick();
+            else
+            {
+                debug.Debug.Log("SatrillesWorld Is Created!", "SERVER");
+            }
+            base.Start();
         }
 
         protected override void OnDispose()
         {
             base.OnDispose();
+        }
+
+        protected override void TickClient()
+        {
+            if (Input.GetKeyDown(Keys.Escape))
+            {
+                Game.Disconnect();
+            }
+            base.TickClient();
         }
     }
 }

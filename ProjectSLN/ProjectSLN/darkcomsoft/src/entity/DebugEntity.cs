@@ -12,11 +12,6 @@ namespace Projectsln.darkcomsoft.src.entity
             base.OnStart();
         }
 
-        protected override void OnTick()
-        {
-            base.OnTick();
-        }
-
         protected override void OnDispose()
         {
             base.OnDispose();
