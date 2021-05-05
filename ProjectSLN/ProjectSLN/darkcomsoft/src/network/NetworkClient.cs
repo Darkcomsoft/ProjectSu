@@ -14,12 +14,8 @@ namespace Projectsln.darkcomsoft.src.network
 {
     public class NetworkClient : NetworkBase
     {
-        private NetworkCallBacks networkCallBacks;
-
         public NetworkClient(string ip, int port)
         {
-            networkCallBacks = new NetworkCallBacks();
-
             NetPeerConfiguration config = new NetPeerConfiguration(NetConfig.AppIdentifier);
 
             config.AutoFlushSendQueue = true;
@@ -58,7 +54,7 @@ namespace Projectsln.darkcomsoft.src.network
                     throw;
             }*/
 
-            networkCallBacks.OnClientStart?.Invoke();
+            NetworkCallBacks.OnClientStart?.Invoke();
         }
 
         public override void Tick()
@@ -82,7 +78,7 @@ namespace Projectsln.darkcomsoft.src.network
                         Debug.LogError(erro, "NETWORK");
                         if (erro == "Shutdown complete")
                         {
-                            networkCallBacks.OnPlayerDisconnect?.Invoke(inc.SenderConnection);
+                            NetworkCallBacks.OnPlayerDisconnect?.Invoke(inc.SenderConnection);
                         }
                         break;
                     case NetIncomingMessageType.Data:
@@ -101,7 +97,7 @@ namespace Projectsln.darkcomsoft.src.network
                         }
                         else if (status == NetConnectionStatus.Connected)
                         {
-                            networkCallBacks.OnConnect?.Invoke();
+                            NetworkCallBacks.OnConnect?.Invoke();
                         }
                         break;
                     default:
@@ -123,7 +119,7 @@ namespace Projectsln.darkcomsoft.src.network
                             case NetConnectionStatus.Disconnecting:
                                 break;
                             case NetConnectionStatus.Disconnected:
-                                networkCallBacks.OnPlayerDisconnect?.Invoke(inc.SenderConnection);
+                                NetworkCallBacks.OnPlayerDisconnect?.Invoke(inc.SenderConnection);
                                 Debug.Log("Player : " + NetUtility.ToHexString(inc.SenderConnection.RemoteUniqueIdentifier) + " Disconnected!", "NETWORK");
                                 break;
                             default:
@@ -202,8 +198,6 @@ namespace Projectsln.darkcomsoft.src.network
 
         protected override void OnDispose()
         {
-            networkCallBacks?.Dispose();
-            networkCallBacks = null;
             base.OnDispose();
         }
 
@@ -255,7 +249,7 @@ namespace Projectsln.darkcomsoft.src.network
                 entityBase.transform.Rotation = new Quaterniond(kvp.r_x, kvp.r_y, kvp.r_z, Quaterniond.Identity.W);
             }
 
-            networkCallBacks.OnReceivedServerData?.Invoke();
+            NetworkCallBacks.OnReceivedServerData?.Invoke();
         }
         #endregion
     }

@@ -47,28 +47,28 @@ namespace Projectsln.darkcomsoft.src.client
         #region NetworkStuff
         private void LinkNetworkCallBacks()
         {
-            NetworkCallBacks.instance.OnClientStart += OnClientStart;
-            NetworkCallBacks.instance.OnConnect += OnConnect;
-            NetworkCallBacks.instance.OnPlayerConnect += OnPlayerConnect;
-            NetworkCallBacks.instance.OnPlayerDisconnect += OnPlayerDisconnect;
-            NetworkCallBacks.instance.OnServerStart += OnServerStart;
-            NetworkCallBacks.instance.PlayerApproval += PlayerApproval;
+            NetworkCallBacks.OnClientStart += OnClientStart;
+            NetworkCallBacks.OnConnect += OnConnect;
+            NetworkCallBacks.OnPlayerConnect += OnPlayerConnect;
+            NetworkCallBacks.OnPlayerDisconnect += OnPlayerDisconnect;
+            NetworkCallBacks.OnServerStart += OnServerStart;
+            NetworkCallBacks.PlayerApproval += PlayerApproval;
 
-            NetworkCallBacks.instance.OnDisconnect += OnDisconnect;
-            NetworkCallBacks.instance.OnServerStop += OnServerStop;
+            NetworkCallBacks.OnDisconnect += OnDisconnect;
+            NetworkCallBacks.OnServerStop += OnServerStop;
         }
 
         private void UnLinkNetworkCallBacks()
         {
-            NetworkCallBacks.instance.OnClientStart -= OnClientStart;
-            NetworkCallBacks.instance.OnConnect -= OnConnect;
-            NetworkCallBacks.instance.OnPlayerConnect -= OnPlayerConnect;
-            NetworkCallBacks.instance.OnPlayerDisconnect -= OnPlayerDisconnect;
-            NetworkCallBacks.instance.OnServerStart -= OnServerStart;
-            NetworkCallBacks.instance.PlayerApproval -= PlayerApproval;
+            NetworkCallBacks.OnClientStart -= OnClientStart;
+            NetworkCallBacks.OnConnect -= OnConnect;
+            NetworkCallBacks.OnPlayerConnect -= OnPlayerConnect;
+            NetworkCallBacks.OnPlayerDisconnect -= OnPlayerDisconnect;
+            NetworkCallBacks.OnServerStart -= OnServerStart;
+            NetworkCallBacks.PlayerApproval -= PlayerApproval;
 
-            NetworkCallBacks.instance.OnDisconnect -= OnDisconnect;
-            NetworkCallBacks.instance.OnServerStop -= OnServerStop;
+            NetworkCallBacks.OnDisconnect -= OnDisconnect;
+            NetworkCallBacks.OnServerStop -= OnServerStop;
         }
 
         public void StartSinglePlayer()

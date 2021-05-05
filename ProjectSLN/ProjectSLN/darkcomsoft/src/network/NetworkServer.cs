@@ -14,12 +14,10 @@ namespace Projectsln.darkcomsoft.src.network
 {
     public class NetworkServer : NetworkBase
     {
-        private NetworkCallBacks networkCallBacks;
         private Dictionary<long, NetConnection> _connectionList;
 
         public NetworkServer(long ip, int port, int maxplayers)
         {
-            networkCallBacks = new NetworkCallBacks();
             _connectionList = new Dictionary<long, NetConnection>();
 
             NetPeerConfiguration config = new NetPeerConfiguration(NetConfig.AppIdentifier);
@@ -57,7 +55,7 @@ namespace Projectsln.darkcomsoft.src.network
 
             Debug.Log("Unique identifier is " + peer.UniqueIdentifier, "NETWORK");
 
-            networkCallBacks.OnServerStart?.Invoke();
+            NetworkCallBacks.OnServerStart?.Invoke();
         }
 
         public override void Tick()
@@ -81,7 +79,7 @@ namespace Projectsln.darkcomsoft.src.network
                         Debug.Log(erro, "NETWORK");
                         if (erro == "Shutdown complete")
                         {
-                            networkCallBacks.OnPlayerDisconnect?.Invoke(inc.SenderConnection);
+                            NetworkCallBacks.OnPlayerDisconnect?.Invoke(inc.SenderConnection);
                         }
                         break;
                     case NetIncomingMessageType.Data:
@@ -89,9 +87,9 @@ namespace Projectsln.darkcomsoft.src.network
                         break;
                     case NetIncomingMessageType.ConnectionApproval:
                         string s = inc.ReadString();
-                        if (networkCallBacks.PlayerApproval != null)
+                        if (NetworkCallBacks.PlayerApproval != null)
                         {
-                            networkCallBacks.PlayerApproval.Invoke(s, inc.SenderConnection);
+                            NetworkCallBacks.PlayerApproval.Invoke(s, inc.SenderConnection);
                         }
                         else
                         {
@@ -108,7 +106,7 @@ namespace Projectsln.darkcomsoft.src.network
                     default:
                         if (inc.SenderConnection.Status == NetConnectionStatus.Connected)
                         {
-                            networkCallBacks.OnPlayerConnect?.Invoke(inc.SenderConnection);
+                            NetworkCallBacks.OnPlayerConnect?.Invoke(inc.SenderConnection);
 
                             List<NetViewSerializer> netvi = new List<NetViewSerializer>();
 
@@ -157,7 +155,7 @@ namespace Projectsln.darkcomsoft.src.network
                         }
                         else if (inc.SenderConnection.Status == NetConnectionStatus.Disconnected)
                         {
-                            networkCallBacks.OnPlayerDisconnect?.Invoke(inc.SenderConnection);
+                            NetworkCallBacks.OnPlayerDisconnect?.Invoke(inc.SenderConnection);
 
                             Entity[] entitys = EntityManager.Instance.getEntityArray;
 
@@ -255,9 +253,6 @@ namespace Projectsln.darkcomsoft.src.network
 
         protected override void OnDispose()
         {
-            networkCallBacks?.Dispose();
-            networkCallBacks = null;
-
             _connectionList?.Clear();
             _connectionList = null;
 

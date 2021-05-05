@@ -23,9 +23,13 @@ namespace Projectsln.darkcomsoft.src.network
         private NetworkType m_netType;
         private NetworkBase m_network;
 
+        private NetworkCallBacks m_networkCallBacks;
+
         public NetworkManager()
         {
             m_instance = this;
+
+            m_networkCallBacks = new NetworkCallBacks();
         }
 
         public static void CreateServer(long ip, int port, int maxplayers)
@@ -123,6 +127,9 @@ namespace Projectsln.darkcomsoft.src.network
             Disconnect();//Call disconnect any way if the network is finished.
 
             m_netViewEntityList.Clear();
+
+            m_networkCallBacks.Dispose();
+            m_networkCallBacks = null;
 
             m_netViewEntityList = null;
             m_instance = null;
