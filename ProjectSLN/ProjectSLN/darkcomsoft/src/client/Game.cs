@@ -95,9 +95,16 @@ namespace Projectsln.darkcomsoft.src.client
 
         }
 
-        public void PlayerApproval(string naosei, NetConnection netConnection)
+        public void PlayerApproval(string data, NetConnection netConnection)
         {
-
+            if (data == NetConfig.SecretKey)
+            {
+                netConnection.Approve();
+            }
+            else
+            {
+                netConnection.Deny("Sorry your data isnt equal to server!");
+            }
         }
 
         public void OnConnect()
