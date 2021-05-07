@@ -68,28 +68,24 @@ namespace Projectsln.darkcomsoft.src.entity
                 DoCheckIfVisible();
             }
 
-            //call tick function anyway if is visible or not, let this to the entity to decide do what when is visible or not
-            if (!Application.IsServer)
+            //<start> call tick function anyway if is visible or not, let this to the entity to decide to do what when is visible or not
+            if (isMine)
+            {
+                TickMyEntity();
+            }
+
+            if (Application.AppType.Equals(enums.ApplicationType.Client))
             {
                 TickClient();
             }
-            else if (Application.IsServer)
+
+            if (NetworkManager.IsServer)
             {
                 TickServer();
             }
-            else
-            {
-                if (Application.AppType == enums.ApplicationType.Client)
-                {
-                    TickClient();
-                }
-                else if (Application.AppType == enums.ApplicationType.Server)
-                {
-                    TickServer();
-                }
-            }
 
-            TickServerClient();
+            OnTick();
+            //<end>
         }
 
         private void DoCheckIfVisible()
@@ -131,6 +127,10 @@ namespace Projectsln.darkcomsoft.src.entity
         }
 
         /// <summary>
+        /// is called very frame if the entity is owned by the player
+        /// </summary>
+        protected virtual void TickMyEntity() { }
+        /// <summary>
         /// This is called everyFrame by the Client
         /// </summary>
         protected virtual void TickClient() { }
@@ -139,9 +139,9 @@ namespace Projectsln.darkcomsoft.src.entity
         /// </summary>
         protected virtual void TickServer() { }
         /// <summary>
-        /// This is called everyFrame by Client and Server
+        /// This is called everyFrame by Client and Server, is called anyway
         /// </summary>
-        protected virtual void TickServerClient() { }
+        protected virtual void OnTick() { }
 
         /// <summary>
         ///  Called when entity is setup in network, this set up the Network and Call this

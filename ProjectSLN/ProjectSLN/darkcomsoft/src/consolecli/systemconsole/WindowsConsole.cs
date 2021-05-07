@@ -9,7 +9,8 @@ namespace Projectsln.darkcomsoft.src.consolecli.systemconsole
 	public class WindowsConsole : ClassBase
 	{
 		public static WindowsConsole instance { get; private set; }
-		public static bool isOpen { get; private set; }
+
+		private static bool m_isConsoleOpen = false;
 
 		private TextWriter oldOutput;
 		public event System.Action<string> OnInputText;
@@ -21,8 +22,8 @@ namespace Projectsln.darkcomsoft.src.consolecli.systemconsole
 
 			ShowDisposeDebugMsg = false;
 
-			InitializeConsole(); 
-			isOpen = true; 
+			InitializeConsole();
+			m_isConsoleOpen = true; 
 		}
 
 		public void Tick()
@@ -32,7 +33,7 @@ namespace Projectsln.darkcomsoft.src.consolecli.systemconsole
 
 		protected override void OnDispose()
 		{
-			isOpen = false;
+			m_isConsoleOpen = false;
 			ShutdownConsole();
 			instance = null;
 			base.OnDispose();
@@ -203,5 +204,7 @@ namespace Projectsln.darkcomsoft.src.consolecli.systemconsole
 			}
 		}
 		#endregion
+
+		public static bool isOpen { get { return m_isConsoleOpen; } }
 	}
 }

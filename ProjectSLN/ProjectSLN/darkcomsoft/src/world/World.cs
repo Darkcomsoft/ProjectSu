@@ -1,4 +1,5 @@
 ﻿using Projectsln.darkcomsoft.src.entity.managers;
+using Projectsln.darkcomsoft.src.network;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -21,27 +22,17 @@ namespace Projectsln.darkcomsoft.src.world
 
         public void Tick()
         {
-            if (!Application.IsServer)
+            if (Application.AppType.Equals(enums.ApplicationType.Client))
             {
                 TickClient();
             }
-            else if (Application.IsServer)
+
+            if (NetworkManager.IsServer)
             {
                 TickServer();
             }
-            else
-            {
-                if (Application.AppType == enums.ApplicationType.Client)
-                {
-                    TickClient();
-                }
-                else if (Application.AppType == enums.ApplicationType.Server)
-                {
-                    TickServer();
-                }
-            }
 
-            TickServerClient();
+            OnTick();
         }
 
         public virtual void Start() { instance = this; }
@@ -55,8 +46,8 @@ namespace Projectsln.darkcomsoft.src.world
         /// </summary>
         protected virtual void TickServer() { }
         /// <summary>
-        /// This is called everyFrame by Client and Server
+        /// This is called everyFrame by Client and Server, is called anyway
         /// </summary>
-        protected virtual void TickServerClient() { }
+        protected virtual void OnTick() { }
     }
 }

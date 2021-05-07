@@ -51,7 +51,6 @@ namespace Projectsln.darkcomsoft.src
             nativeWindow.WindowBorder = OpenTK.Windowing.Common.WindowBorder.Resizable;
             nativeWindow.Flags = OpenTK.Windowing.Common.ContextFlags.Default;
 
-
             nativeWindow.Title = Application.AppName + " : " + Application.Version;
 
             using (WindowMain game = new WindowMain(gameWindowSettings, nativeWindow))

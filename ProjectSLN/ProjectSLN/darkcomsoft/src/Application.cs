@@ -43,14 +43,12 @@ namespace Projectsln.darkcomsoft.src
         public static WorldManager m_worldManager { get; private set; }
         public static EntityManager m_entityManager { get; private set; }
         public static NetworkManager m_networkManager { get; private set; }
-        public static WindowsConsole m_windowsConsole { get; private set; }
 
         private bool m_appIsClosing = false;
 
         public Application(ApplicationType applicationType)
         {
             instance = this;
-            //m_windowsConsole = new WindowsConsole();
 
             AppType = applicationType;
 
@@ -112,9 +110,6 @@ namespace Projectsln.darkcomsoft.src
 
             m_entityManager?.Dispose();
             m_entityManager = null;
-
-            m_windowsConsole?.Dispose();
-            m_windowsConsole = null;
 
             m_resourceManager?.Dispose();
             m_resourceManager = null;

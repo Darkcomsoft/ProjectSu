@@ -200,8 +200,10 @@ namespace Projectsln.darkcomsoft.src.network
         public static NetworkManager instance { get { return m_instance; } }
         public static NetworkType getStatus { get { return instance.m_netType; } }
         public static bool IsRuning { get { if (instance.m_netType != NetworkType.none) { return true; } return false; } }
+        /// <summary>
+        /// If is server return True, if is Client return False
+        /// </summary>
         public static bool IsServer { get { if (instance.m_netType == NetworkType.Server) { return true; } return false; } }
-        public static bool IsClient { get { if (instance.m_netType == NetworkType.Client) { return true; } return false; } }
 
         public Dictionary<int, Entity> getNetViewEntityList { get { return m_netViewEntityList; } }
     }
