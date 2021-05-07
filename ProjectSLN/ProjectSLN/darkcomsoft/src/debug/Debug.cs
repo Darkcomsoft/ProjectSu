@@ -1,4 +1,5 @@
 ﻿using OpenTK.Graphics.OpenGL;
+using Projectsln.darkcomsoft.src.consolecli.systemconsole;
 using Projectsln.darkcomsoft.src.server;
 using System;
 using System.Collections.Generic;
@@ -26,6 +27,14 @@ namespace Projectsln.darkcomsoft.src.debug
             return string.Format("[{0}:{1}:{2}]", System.DateTime.Now.TimeOfDay.Hours, System.DateTime.Now.TimeOfDay.Minutes, System.DateTime.Now.TimeOfDay.Seconds);
         }
 
+        private static void WriteConsole(string msg)
+        {
+            if (WindowsConsole.isOpen)
+            {
+                Console.WriteLine(msg);
+            }
+        }
+
         public static void Log(string menssage, string caller = "")
         {
             string callerName = "";
@@ -36,12 +45,14 @@ namespace Projectsln.darkcomsoft.src.debug
             }
 #if Client
 #if Release
-            Console.WriteLine( string.Format("{0} {1}LOG: {2}", GetPrintTime(), callerName, menssage));
+            WriteConsole( string.Format("{0} {1}LOG: {2}", GetPrintTime(), callerName, menssage));
 #else
             System.Diagnostics.Debug.WriteLine( string.Format("{0} {1}LOG: {2}", GetPrintTime(), callerName, menssage));
+
+            WriteConsole(string.Format("{0} {1}LOG: {2}", GetPrintTime(), callerName, menssage));
 #endif
 #elif Server
-            Console.WriteLine(string.Format("{0} {1}LOG: {2}", GetPrintTime(), callerName, menssage));
+           WriteConsole(string.Format("{0} {1}LOG: {2}", GetPrintTime(), callerName, menssage));
 #endif
         }
 
@@ -55,12 +66,13 @@ namespace Projectsln.darkcomsoft.src.debug
             }
 #if Client
 #if Release
-            Console.WriteLine(string.Format("{0} {1}WARNING: {2}", GetPrintTime(), caller,menssage));
+            WriteConsole(string.Format("{0} {1}WARNING: {2}", GetPrintTime(), caller,menssage));
 #else
             System.Diagnostics.Debug.WriteLine(string.Format("{0} {1}WARNING: {2}", GetPrintTime(), caller,menssage));
+            WriteConsole(string.Format("{0} {1}WARNING: {2}", GetPrintTime(), caller, menssage));
 #endif
 #elif Server
-            Console.WriteLine(string.Format("{0} {1}WARNING: {2}", GetPrintTime(), caller, menssage));
+            WriteConsole(string.Format("{0} {1}WARNING: {2}", GetPrintTime(), caller, menssage));
 #endif
         }
 
@@ -74,12 +86,13 @@ namespace Projectsln.darkcomsoft.src.debug
             }
 #if Client
 #if Release
-            Console.WriteLine(string.Format("{0} {1}ERROR: {2}", GetPrintTime(), caller, menssage));
+            WriteConsole(string.Format("{0} {1}ERROR: {2}", GetPrintTime(), caller, menssage));
 #else
             System.Diagnostics.Debug.WriteLine(string.Format("{0} {1}ERROR: {2}", GetPrintTime(), caller, menssage));
+            WriteConsole(string.Format("{0} {1}ERROR: {2}", GetPrintTime(), caller, menssage));
 #endif
 #elif Server
-            Console.WriteLine(string.Format("{0} {1}ERROR: {2}", GetPrintTime(), caller, menssage));
+            WriteConsole(string.Format("{0} {1}ERROR: {2}", GetPrintTime(), caller, menssage));
 #endif
         }
 
@@ -89,13 +102,13 @@ namespace Projectsln.darkcomsoft.src.debug
             System.Diagnostics.Debug.Fail(menssage);
 
 #if Release
-            Console.WriteLine("ERROR: " + menssage);
+            WriteConsole("ERROR: " + menssage);
             System.Diagnostics.Debug.Fail(menssage);
 #else
             System.Diagnostics.Debug.Fail(menssage);
 #endif
 #elif Server
-            Console.WriteLine("ERROR: " + menssage);
+            WriteConsole("ERROR: " + menssage);
             System.Diagnostics.Debug.Fail(menssage);
 #endif
         }
@@ -105,7 +118,7 @@ namespace Projectsln.darkcomsoft.src.debug
 #if Client
             throw new Exception(menssage);
 #elif Server
-            Console.WriteLine("Exception: " + menssage);
+            WriteConsole("Exception: " + menssage);
 #endif
         }
 

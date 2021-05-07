@@ -1,4 +1,5 @@
-﻿using OpenTK.Windowing.Common;
+﻿using OpenTK.Graphics.OpenGL;
+using OpenTK.Windowing.Common;
 using Projectsln.darkcomsoft.src.client;
 using Projectsln.darkcomsoft.src.consolecli;
 using Projectsln.darkcomsoft.src.consolecli.systemconsole;
@@ -17,6 +18,7 @@ using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
+using System.Runtime.InteropServices;
 using System.Text;
 
 namespace Projectsln.darkcomsoft.src
@@ -48,12 +50,13 @@ namespace Projectsln.darkcomsoft.src
         public Application(ApplicationType applicationType)
         {
             instance = this;
+            //m_windowsConsole = new WindowsConsole();
 
             AppType = applicationType;
 
-            m_resourceManager = new ResourcesManager();
-            m_windowsConsole = new WindowsConsole();
+            PrintUtilsInfos();
 
+            m_resourceManager = new ResourcesManager();
             m_worldManager = new WorldManager();
             m_entityManager = new EntityManager();
             m_networkManager = new NetworkManager();
@@ -77,7 +80,7 @@ namespace Projectsln.darkcomsoft.src
             if (!m_appIsClosing)
             {
                 FrameQueeSystem.Tick();
-                m_windowsConsole?.Tick();
+                WindowsConsole.instance?.Tick();
                 gameInstance?.Tick();
 
                 m_entityManager?.Tick();
@@ -163,6 +166,13 @@ namespace Projectsln.darkcomsoft.src
             gameInstance?.OnMouseUp(e);
         }
         #endregion
+
+        private void PrintUtilsInfos()
+        {
+            debug.Debug.Log(".NET Version: " + RuntimeInformation.FrameworkDescription);
+            debug.Debug.Log("OpenGL Version: " + GL.GetString(StringName.Version));
+            debug.Debug.Log("Shader Version: " + GL.GetString(StringName.ShadingLanguageVersion));
+        }
 
         public static void CloseApp()
         {

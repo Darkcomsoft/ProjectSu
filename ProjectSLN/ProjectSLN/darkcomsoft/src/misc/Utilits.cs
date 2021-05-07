@@ -7,16 +7,41 @@ using Newtonsoft.Json;
 using System.IO;
 using System.IO.Compression;
 using OpenTK.Graphics.OpenGL;
+using System.Runtime.InteropServices;
 
 namespace Projectsln.darkcomsoft.src.misc
 {
     /// <summary>
-    /// All cool Utilitis stuff
+    /// All type of Utilits
     /// </summary>
     public static class Utilits
     {
+        private static int m_gcClearTime = 0;
+
         /// <summary>
-        /// Create a class instance at runtime, procedural, is the same used in the code when you call "new" keyword
+        /// This function call the <see cref="GC.Collect"/>, but this is not need, so to make sure the gc is called this will be called until a int variable reach 5000 units, so its no every frame
+        /// </summary>
+        public static void GC_Collect()
+        {
+            m_gcClearTime++;
+            if (m_gcClearTime >= 5000)
+            {
+                GC.Collect();
+                m_gcClearTime = 0;
+            }
+        }
+
+        /// <summary>
+        /// Open the <paramref name="URL"/> in the OS default browser
+        /// </summary>
+        /// <param name="URL"></param>
+        public static void GoToSite(string URL)
+        {
+            System.Diagnostics.Process.Start(URL);
+        }
+
+        /// <summary>
+        /// Create a class instance at runtime, is the same used in the code when you call "new" keyword
         /// </summary>
         /// <typeparam name="I"></typeparam>
         /// <param name="type"></param>
@@ -75,13 +100,21 @@ namespace Projectsln.darkcomsoft.src.misc
         /// Check if the openGL return a erro, if return a error print to console
         /// </summary>
         /// <param name="msg"></param>
-        public static void CheckGLError(string msg)
+        public static void GL_CheckError(string msg)
         {
             ErrorCode error = GL.GetError();
             if (error != ErrorCode.NoError)
             {
                 Debug.LogError("[" + msg + "] " + error.ToString(), "OpenGL");
             }
+        }
+
+        [DllImport("kernel32", SetLastError = true)]
+        static extern IntPtr LoadLibrary(string lpFileName);
+
+        public static bool CheckDLLExist(string dllName)
+        {
+            return LoadLibrary(dllName) != IntPtr.Zero;
         }
     }
 

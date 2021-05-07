@@ -6,6 +6,7 @@ using OpenTK.Windowing.Desktop;
 using OpenTK.Windowing.GraphicsLibraryFramework;
 using Projectsln.darkcomsoft.src.debug;
 using Projectsln.darkcomsoft.src.enums;
+using Projectsln.darkcomsoft.src.misc;
 using System;
 using System.Collections.Generic;
 using System.Drawing;
@@ -191,6 +192,8 @@ namespace Projectsln.darkcomsoft.src.engine.window
                     application.Tick(time);
                 }
             }
+
+            Utilits.GC_Collect();
 
             Time.UPS = (int)(1 / time);
         }

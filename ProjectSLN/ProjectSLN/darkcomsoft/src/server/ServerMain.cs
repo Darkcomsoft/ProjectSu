@@ -1,6 +1,8 @@
-﻿using Projectsln.darkcomsoft.src.debug;
+﻿using Projectsln.darkcomsoft.src.consolecli.systemconsole;
+using Projectsln.darkcomsoft.src.debug;
 using Projectsln.darkcomsoft.src.engine;
 using Projectsln.darkcomsoft.src.enums;
+using Projectsln.darkcomsoft.src.misc;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -51,7 +53,7 @@ namespace Projectsln.darkcomsoft.src.server
 				Thread.Sleep(1);
 				if (_watchUpdate.ElapsedMilliseconds - lastTimer1 > 1000)
 				{
-					Application.m_windowsConsole?.SetTitleConsole("ProjectEvllyn-Server | " + l_ticks + " ticks");
+					WindowsConsole.instance?.SetTitleConsole("ProjectEvllyn-Server | " + l_ticks + " ticks");
 					//Debug.Log(ticks + " ticks, " + frames + " fps");
 					lastTimer1 += 1000;
 					l_ticks = 0;
@@ -75,6 +77,9 @@ namespace Projectsln.darkcomsoft.src.server
 			{
 				Time._Time = 0;
 			}
+
+			Utilits.GC_Collect();
+
 			_watchTick.Restart();
 		}
 

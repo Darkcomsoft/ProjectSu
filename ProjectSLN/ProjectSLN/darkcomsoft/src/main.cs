@@ -5,22 +5,33 @@ using Projectsln.darkcomsoft.src.engine.window;
 using Projectsln.darkcomsoft.src.server;
 using System;
 using System.Runtime.InteropServices;
+using System.Runtime;
 using System.Threading;
+using Projectsln.darkcomsoft.src.misc;
+using Projectsln.darkcomsoft.src.consolecli.systemconsole;
 
 namespace Projectsln.darkcomsoft.src
 {
     class main
     {
+        public static WindowsConsole m_windowsConsole { get; private set; }
 
         [MTAThread]
         static void Main(string[] args)
         {
+            GCSettings.LatencyMode = GCLatencyMode.LowLatency;
+
+            m_windowsConsole = new WindowsConsole();
+
 #if Client
             StartClient();
 #endif
 #if Server
             StartServer();
 #endif
+
+            m_windowsConsole?.Dispose();
+            m_windowsConsole = null;
         }
 
         private static void StartClient()
@@ -110,31 +121,17 @@ namespace Projectsln.darkcomsoft.src
 
         private static void CheckOpenAL()
         {
-            if (CheckLibrary("openal32.dll"))
+            if (Utilits.CheckDLLExist("openal32.dll"))
             {
                 Debug.Log("You Have OpenAL(Audio Library), you good to go!", "OpenAL");
                 //Application.NoSoundMode = false;
-
             }
             else
             {
-                Debug.LogError("You don't Have OpanAL(Audio Library), you need to Download: https://www.openal.org/", "OpenAL");
+                Debug.LogError("You don't Have OpenAL(Audio Library), you need to Download: https://www.openal.org/", "OpenAL");
                 Debug.Log("Starting! No-Sound Mode ):", "OpenAL");
                 //Application.NoSoundMode = true;
             }
-        }
-
-        public static void GoToSite(string url)
-        {
-            System.Diagnostics.Process.Start(url);
-        }
-
-        [DllImport("kernel32", SetLastError = true)]
-        static extern IntPtr LoadLibrary(string lpFileName);
-
-        static bool CheckLibrary(string fileName)
-        {
-            return LoadLibrary(fileName) != IntPtr.Zero;
         }
     }
 }

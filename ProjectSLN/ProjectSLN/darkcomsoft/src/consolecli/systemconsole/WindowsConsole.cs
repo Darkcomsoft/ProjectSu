@@ -6,29 +6,37 @@ using System.Runtime.InteropServices;
 
 namespace Projectsln.darkcomsoft.src.consolecli.systemconsole
 {
-    public class WindowsConsole : ClassBase
-    {
+	public class WindowsConsole : ClassBase
+	{
+		public static WindowsConsole instance { get; private set; }
+		public static bool isOpen { get; private set; }
+
 		private TextWriter oldOutput;
 		public event System.Action<string> OnInputText;
 		public string inputString;
 
+		public WindowsConsole() 
+		{ 
+			instance = this;
 
-		public WindowsConsole()
-        {
-			InitializeConsole();
+			ShowDisposeDebugMsg = false;
+
+			InitializeConsole(); 
+			isOpen = true; 
 		}
 
 		public void Tick()
-        {
+		{
 			ConsoleTick();
-        }
+		}
 
-        protected override void OnDispose()
-        {
+		protected override void OnDispose()
+		{
+			isOpen = false;
 			ShutdownConsole();
-            base.OnDispose();
-        }
-
+			instance = null;
+			base.OnDispose();
+		}
 
 		#region ConsoleWindow
 		public void InitializeConsole()
