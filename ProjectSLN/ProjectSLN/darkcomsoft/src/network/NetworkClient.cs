@@ -225,7 +225,7 @@ namespace Projectsln.darkcomsoft.src.network
 
             if (GameObjManager.ContainsEntity(NetworkManager.instance.getNetViewEntityList[viewId])) { return; }//Check if the entity is allready in the list
 
-            Entity entityBase = (Entity)GameObjManager.CreateEntity(Type.GetType(typeName), WorldManager.GetWorld(Type.GetType(worldType)));
+            Entity entityBase = (Entity)GameObject.SpawnObject(Type.GetType(typeName), WorldManager.GetWorld(Type.GetType(worldType)));
             entityBase.SetupEntityNetcode(viewId, ownerId);
             entityBase.transform.Position = position;
             entityBase.transform.Rotation = rotation;
@@ -237,7 +237,7 @@ namespace Projectsln.darkcomsoft.src.network
 
             if (!GameObjManager.ContainsEntity(NetworkManager.instance.getNetViewEntityList[viewId])) { return; }//Check if the entity is in the List
 
-            GameObjManager.RemoveEntity(NetworkManager.instance.getNetViewEntityList[viewId]);//Destroy the entity in engine
+            GameObject.DestroyObject(NetworkManager.instance.getNetViewEntityList[viewId]);//Destroy the entity in engine
         }
 
         private void ReadConnectData(NetIncomingMessage inc)
@@ -252,7 +252,7 @@ namespace Projectsln.darkcomsoft.src.network
             foreach (var kvp in entitylist)
             {
                 Debug.Log("EntityReceived: " + kvp.ViewID);
-                Entity entityBase = (Entity)GameObjManager.CreateEntity(Type.GetType(kvp.EntityType), WorldManager.GetWorld(Type.GetType(kvp.WorldType)));
+                Entity entityBase = (Entity)GameObject.SpawnObject(Type.GetType(kvp.EntityType), WorldManager.GetWorld(Type.GetType(kvp.WorldType)));
                 entityBase.SetupEntityNetcode(kvp.ViewID, kvp.Owner);
                 entityBase.transform.Position = new Vector3d(kvp.p_x, kvp.p_y, kvp.p_z);
                 entityBase.transform.Rotation = new Quaterniond(kvp.r_x, kvp.r_y, kvp.r_z, Quaterniond.Identity.W);

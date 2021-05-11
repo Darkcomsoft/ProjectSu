@@ -10,6 +10,7 @@ using Projectsln.darkcomsoft.src.entity;
 using Projectsln.darkcomsoft.src.entity.managers;
 using Projectsln.darkcomsoft.src.misc;
 using Projectsln.darkcomsoft.src.world;
+using ProjectSLN.darkcomsoft.src.engine.gameobject;
 
 namespace Projectsln.darkcomsoft.src.network
 {
@@ -168,7 +169,7 @@ namespace Projectsln.darkcomsoft.src.network
                                 if (entitys[i].getOwner == inc.SenderConnection.RemoteUniqueIdentifier)
                                 {
                                     Debug.Log("Entity Destroyed: " + entitys[i].getOwner, "NETWORK");
-                                    NetworkManager.DestroyEntity(entitys[i]);
+                                    GameObject.DestroyObject(entitys[i]);
                                 }
                             }
 
@@ -289,7 +290,7 @@ namespace Projectsln.darkcomsoft.src.network
             //if (Type.GetType(typeName) == null || Type.GetType(worldType) == null) { return; }//check if this type exist
             //if (Type.GetType(typeName) != typeof(Entity).BaseType) { return; } // check if is derivated from the entity class
 
-            Entity entityBase = (Entity)GameObjManager.CreateEntity(Type.GetType(typeName), WorldManager.GetWorld(Type.GetType(worldType)));
+            Entity entityBase = (Entity)GameObject.SpawnObject(Type.GetType(typeName), WorldManager.GetWorld(Type.GetType(worldType)));
             entityBase.SetupEntityNetcode(viewId, ownerId);
             entityBase.transform.Position = position;
             entityBase.transform.Rotation = rotation;
@@ -338,7 +339,7 @@ namespace Projectsln.darkcomsoft.src.network
 
             Server_SendToAll(msg, NetDeliveryMethod.ReliableOrdered, owner);//send to everyone to destroy this entity
 
-            GameObjManager.RemoveEntity(NetworkManager.instance.getNetViewEntityList[viewId]);//Destroy the entity in engine
+            GameObject.DestroyObject(NetworkManager.instance.getNetViewEntityList[viewId]);//Destroy the entity in engine
         }
         #endregion
 

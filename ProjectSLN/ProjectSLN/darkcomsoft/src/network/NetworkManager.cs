@@ -72,21 +72,18 @@ namespace Projectsln.darkcomsoft.src.network
         /// <typeparam name="T">Type of the entity you want spawn</typeparam>
         /// <param name="world">world you want to spawn a entity</param>
         /// <returns></returns>
-        public static Entity SpawnEntity<T>(World world)
+        public void CreatEntity(Entity entity,World world)
         {
             if (!IsRuning) { throw new Exception("You can't spawn a entity when you are disconnected or when server is not runing"); }
 
-            Entity objectBase = (Entity)GameObjManager.CreateEntity<T>(world);
-            instance.m_network.Spawn(objectBase);
-            return objectBase;
+            instance.m_network.Spawn(entity);
         }
 
-        public static void DestroyEntity(Entity gameobject, bool insta = false)
+        public void DestroyEntity(Entity gameobject)
         {
             if (!IsRuning) { throw new Exception("You can't destroy a entity when you are disconnected or when server is not runing"); }
 
             instance.m_network.Destroy(gameobject);
-            GameObjManager.RemoveEntity(gameobject, insta);
         }
 
         public void Tick()

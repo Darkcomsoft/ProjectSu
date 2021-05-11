@@ -1,7 +1,9 @@
 ﻿using Lidgren.Network;
 using Projectsln.darkcomsoft.src;
 using Projectsln.darkcomsoft.src.engine;
+using Projectsln.darkcomsoft.src.engine.gameobject;
 using Projectsln.darkcomsoft.src.engine.render;
+using Projectsln.darkcomsoft.src.entity;
 using Projectsln.darkcomsoft.src.enums;
 using Projectsln.darkcomsoft.src.network;
 using Projectsln.darkcomsoft.src.world;
@@ -135,6 +137,55 @@ namespace ProjectSLN.darkcomsoft.src.engine.gameobject
         /// When become invisible to a camera, is not visible in camera View port anymore
         /// </summary>
         protected virtual void OnBecomeInvisible() { }
+
+        /// <summary>
+        /// "Spawn" a GameObject, if is a Entity spawn on network
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <param name="world"></param>
+        public static GameObject SpawnObject<T>(World world)
+        {
+            GameObject obj = GameObjManager.CreateGameObject<T>(world);
+
+            if (obj.GetType().Equals(typeof(Entity)))
+            {
+                NetworkManager.instance.CreatEntity((Entity)obj, world);
+            }
+
+            return obj;
+        }
+
+        /// <summary>
+        /// Destroy a GameObject, if is a Entity Destroy on the network
+        /// </summary>
+        /// <param name="gameObject"></param>
+        /// <param name="insta"></param>
+        public static void DestroyObject(GameObject gameObject, bool insta = false)
+        {
+            if (gameObject.GetType().Equals(typeof(Entity)))
+            {
+                NetworkManager.instance.DestroyEntity((Entity)gameObject);
+            }
+
+            GameObjManager.RemoveGameObject(gameObject, insta);
+        }
+
+        /// <summary>
+        /// Dont use this to Spawn <see cref="SpawnObject{T}(World)"/>, thi is just to add and create a Entity instance to the list, but only the netcode call this
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <param name="world"></param>
+        public static GameObject SpawnObject(Type type, World world)
+        {
+            GameObject obj = GameObjManager.CreateGameObject(type, world);
+
+            if (obj.GetType().Equals(typeof(Entity)))
+            {
+                NetworkManager.instance.CreatEntity((Entity)obj, world);
+            }
+
+            return obj;
+        }
 
         public Transform transform { get { return m_transform; } }
         public World GetWorld { get { return m_world; } }

@@ -24,14 +24,7 @@ namespace Projectsln.darkcomsoft.src.engine.gameobject
         {
             for (int i = 0; i < m_objectList.Count; i++)
             {
-                if (m_objectList[i].GetType().Equals(typeof(Entity)))
-                {
-                    NetworkManager.DestroyEntity((Entity)m_objectList[i], true);
-                }
-                else
-                {
-                    RemoveEntity(m_objectList[i], true);
-                }
+                GameObject.DestroyObject(m_objectList[i]);
             }
             m_objectList.Clear();
 
@@ -61,7 +54,7 @@ namespace Projectsln.darkcomsoft.src.engine.gameobject
         /// <typeparam name="T"></typeparam>
         /// <param name="world"></param>
         /// <returns></returns>
-        public static GameObject CreateEntity<T>(World world)
+        public static GameObject CreateGameObject<T>(World world)
         {
             GameObject entityBase = Utilits.CreateInstance<GameObject>(typeof(T));
             entityBase.Start(world);
@@ -76,7 +69,7 @@ namespace Projectsln.darkcomsoft.src.engine.gameobject
         /// <param name="type"></param>
         /// <param name="world"></param>
         /// <returns></returns>
-        public static GameObject CreateEntity(Type type, World world)
+        public static GameObject CreateGameObject(Type type, World world)
         {
             GameObject entityBase = Utilits.CreateInstance<GameObject>(type);
             entityBase.Start(world);
@@ -91,7 +84,7 @@ namespace Projectsln.darkcomsoft.src.engine.gameobject
         /// <typeparam name="T"></typeparam>
         /// <param name="world"></param>
         /// <returns></returns>
-        public static void RemoveEntity(GameObject entity, bool insta = false)
+        public static void RemoveGameObject(GameObject entity, bool insta = false)
         {
             if (ContainsEntity(entity))
             {
@@ -118,14 +111,7 @@ namespace Projectsln.darkcomsoft.src.engine.gameobject
             {
                 if (Instance.m_objectList[i].GetWorld is T)
                 {
-                    if (Instance.m_objectList[i].GetType().Equals(typeof(Entity)))
-                    {
-                        NetworkManager.DestroyEntity((Entity)Instance.m_objectList[i], true);
-                    }
-                    else
-                    {
-                        RemoveEntity(Instance.m_objectList[i], true);
-                    }
+                    GameObject.DestroyObject(Instance.m_objectList[i]);
                 }
             }
         }
