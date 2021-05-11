@@ -5,6 +5,7 @@ using System.Text;
 using Lidgren.Network;
 using OpenTK.Mathematics;
 using Projectsln.darkcomsoft.src.debug;
+using Projectsln.darkcomsoft.src.engine.gameobject;
 using Projectsln.darkcomsoft.src.entity;
 using Projectsln.darkcomsoft.src.entity.managers;
 using Projectsln.darkcomsoft.src.misc;
@@ -115,22 +116,24 @@ namespace Projectsln.darkcomsoft.src.network
 
                             foreach (var kvp in GameObjManager.Instance.getEntityList)
                             {
+                                Entity entity = (Entity)kvp;
+
                                 NetViewSerializer neww = new NetViewSerializer();
 
-                                neww.WorldType = kvp.GetWorld.GetType().Name;
-                                neww.EntityType = kvp.GetType().Name;
+                                neww.WorldType = entity.GetWorld.GetType().Name;
+                                neww.EntityType = entity.GetType().Name;
 
-                                neww.Owner = kvp.getOwner;
-                                neww.ViewID = kvp.getViewId;
-                                neww.RegionID = kvp.getRegionID;
+                                neww.Owner = entity.getOwner;
+                                neww.ViewID = entity.getViewId;
+                                neww.RegionID = entity.getRegionID;
 
-                                neww.p_x = kvp.transform.Position.X;
-                                neww.p_y = kvp.transform.Position.Y;
-                                neww.p_z = kvp.transform.Position.Z;
+                                neww.p_x = entity.transform.Position.X;
+                                neww.p_y = entity.transform.Position.Y;
+                                neww.p_z = entity.transform.Position.Z;
 
-                                neww.r_x = kvp.transform.Rotation.X;
-                                neww.r_y = kvp.transform.Rotation.Y;
-                                neww.r_z = kvp.transform.Rotation.Z;
+                                neww.r_x = entity.transform.Rotation.X;
+                                neww.r_y = entity.transform.Rotation.Y;
+                                neww.r_z = entity.transform.Rotation.Z;
 
                                 netvi.Add(neww);
                             }
@@ -157,7 +160,7 @@ namespace Projectsln.darkcomsoft.src.network
                         {
                             NetworkCallBacks.OnPlayerDisconnect?.Invoke(inc.SenderConnection);
 
-                            Entity[] entitys = GameObjManager.Instance.getEntityArray;
+                            Entity[] entitys = (Entity[])GameObjManager.Instance.getEntityArray;
 
                             for (int i = 0; i < entitys.Length; i++)
                             {
@@ -286,7 +289,7 @@ namespace Projectsln.darkcomsoft.src.network
             //if (Type.GetType(typeName) == null || Type.GetType(worldType) == null) { return; }//check if this type exist
             //if (Type.GetType(typeName) != typeof(Entity).BaseType) { return; } // check if is derivated from the entity class
 
-            Entity entityBase = GameObjManager.AddEntity(Type.GetType(typeName), WorldManager.GetWorld(Type.GetType(worldType)));
+            Entity entityBase = (Entity)GameObjManager.CreateEntity(Type.GetType(typeName), WorldManager.GetWorld(Type.GetType(worldType)));
             entityBase.SetupEntityNetcode(viewId, ownerId);
             entityBase.transform.Position = position;
             entityBase.transform.Rotation = rotation;
