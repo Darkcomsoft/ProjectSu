@@ -98,7 +98,6 @@
   <ItemGroup>
     <Folder Include="darkcomsoft\src\gui\gamegui\" />
     <Folder Include="darkcomsoft\src\mod\api\" />
-    <Folder Include="darkcomsoft\src\worldgenerator\" />
   </ItemGroup>
 
   <ItemGroup>

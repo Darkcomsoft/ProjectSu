@@ -11,27 +11,28 @@ namespace Projectsln.darkcomsoft.src.engine
 {
     public class Transform : ClassBase
     {
-        /// <summary>
-        /// [REMOVER ASSIM QUE POSSIVEL]This is the global player position.
-        /// </summary>
-        public static Vector3d PlayerRootPosition;//remover isso assim que possivel, e por na classe do player.
-
-        private Vector3d _Position;
-        private Quaterniond _Rotation;
-        private Vector3d _Size;
+        private Vector3d m_Position;
+        private Quaterniond m_Rotation;
+        private Vector3d m_Size;
 
         /// <summary>
         /// this is the boundbox, you can calculate with the 3d model, or set a custom value
         /// </summary>
         private Vector3d m_volumeSize;
 
-        private Matrix4 transformMatrix;
+        private Matrix4 m_transformMatrix;
+
+
+        /// <summary>
+        /// [REMOVER ASSIM QUE POSSIVEL]This is the global player position, used to do the fix impresission of the float.
+        /// </summary>
+        public static Vector3d PlayerRootPosition;//remover isso assim que possivel, e por na classe do player.
 
         public Transform()
         {
-            _Position = Vector3d.Zero;
-            _Rotation = Quaterniond.Identity;
-            _Size = Vector3d.One;
+            m_Position = Vector3d.Zero;
+            m_Rotation = Quaterniond.Identity;
+            m_Size = Vector3d.One;
 
             m_volumeSize = Vector3d.One;
 
@@ -39,36 +40,36 @@ namespace Projectsln.darkcomsoft.src.engine
         }
         public Transform(Vector3d position, Quaterniond rotation, Vector3d size, Vector3d volumeSize)
         {
-            _Position = position;
-            _Rotation = rotation;
-            _Size = size;
+            m_Position = position;
+            m_Rotation = rotation;
+            m_Size = size;
             m_volumeSize = volumeSize;
 
             UpdateWorldMatrix();
         }
         public Transform(Vector3d position, Quaterniond rotation, Vector3d size)
         {
-            _Position = position;
-            _Rotation = rotation;
-            _Size = size;
+            m_Position = position;
+            m_Rotation = rotation;
+            m_Size = size;
             m_volumeSize = Vector3d.One;
 
             UpdateWorldMatrix();
         }
         public Transform(Vector3d position, Quaterniond rotation)
         {
-            _Position = position;
-            _Rotation = rotation;
-            _Size = Vector3d.One;
+            m_Position = position;
+            m_Rotation = rotation;
+            m_Size = Vector3d.One;
             m_volumeSize = Vector3d.One;
 
             UpdateWorldMatrix();
         }
         public Transform(Vector3d position)
         {
-            _Position = position;
-            _Rotation = Quaterniond.Identity;
-            _Size = Vector3d.One;
+            m_Position = position;
+            m_Rotation = Quaterniond.Identity;
+            m_Size = Vector3d.One;
             m_volumeSize = Vector3d.One;
 
             UpdateWorldMatrix();
@@ -76,7 +77,7 @@ namespace Projectsln.darkcomsoft.src.engine
 
         private void UpdateWorldMatrix()
         {
-            transformMatrix = Matrix4.CreateScale((Vector3)_Size) * Matrix4.CreateRotationX((float)_Rotation.X) * Matrix4.CreateRotationY((float)_Rotation.Y) * Matrix4.CreateRotationZ((float)_Rotation.Z) * Matrix4.CreateTranslation((Vector3)_Position - (Vector3)PlayerRootPosition);
+            m_transformMatrix = Matrix4.CreateScale((Vector3)m_Size) * Matrix4.CreateRotationX((float)m_Rotation.X) * Matrix4.CreateRotationY((float)m_Rotation.Y) * Matrix4.CreateRotationZ((float)m_Rotation.Z) * Matrix4.CreateTranslation((Vector3)m_Position - (Vector3)PlayerRootPosition);
         }
 
         public void Tick()
@@ -88,7 +89,7 @@ namespace Projectsln.darkcomsoft.src.engine
         {
             get
             {
-                return transformMatrix;
+                return m_transformMatrix;
             }
         }
 
@@ -96,25 +97,25 @@ namespace Projectsln.darkcomsoft.src.engine
         {
             get
             {
-                return _Position;
+                return m_Position;
             }
-            set { _Position = value; }
+            set { m_Position = value; }
         }
         public Quaterniond Rotation
         {
             get
             {
-                return _Rotation;
+                return m_Rotation;
             }
-            set { _Rotation = value; }
+            set { m_Rotation = value; }
         }
         public Vector3d Size
         {
             get
             {
-                return _Size;
+                return m_Size;
             }
-            set { _Size = value; }
+            set { m_Size = value; }
         }
         /// <summary>
         /// this is the boundbox, you can calculate with the 3d model, or set a custom value
@@ -128,8 +129,8 @@ namespace Projectsln.darkcomsoft.src.engine
             set { m_volumeSize = value; }
         }
 
-        public Vector3d Forward { get { return (new Vector3d(_Rotation.X, _Rotation.Y, _Rotation.Z) * Vector3d.UnitZ) * _Size.Z; } }
-        public Vector3d Up { get { return (new Vector3d(_Rotation.X, _Rotation.Y, _Rotation.Z) * Vector3d.UnitY) * _Size.Y; } }
-        public Vector3d Right { get { return (new Vector3d(_Rotation.X, _Rotation.Y, _Rotation.Z) * Vector3d.UnitX) * _Size.X; } }
+        public Vector3d Forward { get { return (new Vector3d(m_Rotation.X, m_Rotation.Y, m_Rotation.Z) * Vector3d.UnitZ) * m_Size.Z; } }
+        public Vector3d Up { get { return (new Vector3d(m_Rotation.X, m_Rotation.Y, m_Rotation.Z) * Vector3d.UnitY) * m_Size.Y; } }
+        public Vector3d Right { get { return (new Vector3d(m_Rotation.X, m_Rotation.Y, m_Rotation.Z) * Vector3d.UnitX) * m_Size.X; } }
     }
 }
