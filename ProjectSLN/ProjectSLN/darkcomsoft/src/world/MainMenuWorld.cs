@@ -62,13 +62,13 @@ namespace Projectsln.darkcomsoft.src.world
             Game.instance.StartSinglePlayer();
         }
 
-        protected override void TickServerClient()
+        protected override void OnTick()
         {
             if (Input.GetKeyDown(Keys.Escape))
             {
                 Application.CloseApp();
             }
-            base.TickServerClient();
+            base.OnTick();
         }
     }
 }

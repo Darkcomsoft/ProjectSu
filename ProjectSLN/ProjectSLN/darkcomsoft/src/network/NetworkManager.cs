@@ -227,11 +227,11 @@ namespace Projectsln.darkcomsoft.src.network
 
     }
 
-    public class RPCALL
+    public struct RPCALL
     {
         public MethodInfo _function;
         public ParameterInfo[] _parameters;
-        public object _obj = null;
+        public object _obj;
 
         public object Execute(params object[] paramss)
         {

@@ -12,7 +12,7 @@ using Projectsln.darkcomsoft.src.engine;
 namespace Projectsln.darkcomsoft.src.entity
 {
     /// <summary>
-    /// Entity is the base entity class for all entity, All entity is sync in network.
+    /// Entity is the base entity class for all entity, All entity is sync over network.
     /// </summary>
     public abstract class Entity : ClassBase
     {

@@ -537,9 +537,9 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\estev\\Documents\\GitHub\\ProjectSu\\ProjectSLN\\ProjectSLN\\Projectsln.csproj",
-      "projectName": "Projectsln",
-      "projectPath": "C:\\Users\\estev\\Documents\\GitHub\\ProjectSu\\ProjectSLN\\ProjectSLN\\Projectsln.csproj",
+      "projectUniqueName": "C:\\Users\\estev\\Documents\\GitHub\\ProjectSu\\ProjectSLN\\ProjectSLN\\ProjectSLN.csproj",
+      "projectName": "ProjectSLN",
+      "projectPath": "C:\\Users\\estev\\Documents\\GitHub\\ProjectSu\\ProjectSLN\\ProjectSLN\\ProjectSLN.csproj",
       "packagesPath": "C:\\Users\\estev\\.nuget\\packages\\",
       "outputPath": "C:\\Users\\estev\\Documents\\GitHub\\ProjectSu\\ProjectSLN\\ProjectSLN\\obj\\",
       "projectStyle": "PackageReference",

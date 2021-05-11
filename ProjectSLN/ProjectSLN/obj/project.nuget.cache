@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "sDKIIWkYgTUHw/6geEvMGeG6ivRkMl3tWAUhvM9cejTBKEHnmcKHlpnhC/txPKJURjSVLaLRx+AmWtV7qLOGAg==",
+  "dgSpecHash": "uiVTTpXiXapzZYsOmJT9ixdnCDgfbFQhoGhCTfCs5xKY6QQaTJDapm5O6/RvUcdAXuFBD4hX9BYTK8PaqZ7ETg==",
   "success": true,
-  "projectFilePath": "C:\\Users\\estev\\Documents\\GitHub\\ProjectSu\\ProjectSLN\\ProjectSLN\\Projectsln.csproj",
+  "projectFilePath": "C:\\Users\\estev\\Documents\\GitHub\\ProjectSu\\ProjectSLN\\ProjectSLN\\ProjectSLN.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\estev\\.nuget\\packages\\microsoft.netcore.platforms\\5.0.0\\microsoft.netcore.platforms.5.0.0.nupkg.sha512",
     "C:\\Users\\estev\\.nuget\\packages\\microsoft.win32.systemevents\\5.0.0\\microsoft.win32.systemevents.5.0.0.nupkg.sha512",

@@ -6,7 +6,7 @@
   "compilationOptions": {},
   "targets": {
     ".NETCoreApp,Version=v3.1": {
-      "Projectsln/1.0.0": {
+      "ProjectSLN/1.0.0": {
         "dependencies": {
           "Newtonsoft.Json": "13.0.1",
           "OpenTK": "4.6.3",
@@ -14,7 +14,7 @@
           "Lidgren.Network": "2012.1.7.0"
         },
         "runtime": {
-          "Projectsln.dll": {}
+          "ProjectSLN.dll": {}
         }
       },
       "Microsoft.NETCore.Platforms/5.0.0": {},
@@ -223,7 +223,7 @@
     }
   },
   "libraries": {
-    "Projectsln/1.0.0": {
+    "ProjectSLN/1.0.0": {
       "type": "project",
       "serviceable": false,
       "sha512": ""
