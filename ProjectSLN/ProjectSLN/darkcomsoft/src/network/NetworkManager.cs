@@ -8,6 +8,8 @@ using Projectsln.darkcomsoft.src.entity;
 using System.Reflection;
 using Projectsln.darkcomsoft.src.world;
 using Projectsln.darkcomsoft.src.entity.managers;
+using ProjectSLN.darkcomsoft.src.engine.gameobject;
+using Projectsln.darkcomsoft.src.engine.gameobject;
 
 namespace Projectsln.darkcomsoft.src.network
 {
@@ -74,17 +76,17 @@ namespace Projectsln.darkcomsoft.src.network
         {
             if (!IsRuning) { throw new Exception("You can't spawn a entity when you are disconnected or when server is not runing"); }
 
-            Entity entityBase = EntityManager.AddEntity<T>(world);
-            instance.m_network.Spawn(entityBase);
-            return entityBase;
+            Entity objectBase = (Entity)GameObjManager.CreateEntity<T>(world);
+            instance.m_network.Spawn(objectBase);
+            return objectBase;
         }
 
-        public static void DestroyEntity(Entity entity, bool insta = false)
+        public static void DestroyEntity(Entity gameobject, bool insta = false)
         {
             if (!IsRuning) { throw new Exception("You can't destroy a entity when you are disconnected or when server is not runing"); }
 
-            instance.m_network.Destroy(entity);
-            EntityManager.RemoveEntity(entity, insta);
+            instance.m_network.Destroy(gameobject);
+            GameObjManager.RemoveEntity(gameobject, insta);
         }
 
         public void Tick()

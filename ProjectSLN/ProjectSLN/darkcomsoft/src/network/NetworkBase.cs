@@ -3,6 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 using Projectsln.darkcomsoft.src.entity;
+using ProjectSLN.darkcomsoft.src.engine.gameobject;
 
 namespace Projectsln.darkcomsoft.src.network
 {

@@ -113,7 +113,7 @@ namespace Projectsln.darkcomsoft.src.network
                             var OuMS = m_peer.CreateMessage();
                             OuMS.Write((byte)NetDataType.ConnectData);
 
-                            foreach (var kvp in EntityManager.Instance.getEntityList)
+                            foreach (var kvp in GameObjManager.Instance.getEntityList)
                             {
                                 NetViewSerializer neww = new NetViewSerializer();
 
@@ -157,7 +157,7 @@ namespace Projectsln.darkcomsoft.src.network
                         {
                             NetworkCallBacks.OnPlayerDisconnect?.Invoke(inc.SenderConnection);
 
-                            Entity[] entitys = EntityManager.Instance.getEntityArray;
+                            Entity[] entitys = GameObjManager.Instance.getEntityArray;
 
                             for (int i = 0; i < entitys.Length; i++)
                             {
@@ -286,7 +286,7 @@ namespace Projectsln.darkcomsoft.src.network
             //if (Type.GetType(typeName) == null || Type.GetType(worldType) == null) { return; }//check if this type exist
             //if (Type.GetType(typeName) != typeof(Entity).BaseType) { return; } // check if is derivated from the entity class
 
-            Entity entityBase = EntityManager.AddEntity(Type.GetType(typeName), WorldManager.GetWorld(Type.GetType(worldType)));
+            Entity entityBase = GameObjManager.AddEntity(Type.GetType(typeName), WorldManager.GetWorld(Type.GetType(worldType)));
             entityBase.SetupEntityNetcode(viewId, ownerId);
             entityBase.transform.Position = position;
             entityBase.transform.Rotation = rotation;
@@ -335,7 +335,7 @@ namespace Projectsln.darkcomsoft.src.network
 
             Server_SendToAll(msg, NetDeliveryMethod.ReliableOrdered, owner);//send to everyone to destroy this entity
 
-            EntityManager.RemoveEntity(NetworkManager.instance.getNetViewEntityList[viewId]);//Destroy the entity in engine
+            GameObjManager.RemoveEntity(NetworkManager.instance.getNetViewEntityList[viewId]);//Destroy the entity in engine
         }
         #endregion
 

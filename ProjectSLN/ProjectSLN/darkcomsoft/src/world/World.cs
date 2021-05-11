@@ -1,4 +1,5 @@
-﻿using Projectsln.darkcomsoft.src.entity.managers;
+﻿using Projectsln.darkcomsoft.src.engine.gameobject;
+using Projectsln.darkcomsoft.src.entity.managers;
 using Projectsln.darkcomsoft.src.network;
 using System;
 using System.Collections.Generic;
@@ -15,7 +16,7 @@ namespace Projectsln.darkcomsoft.src.world
 
         protected override void OnDispose()
         {
-            EntityManager.WorldClear(this);
+            GameObjManager.WorldClear(this);
             instance = null;
             base.OnDispose();
         }
