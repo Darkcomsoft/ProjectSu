@@ -10,12 +10,12 @@ using System.Text;
 
 namespace Projectsln.darkcomsoft.src.engine.gameobject
 {
-    public class GameObjManager : ClassBase
+    public class ObjectManager : ClassBase
     {
-        private static GameObjManager instance;
+        private static ObjectManager instance;
         private List<GameObject> m_objectList = new List<GameObject>();
 
-        public GameObjManager()
+        public ObjectManager()
         {
             instance = this;
         }
@@ -116,7 +116,7 @@ namespace Projectsln.darkcomsoft.src.engine.gameobject
             }
         }
 
-        public static GameObjManager Instance { get { return instance; } }
+        public static ObjectManager Instance { get { return instance; } }
         public List<GameObject> getEntityList { get { return m_objectList; } }
         public GameObject[] getEntityArray { get { return m_objectList.ToArray(); } }
     }

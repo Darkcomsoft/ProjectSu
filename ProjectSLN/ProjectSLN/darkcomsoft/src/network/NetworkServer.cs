@@ -115,7 +115,7 @@ namespace Projectsln.darkcomsoft.src.network
                             var OuMS = m_peer.CreateMessage();
                             OuMS.Write((byte)NetDataType.ConnectData);
 
-                            foreach (var kvp in GameObjManager.Instance.getEntityList)
+                            foreach (var kvp in ObjectManager.Instance.getEntityList)
                             {
                                 Entity entity = (Entity)kvp;
 
@@ -161,7 +161,7 @@ namespace Projectsln.darkcomsoft.src.network
                         {
                             NetworkCallBacks.OnPlayerDisconnect?.Invoke(inc.SenderConnection);
 
-                            Entity[] entitys = (Entity[])GameObjManager.Instance.getEntityArray;
+                            Entity[] entitys = (Entity[])ObjectManager.Instance.getEntityArray;
 
                             for (int i = 0; i < entitys.Length; i++)
                             {

@@ -145,7 +145,7 @@ namespace ProjectSLN.darkcomsoft.src.engine.gameobject
         /// <param name="world"></param>
         public static GameObject SpawnObject<T>(World world)
         {
-            GameObject obj = GameObjManager.CreateGameObject<T>(world);
+            GameObject obj = ObjectManager.CreateGameObject<T>(world);
 
             if (obj.GetType().Equals(typeof(Entity)))
             {
@@ -167,7 +167,7 @@ namespace ProjectSLN.darkcomsoft.src.engine.gameobject
                 NetworkManager.instance.DestroyEntity((Entity)gameObject);
             }
 
-            GameObjManager.RemoveGameObject(gameObject, insta);
+            ObjectManager.RemoveGameObject(gameObject, insta);
         }
 
         /// <summary>
@@ -177,7 +177,7 @@ namespace ProjectSLN.darkcomsoft.src.engine.gameobject
         /// <param name="world"></param>
         public static GameObject SpawnObject(Type type, World world)
         {
-            GameObject obj = GameObjManager.CreateGameObject(type, world);
+            GameObject obj = ObjectManager.CreateGameObject(type, world);
 
             if (obj.GetType().Equals(typeof(Entity)))
             {

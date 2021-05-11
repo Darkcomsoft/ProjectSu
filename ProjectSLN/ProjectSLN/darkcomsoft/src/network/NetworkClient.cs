@@ -223,7 +223,7 @@ namespace Projectsln.darkcomsoft.src.network
             Vector3d position = new Vector3d(inc.ReadDouble(), inc.ReadDouble(), inc.ReadDouble());
             Quaterniond rotation = new Quaterniond(inc.ReadDouble(), inc.ReadDouble(), inc.ReadDouble(), Quaterniond.Identity.W);
 
-            if (GameObjManager.ContainsEntity(NetworkManager.instance.getNetViewEntityList[viewId])) { return; }//Check if the entity is allready in the list
+            if (ObjectManager.ContainsEntity(NetworkManager.instance.getNetViewEntityList[viewId])) { return; }//Check if the entity is allready in the list
 
             Entity entityBase = (Entity)GameObject.SpawnObject(Type.GetType(typeName), WorldManager.GetWorld(Type.GetType(worldType)));
             entityBase.SetupEntityNetcode(viewId, ownerId);
@@ -235,7 +235,7 @@ namespace Projectsln.darkcomsoft.src.network
         {
             var viewId = inc.ReadInt32();
 
-            if (!GameObjManager.ContainsEntity(NetworkManager.instance.getNetViewEntityList[viewId])) { return; }//Check if the entity is in the List
+            if (!ObjectManager.ContainsEntity(NetworkManager.instance.getNetViewEntityList[viewId])) { return; }//Check if the entity is in the List
 
             GameObject.DestroyObject(NetworkManager.instance.getNetViewEntityList[viewId]);//Destroy the entity in engine
         }

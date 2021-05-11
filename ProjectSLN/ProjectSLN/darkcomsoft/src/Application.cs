@@ -42,7 +42,7 @@ namespace Projectsln.darkcomsoft.src
         public static BuildTypeBase gameInstance { get; private set; }// this is the game instance EX: Client or Server
         public static ResourcesManager m_resourceManager { get; private set; }
         public static WorldManager m_worldManager { get; private set; }
-        public static GameObjManager m_entityManager { get; private set; }
+        public static ObjectManager m_entityManager { get; private set; }
         public static NetworkManager m_networkManager { get; private set; }
 
         private bool m_appIsClosing = false;
@@ -57,7 +57,7 @@ namespace Projectsln.darkcomsoft.src
 
             m_resourceManager = new ResourcesManager();
             m_worldManager = new WorldManager();
-            m_entityManager = new GameObjManager();
+            m_entityManager = new ObjectManager();
             m_networkManager = new NetworkManager();
 
             switch (applicationType)

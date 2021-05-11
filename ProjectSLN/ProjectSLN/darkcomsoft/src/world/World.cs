@@ -16,7 +16,7 @@ namespace Projectsln.darkcomsoft.src.world
 
         protected override void OnDispose()
         {
-            GameObjManager.WorldClear(this);
+            ObjectManager.WorldClear(this);
             instance = null;
             base.OnDispose();
         }
