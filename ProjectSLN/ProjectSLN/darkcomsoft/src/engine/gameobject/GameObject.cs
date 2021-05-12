@@ -7,6 +7,7 @@ using Projectsln.darkcomsoft.src.entity;
 using Projectsln.darkcomsoft.src.enums;
 using Projectsln.darkcomsoft.src.network;
 using Projectsln.darkcomsoft.src.world;
+using ProjectSLN.darkcomsoft.src.enums;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -14,15 +15,16 @@ using System.Text;
 namespace ProjectSLN.darkcomsoft.src.engine.gameobject
 {
     /// <summary>
-    /// Class Base for all Game "Object", is like a entity but used for all type of object, static, dynamic, etc.
+    /// Class Base for all Game "Objects", is like a entity but used for all type of object, static, dynamic, etc.
     /// </summary>
-    public class GameObject : ClassBase
+    public abstract class GameObject : ClassBase
     {
         protected Transform m_transform { get; private set; }
         protected bool m_removed { get; private set; }
         protected bool m_visible { get; private set; }
         protected bool m_usefrustum { get; private set; }
-        protected bool m_IsEntityReady;//if the entity is ready for do send RPC, if the entity is spaned on the network
+
+        protected bool m_activated { get; private set; }
 
         protected World m_world { get; private set; }//world of this entity is in
 
@@ -31,20 +33,22 @@ namespace ProjectSLN.darkcomsoft.src.engine.gameobject
             m_removed = false;
             m_visible = false;
             m_usefrustum = true;
-            m_IsEntityReady = false;
 
             m_transform = new Transform();
             this.m_world = world;
 
             OnAwake();
+
+            Enable();
         }
 
-        public void Tick() { if (m_IsEntityReady && !m_removed) { doTick(); } }
+        public void Tick() { if (m_activated && !m_removed) { doTick(); } }
+        public void Draw(DrawStage drawStage) { if (m_activated && !m_removed) { doDraw(drawStage); } }
 
         public void DestroyThis()
         {
             m_removed = true;
-            m_IsEntityReady = false;
+            Disable();
         }
 
         private void doTick()
@@ -71,6 +75,21 @@ namespace ProjectSLN.darkcomsoft.src.engine.gameobject
             //<end>
         }
 
+        private void doDraw(DrawStage drawStage)
+        {
+            if (m_usefrustum)
+            {
+                if (m_visible)
+                {
+                    OnDraw(drawStage);
+                }
+            }
+            else
+            {
+                OnDraw(drawStage);
+            }
+        }
+
         private void DoCheckIfVisible()
         {
             if (Camera.main == null) { return; }
@@ -86,7 +105,7 @@ namespace ProjectSLN.darkcomsoft.src.engine.gameobject
 
         protected override void OnDispose()
         {
-            m_IsEntityReady = false;
+            Disable();
 
             transform.Dispose();
 
@@ -105,9 +124,21 @@ namespace ProjectSLN.darkcomsoft.src.engine.gameobject
         }
 
         /// <summary>
-        /// is called very frame if the entity is owned by the player
+        /// Enable this GameObject
         /// </summary>
-        protected virtual void TickMyEntity() { }
+        protected void Enable()
+        {
+            m_activated = true;
+        }
+
+        /// <summary>
+        /// Disable GameObject, when is disable GameObject dont do Tick, Draw, all functionalitis etc.
+        /// </summary>
+        protected void Disable()
+        {
+            m_activated = false;
+        }
+
         /// <summary>
         /// This is called everyFrame by the Client
         /// </summary>
@@ -122,11 +153,17 @@ namespace ProjectSLN.darkcomsoft.src.engine.gameobject
         protected virtual void OnTick() { }
 
         /// <summary>
-        ///  Called when entity is setup in network, this set up the Network and Call this
+        /// A Render tick, used to render openGL stuff
+        /// </summary>
+        /// <param name="drawStage"></param>
+        protected virtual void OnDraw(DrawStage drawStage) { }
+
+        /// <summary>
+        ///  Called when entity is ready to use, EX: Entity used this when network is setup and call this
         /// </summary>
         protected virtual void OnStart() { }
         /// <summary>
-        /// Called when class instance is created, before this the net is setup and Call the OnStart, Use this if need to do before network entity start
+        /// Called when class instance is created, the <see cref="Entity"/> class call <see cref="OnStart"/> when net is setup, and ready
         /// </summary>
         protected virtual void OnAwake() { }
         /// <summary>
@@ -191,6 +228,5 @@ namespace ProjectSLN.darkcomsoft.src.engine.gameobject
         public World GetWorld { get { return m_world; } }
         public bool isRemoved { get { return m_removed; } }
         public bool isVisible { get { return m_visible; } }
-        public bool isReady { get { return m_IsEntityReady; } }
     }
 }

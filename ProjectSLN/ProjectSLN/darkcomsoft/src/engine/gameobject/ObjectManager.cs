@@ -49,7 +49,7 @@ namespace Projectsln.darkcomsoft.src.engine.gameobject
         }
 
         /// <summary>
-        /// Dont use this to Spawn Entitys(USE THIS -> NetworkManager.SpawnEntity ), thi is just to add and create a Entity instance to the list, but only the netcode call this
+        ///  THIS IS ONLY FOR THE GAME-ENGINE TO CALL, Use This <see cref="GameObject.SpawnObject{T}(World)"/> instead!
         /// </summary>
         /// <typeparam name="T"></typeparam>
         /// <param name="world"></param>
@@ -64,7 +64,7 @@ namespace Projectsln.darkcomsoft.src.engine.gameobject
         }
 
         /// <summary>
-        /// Dont use this to Spawn Entitys(USE THIS -> NetworkManager.SpawnEntity ), thi is just to add and create a Entity instance to the list, but only the netcode call this
+        /// THIS IS ONLY FOR THE GAME-ENGINE TO CALL, Use This <see cref="GameObject.SpawnObject{T}(World)"/> instead!
         /// </summary>
         /// <param name="type"></param>
         /// <param name="world"></param>
@@ -79,7 +79,7 @@ namespace Projectsln.darkcomsoft.src.engine.gameobject
         }
 
         /// <summary>
-        /// Dont use this to Destroy Entitys, "USE THIS -> NetworkManager.DestroyEntity ", thi is just to remove a Entity from the list, and dispose the entity, but only the netcode call this
+        /// THIS IS ONLY FOR THE GAME-ENGINE TO CALL, Use This <see cref="GameObject.DestroyObject(GameObject, bool)"/> instead!
         /// </summary>
         /// <typeparam name="T"></typeparam>
         /// <param name="world"></param>

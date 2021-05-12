@@ -67,7 +67,7 @@ namespace Projectsln.darkcomsoft.src.network
         }
 
         /// <summary>
-        /// Instantiate a entity set the Type <T>, and set world you are calling the function
+        /// THIS IS ONLY FOR THE GAME-ENGINE TO CALL, Use This <see cref="GameObject.SpawnObject{T}(World)"/> instead!
         /// </summary>
         /// <typeparam name="T">Type of the entity you want spawn</typeparam>
         /// <param name="world">world you want to spawn a entity</param>
@@ -79,6 +79,10 @@ namespace Projectsln.darkcomsoft.src.network
             instance.m_network.Spawn(entity);
         }
 
+        /// <summary>
+        /// THIS IS ONLY FOR THE GAME-ENGINE TO CALL, Use This <see cref="GameObject.DestroyObject(GameObject, bool)"/> instead!
+        /// </summary>
+        /// <param name="gameobject"></param>
         public void DestroyEntity(Entity gameobject)
         {
             if (!IsRuning) { throw new Exception("You can't destroy a entity when you are disconnected or when server is not runing"); }

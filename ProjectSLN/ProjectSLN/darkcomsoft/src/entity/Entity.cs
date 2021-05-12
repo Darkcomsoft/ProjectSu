@@ -23,6 +23,8 @@ namespace Projectsln.darkcomsoft.src.entity
         private NetDeliveryMethod m_DefaultNetDeliveryMethod = NetDeliveryMethod.Unreliable;
         private Dictionary<string, RPCALL> _methodlist;
 
+        private bool m_IsEntityReady;//if the entity is ready for do send RPC, if the entity is spaned on the network
+
         protected override void OnAwake()
         {
             _methodlist = new Dictionary<string, RPCALL>();
@@ -41,6 +43,8 @@ namespace Projectsln.darkcomsoft.src.entity
 
         protected override void OnDispose()
         {
+            m_IsEntityReady = false;
+
             NetworkManager.RemoveEntityNet(this);
             _methodlist.Clear();
 
@@ -51,16 +55,22 @@ namespace Projectsln.darkcomsoft.src.entity
 
         protected override void OnTick()
         {
-            if (isMine)
+            if (isMine && m_IsEntityReady)
             {
                 TickMyEntity();
             }
             base.OnTick();
         }
 
+        /// <summary>
+        /// is called Every frame if the entity is owned by the player
+        /// </summary>
+        protected virtual void TickMyEntity() { }
+
         public long getOwner { get { return m_Owner; } }
         public int getViewId { get { return m_ViewID; } }
         public int getRegionID { get { return m_regionId; } }
+        public bool isReady { get { return m_IsEntityReady; } }
         public bool isMine
         {
             get
