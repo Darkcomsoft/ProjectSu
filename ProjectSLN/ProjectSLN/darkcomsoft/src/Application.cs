@@ -165,7 +165,10 @@ namespace Projectsln.darkcomsoft.src
 
         private void PrintUtilsInfos()
         {
+            debug.Debug.Log("Game Version: " + Version);
+
             debug.Debug.Log(".NET Version: " + RuntimeInformation.FrameworkDescription);
+            debug.Debug.Log("OpenTK Version: 4.6.3");
             debug.Debug.Log("OpenGL Version: " + GL.GetString(StringName.Version));
             debug.Debug.Log("Shader Version: " + GL.GetString(StringName.ShadingLanguageVersion));
         }

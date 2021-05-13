@@ -4,12 +4,17 @@ using Projectsln.darkcomsoft.src.misc;
 using System;
 using System.Collections.Generic;
 using System.Text;
+using System.Threading;
 
 namespace ProjectSLN.darkcomsoft.src.worldgenerator
 {
     public class TerrainGenerator : ClassBase
     {
         private Dictionary<Vector3d, Chunk> m_chunkList;
+
+        private Thread m_chunkSpawnThread;
+        private Thread m_populateVoxelThread;
+        private Thread m_meshDataGenerationThread;
 
         public TerrainGenerator()
         {
@@ -28,12 +33,14 @@ namespace ProjectSLN.darkcomsoft.src.worldgenerator
             base.OnDispose();
         }
 
-        /*public Chunk SpawnChunk<T>()
+        private void StartThreads()
         {
-            Chunk entityBase = Utilits.CreateInstance<Chunk>(typeof(T));
-        }*/
+            m_chunkSpawnThread = new Thread(new ThreadStart(LoadingLoop));
+            m_chunkSpawnThread.Name = "Chunk-Spawn-Thread";
+            m_chunkSpawnThread.Start();
+        }
 
-        public void DestroyChunk(Chunk chunk)
+        protected virtual void LoadingLoop()
         {
 
         }
