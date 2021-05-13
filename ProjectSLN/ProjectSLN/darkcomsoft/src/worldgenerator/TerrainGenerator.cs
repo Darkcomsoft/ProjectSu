@@ -1,6 +1,8 @@
 ﻿using OpenTK.Mathematics;
 using Projectsln.darkcomsoft.src;
+using Projectsln.darkcomsoft.src.debug;
 using Projectsln.darkcomsoft.src.misc;
+using ProjectSLN.darkcomsoft.src.engine;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -12,9 +14,7 @@ namespace ProjectSLN.darkcomsoft.src.worldgenerator
     {
         private Dictionary<Vector3d, Chunk> m_chunkList;
 
-        private Thread m_chunkSpawnThread;
-        private Thread m_populateVoxelThread;
-        private Thread m_meshDataGenerationThread;
+        private ThreadLoop m_threadLoop;
 
         public TerrainGenerator()
         {
@@ -23,6 +23,9 @@ namespace ProjectSLN.darkcomsoft.src.worldgenerator
 
         protected override void OnDispose()
         {
+            m_threadLoop.Dispose();
+            m_threadLoop = null;
+
             foreach (var item in m_chunkList)
             {
                 item.Value.Dispose();
@@ -35,14 +38,17 @@ namespace ProjectSLN.darkcomsoft.src.worldgenerator
 
         private void StartThreads()
         {
-            m_chunkSpawnThread = new Thread(new ThreadStart(LoadingLoop));
-            m_chunkSpawnThread.Name = "Chunk-Spawn-Thread";
-            m_chunkSpawnThread.Start();
+            m_threadLoop = new ThreadLoop(new DeleTeste(Tickk));
         }
 
         protected virtual void LoadingLoop()
         {
 
+        }
+
+        private void Tickk()
+        {
+            Debug.Log("Tick Terrain");
         }
     }
 }

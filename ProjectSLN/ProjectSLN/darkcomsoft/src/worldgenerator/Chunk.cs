@@ -12,6 +12,7 @@ namespace ProjectSLN.darkcomsoft.src.worldgenerator
     /// </summary>
     public abstract class Chunk : GameObject
     {
+        
         protected override void OnAwake()
         {
             base.OnAwake();

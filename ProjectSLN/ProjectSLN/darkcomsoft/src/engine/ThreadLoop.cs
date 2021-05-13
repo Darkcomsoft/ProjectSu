@@ -15,95 +15,130 @@ namespace ProjectSLN.darkcomsoft.src.engine
     public class ThreadLoop : ClassBase
     {
         private bool m_runnig;
-        private Thread m_thread;
-
+        private string m_threadName = "";
         private int m_tickRate = 15;
 
+        private Thread m_thread;
         private System.Diagnostics.Stopwatch m_watchUpdate;
 
-        public ThreadLoop()
+        private ThreadCallBack tickCall;
+
+        public ThreadLoop(ThreadCallBack tickDele)
         {
-            m_runnig = false;
+            try
+            {
+                m_runnig = false;
 
-            m_watchUpdate = new System.Diagnostics.Stopwatch();
+                tickCall = tickDele;
 
-            m_thread = new Thread(new ThreadStart(Run));
-            m_thread.Name = "Chunk-Spawn-Thread";
-            m_thread.Priority = ThreadPriority.BelowNormal;
-            m_thread.IsBackground = true;
-            m_thread.Start();
+                m_watchUpdate = new System.Diagnostics.Stopwatch();
+
+                m_thread = new Thread(new ThreadStart(Run));
+                m_thread.Priority = ThreadPriority.BelowNormal;
+                m_thread.IsBackground = true;
+                m_thread.Start();
+
+                m_threadName = m_thread.ManagedThreadId.ToString();
+            }
+            catch (Exception e)
+            {
+                throw e;
+            }
         }
 
-        public ThreadLoop(string ThreadName, ThreadPriority threadPriority, bool threadBackground,int TickRate)
+        public ThreadLoop(string ThreadName, ThreadPriority threadPriority, bool threadBackground,int TickRate, ThreadCallBack tickDele)
         {
-            m_runnig = false;
-            m_tickRate = TickRate;
+            try
+            {
+                m_runnig = false;
+                m_tickRate = TickRate;
 
-            m_watchUpdate = new System.Diagnostics.Stopwatch();
+                tickCall = tickDele;
 
-            m_thread = new Thread(new ThreadStart(Run));
-            m_thread.Name = ThreadName;
-            m_thread.Priority = threadPriority;
-            m_thread.IsBackground = threadBackground;
-            m_thread.Start();
+                m_watchUpdate = new System.Diagnostics.Stopwatch();
+
+                m_thread = new Thread(new ThreadStart(Run));
+                m_thread.Name = ThreadName;
+                m_thread.Priority = threadPriority;
+                m_thread.IsBackground = threadBackground;
+                m_thread.Start();
+
+                m_threadName = ThreadName;
+            }
+            catch (Exception e)
+            {
+                throw e;
+            }
         }
 
         private void Run()
         {
-            m_runnig = true;
-            ThreadOnStart();
-
-            m_watchUpdate.Start();
-
-            var l_lastTime = m_watchUpdate.ElapsedMilliseconds;
-            var l_mspertick = 1000.0d / m_tickRate;
-            var l_noprocess = 0d;
-            var l_ticks = 0;
-            var lastTimer1 = m_watchUpdate.ElapsedMilliseconds;
-            long now = 0;
-
-            while (m_runnig)
+            try
             {
-                now = m_watchUpdate.ElapsedMilliseconds;
-                l_noprocess += (now - l_lastTime) / l_mspertick;
-                l_lastTime = now;
-                while (l_noprocess >= 1)
+                m_runnig = true;
+                ThreadOnStart();
+
+                m_watchUpdate.Start();
+
+                var l_lastTime = m_watchUpdate.ElapsedMilliseconds;
+                var l_mspertick = 1000.0d / m_tickRate;
+                var l_noprocess = 0d;
+                var l_ticks = 0;
+                var lastTimer1 = m_watchUpdate.ElapsedMilliseconds;
+                long now = 0;
+
+                while (m_runnig)
                 {
-                    l_ticks++;
-                    Tick();
-                    l_noprocess -= 1;
+                    now = m_watchUpdate.ElapsedMilliseconds;
+                    l_noprocess += (now - l_lastTime) / l_mspertick;
+                    l_lastTime = now;
+                    while (l_noprocess >= 1)
+                    {
+                        l_ticks++;
+                        Tick();
+                        l_noprocess -= 1;
+                    }
+
+                    Thread.Sleep(1);
+                    if (m_watchUpdate.ElapsedMilliseconds - lastTimer1 > 1000)
+                    {
+                        Debug.Log(l_ticks + " Ticks, ", "THREAD-" + m_threadName);
+                        lastTimer1 += 1000;
+                        l_ticks = 0;
+                    }
                 }
 
-                Thread.Sleep(1);
-                if (m_watchUpdate.ElapsedMilliseconds - lastTimer1 > 1000)
-                {
-                    Debug.Log(l_ticks + " ticks, ", "THREAD-LOOP");
-                    lastTimer1 += 1000;
-                    l_ticks = 0;
-                }
+                ThreadOnDestroy();//call before thread finish
             }
-
-            ThreadOnDestroy();//call before thread finish
+            catch (Exception e)
+            {
+                throw e;
+            }
         }
 
-        private void Tick() { }
+        private void Tick() { tickCall(); }
 
         private void ThreadOnStart() { }
-        private void ThreadOnDestroy() { }
+        private void ThreadOnDestroy() { Debug.Log("Thread Loop is finished!", "THREAD-" + m_threadName); }
 
         protected override void OnDispose()
         {
-            m_runnig = false;
-
-            if (m_thread.ThreadState != ThreadState.Stopped)
+            try
             {
-                m_thread.Abort();
-            }
+                m_runnig = false;
 
-            m_watchUpdate = null;
-            m_thread = null;
+                m_thread.Join();//NAO SEI SE ISSO FAZ O QUE ESTOU QUERENDO, MAS EU VI QUE ISSO DA UM BLOCK NO MAIN THREAD, ATE ESTE THREAD FINALIZAR, NAO SEI
+
+                m_watchUpdate = null;
+                m_thread = null;
+            }
+            catch (Exception e)
+            {
+                throw e;
+            }
 
             base.OnDispose();
         }
     }
+    public delegate void ThreadCallBack();
 }
