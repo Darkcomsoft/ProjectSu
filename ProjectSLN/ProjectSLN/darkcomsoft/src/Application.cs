@@ -119,11 +119,6 @@ namespace Projectsln.darkcomsoft.src
             base.OnDispose();
         }
 
-        private void ReloadResources()
-        {
-
-        }
-
         private void StartGame()
         {
             m_resourceManager.LoadPreResources(AppType);
