@@ -56,11 +56,10 @@ namespace Projectsln.darkcomsoft.src.engine.gameobject
         /// <returns></returns>
         public static GameObject CreateGameObject<T>(World world)
         {
-            GameObject entityBase = Utilits.CreateInstance<GameObject>(typeof(T));
-            entityBase.Start(world);
-
-            Instance.m_objectList.Add(entityBase);
-            return entityBase;
+            GameObject gameObject = Utilits.CreateInstance<GameObject>(typeof(T));
+            Instance.m_objectList.Add(gameObject);
+            gameObject.Create(world);
+            return gameObject;
         }
 
         /// <summary>
@@ -71,11 +70,10 @@ namespace Projectsln.darkcomsoft.src.engine.gameobject
         /// <returns></returns>
         public static GameObject CreateGameObject(Type type, World world)
         {
-            GameObject entityBase = Utilits.CreateInstance<GameObject>(type);
-            entityBase.Start(world);
-
-            Instance.m_objectList.Add(entityBase);
-            return entityBase;
+            GameObject gameObject = Utilits.CreateInstance<GameObject>(type);
+            Instance.m_objectList.Add(gameObject);
+            gameObject.Create(world);
+            return gameObject;
         }
 
         /// <summary>
@@ -111,7 +109,10 @@ namespace Projectsln.darkcomsoft.src.engine.gameobject
             {
                 if (Instance.m_objectList[i].GetWorld is T)
                 {
-                    GameObject.DestroyObject(Instance.m_objectList[i]);
+                    if (Instance.m_objectList[i] != null)
+                    {
+                        GameObject.DestroyObject(Instance.m_objectList[i]);
+                    }
                 }
             }
         }

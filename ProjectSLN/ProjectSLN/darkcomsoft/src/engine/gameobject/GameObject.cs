@@ -1,5 +1,6 @@
 ﻿using Lidgren.Network;
 using Projectsln.darkcomsoft.src;
+using Projectsln.darkcomsoft.src.debug;
 using Projectsln.darkcomsoft.src.engine;
 using Projectsln.darkcomsoft.src.engine.gameobject;
 using Projectsln.darkcomsoft.src.engine.render;
@@ -28,8 +29,10 @@ namespace ProjectSLN.darkcomsoft.src.engine.gameobject
 
         protected World m_world { get; private set; }//world of this entity is in
 
-        public void Start(World world)
+        public void Create(World world)
         {
+            Debug.Log("GameObject is Created!");
+
             m_removed = false;
             m_visible = false;
             m_usefrustum = true;

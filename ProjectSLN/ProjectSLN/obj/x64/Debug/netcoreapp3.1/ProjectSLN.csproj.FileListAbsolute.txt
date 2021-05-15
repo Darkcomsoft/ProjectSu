@@ -1,6 +1,3 @@
-C:\Users\estev\Documents\GitHub\ProjectSu\ProjectSLN\ProjectSLN\obj\x64\Debug\netcoreapp3.1\ProjectSLN.AssemblyInfoInputs.cache
-C:\Users\estev\Documents\GitHub\ProjectSu\ProjectSLN\ProjectSLN\obj\x64\Debug\netcoreapp3.1\ProjectSLN.AssemblyInfo.cs
-C:\Users\estev\Documents\GitHub\ProjectSu\ProjectSLN\ProjectSLN\obj\x64\Debug\netcoreapp3.1\ProjectSLN.csproj.CoreCompileInputs.cache
 C:\Users\estev\Documents\GitHub\ProjectSu\ProjectSLN\ProjectSLN\bin\x64\Debug\netcoreapp3.1\ProjectSLN.exe
 C:\Users\estev\Documents\GitHub\ProjectSu\ProjectSLN\ProjectSLN\bin\x64\Debug\netcoreapp3.1\ProjectSLN.deps.json
 C:\Users\estev\Documents\GitHub\ProjectSu\ProjectSLN\ProjectSLN\bin\x64\Debug\netcoreapp3.1\ProjectSLN.runtimeconfig.json
@@ -29,6 +26,9 @@ C:\Users\estev\Documents\GitHub\ProjectSu\ProjectSLN\ProjectSLN\bin\x64\Debug\ne
 C:\Users\estev\Documents\GitHub\ProjectSu\ProjectSLN\ProjectSLN\bin\x64\Debug\netcoreapp3.1\runtimes\win\lib\netcoreapp3.0\System.Drawing.Common.dll
 C:\Users\estev\Documents\GitHub\ProjectSu\ProjectSLN\ProjectSLN\bin\x64\Debug\netcoreapp3.1\Lidgren.Network.dll
 C:\Users\estev\Documents\GitHub\ProjectSu\ProjectSLN\ProjectSLN\obj\x64\Debug\netcoreapp3.1\ProjectSLN.csprojAssemblyReference.cache
+C:\Users\estev\Documents\GitHub\ProjectSu\ProjectSLN\ProjectSLN\obj\x64\Debug\netcoreapp3.1\ProjectSLN.AssemblyInfoInputs.cache
+C:\Users\estev\Documents\GitHub\ProjectSu\ProjectSLN\ProjectSLN\obj\x64\Debug\netcoreapp3.1\ProjectSLN.AssemblyInfo.cs
+C:\Users\estev\Documents\GitHub\ProjectSu\ProjectSLN\ProjectSLN\obj\x64\Debug\netcoreapp3.1\ProjectSLN.csproj.CoreCompileInputs.cache
 C:\Users\estev\Documents\GitHub\ProjectSu\ProjectSLN\ProjectSLN\obj\x64\Debug\netcoreapp3.1\ProjectSLN.csproj.CopyComplete
 C:\Users\estev\Documents\GitHub\ProjectSu\ProjectSLN\ProjectSLN\obj\x64\Debug\netcoreapp3.1\ProjectSLN.dll
 C:\Users\estev\Documents\GitHub\ProjectSu\ProjectSLN\ProjectSLN\obj\x64\Debug\netcoreapp3.1\ProjectSLN.pdb

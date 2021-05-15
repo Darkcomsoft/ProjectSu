@@ -46,8 +46,6 @@ namespace Projectsln.darkcomsoft.src
         public static ObjectManager m_entityManager { get; private set; }
         public static NetworkManager m_networkManager { get; private set; }
 
-        private ThreadLoop m_threadLoop;
-
         private bool m_appIsClosing = false;
 
         public Application(ApplicationType applicationType)
@@ -57,8 +55,6 @@ namespace Projectsln.darkcomsoft.src
             AppType = applicationType;
 
             PrintUtilsInfos();
-
-            m_threadLoop = new ThreadLoop(new ThreadCallBack(TickTeste));
 
             m_resourceManager = new ResourcesManager();
             m_worldManager = new WorldManager();
@@ -77,11 +73,6 @@ namespace Projectsln.darkcomsoft.src
                     Projectsln.darkcomsoft.src.debug.Debug.Log("I don't know what you trying to do, but this is not a app, to start-up!");
                     return;
             }
-        }
-
-        private void TickTeste()
-        {
-            //debug.Debug.Log("TickThreadTeste!");
         }
 
         public void Tick(double time)
@@ -107,9 +98,6 @@ namespace Projectsln.darkcomsoft.src
         //DAR UMA OLHADA NA ORDEM DE DISPOSE, POR QUE ESTOU FAZENDO DE QUALQUER GEITO
         protected override void OnDispose()
         {
-            m_threadLoop.Dispose();
-            m_threadLoop = null;
-
             if (gameInstance != null)
             {
                 gameInstance.Dispose();

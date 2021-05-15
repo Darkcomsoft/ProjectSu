@@ -4,6 +4,8 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 using Projectsln.darkcomsoft.src.client;
+using ProjectSLN.darkcomsoft.src.engine.gameobject;
+using ProjectSLN.darkcomsoft.src.worldgenerator;
 
 namespace Projectsln.darkcomsoft.src.world
 {
@@ -12,11 +14,15 @@ namespace Projectsln.darkcomsoft.src.world
     /// </summary>
     public class SatrillesWorld : World
     {
+        private TerrainGenerator m_terrainGenObject;
+
         public override void Start()
         {
             if (!Application.IsServer)
             {
                 debug.Debug.Log("SatrillesWorld Is Created!", "CLIENT");
+
+                GameObject.SpawnObject<TerrainGenerator>(this);
             }
             else
             {
@@ -27,6 +33,9 @@ namespace Projectsln.darkcomsoft.src.world
 
         protected override void OnDispose()
         {
+            //GameObject.DestroyObject(m_terrainGenObject, true);
+            m_terrainGenObject = null;
+
             base.OnDispose();
         }
 

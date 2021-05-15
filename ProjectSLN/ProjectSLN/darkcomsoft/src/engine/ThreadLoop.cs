@@ -25,7 +25,7 @@ namespace ProjectSLN.darkcomsoft.src.engine
         private ThreadCallBack m_startCall;
         private ThreadCallBack m_destroyCall;
 
-        public ThreadLoop(ThreadCallBack tickDele, ThreadCallBack startDele, ThreadCallBack destroyDele)
+        public ThreadLoop(ThreadCallBack tickDele, ThreadCallBack startDele = null, ThreadCallBack destroyDele = null)
         {
             try
             {
@@ -50,7 +50,7 @@ namespace ProjectSLN.darkcomsoft.src.engine
             }
         }
 
-        public ThreadLoop(string ThreadName, ThreadPriority threadPriority, bool threadBackground,int TickRate, ThreadCallBack tickDele, ThreadCallBack startDele, ThreadCallBack destroyDele)
+        public ThreadLoop(string ThreadName, ThreadPriority threadPriority, bool threadBackground,int TickRate, ThreadCallBack tickDele, ThreadCallBack startDele = null, ThreadCallBack destroyDele = null)
         {
             try
             {
@@ -122,10 +122,10 @@ namespace ProjectSLN.darkcomsoft.src.engine
             }
         }
 
-        private void Tick() { m_tickCall(); }
+        private void Tick() { m_tickCall?.Invoke(); }
 
-        private void Start() { m_startCall(); }
-        private void Destroy() { m_destroyCall(); Debug.Log("Thread Loop is finished!", "THREAD-" + m_threadName); }
+        private void Start() { m_startCall?.Invoke(); }
+        private void Destroy() { m_destroyCall?.Invoke(); Debug.Log("Thread Loop is finished!", "THREAD-" + m_threadName); }
 
         protected override void OnDispose()
         {
