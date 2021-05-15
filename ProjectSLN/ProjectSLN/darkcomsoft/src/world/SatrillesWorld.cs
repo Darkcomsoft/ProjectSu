@@ -18,22 +18,22 @@ namespace Projectsln.darkcomsoft.src.world
 
         public override void Start()
         {
-            if (!Application.IsServer)
+            m_terrainGenObject = (TerrainGenerator)GameObject.SpawnObject<TerrainGenerator>(this);
+
+            /*if (Application.AppType == enums.ApplicationType.Client)
             {
                 debug.Debug.Log("SatrillesWorld Is Created!", "CLIENT");
-
-                GameObject.SpawnObject<TerrainGenerator>(this);
             }
-            else
+            if (Application.IsServer)
             {
                 debug.Debug.Log("SatrillesWorld Is Created!", "SERVER");
-            }
+            }*/
             base.Start();
         }
 
         protected override void OnDispose()
         {
-            //GameObject.DestroyObject(m_terrainGenObject, true);
+            GameObject.DestroyObject(m_terrainGenObject, true);
             m_terrainGenObject = null;
 
             base.OnDispose();
