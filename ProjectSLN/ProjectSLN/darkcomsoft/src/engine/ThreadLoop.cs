@@ -21,15 +21,19 @@ namespace ProjectSLN.darkcomsoft.src.engine
         private Thread m_thread;
         private System.Diagnostics.Stopwatch m_watchUpdate;
 
-        private ThreadCallBack tickCall;
+        private ThreadCallBack m_tickCall;
+        private ThreadCallBack m_startCall;
+        private ThreadCallBack m_destroyCall;
 
-        public ThreadLoop(ThreadCallBack tickDele)
+        public ThreadLoop(ThreadCallBack tickDele, ThreadCallBack startDele, ThreadCallBack destroyDele)
         {
             try
             {
                 m_runnig = false;
 
-                tickCall = tickDele;
+                m_tickCall = tickDele;
+                m_startCall = startDele;
+                m_destroyCall = destroyDele;
 
                 m_watchUpdate = new System.Diagnostics.Stopwatch();
 
@@ -46,14 +50,16 @@ namespace ProjectSLN.darkcomsoft.src.engine
             }
         }
 
-        public ThreadLoop(string ThreadName, ThreadPriority threadPriority, bool threadBackground,int TickRate, ThreadCallBack tickDele)
+        public ThreadLoop(string ThreadName, ThreadPriority threadPriority, bool threadBackground,int TickRate, ThreadCallBack tickDele, ThreadCallBack startDele, ThreadCallBack destroyDele)
         {
             try
             {
                 m_runnig = false;
                 m_tickRate = TickRate;
 
-                tickCall = tickDele;
+                m_tickCall = tickDele;
+                m_startCall = startDele;
+                m_destroyCall = destroyDele;
 
                 m_watchUpdate = new System.Diagnostics.Stopwatch();
 
@@ -76,7 +82,7 @@ namespace ProjectSLN.darkcomsoft.src.engine
             try
             {
                 m_runnig = true;
-                ThreadOnStart();
+                Start();
 
                 m_watchUpdate.Start();
 
@@ -108,7 +114,7 @@ namespace ProjectSLN.darkcomsoft.src.engine
                     }
                 }
 
-                ThreadOnDestroy();//call before thread finish
+                Destroy();//call before thread finish
             }
             catch (Exception e)
             {
@@ -116,10 +122,10 @@ namespace ProjectSLN.darkcomsoft.src.engine
             }
         }
 
-        private void Tick() { tickCall(); }
+        private void Tick() { m_tickCall(); }
 
-        private void ThreadOnStart() { }
-        private void ThreadOnDestroy() { Debug.Log("Thread Loop is finished!", "THREAD-" + m_threadName); }
+        private void Start() { m_startCall(); }
+        private void Destroy() { m_destroyCall(); Debug.Log("Thread Loop is finished!", "THREAD-" + m_threadName); }
 
         protected override void OnDispose()
         {
@@ -131,12 +137,15 @@ namespace ProjectSLN.darkcomsoft.src.engine
 
                 m_watchUpdate = null;
                 m_thread = null;
+
+                m_tickCall = null;
+                m_startCall = null;
+                m_destroyCall = null;
             }
             catch (Exception e)
             {
                 throw e;
             }
-
             base.OnDispose();
         }
     }
