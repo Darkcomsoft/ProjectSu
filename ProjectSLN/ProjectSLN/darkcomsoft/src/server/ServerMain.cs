@@ -1,4 +1,4 @@
-﻿using ProjectSLN.darkcomsoft.src.consolecli.systemconsole;
+﻿using ProjectSLN.darkcomsoft.src.CLI.systemconsole;
 using ProjectSLN.darkcomsoft.src.debug;
 using ProjectSLN.darkcomsoft.src.engine;
 using ProjectSLN.darkcomsoft.src.enums;

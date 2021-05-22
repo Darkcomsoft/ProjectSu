@@ -3,7 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 
-namespace ProjectSLN.darkcomsoft.src.consolecli
+namespace ProjectSLN.darkcomsoft.src.CLI
 {
     public class cvar : ClassBase
     {

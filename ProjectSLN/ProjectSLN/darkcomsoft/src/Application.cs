@@ -1,8 +1,8 @@
 ﻿using OpenTK.Graphics.OpenGL;
 using OpenTK.Windowing.Common;
 using ProjectSLN.darkcomsoft.src.client;
-using ProjectSLN.darkcomsoft.src.consolecli;
-using ProjectSLN.darkcomsoft.src.consolecli.systemconsole;
+using ProjectSLN.darkcomsoft.src.CLI;
+using ProjectSLN.darkcomsoft.src.CLI.systemconsole;
 using ProjectSLN.darkcomsoft.src.debug;
 using ProjectSLN.darkcomsoft.src.engine;
 using ProjectSLN.darkcomsoft.src.engine.gameobject;

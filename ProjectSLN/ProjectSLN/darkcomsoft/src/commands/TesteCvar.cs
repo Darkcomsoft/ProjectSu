@@ -1,4 +1,4 @@
-﻿using ProjectSLN.darkcomsoft.src.consolecli;
+﻿using ProjectSLN.darkcomsoft.src.CLI;
 using ProjectSLN.darkcomsoft.src.debug;
 using System;
 using System.Collections.Generic;

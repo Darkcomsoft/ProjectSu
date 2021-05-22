@@ -1,5 +1,5 @@
 ﻿using ProjectSLN.darkcomsoft.src;
-using ProjectSLN.darkcomsoft.src.consolecli;
+using ProjectSLN.darkcomsoft.src.CLI;
 using System;
 using System.Collections.Generic;
 using System.Text;

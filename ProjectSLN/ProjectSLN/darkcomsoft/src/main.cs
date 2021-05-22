@@ -8,7 +8,7 @@ using System.Runtime.InteropServices;
 using System.Runtime;
 using System.Threading;
 using ProjectSLN.darkcomsoft.src.misc;
-using ProjectSLN.darkcomsoft.src.consolecli.systemconsole;
+using ProjectSLN.darkcomsoft.src.CLI.systemconsole;
 
 namespace ProjectSLN.darkcomsoft.src
 {

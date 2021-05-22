@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Runtime.InteropServices;
 
-namespace ProjectSLN.darkcomsoft.src.consolecli.systemconsole
+namespace ProjectSLN.darkcomsoft.src.CLI.systemconsole
 {
 	public class WindowsConsole : ClassBase
 	{

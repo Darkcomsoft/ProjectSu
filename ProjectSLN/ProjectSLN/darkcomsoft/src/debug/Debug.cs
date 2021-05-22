@@ -1,5 +1,5 @@
 ﻿using OpenTK.Graphics.OpenGL;
-using ProjectSLN.darkcomsoft.src.consolecli.systemconsole;
+using ProjectSLN.darkcomsoft.src.CLI.systemconsole;
 using ProjectSLN.darkcomsoft.src.server;
 using System;
 using System.Collections.Generic;
