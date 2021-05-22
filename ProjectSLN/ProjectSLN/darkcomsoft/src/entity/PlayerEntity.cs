@@ -1,9 +1,9 @@
-﻿using Projectsln.darkcomsoft.src.debug;
+﻿using ProjectSLN.darkcomsoft.src.debug;
 using System;
 using System.Collections.Generic;
 using System.Text;
 
-namespace Projectsln.darkcomsoft.src.entity
+namespace ProjectSLN.darkcomsoft.src.entity
 {
     public class PlayerEntity : LivingEntity
     {

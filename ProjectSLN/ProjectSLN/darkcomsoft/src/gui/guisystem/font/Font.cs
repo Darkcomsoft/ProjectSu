@@ -1,14 +1,14 @@
-﻿using Projectsln.darkcomsoft.src.render;
+﻿using ProjectSLN.darkcomsoft.src.render;
 using System;
 using System.Collections.Generic;
 using System.Text;
 using System.IO;
-using Projectsln.darkcomsoft.src.engine.window;
+using ProjectSLN.darkcomsoft.src.engine.window;
 using OpenTK.Graphics.OpenGL;
-using Projectsln.darkcomsoft.src.resources;
-using Projectsln.darkcomsoft.src.resources.resourcestype;
+using ProjectSLN.darkcomsoft.src.resources;
+using ProjectSLN.darkcomsoft.src.resources.resourcestype;
 
-namespace Projectsln.darkcomsoft.src.gui.guisystem.font
+namespace ProjectSLN.darkcomsoft.src.gui.guisystem.font
 {
     public class Font: ClassBase
     {

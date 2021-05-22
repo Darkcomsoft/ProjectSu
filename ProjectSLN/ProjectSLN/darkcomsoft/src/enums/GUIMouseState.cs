@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace Projectsln.darkcomsoft.src.enums
+namespace ProjectSLN.darkcomsoft.src.enums
 {
     public enum GUIElementStatus : byte
     {

@@ -2,17 +2,18 @@
 using System.Collections.Generic;
 using System.Text;
 using Lidgren.Network;
-using Projectsln.darkcomsoft.src.debug;
-using Projectsln.darkcomsoft.src.misc;
-using Projectsln.darkcomsoft.src.entity;
+using ProjectSLN.darkcomsoft.src.debug;
+using ProjectSLN.darkcomsoft.src.misc;
+using ProjectSLN.darkcomsoft.src.entity;
 using System.Reflection;
-using Projectsln.darkcomsoft.src.world;
-using Projectsln.darkcomsoft.src.entity.managers;
+using ProjectSLN.darkcomsoft.src.world;
+using ProjectSLN.darkcomsoft.src.entity.managers;
 using ProjectSLN.darkcomsoft.src.engine.gameobject;
-using Projectsln.darkcomsoft.src.engine.gameobject;
+using ProjectSLN.darkcomsoft.src.engine.gameobject;
 
-namespace Projectsln.darkcomsoft.src.network
+namespace ProjectSLN.darkcomsoft.src.network
 {
+    [Obsolete("FUCK THE MULTIPLAYER FOR NOW")]
     public class NetworkManager : ClassBase
     {
         /// <summary>
@@ -206,7 +207,7 @@ namespace Projectsln.darkcomsoft.src.network
         /// <summary>
         /// If is server return True, if is Client return False
         /// </summary>
-        public static bool IsServer { get { if (instance.m_netType == NetworkType.Server) { return true; } return false; } }
+        //public static bool IsServer { get { if (instance.m_netType == NetworkType.Server) { return true; } return false; } }
 
         public Dictionary<int, Entity> getNetViewEntityList { get { return m_netViewEntityList; } }
     }

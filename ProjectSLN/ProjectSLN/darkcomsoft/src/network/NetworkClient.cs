@@ -4,15 +4,15 @@ using System.Net;
 using System.Text;
 using Lidgren.Network;
 using OpenTK.Mathematics;
-using Projectsln.darkcomsoft.src.debug;
-using Projectsln.darkcomsoft.src.engine.gameobject;
-using Projectsln.darkcomsoft.src.entity;
-using Projectsln.darkcomsoft.src.entity.managers;
-using Projectsln.darkcomsoft.src.misc;
-using Projectsln.darkcomsoft.src.world;
+using ProjectSLN.darkcomsoft.src.debug;
+using ProjectSLN.darkcomsoft.src.engine.gameobject;
+using ProjectSLN.darkcomsoft.src.entity;
+using ProjectSLN.darkcomsoft.src.entity.managers;
+using ProjectSLN.darkcomsoft.src.misc;
+using ProjectSLN.darkcomsoft.src.world;
 using ProjectSLN.darkcomsoft.src.engine.gameobject;
 
-namespace Projectsln.darkcomsoft.src.network
+namespace ProjectSLN.darkcomsoft.src.network
 {
     public class NetworkClient : NetworkBase
     {

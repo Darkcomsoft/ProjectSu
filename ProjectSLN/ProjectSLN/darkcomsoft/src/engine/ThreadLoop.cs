@@ -1,7 +1,7 @@
-﻿using Projectsln.darkcomsoft.src;
-using Projectsln.darkcomsoft.src.debug;
-using Projectsln.darkcomsoft.src.engine.window;
-using Projectsln.darkcomsoft.src.server;
+﻿using ProjectSLN.darkcomsoft.src;
+using ProjectSLN.darkcomsoft.src.debug;
+using ProjectSLN.darkcomsoft.src.engine.window;
+using ProjectSLN.darkcomsoft.src.server;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -108,7 +108,10 @@ namespace ProjectSLN.darkcomsoft.src.engine
                     Thread.Sleep(1);
                     if (m_watchUpdate.ElapsedMilliseconds - lastTimer1 > 1000)
                     {
-                        Debug.Log(l_ticks + " Ticks, ", "THREAD-" + m_threadName);
+                        if (Debug.isDebugEnabled)
+                        {
+                            Debug.Log(l_ticks + " Tick", "THREAD-" + m_threadName);
+                        }
                         lastTimer1 += 1000;
                         l_ticks = 0;
                     }

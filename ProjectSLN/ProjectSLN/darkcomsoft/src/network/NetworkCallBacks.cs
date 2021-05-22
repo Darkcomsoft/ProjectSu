@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Text;
 using Lidgren.Network;
 
-namespace Projectsln.darkcomsoft.src.network
+namespace ProjectSLN.darkcomsoft.src.network
 {
     public class NetworkCallBacks : ClassBase
     {

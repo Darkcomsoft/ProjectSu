@@ -1,20 +1,20 @@
 ﻿using OpenTK.Graphics.OpenGL;
 using OpenTK.Windowing.Common;
-using Projectsln.darkcomsoft.src.client;
-using Projectsln.darkcomsoft.src.consolecli;
-using Projectsln.darkcomsoft.src.consolecli.systemconsole;
-using Projectsln.darkcomsoft.src.debug;
-using Projectsln.darkcomsoft.src.engine;
-using Projectsln.darkcomsoft.src.engine.gameobject;
-using Projectsln.darkcomsoft.src.engine.render;
-using Projectsln.darkcomsoft.src.engine.window;
-using Projectsln.darkcomsoft.src.entity.managers;
-using Projectsln.darkcomsoft.src.enums;
-using Projectsln.darkcomsoft.src.gui.guisystem;
-using Projectsln.darkcomsoft.src.network;
-using Projectsln.darkcomsoft.src.resources;
-using Projectsln.darkcomsoft.src.server;
-using Projectsln.darkcomsoft.src.world;
+using ProjectSLN.darkcomsoft.src.client;
+using ProjectSLN.darkcomsoft.src.consolecli;
+using ProjectSLN.darkcomsoft.src.consolecli.systemconsole;
+using ProjectSLN.darkcomsoft.src.debug;
+using ProjectSLN.darkcomsoft.src.engine;
+using ProjectSLN.darkcomsoft.src.engine.gameobject;
+using ProjectSLN.darkcomsoft.src.engine.render;
+using ProjectSLN.darkcomsoft.src.engine.window;
+using ProjectSLN.darkcomsoft.src.entity.managers;
+using ProjectSLN.darkcomsoft.src.enums;
+using ProjectSLN.darkcomsoft.src.gui.guisystem;
+using ProjectSLN.darkcomsoft.src.network;
+using ProjectSLN.darkcomsoft.src.resources;
+using ProjectSLN.darkcomsoft.src.server;
+using ProjectSLN.darkcomsoft.src.world;
 using ProjectSLN.darkcomsoft.src.engine;
 using System;
 using System.Collections.Generic;
@@ -23,7 +23,7 @@ using System.IO;
 using System.Runtime.InteropServices;
 using System.Text;
 
-namespace Projectsln.darkcomsoft.src
+namespace ProjectSLN.darkcomsoft.src
 {
     /// <summary>
     /// Application is the base class for the entity systesm, this is used by the server or client
@@ -44,7 +44,6 @@ namespace Projectsln.darkcomsoft.src
         public static ResourcesManager m_resourceManager { get; private set; }
         public static WorldManager m_worldManager { get; private set; }
         public static ObjectManager m_entityManager { get; private set; }
-        public static NetworkManager m_networkManager { get; private set; }
 
         private bool m_appIsClosing = false;
 
@@ -59,7 +58,6 @@ namespace Projectsln.darkcomsoft.src
             m_resourceManager = new ResourcesManager();
             m_worldManager = new WorldManager();
             m_entityManager = new ObjectManager();
-            m_networkManager = new NetworkManager();
 
             switch (applicationType)
             {
@@ -70,7 +68,7 @@ namespace Projectsln.darkcomsoft.src
                     StartServer();
                     break;
                 default:
-                    Projectsln.darkcomsoft.src.debug.Debug.Log("I don't know what you trying to do, but this is not a app, to start-up!");
+                    ProjectSLN.darkcomsoft.src.debug.Debug.Log("I don't know what you trying to do, but this is not a app, to start-up!");
                     return;
             }
         }
@@ -84,7 +82,6 @@ namespace Projectsln.darkcomsoft.src
                 gameInstance?.Tick();
 
                 m_entityManager?.Tick();
-                m_networkManager?.Tick();
                 m_worldManager?.Tick();
             }
         }
@@ -103,9 +100,6 @@ namespace Projectsln.darkcomsoft.src
                 gameInstance.Dispose();
                 gameInstance = null;
             }
-
-            m_networkManager?.Dispose();
-            m_networkManager = null;
 
             m_worldManager?.Dispose();
             m_worldManager = null;

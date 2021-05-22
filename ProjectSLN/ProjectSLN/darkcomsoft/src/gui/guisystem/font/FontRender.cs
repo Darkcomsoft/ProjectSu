@@ -1,16 +1,16 @@
 ﻿using OpenTK.Mathematics;
 using OpenTK.Graphics.OpenGL;
-using Projectsln.darkcomsoft.src.gui.guisystem.guielements;
+using ProjectSLN.darkcomsoft.src.gui.guisystem.guielements;
 using System;
 using System.Collections.Generic;
 using System.Drawing;
 using System.Text;
-using Projectsln.darkcomsoft.src.render;
-using Projectsln.darkcomsoft.src.enums;
-using Projectsln.darkcomsoft.src.engine.window;
-using Projectsln.darkcomsoft.src.debug;
+using ProjectSLN.darkcomsoft.src.render;
+using ProjectSLN.darkcomsoft.src.enums;
+using ProjectSLN.darkcomsoft.src.engine.window;
+using ProjectSLN.darkcomsoft.src.debug;
 
-namespace Projectsln.darkcomsoft.src.gui.guisystem.font
+namespace ProjectSLN.darkcomsoft.src.gui.guisystem.font
 {
 	public class FontRender : ClassBase
 	{

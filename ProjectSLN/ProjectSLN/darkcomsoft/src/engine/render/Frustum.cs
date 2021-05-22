@@ -1,9 +1,12 @@
 ﻿using OpenTK.Mathematics;
+using OpenTK;
 using System;
 using System.Collections.Generic;
 using System.Text;
+using System.Linq;
+using ProjectSLN.darkcomsoft.src.misc;
 
-namespace Projectsln.darkcomsoft.src.engine.render
+namespace ProjectSLN.darkcomsoft.src.engine.render
 {
     //I DONT KNOW BUT THIS FUNCTIONS FRUSTUM NEED SOME OPTIMIZATION, I DON'T KNOW DO A LOOK
     public static class Frustum
@@ -343,6 +346,38 @@ namespace Projectsln.darkcomsoft.src.engine.render
             _frustum[(int)ClippingPlane.Front, 3] = _clipMatrix[15] + _clipMatrix[14];
             NormalizePlane(_frustum, (int)ClippingPlane.Front);
         }
+    }
+
+    public class FrustumTeste
+    {
+        public static FrustumTeste FromViewProjection(Matrix4 m)
+        {
+            var p = new[]
+            {
+                new Plane(m.Column3 + m.Column0), //Left
+                new Plane(m.Column3 - m.Column0), //Right
+
+                new Plane(m.Column3 + m.Column1), //Bottom
+                new Plane(m.Column3 - m.Column1), //Top
+
+                new Plane(m.Column3 + m.Column2), //Near
+                new Plane(m.Column3 - m.Column2) //Far
+            };
+
+            foreach (var plane in p)
+                plane.Normalize();
+
+            return new FrustumTeste(p);
+        }
+
+        public readonly Plane[] Planes;
+
+        public FrustumTeste(Plane[] planes)
+        {
+            Planes = planes;
+        }
+
+        public bool SpehereIntersection(Vector3 position, float radius) => Planes.All(plane => !(Vector3.Dot(position, plane.Normal) + plane.D + radius <= 0));
     }
 
     public struct BoundingVolume

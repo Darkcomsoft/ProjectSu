@@ -1,11 +1,11 @@
 ﻿using OpenTK.Graphics.OpenGL;
-using Projectsln.darkcomsoft.src.consolecli.systemconsole;
-using Projectsln.darkcomsoft.src.server;
+using ProjectSLN.darkcomsoft.src.consolecli.systemconsole;
+using ProjectSLN.darkcomsoft.src.server;
 using System;
 using System.Collections.Generic;
 using System.Text;
 
-namespace Projectsln.darkcomsoft.src.debug
+namespace ProjectSLN.darkcomsoft.src.debug
 {
     public static class Debug
     {
@@ -31,12 +31,14 @@ namespace Projectsln.darkcomsoft.src.debug
         {
             if (WindowsConsole.isOpen)
             {
-                Console.WriteLine(msg);
+                WindowsConsole.WriteLine(msg);
             }
         }
 
         public static void Log(string menssage, string caller = "")
         {
+            if (!m_debugMode) { return; }
+
             string callerName = "";
 
             if (caller != string.Empty)
@@ -58,6 +60,8 @@ namespace Projectsln.darkcomsoft.src.debug
 
         public static void LogWarning(string menssage, string caller = "")
         {
+            if (!m_debugMode) { return; }
+
             string callerName = "";
 
             if (caller != string.Empty)
@@ -78,6 +82,8 @@ namespace Projectsln.darkcomsoft.src.debug
 
         public static void LogError(string menssage, string caller = "")
         {
+            if (!m_debugMode) { return; }
+
             string callerName = "";
 
             if (caller != string.Empty)

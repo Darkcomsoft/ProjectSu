@@ -1,16 +1,16 @@
 ﻿using OpenTK.Windowing.Desktop;
-using Projectsln.darkcomsoft.src;
-using Projectsln.darkcomsoft.src.debug;
-using Projectsln.darkcomsoft.src.engine.window;
-using Projectsln.darkcomsoft.src.server;
+using ProjectSLN.darkcomsoft.src;
+using ProjectSLN.darkcomsoft.src.debug;
+using ProjectSLN.darkcomsoft.src.engine.window;
+using ProjectSLN.darkcomsoft.src.server;
 using System;
 using System.Runtime.InteropServices;
 using System.Runtime;
 using System.Threading;
-using Projectsln.darkcomsoft.src.misc;
-using Projectsln.darkcomsoft.src.consolecli.systemconsole;
+using ProjectSLN.darkcomsoft.src.misc;
+using ProjectSLN.darkcomsoft.src.consolecli.systemconsole;
 
-namespace Projectsln.darkcomsoft.src
+namespace ProjectSLN.darkcomsoft.src
 {
     class main
     {
@@ -19,10 +19,18 @@ namespace Projectsln.darkcomsoft.src
         [MTAThread]
         static void Main(string[] args)
         {
+            foreach (var value in args)
+            {
+                if (value == "-debug")
+                {
+                    Debug.EnableDebug();
+                }
+                Debug.Log("Argument: " + value);
+            }
+
             GCSettings.LatencyMode = GCLatencyMode.LowLatency;
 
             m_windowsConsole = new WindowsConsole();
-
 #if Client
             StartClient();
 #endif

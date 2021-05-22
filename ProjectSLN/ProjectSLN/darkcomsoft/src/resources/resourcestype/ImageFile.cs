@@ -1,4 +1,4 @@
-﻿using Projectsln.darkcomsoft.src.debug;
+﻿using ProjectSLN.darkcomsoft.src.debug;
 using System;
 using System.Collections.Generic;
 using System.Drawing;
@@ -6,7 +6,7 @@ using System.Drawing.Imaging;
 using System.IO;
 using System.Text;
 
-namespace Projectsln.darkcomsoft.src.resources.resourcestype
+namespace ProjectSLN.darkcomsoft.src.resources.resourcestype
 {
     public struct ImageFile
     {

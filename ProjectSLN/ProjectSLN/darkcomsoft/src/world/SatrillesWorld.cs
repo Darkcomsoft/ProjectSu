@@ -1,13 +1,14 @@
-﻿using Projectsln.darkcomsoft.src.engine;
+﻿using ProjectSLN.darkcomsoft.src.engine;
 using OpenTK.Windowing.GraphicsLibraryFramework;
 using System;
 using System.Collections.Generic;
 using System.Text;
-using Projectsln.darkcomsoft.src.client;
+using ProjectSLN.darkcomsoft.src.client;
 using ProjectSLN.darkcomsoft.src.engine.gameobject;
 using ProjectSLN.darkcomsoft.src.worldgenerator;
+using ProjectSLN.darkcomsoft.src.entity;
 
-namespace Projectsln.darkcomsoft.src.world
+namespace ProjectSLN.darkcomsoft.src.world
 {
     /// <summary>
     /// Satrilles World is the main world of the games history, the normal world, start world etc.
@@ -19,15 +20,6 @@ namespace Projectsln.darkcomsoft.src.world
         public override void Start()
         {
             m_terrainGenObject = (TerrainGenerator)GameObject.SpawnObject<TerrainGenerator>(this);
-
-            /*if (Application.AppType == enums.ApplicationType.Client)
-            {
-                debug.Debug.Log("SatrillesWorld Is Created!", "CLIENT");
-            }
-            if (Application.IsServer)
-            {
-                debug.Debug.Log("SatrillesWorld Is Created!", "SERVER");
-            }*/
             base.Start();
         }
 
@@ -39,13 +31,13 @@ namespace Projectsln.darkcomsoft.src.world
             base.OnDispose();
         }
 
-        protected override void TickClient()
+        protected override void OnTick()
         {
             if (Input.GetKeyDown(Keys.Escape))
             {
                 Game.Disconnect();
             }
-            base.TickClient();
+            base.OnTick();
         }
     }
 }

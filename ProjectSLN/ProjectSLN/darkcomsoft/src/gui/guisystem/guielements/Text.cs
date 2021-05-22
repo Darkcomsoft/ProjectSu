@@ -1,16 +1,16 @@
-﻿using Projectsln.darkcomsoft.src.debug;
-using Projectsln.darkcomsoft.src.enums;
-using Projectsln.darkcomsoft.src.gui.guisystem.font;
-using Projectsln.darkcomsoft.src.resources;
+﻿using ProjectSLN.darkcomsoft.src.debug;
+using ProjectSLN.darkcomsoft.src.enums;
+using ProjectSLN.darkcomsoft.src.gui.guisystem.font;
+using ProjectSLN.darkcomsoft.src.resources;
 using OpenTK.Mathematics;
 using OpenTK.Graphics.OpenGL;
 using System;
 using System.Collections.Generic;
 using System.Drawing;
 using System.Text;
-using Projectsln.darkcomsoft.src.engine;
+using ProjectSLN.darkcomsoft.src.engine;
 
-namespace Projectsln.darkcomsoft.src.gui.guisystem.guielements
+namespace ProjectSLN.darkcomsoft.src.gui.guisystem.guielements
 {
     /// <summary>
     /// Simple Gui Text, used for display text on the screen, with a font

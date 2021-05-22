@@ -1,9 +1,9 @@
-﻿using Projectsln.darkcomsoft.src.debug;
+﻿using ProjectSLN.darkcomsoft.src.debug;
 using System;
 using System.Collections.Generic;
 using System.Text;
 
-namespace Projectsln.darkcomsoft.src
+namespace ProjectSLN.darkcomsoft.src
 {
     public abstract class ClassBase : IDisposable
     {

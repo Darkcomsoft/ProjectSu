@@ -1,7 +1,7 @@
 ﻿using OpenTK.Mathematics;
-using Projectsln.darkcomsoft.src;
-using Projectsln.darkcomsoft.src.debug;
-using Projectsln.darkcomsoft.src.misc;
+using ProjectSLN.darkcomsoft.src;
+using ProjectSLN.darkcomsoft.src.debug;
+using ProjectSLN.darkcomsoft.src.misc;
 using ProjectSLN.darkcomsoft.src.engine;
 using ProjectSLN.darkcomsoft.src.engine.gameobject;
 using System;
@@ -48,7 +48,7 @@ namespace ProjectSLN.darkcomsoft.src.worldgenerator
         //Terrain loader tick
         private void GenTick()
         {
-            Debug.Log("Tick Terrain");
+           
         }
     }
 }

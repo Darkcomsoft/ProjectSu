@@ -1,13 +1,13 @@
 ﻿using Lidgren.Network;
-using Projectsln.darkcomsoft.src;
-using Projectsln.darkcomsoft.src.debug;
-using Projectsln.darkcomsoft.src.engine;
-using Projectsln.darkcomsoft.src.engine.gameobject;
-using Projectsln.darkcomsoft.src.engine.render;
-using Projectsln.darkcomsoft.src.entity;
-using Projectsln.darkcomsoft.src.enums;
-using Projectsln.darkcomsoft.src.network;
-using Projectsln.darkcomsoft.src.world;
+using ProjectSLN.darkcomsoft.src;
+using ProjectSLN.darkcomsoft.src.debug;
+using ProjectSLN.darkcomsoft.src.engine;
+using ProjectSLN.darkcomsoft.src.engine.gameobject;
+using ProjectSLN.darkcomsoft.src.engine.render;
+using ProjectSLN.darkcomsoft.src.entity;
+using ProjectSLN.darkcomsoft.src.enums;
+using ProjectSLN.darkcomsoft.src.network;
+using ProjectSLN.darkcomsoft.src.world;
 using ProjectSLN.darkcomsoft.src.enums;
 using System;
 using System.Collections.Generic;
@@ -31,11 +31,11 @@ namespace ProjectSLN.darkcomsoft.src.engine.gameobject
 
         public void Create(World world)
         {
-            Debug.Log("GameObject is Created!");
+            Debug.Log(this.GetType() + " is Created!");
 
             m_removed = false;
             m_visible = false;
-            m_usefrustum = true;
+            m_usefrustum = false;
 
             m_transform = new Transform();
             this.m_world = world;
@@ -65,16 +65,6 @@ namespace ProjectSLN.darkcomsoft.src.engine.gameobject
 
             //<start> call tick function anyway if is visible or not, let this to the entity to decide to do what when is visible or not
             OnTick();
-
-            if (Application.AppType.Equals(ApplicationType.Client))
-            {
-                TickClient();
-            }
-
-            if (NetworkManager.IsServer)
-            {
-                TickServer();
-            }
             //<end>
         }
 
@@ -142,14 +132,6 @@ namespace ProjectSLN.darkcomsoft.src.engine.gameobject
             m_activated = false;
         }
 
-        /// <summary>
-        /// This is called everyFrame by the Client
-        /// </summary>
-        protected virtual void TickClient() { }
-        /// <summary>
-        /// This is only called everyFrame by the server
-        /// </summary>
-        protected virtual void TickServer() { }
         /// <summary>
         /// This is called everyFrame by Client and Server, is called anyway
         /// </summary>

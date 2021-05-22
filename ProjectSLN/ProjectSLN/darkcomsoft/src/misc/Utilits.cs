@@ -1,4 +1,4 @@
-﻿using Projectsln.darkcomsoft.src.debug;
+﻿using ProjectSLN.darkcomsoft.src.debug;
 using System;
 using System.Collections.Generic;
 using System.Net;
@@ -8,8 +8,9 @@ using System.IO;
 using System.IO.Compression;
 using OpenTK.Graphics.OpenGL;
 using System.Runtime.InteropServices;
+using OpenTK.Mathematics;
 
-namespace Projectsln.darkcomsoft.src.misc
+namespace ProjectSLN.darkcomsoft.src.misc
 {
     /// <summary>
     /// All type of Utilits
@@ -115,6 +116,33 @@ namespace Projectsln.darkcomsoft.src.misc
         public static bool CheckDLLExist(string dllName)
         {
             return LoadLibrary(dllName) != IntPtr.Zero;
+        }
+    }
+
+    public class Plane
+    {
+        public Vector3 Normal;
+        public float D;
+
+        public float A => Normal.X;
+        public float B => Normal.Y;
+        public float C => Normal.Z;
+
+        public Plane(Vector4 v) : this(v.Xyz, v.W)
+        {
+        }
+
+        public Plane(Vector3 normal, float d)
+        {
+            Normal = normal;
+            D = d;
+        }
+
+        public void Normalize()
+        {
+            var x = 1 / Normal.Length;
+            Normal *= x;
+            D *= x;
         }
     }
 

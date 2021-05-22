@@ -8,10 +8,10 @@ using OpenTK.Input;
 using OpenTK.Graphics.OpenGL;
 using OpenTK.Mathematics;
 using OpenTK.Windowing.Desktop;
-using Projectsln.darkcomsoft.src.engine.window;
-using Projectsln.darkcomsoft.src.entity;
+using ProjectSLN.darkcomsoft.src.engine.window;
+using ProjectSLN.darkcomsoft.src.entity;
 
-namespace Projectsln.darkcomsoft.src.engine
+namespace ProjectSLN.darkcomsoft.src.engine
 {
     public class Camera : ClassBase //MAYBE THIS NEED A CODE CLEAN-UP TO THE NEW SYSTEMS
     {

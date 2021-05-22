@@ -1,8 +1,8 @@
-﻿using Projectsln.darkcomsoft.src.consolecli.systemconsole;
-using Projectsln.darkcomsoft.src.debug;
-using Projectsln.darkcomsoft.src.engine;
-using Projectsln.darkcomsoft.src.enums;
-using Projectsln.darkcomsoft.src.misc;
+﻿using ProjectSLN.darkcomsoft.src.consolecli.systemconsole;
+using ProjectSLN.darkcomsoft.src.debug;
+using ProjectSLN.darkcomsoft.src.engine;
+using ProjectSLN.darkcomsoft.src.enums;
+using ProjectSLN.darkcomsoft.src.misc;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -10,7 +10,7 @@ using System.Runtime.InteropServices;
 using System.Text;
 using System.Threading;
 
-namespace Projectsln.darkcomsoft.src.server
+namespace ProjectSLN.darkcomsoft.src.server
 {
     public class ServerMain : ClassBase
     {

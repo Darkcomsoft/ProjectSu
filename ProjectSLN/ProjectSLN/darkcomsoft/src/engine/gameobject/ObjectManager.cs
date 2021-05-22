@@ -1,14 +1,14 @@
-﻿using Projectsln.darkcomsoft.src.debug;
-using Projectsln.darkcomsoft.src.entity;
-using Projectsln.darkcomsoft.src.misc;
-using Projectsln.darkcomsoft.src.network;
-using Projectsln.darkcomsoft.src.world;
+﻿using ProjectSLN.darkcomsoft.src.debug;
+using ProjectSLN.darkcomsoft.src.entity;
+using ProjectSLN.darkcomsoft.src.misc;
+using ProjectSLN.darkcomsoft.src.network;
+using ProjectSLN.darkcomsoft.src.world;
 using ProjectSLN.darkcomsoft.src.engine.gameobject;
 using System;
 using System.Collections.Generic;
 using System.Text;
 
-namespace Projectsln.darkcomsoft.src.engine.gameobject
+namespace ProjectSLN.darkcomsoft.src.engine.gameobject
 {
     public class ObjectManager : ClassBase
     {
@@ -42,8 +42,8 @@ namespace Projectsln.darkcomsoft.src.engine.gameobject
 
                 if (entityBase.isRemoved)
                 {
+                    m_objectList.Remove(entityBase);
                     entityBase.Dispose();
-                    m_objectList.RemoveAt(--i);
                 }
             }
         }

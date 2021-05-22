@@ -1,10 +1,10 @@
-﻿using Projectsln.darkcomsoft.src.debug;
+﻿using ProjectSLN.darkcomsoft.src.debug;
 using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Runtime.InteropServices;
 
-namespace Projectsln.darkcomsoft.src.consolecli.systemconsole
+namespace ProjectSLN.darkcomsoft.src.consolecli.systemconsole
 {
 	public class WindowsConsole : ClassBase
 	{
@@ -16,14 +16,16 @@ namespace Projectsln.darkcomsoft.src.consolecli.systemconsole
 		public event System.Action<string> OnInputText;
 		public string inputString;
 
-		public WindowsConsole() 
-		{ 
+		private bool isTyping = false;
+
+		public WindowsConsole()
+		{
 			instance = this;
 
 			ShowDisposeDebugMsg = false;
 
 			InitializeConsole();
-			m_isConsoleOpen = true; 
+			m_isConsoleOpen = true;
 		}
 
 		public void Tick()
@@ -99,9 +101,12 @@ namespace Projectsln.darkcomsoft.src.consolecli.systemconsole
 		#endregion
 
 		#region ConsoleInput
-		public void WriteLine(string msg)
+		public static void WriteLine(string msg)
 		{
-			System.Console.WriteLine(msg);
+			if (!instance.isTyping)
+            {
+				System.Console.WriteLine(msg);
+			}
 		}
 
 		public void ConsoleClearLine()
@@ -130,6 +135,7 @@ namespace Projectsln.darkcomsoft.src.consolecli.systemconsole
 
 			if (inputString.Length <= 1)
 			{
+				isTyping = false;
 				ConsoleClearLine();
 
 				var strtext = inputString;
@@ -156,11 +162,15 @@ namespace Projectsln.darkcomsoft.src.consolecli.systemconsole
 
 		internal void OnEnter()
 		{
+			isTyping = false;
+
 			ConsoleClearLine();
 
 			System.Console.ForegroundColor = ConsoleColor.Green;
 			string[] textarray = inputString.Split(" "[0]);
-			//Commands.ReadInputCommand(textarray);
+
+			ExecuteCommands(textarray);
+
 			WriteLine(inputString);
 			System.Console.ForegroundColor = ConsoleColor.White;
 
@@ -198,10 +208,39 @@ namespace Projectsln.darkcomsoft.src.consolecli.systemconsole
 
 			if (key.KeyChar != '\u0000')
 			{
+				isTyping = true;
 				inputString += key.KeyChar;
 				ConsoleRedrawInputLine();
 				return;
 			}
+		}
+
+		private void ExecuteCommands(string[] stringarray)
+		{
+			string commandName = stringarray[0];
+			string[] commandParameter = new string[stringarray.Length];
+
+			for (int i = 1; i < stringarray.Length; i++)
+			{
+				commandParameter[i] = stringarray[i];
+			}
+			Type type = Type.GetType("ProjectSLN.darkcomsoft.src.commands." + commandName);
+
+			if (type!= null)
+            {
+				if (type.BaseType == typeof(cvar))
+                {
+					ConsoleCLI.Execute(type, commandParameter);
+                }
+                else
+                {
+					Debug.LogError("This " + commandName + "is not a CVAR Command!");
+				}
+            }
+            else
+            {
+				Debug.LogError("This " + commandName + "don't exist!");
+            }
 		}
 		#endregion
 

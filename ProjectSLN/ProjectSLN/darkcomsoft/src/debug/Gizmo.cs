@@ -4,10 +4,10 @@ using System.Drawing;
 using System.Text;
 using OpenTK.Graphics.OpenGL;
 using OpenTK.Mathematics;
-using Projectsln.darkcomsoft.src.render;
-using Projectsln.darkcomsoft.src.resources;
+using ProjectSLN.darkcomsoft.src.render;
+using ProjectSLN.darkcomsoft.src.resources;
 
-namespace Projectsln.darkcomsoft.src.debug
+namespace ProjectSLN.darkcomsoft.src.debug
 {
     public class Gizmo : ClassBase
     {

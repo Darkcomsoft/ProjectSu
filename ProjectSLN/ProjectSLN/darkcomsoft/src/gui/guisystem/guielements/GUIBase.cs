@@ -1,19 +1,19 @@
 ﻿using OpenTK.Graphics.OpenGL;
 using OpenTK.Mathematics;
 using OpenTK.Windowing.Common;
-using Projectsln.darkcomsoft.src.client;
-using Projectsln.darkcomsoft.src.debug;
-using Projectsln.darkcomsoft.src.engine;
-using Projectsln.darkcomsoft.src.engine.window;
-using Projectsln.darkcomsoft.src.enums;
-using Projectsln.darkcomsoft.src.render;
-using Projectsln.darkcomsoft.src.resources;
+using ProjectSLN.darkcomsoft.src.client;
+using ProjectSLN.darkcomsoft.src.debug;
+using ProjectSLN.darkcomsoft.src.engine;
+using ProjectSLN.darkcomsoft.src.engine.window;
+using ProjectSLN.darkcomsoft.src.enums;
+using ProjectSLN.darkcomsoft.src.render;
+using ProjectSLN.darkcomsoft.src.resources;
 using System;
 using System.Collections.Generic;
 using System.Drawing;
 using System.Text;
 
-namespace Projectsln.darkcomsoft.src.gui.guisystem.guielements
+namespace ProjectSLN.darkcomsoft.src.gui.guisystem.guielements
 {
     /// <summary>
     /// Base of all GuiElements

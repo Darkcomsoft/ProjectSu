@@ -1,15 +1,22 @@
-﻿using Projectsln.darkcomsoft.src.misc;
+﻿using ProjectSLN.darkcomsoft.src.misc;
 using System;
 using System.Collections.Generic;
 using System.Text;
 
-namespace Projectsln.darkcomsoft.src.consolecli
+namespace ProjectSLN.darkcomsoft.src.consolecli
 {
     public static class ConsoleCLI
     {
-        public static void Execute<T>(params object[] parameters)
+        public static void Execute<T>(params string[] parameters)
         {
             cvar cva = Utilits.CreateInstance<cvar>(typeof(T));
+            cva.Execute(parameters);
+            cva.Dispose();
+        }
+
+        public static void Execute(Type type, params string[] parameters)
+        {
+            cvar cva = Utilits.CreateInstance<cvar>(type);
             cva.Execute(parameters);
             cva.Dispose();
         }

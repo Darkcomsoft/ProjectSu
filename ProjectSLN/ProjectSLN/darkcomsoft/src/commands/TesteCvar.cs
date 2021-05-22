@@ -1,9 +1,10 @@
-﻿using Projectsln.darkcomsoft.src.debug;
+﻿using ProjectSLN.darkcomsoft.src.consolecli;
+using ProjectSLN.darkcomsoft.src.debug;
 using System;
 using System.Collections.Generic;
 using System.Text;
 
-namespace Projectsln.darkcomsoft.src.consolecli
+namespace ProjectSLN.darkcomsoft.src.commands
 {
     public class TesteCvar : cvar
     {
@@ -12,11 +13,12 @@ namespace Projectsln.darkcomsoft.src.consolecli
             needAdvancedPermission = false;
         }
 
-        protected override void OnExecute(params object[] param)
+        protected override void OnExecute(params string[] param)
         {
-            CheckParamsSize(param.Length, 1);
-
-            Log("Teste cvar is working! " + param[0]);
+            if (CheckParamsSize(param.Length, 1))
+            {
+                Log("Teste cvar is working! " + param[0]);
+            }
             base.OnExecute(param);
         }
 
