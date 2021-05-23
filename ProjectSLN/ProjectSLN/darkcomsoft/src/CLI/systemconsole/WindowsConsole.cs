@@ -141,10 +141,7 @@ namespace ProjectSLN.darkcomsoft.src.CLI.systemconsole
 				var strtext = inputString;
 				inputString = "";
 
-				if (OnInputText != null)
-				{
-					OnInputText(strtext);
-				}
+				OnInputText?.Invoke(strtext);
 			}
 			else
 			{
@@ -177,10 +174,7 @@ namespace ProjectSLN.darkcomsoft.src.CLI.systemconsole
 			var strtext = inputString;
 			inputString = "";
 
-			if (OnInputText != null)
-			{
-				OnInputText(strtext);
-			}
+			OnInputText?.Invoke(strtext);
 		}
 
 		public void ConsoleTick()

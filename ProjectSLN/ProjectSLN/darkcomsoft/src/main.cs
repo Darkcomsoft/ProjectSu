@@ -16,17 +16,12 @@ namespace ProjectSLN.darkcomsoft.src
     {
         public static WindowsConsole m_windowsConsole { get; private set; }
 
+        private const int m_GcCleanOutOfMemoryException = 2;
+
         [MTAThread]
         static void Main(string[] args)
         {
-            foreach (var value in args)
-            {
-                if (value == "-debug")
-                {
-                    Debug.EnableDebug();
-                }
-                Debug.Log("Argument: " + value);
-            }
+            LoadLauncheArguments(args);
 
             GCSettings.LatencyMode = GCLatencyMode.LowLatency;
 
@@ -70,7 +65,7 @@ namespace ProjectSLN.darkcomsoft.src
                 catch (OutOfMemoryException memoryEx)
                 {
                     Debug.LogWarning("GC: " + memoryEx.Message, "Main");
-                    for (int i = 0; i < 2; i++)
+                    for (int i = 0; i < m_GcCleanOutOfMemoryException; i++)
                     {
                         Debug.LogWarning("GC: Collecting Garbage!", "Main");
                         GC.Collect();
@@ -138,6 +133,18 @@ namespace ProjectSLN.darkcomsoft.src
                 Debug.LogError("You don't Have OpenAL(Audio Library), you need to Download: https://www.openal.org/", "OpenAL");
                 Debug.Log("Starting! No-Sound Mode ):", "OpenAL");
                 //Application.NoSoundMode = true;
+            }
+        }
+
+        private static void LoadLauncheArguments(string[] arg)
+        {
+            foreach (var value in arg)
+            {
+                if (value == "-debug")
+                {
+                    Debug.EnableDebug();
+                }
+                Debug.Log("Argument: " + value);
             }
         }
     }

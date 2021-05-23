@@ -30,7 +30,7 @@ namespace ProjectSLN.darkcomsoft.src.gui.guisystem.guielements
 
         private FontRender m_fontRender;
 
-        public Action OnClick;
+        public event Action OnClick;
 
         public Buttom()
         {
