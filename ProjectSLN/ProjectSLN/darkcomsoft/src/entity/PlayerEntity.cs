@@ -1,4 +1,5 @@
-﻿using ProjectSLN.darkcomsoft.src.debug;
+﻿using ProjectSLN.darkcomsoft.src.client;
+using ProjectSLN.darkcomsoft.src.debug;
 using System;
 using System.Collections.Generic;
 using System.Text;

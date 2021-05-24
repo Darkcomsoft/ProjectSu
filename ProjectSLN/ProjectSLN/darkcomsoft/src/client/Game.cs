@@ -1,5 +1,6 @@
 ﻿using Lidgren.Network;
 using ProjectSLN.darkcomsoft.src.debug;
+using ProjectSLN.darkcomsoft.src.entity;
 using ProjectSLN.darkcomsoft.src.network;
 using ProjectSLN.darkcomsoft.src.world;
 using System;
@@ -15,6 +16,10 @@ namespace ProjectSLN.darkcomsoft.src.client
     {
         public static Game instance { get; private set; }
         private bool m_isPlaying = false;
+
+        private World m_correntWorld;
+
+        public PlayerEntity m_player { get; private set; }
 
         public Game()
         {
@@ -33,7 +38,7 @@ namespace ProjectSLN.darkcomsoft.src.client
 
         private void CreateStartWorlds()
         {
-            WorldManager.SpawnWorld<MainMenuWorld>();//Start menu World
+           WorldManager.SpawnWorld<MainMenuWorld>();//Start menu World
         }
 
         public void StartSinglePlayer()
@@ -56,6 +61,17 @@ namespace ProjectSLN.darkcomsoft.src.client
             instance.m_isPlaying = false;
             WorldManager.DestroyAllWorlds();
             WorldManager.SpawnWorld<MainMenuWorld>();
+            m_correntWorld = null;
+        }
+
+        protected void SpawnPlayer(PlayerEntity playerEntity)
+        {
+
+        }
+
+        public void DestroyPlayer(PlayerEntity playerEntity)
+        {
+
         }
     }
 }
