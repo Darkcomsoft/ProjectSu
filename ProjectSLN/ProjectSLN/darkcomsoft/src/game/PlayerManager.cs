@@ -1,4 +1,5 @@
-﻿using ProjectSLN.darkcomsoft.src.engine.gameobject;
+﻿using ProjectSLN.darkcomsoft.src.debug;
+using ProjectSLN.darkcomsoft.src.engine.gameobject;
 using ProjectSLN.darkcomsoft.src.entity;
 using ProjectSLN.darkcomsoft.src.misc;
 using ProjectSLN.darkcomsoft.src.world;
@@ -35,6 +36,7 @@ namespace ProjectSLN.darkcomsoft.src.game
         public void KillPlayer(PlayerEntity playerEntity, [CallerMemberName]string caller = "")
         {
             m_playerentity = null;
+            print("Method Caller: " + caller);
         }
     }
 }

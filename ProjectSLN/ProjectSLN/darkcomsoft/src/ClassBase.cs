@@ -71,6 +71,25 @@ namespace ProjectSLN.darkcomsoft.src
         }
 
         /// <summary>
+        /// Used for print in console and debug, is the same of <see cref="Debug.Log(string, string)"/>
+        /// </summary>
+        /// <param name="msg"></param>
+        /// <param name="caller"></param>
+        protected void print(string msg, string caller = "") { Debug.Log(msg, caller); }
+        /// <summary>
+        /// Used for print Warning in console and debug, is the same of <see cref="Debug.LogWarning(string, string)"/>
+        /// </summary>
+        /// <param name="msg"></param>
+        /// <param name="caller"></param>
+        protected void printWarning(string msg, string caller = "") { Debug.LogWarning(msg, caller); }
+        /// <summary>
+        /// Used for print Errors in console and debug, is the same of <see cref="Debug.LogError(string, string)"/>
+        /// </summary>
+        /// <param name="msg"></param>
+        /// <param name="caller"></param>
+        protected void printError(string msg, string caller = "") { Debug.LogError(msg, caller); }
+
+        /// <summary>
         /// if is true when this object is disposed is Write a debug text on console, Default=True
         /// </summary>
         protected bool ShowDisposeDebugMsg { get { return m_showdebugDispose; } set { m_showdebugDispose = value; } }
