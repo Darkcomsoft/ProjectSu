@@ -1,6 +1,7 @@
 ﻿using Lidgren.Network;
 using ProjectSLN.darkcomsoft.src.debug;
 using ProjectSLN.darkcomsoft.src.entity;
+using ProjectSLN.darkcomsoft.src.game;
 using ProjectSLN.darkcomsoft.src.network;
 using ProjectSLN.darkcomsoft.src.world;
 using System;
@@ -17,13 +18,13 @@ namespace ProjectSLN.darkcomsoft.src.client
         public static Game instance { get; private set; }
         private bool m_isPlaying = false;
 
-        private World m_correntWorld;
-
-        public PlayerEntity m_player { get; private set; }
+        private PlayerManager m_playerManager;
 
         public Game()
         {
             instance = this;
+
+            m_playerManager = new PlayerManager();
 
             CreateStartWorlds();
         }
@@ -31,6 +32,9 @@ namespace ProjectSLN.darkcomsoft.src.client
         protected override void OnDispose()
         {
             WorldManager.DestroyAllWorlds();
+
+            m_playerManager.Dispose();
+            m_playerManager = null;
 
             instance = null;
             base.OnDispose();
@@ -47,31 +51,19 @@ namespace ProjectSLN.darkcomsoft.src.client
             JoinGameWorld();
         }
 
-        #region WorldStuff
-        private void JoinGameWorld()
-        {
-            WorldManager.DestroyWorld(WorldManager.GetWorld<MainMenuWorld>());
-            WorldManager.SpawnWorld<SatrillesWorld>();
-        }
-
-        #endregion
-
         public static void Disconnect()
         {
             instance.m_isPlaying = false;
             WorldManager.DestroyAllWorlds();
             WorldManager.SpawnWorld<MainMenuWorld>();
-            m_correntWorld = null;
         }
 
-        protected void SpawnPlayer(PlayerEntity playerEntity)
+        #region World's Stuff
+        private void JoinGameWorld()
         {
-
+            WorldManager.DestroyWorld(WorldManager.GetWorld<MainMenuWorld>());
+            WorldManager.SpawnWorld<SatrillesWorld>();
         }
-
-        public void DestroyPlayer(PlayerEntity playerEntity)
-        {
-
-        }
+        #endregion
     }
 }

@@ -160,6 +160,14 @@ namespace ProjectSLN.darkcomsoft.src.engine.gameobject
         /// </summary>
         protected virtual void OnBecomeInvisible() { }
 
+        protected virtual void OnWorldChanged() { }
+
+        /// <summary>
+        /// Move this GameObject to this <paramref name="world"/> World!
+        /// </summary>
+        /// <param name="world"></param>
+        protected void ChangeWorld(World world) { m_world = world; OnWorldChanged(); }
+
         /// <summary>
         /// "Spawn" a GameObject, if is a Entity spawn on network
         /// </summary>
@@ -169,10 +177,10 @@ namespace ProjectSLN.darkcomsoft.src.engine.gameobject
         {
             GameObject obj = ObjectManager.CreateGameObject<T>(world);
 
-            if (obj.GetType().Equals(typeof(Entity)))
+            /*if (obj.GetType().Equals(typeof(Entity)))
             {
                 NetworkManager.instance.CreatEntity((Entity)obj, world);
-            }
+            }*/
 
             return obj;
         }
@@ -184,10 +192,10 @@ namespace ProjectSLN.darkcomsoft.src.engine.gameobject
         /// <param name="insta"></param>
         public static void DestroyObject(GameObject gameObject, bool insta = false)
         {
-            if (gameObject.GetType().Equals(typeof(Entity)))
+            /*if (gameObject.GetType().Equals(typeof(Entity)))
             {
                 NetworkManager.instance.DestroyEntity((Entity)gameObject);
-            }
+            }*/
 
             ObjectManager.RemoveGameObject(gameObject, insta);
         }
@@ -201,10 +209,10 @@ namespace ProjectSLN.darkcomsoft.src.engine.gameobject
         {
             GameObject obj = ObjectManager.CreateGameObject(type, world);
 
-            if (obj.GetType().Equals(typeof(Entity)))
+            /*if (obj.GetType().Equals(typeof(Entity)))
             {
                 NetworkManager.instance.CreatEntity((Entity)obj, world);
-            }
+            }*/
 
             return obj;
         }

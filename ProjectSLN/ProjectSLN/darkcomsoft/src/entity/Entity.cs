@@ -28,6 +28,11 @@ namespace ProjectSLN.darkcomsoft.src.entity
             base.OnDispose();
         }
 
+        public static void MoveEntityToWorld(Entity entity, World world)
+        {
+            entity.ChangeWorld(world);
+        }
+
         #region OldStuffOfNetwork
         [Obsolete]
         protected int m_regionId { get; private set; }//this the in world region, sync only player inside the region withothers
