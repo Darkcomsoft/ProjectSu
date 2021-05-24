@@ -9,11 +9,11 @@ namespace ProjectSLN.darkcomsoft.src.entity
     /// </summary>
     public class LivingEntity : Entity
     {
-        private bool alive = false;
+        private bool m_alive = false;
 
         protected override void OnAwake()
         {
-            alive = true;
+            m_alive = true;
             base.OnAwake();
         }
 

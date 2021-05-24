@@ -37,7 +37,7 @@ namespace ProjectSLN.darkcomsoft.src.server
         private void StartGameServer()
         {
             LinkNetworkCallBacks();
-            Application.SetNetworkType(enums.AppNetworkType.ClientSinglePlayerServer);
+            //Application.SetNetworkType(enums.AppNetworkType.ClientSinglePlayerServer);
             NetworkManager.CreateServer(127001, 25000, 10);
         }
 
