@@ -22,6 +22,7 @@ namespace ProjectSLN.darkcomsoft.src
         static void Main(string[] args)
         {
             LoadLauncheArguments(args);
+            CheckDevMode();
 
             GCSettings.LatencyMode = GCLatencyMode.LowLatency;
 
@@ -146,6 +147,16 @@ namespace ProjectSLN.darkcomsoft.src
                 }
                 Debug.Log("Argument: " + value);
             }
+        }
+
+        private static void CheckDevMode()
+        {
+#if DEBUG
+            //if is runing a debug version, set by default this
+            Debug.EnablePrintDebug();
+#else
+            Debug.DisablePrintDebug();
+#endif
         }
     }
 }

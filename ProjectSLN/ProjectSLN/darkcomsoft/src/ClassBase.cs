@@ -75,19 +75,19 @@ namespace ProjectSLN.darkcomsoft.src
         /// </summary>
         /// <param name="msg"></param>
         /// <param name="caller"></param>
-        protected void print(string msg, string caller = "") { Debug.Log(msg, caller); }
+        protected static void print(string msg, string caller = "") { Debug.Log(msg, caller); }
         /// <summary>
         /// Used for print Warning in console and debug, is the same of <see cref="Debug.LogWarning(string, string)"/>
         /// </summary>
         /// <param name="msg"></param>
         /// <param name="caller"></param>
-        protected void printWarning(string msg, string caller = "") { Debug.LogWarning(msg, caller); }
+        protected static void printWarning(string msg, string caller = "") { Debug.LogWarning(msg, caller); }
         /// <summary>
         /// Used for print Errors in console and debug, is the same of <see cref="Debug.LogError(string, string)"/>
         /// </summary>
         /// <param name="msg"></param>
         /// <param name="caller"></param>
-        protected void printError(string msg, string caller = "") { Debug.LogError(msg, caller); }
+        protected static void printError(string msg, string caller = "") { Debug.LogError(msg, caller); }
 
         /// <summary>
         /// if is true when this object is disposed is Write a debug text on console, Default=True

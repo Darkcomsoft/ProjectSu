@@ -9,14 +9,14 @@ namespace ProjectSLN.darkcomsoft.src.network
     {
         private static NetworkCallBacks m_instance;
 
-        public static event Action<NetConnection> OnPlayerDisconnect;
-        public static event Action<NetConnection> OnPlayerConnect;
-        public static event Action<string, NetConnection> PlayerApproval;
-        public static event Action OnDisconnect;
-        public static event Action OnConnect;
-        public static event Action OnServerStart;
-        public static event Action OnServerStop;
-        public static event Action OnClientStart;
+        public static Action<NetConnection> OnPlayerDisconnect;
+        public static Action<NetConnection> OnPlayerConnect;
+        public static Action<string, NetConnection> PlayerApproval;
+        public static Action OnDisconnect;
+        public static Action OnConnect;
+        public static Action OnServerStart;
+        public static Action OnServerStop;
+        public static Action OnClientStart;
         /// <summary>
         /// <see cref="OnReceivedServerData"/> is called when a client receive start data, like the entire list of entitys, this means you cliet have every thing to play
         /// </summary>

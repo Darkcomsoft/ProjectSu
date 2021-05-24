@@ -10,5 +10,13 @@ namespace ProjectSLN.darkcomsoft.src.entity
     public class LivingEntity : Entity
     {
         private bool alive = false;
+
+        protected override void OnAwake()
+        {
+            alive = true;
+            base.OnAwake();
+        }
+
+        protected virtual void OnDeath() { }
     }
 }

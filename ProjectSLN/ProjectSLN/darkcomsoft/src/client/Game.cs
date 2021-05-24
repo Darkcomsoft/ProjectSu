@@ -42,7 +42,7 @@ namespace ProjectSLN.darkcomsoft.src.client
 
         private void CreateStartWorlds()
         {
-           WorldManager.SpawnWorld<MainMenuWorld>();//Start menu World
+            LoadMainMenu();
         }
 
         public void StartSinglePlayer()
@@ -54,15 +54,20 @@ namespace ProjectSLN.darkcomsoft.src.client
         public static void Disconnect()
         {
             instance.m_isPlaying = false;
-            WorldManager.DestroyAllWorlds();
-            WorldManager.SpawnWorld<MainMenuWorld>();
+            instance.LoadMainMenu();
         }
 
         #region World's Stuff
         private void JoinGameWorld()
         {
-            WorldManager.DestroyWorld(WorldManager.GetWorld<MainMenuWorld>());
+            WorldManager.DestroyAllWorlds();
             WorldManager.SpawnWorld<SatrillesWorld>();
+        }
+
+        private void LoadMainMenu()
+        {
+            WorldManager.DestroyAllWorlds();
+            WorldManager.SpawnWorld<MainMenuWorld>();
         }
         #endregion
     }

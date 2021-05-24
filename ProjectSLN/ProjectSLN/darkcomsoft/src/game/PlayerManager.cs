@@ -12,15 +12,18 @@ namespace ProjectSLN.darkcomsoft.src.game
 {
     public class PlayerManager : ClassBase
     {
-        public static PlayerEntity m_playerentity { get; private set; }
+        public static PlayerManager instance { get; private set; }
+        public PlayerEntity m_playerentity { get; private set; }
 
         public PlayerManager()
         {
-
+            instance = this;
         }
 
         protected override void OnDispose()
         {
+            m_playerentity = null;
+            instance = null;
             base.OnDispose();
         }
 
@@ -33,9 +36,9 @@ namespace ProjectSLN.darkcomsoft.src.game
         }
 
         [EngineOnly]
-        public void KillPlayer(PlayerEntity playerEntity, [CallerMemberName]string caller = "")
+        public static void KillPlayer(PlayerEntity playerEntity, [CallerMemberName]string caller = "")
         {
-            m_playerentity = null;
+            instance.m_playerentity = null;
             print("Method Caller: " + caller);
         }
     }
