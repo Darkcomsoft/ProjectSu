@@ -1,9 +1,3 @@
-C:\Users\estev\Documents\GitHub\ProjectIndustry\ProjectSLN\bin\x64\Debug\netcoreapp3.1\ProjectIND.exe
-C:\Users\estev\Documents\GitHub\ProjectIndustry\ProjectSLN\bin\x64\Debug\netcoreapp3.1\ProjectIND.deps.json
-C:\Users\estev\Documents\GitHub\ProjectIndustry\ProjectSLN\bin\x64\Debug\netcoreapp3.1\ProjectIND.runtimeconfig.json
-C:\Users\estev\Documents\GitHub\ProjectIndustry\ProjectSLN\bin\x64\Debug\netcoreapp3.1\ProjectIND.runtimeconfig.dev.json
-C:\Users\estev\Documents\GitHub\ProjectIndustry\ProjectSLN\bin\x64\Debug\netcoreapp3.1\ProjectIND.dll
-C:\Users\estev\Documents\GitHub\ProjectIndustry\ProjectSLN\bin\x64\Debug\netcoreapp3.1\ProjectIND.pdb
 C:\Users\estev\Documents\GitHub\ProjectIndustry\ProjectSLN\bin\x64\Debug\netcoreapp3.1\Microsoft.Win32.SystemEvents.dll
 C:\Users\estev\Documents\GitHub\ProjectIndustry\ProjectSLN\bin\x64\Debug\netcoreapp3.1\Newtonsoft.Json.dll
 C:\Users\estev\Documents\GitHub\ProjectIndustry\ProjectSLN\bin\x64\Debug\netcoreapp3.1\OpenTK.Compute.dll
@@ -30,6 +24,12 @@ C:\Users\estev\Documents\GitHub\ProjectIndustry\ProjectSLN\obj\x64\Debug\netcore
 C:\Users\estev\Documents\GitHub\ProjectIndustry\ProjectSLN\obj\x64\Debug\netcoreapp3.1\ProjectIND.AssemblyInfo.cs
 C:\Users\estev\Documents\GitHub\ProjectIndustry\ProjectSLN\obj\x64\Debug\netcoreapp3.1\ProjectIND.csproj.CoreCompileInputs.cache
 C:\Users\estev\Documents\GitHub\ProjectIndustry\ProjectSLN\obj\x64\Debug\netcoreapp3.1\ProjectIND.csproj.CopyComplete
-C:\Users\estev\Documents\GitHub\ProjectIndustry\ProjectSLN\obj\x64\Debug\netcoreapp3.1\ProjectIND.dll
-C:\Users\estev\Documents\GitHub\ProjectIndustry\ProjectSLN\obj\x64\Debug\netcoreapp3.1\ProjectIND.pdb
 C:\Users\estev\Documents\GitHub\ProjectIndustry\ProjectSLN\obj\x64\Debug\netcoreapp3.1\ProjectIND.genruntimeconfig.cache
+C:\Users\estev\Documents\GitHub\ProjectIndustry\ProjectSLN\bin\x64\Debug\netcoreapp3.1\ProjectIndustry.exe
+C:\Users\estev\Documents\GitHub\ProjectIndustry\ProjectSLN\bin\x64\Debug\netcoreapp3.1\ProjectIndustry.deps.json
+C:\Users\estev\Documents\GitHub\ProjectIndustry\ProjectSLN\bin\x64\Debug\netcoreapp3.1\ProjectIndustry.runtimeconfig.json
+C:\Users\estev\Documents\GitHub\ProjectIndustry\ProjectSLN\bin\x64\Debug\netcoreapp3.1\ProjectIndustry.runtimeconfig.dev.json
+C:\Users\estev\Documents\GitHub\ProjectIndustry\ProjectSLN\bin\x64\Debug\netcoreapp3.1\ProjectIndustry.dll
+C:\Users\estev\Documents\GitHub\ProjectIndustry\ProjectSLN\bin\x64\Debug\netcoreapp3.1\ProjectIndustry.pdb
+C:\Users\estev\Documents\GitHub\ProjectIndustry\ProjectSLN\obj\x64\Debug\netcoreapp3.1\ProjectIndustry.dll
+C:\Users\estev\Documents\GitHub\ProjectIndustry\ProjectSLN\obj\x64\Debug\netcoreapp3.1\ProjectIndustry.pdb

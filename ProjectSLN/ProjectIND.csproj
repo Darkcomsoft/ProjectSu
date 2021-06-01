@@ -5,7 +5,12 @@
     <TargetFramework>netcoreapp3.1</TargetFramework>
     <Platforms>AnyCPU;x64</Platforms>
     <Configurations>Debug;Release;Debug-Server;Release-Server</Configurations>
-    <StartupObject>ProjectSLN.darkcomsoft.src.main</StartupObject>
+    <StartupObject></StartupObject>
+    <AssemblyName>ProjectIndustry</AssemblyName>
+    <Company>Darkcomsoft</Company>
+    <Copyright>Copyright (c) 2021 Darkcomsoft - All rights reserved</Copyright>
+    <PackageProjectUrl>https://github.com/Darkcomsoft</PackageProjectUrl>
+    <PackageTags>Video Game, Procedural Game, Survival Game</PackageTags>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">

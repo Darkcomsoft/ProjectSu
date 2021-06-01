@@ -6,7 +6,7 @@
   "compilationOptions": {},
   "targets": {
     ".NETCoreApp,Version=v3.1": {
-      "ProjectIND/1.0.0": {
+      "ProjectIndustry/1.0.0": {
         "dependencies": {
           "Newtonsoft.Json": "13.0.1",
           "OpenTK": "4.6.3",
@@ -14,7 +14,7 @@
           "Lidgren.Network": "2012.1.7.0"
         },
         "runtime": {
-          "ProjectIND.dll": {}
+          "ProjectIndustry.dll": {}
         }
       },
       "Microsoft.NETCore.Platforms/5.0.0": {},
@@ -223,7 +223,7 @@
     }
   },
   "libraries": {
-    "ProjectIND/1.0.0": {
+    "ProjectIndustry/1.0.0": {
       "type": "project",
       "serviceable": false,
       "sha512": ""

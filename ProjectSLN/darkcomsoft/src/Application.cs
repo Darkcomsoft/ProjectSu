@@ -29,8 +29,8 @@ namespace ProjectIND.darkcomsoft.src
     /// </summary>
     public class Application : ClassBase
     {
-        public const string AppName = "ProjectSLN";
-        public const string Version = "InDev w21m4w2";
+        public const string AppName = "ProjectIndustry";
+        public const string Version = "InDev w21m6w1";
 
         public static readonly string BinaryPath = GetBinaryPath();
         public static readonly string AssetsPath = GetAssetsPath() + "\\Assets";
