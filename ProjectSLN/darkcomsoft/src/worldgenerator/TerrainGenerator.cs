@@ -1,15 +1,15 @@
 ﻿using OpenTK.Mathematics;
-using ProjectSLN.darkcomsoft.src;
-using ProjectSLN.darkcomsoft.src.debug;
-using ProjectSLN.darkcomsoft.src.misc;
-using ProjectSLN.darkcomsoft.src.engine;
-using ProjectSLN.darkcomsoft.src.engine.gameobject;
+using ProjectIND.darkcomsoft.src;
+using ProjectIND.darkcomsoft.src.debug;
+using ProjectIND.darkcomsoft.src.misc;
+using ProjectIND.darkcomsoft.src.engine;
+using ProjectIND.darkcomsoft.src.engine.gameobject;
 using System;
 using System.Collections.Generic;
 using System.Text;
 using System.Threading;
 
-namespace ProjectSLN.darkcomsoft.src.worldgenerator
+namespace ProjectIND.darkcomsoft.src.worldgenerator
 {
     public class TerrainGenerator : GameObject
     {

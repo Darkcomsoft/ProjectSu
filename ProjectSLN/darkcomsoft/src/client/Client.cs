@@ -1,19 +1,19 @@
 ﻿using OpenTK.Mathematics;
-using ProjectSLN.darkcomsoft.src.debug;
-using ProjectSLN.darkcomsoft.src.engine;
-using ProjectSLN.darkcomsoft.src.entity;
-using ProjectSLN.darkcomsoft.src.entity.managers;
-using ProjectSLN.darkcomsoft.src.world;
+using ProjectIND.darkcomsoft.src.debug;
+using ProjectIND.darkcomsoft.src.engine;
+using ProjectIND.darkcomsoft.src.entity;
+using ProjectIND.darkcomsoft.src.entity.managers;
+using ProjectIND.darkcomsoft.src.world;
 using OpenTK.Windowing.GraphicsLibraryFramework;
 using System;
 using System.Collections.Generic;
 using System.Text;
-using ProjectSLN.darkcomsoft.src.gui.guisystem;
+using ProjectIND.darkcomsoft.src.gui.guisystem;
 using OpenTK.Windowing.Common;
-using ProjectSLN.darkcomsoft.src.network;
+using ProjectIND.darkcomsoft.src.network;
 using Lidgren.Network;
 
-namespace ProjectSLN.darkcomsoft.src.client
+namespace ProjectIND.darkcomsoft.src.client
 {
     /// <summary>
     /// is the client, this is the class start the game stuff, like graphics, and other things

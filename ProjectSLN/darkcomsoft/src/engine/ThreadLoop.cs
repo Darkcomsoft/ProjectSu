@@ -1,13 +1,13 @@
-﻿using ProjectSLN.darkcomsoft.src;
-using ProjectSLN.darkcomsoft.src.debug;
-using ProjectSLN.darkcomsoft.src.engine.window;
-using ProjectSLN.darkcomsoft.src.server;
+﻿using ProjectIND.darkcomsoft.src;
+using ProjectIND.darkcomsoft.src.debug;
+using ProjectIND.darkcomsoft.src.engine.window;
+using ProjectIND.darkcomsoft.src.server;
 using System;
 using System.Collections.Generic;
 using System.Text;
 using System.Threading;
 
-namespace ProjectSLN.darkcomsoft.src.engine
+namespace ProjectIND.darkcomsoft.src.engine
 {
     /// <summary>
     /// This start a loop thread like in the <see cref="WindowMain"/> and <see cref="ServerMain"/>, a normal gameloop

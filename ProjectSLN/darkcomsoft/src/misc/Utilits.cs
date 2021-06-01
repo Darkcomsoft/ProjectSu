@@ -1,4 +1,4 @@
-﻿using ProjectSLN.darkcomsoft.src.debug;
+﻿using ProjectIND.darkcomsoft.src.debug;
 using System;
 using System.Collections.Generic;
 using System.Net;
@@ -10,7 +10,7 @@ using OpenTK.Graphics.OpenGL;
 using System.Runtime.InteropServices;
 using OpenTK.Mathematics;
 
-namespace ProjectSLN.darkcomsoft.src.misc
+namespace ProjectIND.darkcomsoft.src.misc
 {
     /// <summary>
     /// All type of Utilits

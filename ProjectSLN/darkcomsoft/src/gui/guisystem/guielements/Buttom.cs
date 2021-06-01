@@ -1,17 +1,17 @@
 ﻿using OpenTK.Mathematics;
 using OpenTK.Windowing.Common;
 using OpenTK.Windowing.GraphicsLibraryFramework;
-using ProjectSLN.darkcomsoft.src.debug;
-using ProjectSLN.darkcomsoft.src.enums;
-using ProjectSLN.darkcomsoft.src.gui.guisystem.font;
-using ProjectSLN.darkcomsoft.src.render;
-using ProjectSLN.darkcomsoft.src.resources;
+using ProjectIND.darkcomsoft.src.debug;
+using ProjectIND.darkcomsoft.src.enums;
+using ProjectIND.darkcomsoft.src.gui.guisystem.font;
+using ProjectIND.darkcomsoft.src.render;
+using ProjectIND.darkcomsoft.src.resources;
 using System;
 using System.Collections.Generic;
 using System.Drawing;
 using System.Text;
 
-namespace ProjectSLN.darkcomsoft.src.gui.guisystem.guielements
+namespace ProjectIND.darkcomsoft.src.gui.guisystem.guielements
 {
     /// <summary>
     /// A simple gui buttom, only one function click

@@ -1,19 +1,19 @@
-﻿using ProjectSLN.darkcomsoft.src.debug;
-using ProjectSLN.darkcomsoft.src.entity;
-using ProjectSLN.darkcomsoft.src.entity.managers;
-using ProjectSLN.darkcomsoft.src.gui.guisystem.guielements;
+﻿using ProjectIND.darkcomsoft.src.debug;
+using ProjectIND.darkcomsoft.src.entity;
+using ProjectIND.darkcomsoft.src.entity.managers;
+using ProjectIND.darkcomsoft.src.gui.guisystem.guielements;
 using System.Drawing;
 using System;
 using System.Collections.Generic;
 using System.Text;
 using OpenTK.Mathematics;
-using ProjectSLN.darkcomsoft.src.gui.guisystem.font;
-using ProjectSLN.darkcomsoft.src.client;
-using ProjectSLN.darkcomsoft.src.engine.window;
-using ProjectSLN.darkcomsoft.src.engine;
+using ProjectIND.darkcomsoft.src.gui.guisystem.font;
+using ProjectIND.darkcomsoft.src.client;
+using ProjectIND.darkcomsoft.src.engine.window;
+using ProjectIND.darkcomsoft.src.engine;
 using OpenTK.Windowing.GraphicsLibraryFramework;
 
-namespace ProjectSLN.darkcomsoft.src.world
+namespace ProjectIND.darkcomsoft.src.world
 {
     public class MainMenuWorld : World
     {

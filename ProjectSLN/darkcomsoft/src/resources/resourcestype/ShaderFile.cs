@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace ProjectSLN.darkcomsoft.src.resources.resourcestype
+namespace ProjectIND.darkcomsoft.src.resources.resourcestype
 {
     public struct ShaderFile
     {

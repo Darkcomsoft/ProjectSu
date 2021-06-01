@@ -1,14 +1,14 @@
-﻿using ProjectSLN.darkcomsoft.src.debug;
-using ProjectSLN.darkcomsoft.src.enums;
-using ProjectSLN.darkcomsoft.src.gui.guisystem.font;
-using ProjectSLN.darkcomsoft.src.render;
-using ProjectSLN.darkcomsoft.src.resources.resourcestype;
+﻿using ProjectIND.darkcomsoft.src.debug;
+using ProjectIND.darkcomsoft.src.enums;
+using ProjectIND.darkcomsoft.src.gui.guisystem.font;
+using ProjectIND.darkcomsoft.src.render;
+using ProjectIND.darkcomsoft.src.resources.resourcestype;
 using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Text;
 
-namespace ProjectSLN.darkcomsoft.src.resources
+namespace ProjectIND.darkcomsoft.src.resources
 {
     public class ResourcesManager : ClassBase
     {

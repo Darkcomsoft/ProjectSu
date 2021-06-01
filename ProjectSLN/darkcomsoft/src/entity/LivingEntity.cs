@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace ProjectSLN.darkcomsoft.src.entity
+namespace ProjectIND.darkcomsoft.src.entity
 {
     /// <summary>
     /// A Entity with life, can die etc.

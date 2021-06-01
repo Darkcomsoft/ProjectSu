@@ -1,20 +1,20 @@
 ﻿using OpenTK.Mathematics;
-using ProjectSLN.darkcomsoft.src.gui.guisystem.guielements;
+using ProjectIND.darkcomsoft.src.gui.guisystem.guielements;
 using OpenTK.Graphics.OpenGL;
 using OpenTK.Windowing.GraphicsLibraryFramework;
 using System;
 using System.Collections.Generic;
 using System.Text;
-using ProjectSLN.darkcomsoft.src.debug;
-using ProjectSLN.darkcomsoft.src.misc;
-using ProjectSLN.darkcomsoft.src.enums;
+using ProjectIND.darkcomsoft.src.debug;
+using ProjectIND.darkcomsoft.src.misc;
+using ProjectIND.darkcomsoft.src.enums;
 using System.Drawing;
 using OpenTK.Windowing.Common;
-using ProjectSLN.darkcomsoft.src.engine.window;
-using ProjectSLN.darkcomsoft.src.engine;
-using ProjectSLN.darkcomsoft.src.client;
+using ProjectIND.darkcomsoft.src.engine.window;
+using ProjectIND.darkcomsoft.src.engine;
+using ProjectIND.darkcomsoft.src.client;
 
-namespace ProjectSLN.darkcomsoft.src.gui.guisystem
+namespace ProjectIND.darkcomsoft.src.gui.guisystem
 {
     public class GUI : ClassBase
     {

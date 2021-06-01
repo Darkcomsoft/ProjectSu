@@ -1,16 +1,16 @@
 ﻿using OpenTK.Windowing.Desktop;
-using ProjectSLN.darkcomsoft.src;
-using ProjectSLN.darkcomsoft.src.debug;
-using ProjectSLN.darkcomsoft.src.engine.window;
-using ProjectSLN.darkcomsoft.src.server;
+using ProjectIND.darkcomsoft.src;
+using ProjectIND.darkcomsoft.src.debug;
+using ProjectIND.darkcomsoft.src.engine.window;
+using ProjectIND.darkcomsoft.src.server;
 using System;
 using System.Runtime.InteropServices;
 using System.Runtime;
 using System.Threading;
-using ProjectSLN.darkcomsoft.src.misc;
-using ProjectSLN.darkcomsoft.src.CLI.systemconsole;
+using ProjectIND.darkcomsoft.src.misc;
+using ProjectIND.darkcomsoft.src.CLI.systemconsole;
 
-namespace ProjectSLN.darkcomsoft.src
+namespace ProjectIND.darkcomsoft.src
 {
     class main
     {

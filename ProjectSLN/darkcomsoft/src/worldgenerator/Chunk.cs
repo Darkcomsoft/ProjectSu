@@ -1,11 +1,11 @@
-﻿using ProjectSLN.darkcomsoft.src;
-using ProjectSLN.darkcomsoft.src.engine;
-using ProjectSLN.darkcomsoft.src.engine.gameobject;
+﻿using ProjectIND.darkcomsoft.src;
+using ProjectIND.darkcomsoft.src.engine;
+using ProjectIND.darkcomsoft.src.engine.gameobject;
 using System;
 using System.Collections.Generic;
 using System.Text;
 
-namespace ProjectSLN.darkcomsoft.src.worldgenerator
+namespace ProjectIND.darkcomsoft.src.worldgenerator
 {
     /// <summary>
     /// Base class for all type of voxel Chunks

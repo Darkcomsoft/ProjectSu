@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace ProjectSLN.darkcomsoft.src.enums
+namespace ProjectIND.darkcomsoft.src.enums
 {
     /// <summary>
     /// Gui Dock Type, EX: LeftTop of the screen

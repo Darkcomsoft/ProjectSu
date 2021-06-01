@@ -1,10 +1,10 @@
-﻿using ProjectSLN.darkcomsoft.src.debug;
+﻿using ProjectIND.darkcomsoft.src.debug;
 using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Text;
 
-namespace ProjectSLN.darkcomsoft.src.resources.resourcestype
+namespace ProjectIND.darkcomsoft.src.resources.resourcestype
 {
     /// <summary>
     /// Load a custom GLSL file, dglsl is a file group of vertex shader and fragment shader

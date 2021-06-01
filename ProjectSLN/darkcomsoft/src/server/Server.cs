@@ -1,12 +1,12 @@
 ﻿using Lidgren.Network;
-using ProjectSLN.darkcomsoft.src.debug;
-using ProjectSLN.darkcomsoft.src.network;
-using ProjectSLN.darkcomsoft.src.world;
+using ProjectIND.darkcomsoft.src.debug;
+using ProjectIND.darkcomsoft.src.network;
+using ProjectIND.darkcomsoft.src.world;
 using System;
 using System.Collections.Generic;
 using System.Text;
 
-namespace ProjectSLN.darkcomsoft.src.server
+namespace ProjectIND.darkcomsoft.src.server
 {
     public class Server : BuildTypeBase
     {

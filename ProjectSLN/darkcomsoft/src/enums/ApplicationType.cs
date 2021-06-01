@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace ProjectSLN.darkcomsoft.src.enums
+namespace ProjectIND.darkcomsoft.src.enums
 {
     /// <summary>
     /// ApplicationType define what type of application is runing, or to decide what type of app start.

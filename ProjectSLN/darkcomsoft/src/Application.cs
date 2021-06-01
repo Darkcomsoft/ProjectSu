@@ -1,20 +1,20 @@
 ﻿using OpenTK.Graphics.OpenGL;
 using OpenTK.Windowing.Common;
-using ProjectSLN.darkcomsoft.src.client;
-using ProjectSLN.darkcomsoft.src.CLI;
-using ProjectSLN.darkcomsoft.src.CLI.systemconsole;
-using ProjectSLN.darkcomsoft.src.debug;
-using ProjectSLN.darkcomsoft.src.engine;
-using ProjectSLN.darkcomsoft.src.engine.gameobject;
-using ProjectSLN.darkcomsoft.src.engine.render;
-using ProjectSLN.darkcomsoft.src.engine.window;
-using ProjectSLN.darkcomsoft.src.entity.managers;
-using ProjectSLN.darkcomsoft.src.enums;
-using ProjectSLN.darkcomsoft.src.gui.guisystem;
-using ProjectSLN.darkcomsoft.src.network;
-using ProjectSLN.darkcomsoft.src.resources;
-using ProjectSLN.darkcomsoft.src.server;
-using ProjectSLN.darkcomsoft.src.world;
+using ProjectIND.darkcomsoft.src.client;
+using ProjectIND.darkcomsoft.src.CLI;
+using ProjectIND.darkcomsoft.src.CLI.systemconsole;
+using ProjectIND.darkcomsoft.src.debug;
+using ProjectIND.darkcomsoft.src.engine;
+using ProjectIND.darkcomsoft.src.engine.gameobject;
+using ProjectIND.darkcomsoft.src.engine.render;
+using ProjectIND.darkcomsoft.src.engine.window;
+using ProjectIND.darkcomsoft.src.entity.managers;
+using ProjectIND.darkcomsoft.src.enums;
+using ProjectIND.darkcomsoft.src.gui.guisystem;
+using ProjectIND.darkcomsoft.src.network;
+using ProjectIND.darkcomsoft.src.resources;
+using ProjectIND.darkcomsoft.src.server;
+using ProjectIND.darkcomsoft.src.world;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
@@ -22,7 +22,7 @@ using System.IO;
 using System.Runtime.InteropServices;
 using System.Text;
 
-namespace ProjectSLN.darkcomsoft.src
+namespace ProjectIND.darkcomsoft.src
 {
     /// <summary>
     /// Application is the base class for the entity systesm, this is used by the server or client

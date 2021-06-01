@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace ProjectSLN.darkcomsoft.src.crash
+namespace ProjectIND.darkcomsoft.src.crash
 {
     public struct Crash
     {

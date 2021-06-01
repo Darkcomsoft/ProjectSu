@@ -2,9 +2,9 @@
 using System.Collections.Generic;
 using System.Text;
 using OpenTK.Graphics.OpenGL;
-using ProjectSLN.darkcomsoft.src.resources.resourcestype;
+using ProjectIND.darkcomsoft.src.resources.resourcestype;
 
-namespace ProjectSLN.darkcomsoft.src.render
+namespace ProjectIND.darkcomsoft.src.render
 {
     public class Texture : ClassBase
     {

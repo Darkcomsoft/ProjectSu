@@ -3,7 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 
-namespace ProjectSLN.darkcomsoft.src.client
+namespace ProjectIND.darkcomsoft.src.client
 {
     /// <summary>
     /// Game Settings like, graphics, sound, controls etc.

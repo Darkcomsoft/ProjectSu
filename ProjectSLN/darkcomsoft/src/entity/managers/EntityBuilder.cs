@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace ProjectSLN.darkcomsoft.src.entity.managers
+namespace ProjectIND.darkcomsoft.src.entity.managers
 {
     /// <summary>
     /// Create pre configured entitys

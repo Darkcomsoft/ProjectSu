@@ -1,10 +1,10 @@
-﻿using ProjectSLN.darkcomsoft.src.debug;
+﻿using ProjectIND.darkcomsoft.src.debug;
 using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Runtime.InteropServices;
 
-namespace ProjectSLN.darkcomsoft.src.CLI.systemconsole
+namespace ProjectIND.darkcomsoft.src.CLI.systemconsole
 {
 	public class WindowsConsole : ClassBase
 	{

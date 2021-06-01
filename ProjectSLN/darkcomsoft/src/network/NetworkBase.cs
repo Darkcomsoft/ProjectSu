@@ -2,10 +2,10 @@
 using System;
 using System.Collections.Generic;
 using System.Text;
-using ProjectSLN.darkcomsoft.src.entity;
-using ProjectSLN.darkcomsoft.src.engine.gameobject;
+using ProjectIND.darkcomsoft.src.entity;
+using ProjectIND.darkcomsoft.src.engine.gameobject;
 
-namespace ProjectSLN.darkcomsoft.src.network
+namespace ProjectIND.darkcomsoft.src.network
 {
     public class NetworkBase : ClassBase
     {

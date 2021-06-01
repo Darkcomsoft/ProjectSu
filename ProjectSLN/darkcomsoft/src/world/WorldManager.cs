@@ -1,10 +1,10 @@
-﻿using ProjectSLN.darkcomsoft.src.debug;
-using ProjectSLN.darkcomsoft.src.misc;
+﻿using ProjectIND.darkcomsoft.src.debug;
+using ProjectIND.darkcomsoft.src.misc;
 using System;
 using System.Collections.Generic;
 using System.Text;
 
-namespace ProjectSLN.darkcomsoft.src.world
+namespace ProjectIND.darkcomsoft.src.world
 {
     public class WorldManager : ClassBase
     {

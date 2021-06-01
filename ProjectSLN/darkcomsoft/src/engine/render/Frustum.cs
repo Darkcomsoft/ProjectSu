@@ -4,9 +4,9 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 using System.Linq;
-using ProjectSLN.darkcomsoft.src.misc;
+using ProjectIND.darkcomsoft.src.misc;
 
-namespace ProjectSLN.darkcomsoft.src.engine.render
+namespace ProjectIND.darkcomsoft.src.engine.render
 {
     //I DONT KNOW BUT THIS FUNCTIONS FRUSTUM NEED SOME OPTIMIZATION, I DON'T KNOW DO A LOOK
     public static class Frustum

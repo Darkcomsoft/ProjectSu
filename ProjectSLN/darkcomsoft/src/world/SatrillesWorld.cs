@@ -1,14 +1,14 @@
-﻿using ProjectSLN.darkcomsoft.src.engine;
+﻿using ProjectIND.darkcomsoft.src.engine;
 using OpenTK.Windowing.GraphicsLibraryFramework;
 using System;
 using System.Collections.Generic;
 using System.Text;
-using ProjectSLN.darkcomsoft.src.client;
-using ProjectSLN.darkcomsoft.src.engine.gameobject;
-using ProjectSLN.darkcomsoft.src.worldgenerator;
-using ProjectSLN.darkcomsoft.src.entity;
+using ProjectIND.darkcomsoft.src.client;
+using ProjectIND.darkcomsoft.src.engine.gameobject;
+using ProjectIND.darkcomsoft.src.worldgenerator;
+using ProjectIND.darkcomsoft.src.entity;
 
-namespace ProjectSLN.darkcomsoft.src.world
+namespace ProjectIND.darkcomsoft.src.world
 {
     /// <summary>
     /// Satrilles World is the main world of the games history, the normal world, start world etc.

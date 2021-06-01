@@ -1,19 +1,19 @@
 ﻿using Lidgren.Network;
-using ProjectSLN.darkcomsoft.src;
-using ProjectSLN.darkcomsoft.src.debug;
-using ProjectSLN.darkcomsoft.src.engine;
-using ProjectSLN.darkcomsoft.src.engine.gameobject;
-using ProjectSLN.darkcomsoft.src.engine.render;
-using ProjectSLN.darkcomsoft.src.entity;
-using ProjectSLN.darkcomsoft.src.enums;
-using ProjectSLN.darkcomsoft.src.network;
-using ProjectSLN.darkcomsoft.src.world;
-using ProjectSLN.darkcomsoft.src.enums;
+using ProjectIND.darkcomsoft.src;
+using ProjectIND.darkcomsoft.src.debug;
+using ProjectIND.darkcomsoft.src.engine;
+using ProjectIND.darkcomsoft.src.engine.gameobject;
+using ProjectIND.darkcomsoft.src.engine.render;
+using ProjectIND.darkcomsoft.src.entity;
+using ProjectIND.darkcomsoft.src.enums;
+using ProjectIND.darkcomsoft.src.network;
+using ProjectIND.darkcomsoft.src.world;
+using ProjectIND.darkcomsoft.src.enums;
 using System;
 using System.Collections.Generic;
 using System.Text;
 
-namespace ProjectSLN.darkcomsoft.src.engine.gameobject
+namespace ProjectIND.darkcomsoft.src.engine.gameobject
 {
     /// <summary>
     /// Class Base for all Game "Objects", is like a entity but used for all type of object, static, dynamic, etc.

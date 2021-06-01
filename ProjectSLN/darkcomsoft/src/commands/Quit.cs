@@ -1,10 +1,10 @@
-﻿using ProjectSLN.darkcomsoft.src;
-using ProjectSLN.darkcomsoft.src.CLI;
+﻿using ProjectIND.darkcomsoft.src;
+using ProjectIND.darkcomsoft.src.CLI;
 using System;
 using System.Collections.Generic;
 using System.Text;
 
-namespace ProjectSLN.darkcomsoft.src.commands
+namespace ProjectIND.darkcomsoft.src.commands
 {
     public class Quit : cvar
     {

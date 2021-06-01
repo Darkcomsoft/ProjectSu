@@ -1,11 +1,11 @@
-﻿using ProjectSLN.darkcomsoft.src.client;
-using ProjectSLN.darkcomsoft.src.debug;
-using ProjectSLN.darkcomsoft.src.game;
+﻿using ProjectIND.darkcomsoft.src.client;
+using ProjectIND.darkcomsoft.src.debug;
+using ProjectIND.darkcomsoft.src.game;
 using System;
 using System.Collections.Generic;
 using System.Text;
 
-namespace ProjectSLN.darkcomsoft.src.entity
+namespace ProjectIND.darkcomsoft.src.entity
 {
     public class PlayerEntity : LivingEntity
     {

@@ -7,7 +7,7 @@ using OpenTK;
 using OpenTK.Graphics;
 using OpenTK.Mathematics;
 
-namespace ProjectSLN.darkcomsoft.src.engine
+namespace ProjectIND.darkcomsoft.src.engine
 {
     public class Transform : ClassBase
     {

@@ -1,10 +1,10 @@
-﻿using ProjectSLN.darkcomsoft.src.CLI;
-using ProjectSLN.darkcomsoft.src.debug;
+﻿using ProjectIND.darkcomsoft.src.CLI;
+using ProjectIND.darkcomsoft.src.debug;
 using System;
 using System.Collections.Generic;
 using System.Text;
 
-namespace ProjectSLN.darkcomsoft.src.commands
+namespace ProjectIND.darkcomsoft.src.commands
 {
     public class TesteCvar : cvar
     {

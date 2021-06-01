@@ -1,9 +1,9 @@
-﻿using ProjectSLN.darkcomsoft.src.misc;
+﻿using ProjectIND.darkcomsoft.src.misc;
 using System;
 using System.Collections.Generic;
 using System.Text;
 
-namespace ProjectSLN.darkcomsoft.src.CLI
+namespace ProjectIND.darkcomsoft.src.CLI
 {
     public static class ConsoleCLI
     {

@@ -1,16 +1,16 @@
-﻿using ProjectSLN.darkcomsoft.src.debug;
-using ProjectSLN.darkcomsoft.src.engine.render;
-using ProjectSLN.darkcomsoft.src.world;
+﻿using ProjectIND.darkcomsoft.src.debug;
+using ProjectIND.darkcomsoft.src.engine.render;
+using ProjectIND.darkcomsoft.src.world;
 using Lidgren.Network;
 using System;
 using System.Collections.Generic;
 using System.Text;
-using ProjectSLN.darkcomsoft.src.network;
-using ProjectSLN.darkcomsoft.src.entity.managers;
-using ProjectSLN.darkcomsoft.src.engine;
-using ProjectSLN.darkcomsoft.src.engine.gameobject;
+using ProjectIND.darkcomsoft.src.network;
+using ProjectIND.darkcomsoft.src.entity.managers;
+using ProjectIND.darkcomsoft.src.engine;
+using ProjectIND.darkcomsoft.src.engine.gameobject;
 
-namespace ProjectSLN.darkcomsoft.src.entity
+namespace ProjectIND.darkcomsoft.src.entity
 {
     /// <summary>
     /// Entity is the base entity class for all entity, All entity is sync over network.

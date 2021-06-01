@@ -1,11 +1,11 @@
 ﻿using OpenTK.Graphics.OpenGL;
-using ProjectSLN.darkcomsoft.src.CLI.systemconsole;
-using ProjectSLN.darkcomsoft.src.server;
+using ProjectIND.darkcomsoft.src.CLI.systemconsole;
+using ProjectIND.darkcomsoft.src.server;
 using System;
 using System.Collections.Generic;
 using System.Text;
 
-namespace ProjectSLN.darkcomsoft.src.debug
+namespace ProjectIND.darkcomsoft.src.debug
 {
     public static class Debug
     {

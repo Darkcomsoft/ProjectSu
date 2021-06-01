@@ -1,13 +1,13 @@
 ﻿using OpenTK.Mathematics;
 using OpenTK.Windowing.GraphicsLibraryFramework;
-using ProjectSLN.darkcomsoft.src.engine.window;
+using ProjectIND.darkcomsoft.src.engine.window;
 using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Drawing;
 using System.Text;
 
-namespace ProjectSLN.darkcomsoft.src.engine
+namespace ProjectIND.darkcomsoft.src.engine
 {
     /// <summary>
     /// All input calculation/system, mouse, keyboard, and more in near future...

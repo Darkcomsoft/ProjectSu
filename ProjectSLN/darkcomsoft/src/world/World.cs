@@ -1,11 +1,11 @@
-﻿using ProjectSLN.darkcomsoft.src.engine.gameobject;
-using ProjectSLN.darkcomsoft.src.entity.managers;
-using ProjectSLN.darkcomsoft.src.network;
+﻿using ProjectIND.darkcomsoft.src.engine.gameobject;
+using ProjectIND.darkcomsoft.src.entity.managers;
+using ProjectIND.darkcomsoft.src.network;
 using System;
 using System.Collections.Generic;
 using System.Text;
 
-namespace ProjectSLN.darkcomsoft.src.world
+namespace ProjectIND.darkcomsoft.src.world
 {
     /// <summary>
     /// Base class of all Worlds, Worlds is "like" scenes in Unity3D

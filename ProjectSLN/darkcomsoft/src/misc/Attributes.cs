@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace ProjectSLN.darkcomsoft.src.misc
+namespace ProjectIND.darkcomsoft.src.misc
 {
     [System.AttributeUsage(System.AttributeTargets.All, AllowMultiple = true)]
     public class AuthorAttribute : System.Attribute

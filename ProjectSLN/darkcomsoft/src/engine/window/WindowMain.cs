@@ -4,9 +4,9 @@ using OpenTK.Windowing.Common;
 using OpenTK.Windowing.Common.Input;
 using OpenTK.Windowing.Desktop;
 using OpenTK.Windowing.GraphicsLibraryFramework;
-using ProjectSLN.darkcomsoft.src.debug;
-using ProjectSLN.darkcomsoft.src.enums;
-using ProjectSLN.darkcomsoft.src.misc;
+using ProjectIND.darkcomsoft.src.debug;
+using ProjectIND.darkcomsoft.src.enums;
+using ProjectIND.darkcomsoft.src.misc;
 using System;
 using System.Collections.Generic;
 using System.Drawing;
@@ -14,7 +14,7 @@ using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 
-namespace ProjectSLN.darkcomsoft.src.engine.window
+namespace ProjectIND.darkcomsoft.src.engine.window
 {
     /// <summary>
     /// my implementation of the OpenTk GameWindow class

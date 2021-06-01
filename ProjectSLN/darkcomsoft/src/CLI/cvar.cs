@@ -1,9 +1,9 @@
-﻿using ProjectSLN.darkcomsoft.src.debug;
+﻿using ProjectIND.darkcomsoft.src.debug;
 using System;
 using System.Collections.Generic;
 using System.Text;
 
-namespace ProjectSLN.darkcomsoft.src.CLI
+namespace ProjectIND.darkcomsoft.src.CLI
 {
     public class cvar : ClassBase
     {

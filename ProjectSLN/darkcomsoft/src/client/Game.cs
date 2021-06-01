@@ -1,14 +1,14 @@
 ﻿using Lidgren.Network;
-using ProjectSLN.darkcomsoft.src.debug;
-using ProjectSLN.darkcomsoft.src.entity;
-using ProjectSLN.darkcomsoft.src.game;
-using ProjectSLN.darkcomsoft.src.network;
-using ProjectSLN.darkcomsoft.src.world;
+using ProjectIND.darkcomsoft.src.debug;
+using ProjectIND.darkcomsoft.src.entity;
+using ProjectIND.darkcomsoft.src.game;
+using ProjectIND.darkcomsoft.src.network;
+using ProjectIND.darkcomsoft.src.world;
 using System;
 using System.Collections.Generic;
 using System.Text;
 
-namespace ProjectSLN.darkcomsoft.src.client
+namespace ProjectIND.darkcomsoft.src.client
 {
     /// <summary>
     /// <see cref="Game"/> used to controll the game logic, like join a world, etc. <see cref="Client"/> is more for the Client Engine stuff like rendering

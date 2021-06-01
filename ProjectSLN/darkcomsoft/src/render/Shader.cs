@@ -1,12 +1,12 @@
-﻿using ProjectSLN.darkcomsoft.src.resources.resourcestype;
+﻿using ProjectIND.darkcomsoft.src.resources.resourcestype;
 using OpenTK.Graphics.OpenGL;
 using System;
 using System.Collections.Generic;
 using System.Text;
-using ProjectSLN.darkcomsoft.src.debug;
+using ProjectIND.darkcomsoft.src.debug;
 using OpenTK.Mathematics;
 
-namespace ProjectSLN.darkcomsoft.src.render
+namespace ProjectIND.darkcomsoft.src.render
 {
     /// <summary>
     /// OpenGL Shader, complier and binder
