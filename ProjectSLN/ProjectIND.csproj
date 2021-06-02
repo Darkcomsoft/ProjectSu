@@ -5,7 +5,7 @@
     <TargetFramework>netcoreapp3.1</TargetFramework>
     <Platforms>AnyCPU;x64</Platforms>
     <Configurations>Debug;Release;Debug-Server;Release-Server</Configurations>
-    <StartupObject></StartupObject>
+    <StartupObject>ProjectIND.darkcomsoft.src.main</StartupObject>
     <AssemblyName>ProjectIndustry</AssemblyName>
     <Company>Darkcomsoft</Company>
     <Copyright>Copyright (c) 2021 Darkcomsoft - All rights reserved</Copyright>

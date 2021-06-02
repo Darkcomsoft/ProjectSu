@@ -18,7 +18,7 @@ namespace ProjectIND.darkcomsoft.src.client
         public static Game instance { get; private set; }
         private bool m_isPlaying = false;
 
-        private PlayerManager m_playerManager;
+        public static PlayerManager m_playerManager { get; private set; }
 
         public Game()
         {

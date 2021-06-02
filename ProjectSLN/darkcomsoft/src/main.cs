@@ -9,14 +9,16 @@ using System.Runtime;
 using System.Threading;
 using ProjectIND.darkcomsoft.src.misc;
 using ProjectIND.darkcomsoft.src.CLI.systemconsole;
+using ProjectIND.darkcomsoft.src.enums;
 
 namespace ProjectIND.darkcomsoft.src
 {
     class main
     {
-        public static WindowsConsole m_windowsConsole { get; private set; }
-
         private const int m_GcCleanOutOfMemoryException = 2;
+
+        public static WindowsConsole m_windowsConsole { get; private set; }
+        private static ApplicationType m_appType;
 
         [MTAThread]
         static void Main(string[] args)
@@ -41,6 +43,8 @@ namespace ProjectIND.darkcomsoft.src
         private static void StartClient()
         {
             CheckOpenAL();
+
+            m_appType = ApplicationType.Client;
 
             GameWindowSettings gameWindowSettings = GameWindowSettings.Default;
             gameWindowSettings.IsMultiThreaded = false;//ISSO TAMBEM NAO ESTA SENDO USADO, SE PA NUNCA SERA NAO SEI
@@ -88,6 +92,8 @@ namespace ProjectIND.darkcomsoft.src
 
         private static void StartServer()
         {
+            m_appType = ApplicationType.Server;
+
             using (ServerMain server = new ServerMain())
             {
                 try
@@ -115,11 +121,6 @@ namespace ProjectIND.darkcomsoft.src
                     ServerMain.Exit();
                 }
             }
-        }
-
-        public void ReloadGame()
-        {
-
         }
 
         private static void CheckOpenAL()

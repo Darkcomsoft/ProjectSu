@@ -1,4 +1,5 @@
-﻿using ProjectIND.darkcomsoft.src.debug;
+﻿using OpenTK.Mathematics;
+using ProjectIND.darkcomsoft.src.debug;
 using ProjectIND.darkcomsoft.src.engine.gameobject;
 using ProjectIND.darkcomsoft.src.entity;
 using ProjectIND.darkcomsoft.src.misc;
@@ -14,6 +15,8 @@ namespace ProjectIND.darkcomsoft.src.game
     {
         public static PlayerManager instance { get; private set; }
         public PlayerEntity m_playerentity { get; private set; }
+
+        public static Vector3d m_playerPosition = Vector3d.Zero;
 
         public PlayerManager()
         {

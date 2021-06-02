@@ -4,19 +4,23 @@ using System.Text;
 
 namespace ProjectIND.darkcomsoft.src.engine
 {
-    [Obsolete("Subistituir isso pelo o nova classe ProjectSLN.darkcomsoft.src.engine.ActionQueue.cs")]
     /// <summary>
-    /// Queue Called Frame by Frame
+    /// Used to create a ActionQueue, to do somthing frame by frame, or if pass the max Cache Count do all in one tick
     /// </summary>
-    public static class FrameQueeSystem
+    public class ActionQueue : ClassBase
     {
         /// <summary>
         /// if the queue count pass this number, is claer every thing on it, in one tick, Default: 200
         /// </summary>
         public const int QueueCache = 300;
-        private static Queue<Action> actionList = new Queue<Action>(QueueCache);
+        private Queue<Action> actionList;
 
-        public static void Tick()
+        public ActionQueue()
+        {
+            actionList = new Queue<Action>(QueueCache);
+        }
+
+        public void Tick()
         {
             if (actionList.Count > 0)
             {
@@ -34,7 +38,7 @@ namespace ProjectIND.darkcomsoft.src.engine
             }
         }
 
-        public static void CleanUp()
+        protected override void OnDispose()
         {
             while (actionList.Count > 0)
             {
@@ -42,9 +46,10 @@ namespace ProjectIND.darkcomsoft.src.engine
             }
 
             actionList.Clear();
+            base.OnDispose();
         }
 
-        public static void Enqueue(Action action)
+        public void Enqueue(Action action)
         {
             actionList.Enqueue(action);
         }

@@ -10,7 +10,6 @@ using ProjectIND.darkcomsoft.src.entity;
 using ProjectIND.darkcomsoft.src.entity.managers;
 using ProjectIND.darkcomsoft.src.misc;
 using ProjectIND.darkcomsoft.src.world;
-using ProjectIND.darkcomsoft.src.engine.gameobject;
 
 namespace ProjectIND.darkcomsoft.src.network
 {

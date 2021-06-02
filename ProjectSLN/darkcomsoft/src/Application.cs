@@ -25,7 +25,7 @@ using System.Text;
 namespace ProjectIND.darkcomsoft.src
 {
     /// <summary>
-    /// Application is the base class for the entity systesm, this is used by the server or client
+    /// Application is the base class for the engine, define variables for client and server
     /// </summary>
     public class Application : ClassBase
     {
