@@ -7,7 +7,7 @@ namespace ProjectIND.darkcomsoft.src.network
 {
     public class NetworkCallBacks : ClassBase
     {
-        private static NetworkCallBacks m_instance;
+        private static NetworkCallBacks v_instance;
 
         public static Action<NetConnection> OnPlayerDisconnect;
         public static Action<NetConnection> OnPlayerConnect;
@@ -24,7 +24,7 @@ namespace ProjectIND.darkcomsoft.src.network
 
         public NetworkCallBacks()
         {
-            m_instance = this;
+            v_instance = this;
         }
 
         protected override void OnDispose()
@@ -39,10 +39,10 @@ namespace ProjectIND.darkcomsoft.src.network
             OnClientStart = null;
             OnReceivedServerData = null;
 
-            m_instance = null;
+            v_instance = null;
             base.OnDispose();
         }
 
-        public static NetworkCallBacks instance { get { return m_instance; } }
+        public static NetworkCallBacks instance { get { return v_instance; } }
     }
 }

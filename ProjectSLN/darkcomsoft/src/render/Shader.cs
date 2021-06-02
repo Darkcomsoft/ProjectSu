@@ -13,8 +13,8 @@ namespace ProjectIND.darkcomsoft.src.render
     /// </summary>
     public class Shader : ClassBase
     {
-        private int m_shaderHandler;
-        private bool m_isvalid = false;
+        private int v_shaderHandler;
+        private bool v_isvalid = false;
 
         private Dictionary<string, int> _uniformLocations;
 
@@ -67,27 +67,27 @@ namespace ProjectIND.darkcomsoft.src.render
                 Debug.LogError("Failed to create program : " + glerror, "SHADER");
                 GL.DeleteProgram(program);
             }
-            m_shaderHandler = program;
-            m_isvalid = true;
+            v_shaderHandler = program;
+            v_isvalid = true;
         }
 
         public void Use()
         {
-            if (m_isvalid)
+            if (v_isvalid)
             {
-                GL.UseProgram(m_shaderHandler);
+                GL.UseProgram(v_shaderHandler);
             }
         }
 
         protected override void OnDispose()
         {
-            if (m_isvalid)
+            if (v_isvalid)
             {
-                GL.DeleteProgram(m_shaderHandler);
-                m_isvalid = false;
+                GL.DeleteProgram(v_shaderHandler);
+                v_isvalid = false;
             }
 
-            m_shaderHandler = 0;
+            v_shaderHandler = 0;
             _uniformLocations.Clear();
             _uniformLocations = null;
 

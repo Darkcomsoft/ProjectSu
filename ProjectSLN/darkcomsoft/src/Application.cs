@@ -39,11 +39,11 @@ namespace ProjectIND.darkcomsoft.src
 
         public static ApplicationType AppType { get; private set; }
         public static BuildTypeBase gameInstance { get; private set; }// this is the game instance EX: Client or Server
-        public static ResourcesManager m_resourceManager { get; private set; }
-        public static WorldManager m_worldManager { get; private set; }
-        public static ObjectManager m_entityManager { get; private set; }
+        public static ResourcesManager v_resourceManager { get; private set; }
+        public static WorldManager v_worldManager { get; private set; }
+        public static ObjectManager v_entityManager { get; private set; }
 
-        private bool m_appIsClosing = false;
+        private bool v_appIsClosing = false;
 
         public Application(ApplicationType applicationType)
         {
@@ -53,9 +53,9 @@ namespace ProjectIND.darkcomsoft.src
 
             PrintUtilsInfos();
 
-            m_resourceManager = new ResourcesManager();
-            m_worldManager = new WorldManager();
-            m_entityManager = new ObjectManager();
+            v_resourceManager = new ResourcesManager();
+            v_worldManager = new WorldManager();
+            v_entityManager = new ObjectManager();
 
             switch (applicationType)
             {
@@ -73,20 +73,20 @@ namespace ProjectIND.darkcomsoft.src
 
         public void Tick(double time)
         {
-            if (!m_appIsClosing)
+            if (!v_appIsClosing)
             {
                 FrameQueeSystem.Tick();
                 WindowsConsole.instance?.Tick();
                 gameInstance?.Tick();
 
-                m_entityManager?.Tick();
-                m_worldManager?.Tick();
+                v_entityManager?.Tick();
+                v_worldManager?.Tick();
             }
         }
 
         public void TickDraw(double time)
         {
-            if (!m_appIsClosing)
+            if (!v_appIsClosing)
                 gameInstance?.TickDraw();
         }
 
@@ -99,14 +99,14 @@ namespace ProjectIND.darkcomsoft.src
                 gameInstance = null;
             }
 
-            m_worldManager?.Dispose();
-            m_worldManager = null;
+            v_worldManager?.Dispose();
+            v_worldManager = null;
 
-            m_entityManager?.Dispose();
-            m_entityManager = null;
+            v_entityManager?.Dispose();
+            v_entityManager = null;
 
-            m_resourceManager?.Dispose();
-            m_resourceManager = null;
+            v_resourceManager?.Dispose();
+            v_resourceManager = null;
 
             instance = null;
             base.OnDispose();
@@ -114,7 +114,7 @@ namespace ProjectIND.darkcomsoft.src
 
         private void StartGame()
         {
-            m_resourceManager.LoadPreResources(AppType);
+            v_resourceManager.LoadPreResources(AppType);
 
             gameInstance = new Client();
         }
@@ -158,7 +158,7 @@ namespace ProjectIND.darkcomsoft.src
 
         public static void CloseApp()
         {
-            instance.m_appIsClosing = true;
+            instance.v_appIsClosing = true;
 
             switch (AppType)
             {

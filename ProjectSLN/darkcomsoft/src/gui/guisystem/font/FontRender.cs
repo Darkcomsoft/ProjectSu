@@ -14,40 +14,40 @@ namespace ProjectIND.darkcomsoft.src.gui.guisystem.font
 {
 	public class FontRender : ClassBase
 	{
-		private string m_text = "";
+		private string v_text = "";
 
-		private float m_fontSizee;
-		private float m_lineMaxSize;
-		private int m_numberOfLines;
+		private float v_fontSizee;
+		private float v_lineMaxSize;
+		private int v_numberOfLines;
 
-		private bool m_Ready;
+		private bool v_Ready;
 
-		private TextAling m_TextAling = TextAling.Left;
+		private TextAling v_TextAling = TextAling.Left;
 
-		private Color4 m_color = Color4.White;
-		private Font m_font;
-		private GUIBase m_gUIBase;
-		private TextMeshData m_textMeshData;
+		private Color4 v_color = Color4.White;
+		private Font v_font;
+		private GUIBase v_gUIBase;
+		private TextMeshData v_textMeshData;
 
-		private Shader m_shader;
+		private Shader v_shader;
 
-		private Matrix4 m_WorldMatrix;
+		private Matrix4 v_WorldMatrix;
 
 		private int VAO, vbo, ubo;
 
 		public FontRender(string text, float fontSize, float maxLine, GUIBase gUIBase, Font font, Shader shader)
 		{
-			m_Ready = false;
+			v_Ready = false;
 
-			m_text = text;
-			m_fontSizee = fontSize;
-			m_gUIBase = gUIBase;
-			m_lineMaxSize = maxLine;
+			v_text = text;
+			v_fontSizee = fontSize;
+			v_gUIBase = gUIBase;
+			v_lineMaxSize = maxLine;
 
-			m_shader = shader;
-			m_font = font;
+			v_shader = shader;
+			v_font = font;
 
-			m_textMeshData = createTextMesh();
+			v_textMeshData = createTextMesh();
 
 			SetUpBuffers();
 			UpdateTransform();
@@ -67,36 +67,36 @@ namespace ProjectIND.darkcomsoft.src.gui.guisystem.font
 			GL.DeleteBuffer(ubo);
 			GL.DeleteVertexArray(VAO);
 
-			m_textMeshData.Clear();
+			v_textMeshData.Clear();
 
-			m_shader = null;
-			m_gUIBase = null;
-			m_font = null;
+			v_shader = null;
+			v_gUIBase = null;
+			v_font = null;
 			base.OnDispose();
 		}
 
 		public void SetText(string value)
         {
-			m_text = value;
+			v_text = value;
 			Refresh();
 		}
 
 		public void SetTextPivot(TextAling textAling)
         {
-			m_TextAling = textAling;
+			v_TextAling = textAling;
 			Refresh();
 		}
 
 		public void SetColor(Color4 color)
         {
-			m_color = color;
+			v_color = color;
         }
 
 		public void Draw()
         {
-			if (m_Ready)
+			if (v_Ready)
 			{
-				GL.Scissor((int)m_gUIBase.GetFinalPosition.X, (int)m_gUIBase.GetFinalPosition.Y, (int)m_gUIBase.GetFinalPosition.Width, (int)m_gUIBase.GetFinalPosition.Height);
+				GL.Scissor((int)v_gUIBase.GetFinalPosition.X, (int)v_gUIBase.GetFinalPosition.Y, (int)v_gUIBase.GetFinalPosition.Width, (int)v_gUIBase.GetFinalPosition.Height);
 
 				GL.Enable(EnableCap.ScissorTest);
 				GL.Enable(EnableCap.Blend);
@@ -106,14 +106,14 @@ namespace ProjectIND.darkcomsoft.src.gui.guisystem.font
 				GL.BindVertexArray(VAO);
 				GL.BindBuffer(BufferTarget.ArrayBuffer, vbo);
 
-				m_shader.Use();
-				m_font.AtlasTexture.Use();
+				v_shader.Use();
+				v_font.AtlasTexture.Use();
 
-				m_shader.Set("fontColor", m_color);
-				m_shader.Set("world", m_WorldMatrix);
-				m_shader.Set("projection", m_gUIBase.GetProjectionMatrix);
+				v_shader.Set("fontColor", v_color);
+				v_shader.Set("world", v_WorldMatrix);
+				v_shader.Set("projection", v_gUIBase.GetProjectionMatrix);
 
-				GL.DrawArrays(PrimitiveType.Triangles, 0, m_textMeshData.getVertexLength());
+				GL.DrawArrays(PrimitiveType.Triangles, 0, v_textMeshData.getVertexLength());
 
 				GL.BindBuffer(BufferTarget.ArrayBuffer, 0);
 				GL.BindVertexArray(0);
@@ -131,26 +131,26 @@ namespace ProjectIND.darkcomsoft.src.gui.guisystem.font
 
 		private void Refresh()
         {
-			m_Ready = false;
+			v_Ready = false;
 
-			m_textMeshData.Clear();
-			m_textMeshData = createTextMesh();
+			v_textMeshData.Clear();
+			v_textMeshData = createTextMesh();
 
 			GL.BindVertexArray(VAO);
 
 			GL.BindBuffer(BufferTarget.ArrayBuffer, vbo);
-			GL.BufferData(BufferTarget.ArrayBuffer, m_textMeshData.getVertexLength() * Vector2.SizeInBytes, m_textMeshData.getVertexPositions(), BufferUsageHint.DynamicDraw);
+			GL.BufferData(BufferTarget.ArrayBuffer, v_textMeshData.getVertexLength() * Vector2.SizeInBytes, v_textMeshData.getVertexPositions(), BufferUsageHint.DynamicDraw);
 			GL.VertexAttribPointer(0, 2, VertexAttribPointerType.Float, false, 0, 0);
 			GL.EnableVertexAttribArray(0);
 
 			GL.BindBuffer(BufferTarget.ArrayBuffer, ubo);
-			GL.BufferData(BufferTarget.ArrayBuffer, m_textMeshData.getTextureCoordsLength() * Vector2.SizeInBytes, m_textMeshData.getTextureCoords(), BufferUsageHint.DynamicDraw);
+			GL.BufferData(BufferTarget.ArrayBuffer, v_textMeshData.getTextureCoordsLength() * Vector2.SizeInBytes, v_textMeshData.getTextureCoords(), BufferUsageHint.DynamicDraw);
 			GL.VertexAttribPointer(1, 2, VertexAttribPointerType.Float, false, 0, 0);
 			GL.EnableVertexAttribArray(1);
 
 			UpdateTransform();
 
-			m_Ready = true;
+			v_Ready = true;
 		}
 
 		private void SetUpBuffers()
@@ -162,46 +162,46 @@ namespace ProjectIND.darkcomsoft.src.gui.guisystem.font
 			GL.BindVertexArray(VAO);
 
 			GL.BindBuffer(BufferTarget.ArrayBuffer, vbo);
-			GL.BufferData(BufferTarget.ArrayBuffer, m_textMeshData.getVertexLength() * Vector2.SizeInBytes, m_textMeshData.getVertexPositions(), BufferUsageHint.DynamicDraw);
+			GL.BufferData(BufferTarget.ArrayBuffer, v_textMeshData.getVertexLength() * Vector2.SizeInBytes, v_textMeshData.getVertexPositions(), BufferUsageHint.DynamicDraw);
 			GL.VertexAttribPointer(0, 2, VertexAttribPointerType.Float, false, 0, 0);
 			GL.EnableVertexAttribArray(0);
 
 			GL.BindBuffer(BufferTarget.ArrayBuffer, ubo);
-			GL.BufferData(BufferTarget.ArrayBuffer, m_textMeshData.getTextureCoordsLength() * Vector2.SizeInBytes, m_textMeshData.getTextureCoords(), BufferUsageHint.DynamicDraw);
+			GL.BufferData(BufferTarget.ArrayBuffer, v_textMeshData.getTextureCoordsLength() * Vector2.SizeInBytes, v_textMeshData.getTextureCoords(), BufferUsageHint.DynamicDraw);
 			GL.VertexAttribPointer(1, 2, VertexAttribPointerType.Float, false, 0, 0);
 			GL.EnableVertexAttribArray(1);
 
-			m_Ready = true;
+			v_Ready = true;
 		}
 
 		private void UpdateTransform()
         {
 			Vector2 textPosition = new Vector2();
 
-            switch (m_TextAling)
+            switch (v_TextAling)
             {
                 case TextAling.Center:
 					textPosition.X = 0;
 					textPosition.Y = 0;
 					break;
                 case TextAling.Left:
-					textPosition.X = -m_gUIBase.GetFinalPosition.Width / 2f;
+					textPosition.X = -v_gUIBase.GetFinalPosition.Width / 2f;
 					textPosition.Y = 0;
 					break;
                 case TextAling.Right:
-					textPosition.X = m_gUIBase.GetFinalPosition.Width / 2f;
+					textPosition.X = v_gUIBase.GetFinalPosition.Width / 2f;
 					textPosition.Y = 0;
 					break;
                 case TextAling.Top:
 					textPosition.X = 0;
-					textPosition.Y = -m_gUIBase.GetFinalPosition.Width / 2f;
+					textPosition.Y = -v_gUIBase.GetFinalPosition.Width / 2f;
 					break;
                 case TextAling.Bottom:
 					textPosition.X = 0;
-					textPosition.Y = m_gUIBase.GetFinalPosition.Width / 2f;
+					textPosition.Y = v_gUIBase.GetFinalPosition.Width / 2f;
 					break;
             }
-            m_WorldMatrix = Matrix4.CreateScale(m_fontSizee * m_fontSizee) * Matrix4.CreateTranslation((m_gUIBase.GetFinalPosition.X + m_gUIBase.GetFinalPosition.Width / 2) + textPosition.X, (m_gUIBase.GetFinalPosition.Y + m_gUIBase.GetFinalPosition.Height / 2) + textPosition.Y, 0);
+            v_WorldMatrix = Matrix4.CreateScale(v_fontSizee * v_fontSizee) * Matrix4.CreateTranslation((v_gUIBase.GetFinalPosition.X + v_gUIBase.GetFinalPosition.Width / 2) + textPosition.X, (v_gUIBase.GetFinalPosition.Y + v_gUIBase.GetFinalPosition.Height / 2) + textPosition.Y, 0);
 		}
 
 		private TextMeshData createTextMesh()
@@ -213,9 +213,9 @@ namespace ProjectIND.darkcomsoft.src.gui.guisystem.font
 
 		private List<Line> createStructure()
 		{
-			char[] chars = m_text.ToCharArray();
+			char[] chars = v_text.ToCharArray();
 			List<Line> lines = new List<Line>();
-			Line currentLine = new Line(m_font.getSpaceWidth(), m_lineMaxSize);
+			Line currentLine = new Line(v_font.getSpaceWidth(), v_lineMaxSize);
 			Word currentWord = new Word(0);
 
 			for (int i = 0; i < chars.Length; i++)
@@ -227,13 +227,13 @@ namespace ProjectIND.darkcomsoft.src.gui.guisystem.font
 					if (!added)
 					{
 						lines.Add(currentLine);
-						currentLine = new Line(m_font.getSpaceWidth(), m_lineMaxSize);
+						currentLine = new Line(v_font.getSpaceWidth(), v_lineMaxSize);
 						currentLine.attemptToAddWord(currentWord);
 					}
 					currentWord = new Word(0);
 					continue;
 				}
-				Character character = m_font.getCharacter(ascii);
+				Character character = v_font.getCharacter(ascii);
 				currentWord.addCharacter(character);
 			}
 
@@ -248,7 +248,7 @@ namespace ProjectIND.darkcomsoft.src.gui.guisystem.font
 			if (!added)
 			{
 				lines.Add(currentLine);
-				currentLine = new Line(m_font.getSpaceWidth(), m_lineMaxSize);
+				currentLine = new Line(v_font.getSpaceWidth(), v_lineMaxSize);
 				currentLine.attemptToAddWord(currentWord);
 			}
 			lines.Add(currentLine);
@@ -256,7 +256,7 @@ namespace ProjectIND.darkcomsoft.src.gui.guisystem.font
 
 		private TextMeshData createQuadVertices(List<Line> lines)
 		{
-			m_numberOfLines = lines.Count;
+			v_numberOfLines = lines.Count;
 			float curserX = 0f;
 			float curserY = 0f;
 
@@ -265,22 +265,22 @@ namespace ProjectIND.darkcomsoft.src.gui.guisystem.font
 
 			foreach (var line in lines)
 			{
-				switch (m_TextAling)
+				switch (v_TextAling)
 				{
 					case TextAling.Center:
-						curserX = (m_font.getSpaceWidth()) - (line.getLineLength() / 2f);
+						curserX = (v_font.getSpaceWidth()) - (line.getLineLength() / 2f);
 						curserY = (Font.LINE_HEIGHT) / 2f;
 						break;
 					case TextAling.Left:
-						curserX = (m_font.getSpaceWidth()) / 2f;
+						curserX = (v_font.getSpaceWidth()) / 2f;
 						curserY = (Font.LINE_HEIGHT) / 2f;
 						break;
 					case TextAling.Right:
-						curserX = (m_font.getSpaceWidth()) - (line.getLineLength());
+						curserX = (v_font.getSpaceWidth()) - (line.getLineLength());
 						curserY = (Font.LINE_HEIGHT) / 2f;
 						break;
 					default:
-						curserX = (m_font.getSpaceWidth()) - (line.getLineLength() / 2f);
+						curserX = (v_font.getSpaceWidth()) - (line.getLineLength() / 2f);
 						curserY = (Font.LINE_HEIGHT) / 2f;
 						break;
 				}
@@ -293,7 +293,7 @@ namespace ProjectIND.darkcomsoft.src.gui.guisystem.font
 						addTexCoords(textureCoords, letter.getxTextureCoord(), letter.getyTextureCoord(), letter.getXMaxTextureCoord(), letter.getYMaxTextureCoord());
 						curserX += letter.getxAdvance();
 					}
-					curserX += m_font.getSpaceWidth();
+					curserX += v_font.getSpaceWidth();
 				}
 				curserX = 0;
 				curserY += Font.LINE_HEIGHT;

@@ -17,20 +17,20 @@ namespace ProjectIND.darkcomsoft.src.world
 {
     public class MainMenuWorld : World
     {
-        public Buttom m_singlePlayerButtom;
-        public Text m_textTeste;
+        public Buttom v_singlePlayerButtom;
+        public Text v_textTeste;
 
         public override void Start()
         {
             Debug.Log("MainMenu Started!");
 
-            m_singlePlayerButtom = new Buttom("SinglePlayer", new RectangleF(0, 0, 100, 50), enums.GUIDock.Center, enums.GUIPivot.Center);
-            m_singlePlayerButtom.SetTextColor(Color4.Black);
-            m_singlePlayerButtom.SetTextAling(TextAling.Center);
+            v_singlePlayerButtom = new Buttom("SinglePlayer", new RectangleF(0, 0, 100, 50), enums.GUIDock.Center, enums.GUIPivot.Center);
+            v_singlePlayerButtom.SetTextColor(Color4.Black);
+            v_singlePlayerButtom.SetTextAling(TextAling.Center);
 
-            m_singlePlayerButtom.OnClick += OnSingleClick;
+            v_singlePlayerButtom.OnClick += OnSingleClick;
 
-            m_textTeste = new Text("Text Teste", new RectangleF(20, 20, 100, 20), enums.GUIDock.LeftTop, enums.GUIPivot.LeftTop, 25);
+            v_textTeste = new Text("Text Teste", new RectangleF(20, 20, 100, 20), enums.GUIDock.LeftTop, enums.GUIPivot.LeftTop, 25);
 
             base.Start();
         }
@@ -39,13 +39,13 @@ namespace ProjectIND.darkcomsoft.src.world
         {
             Debug.Log("MainMenu Disposed!");
 
-            m_singlePlayerButtom.OnClick -= OnSingleClick;
+            v_singlePlayerButtom.OnClick -= OnSingleClick;
 
-            m_textTeste?.Dispose();
-            m_textTeste = null;
+            v_textTeste?.Dispose();
+            v_textTeste = null;
 
-            m_singlePlayerButtom?.Dispose();
-            m_singlePlayerButtom = null;
+            v_singlePlayerButtom?.Dispose();
+            v_singlePlayerButtom = null;
 
             base.OnDispose();
         }

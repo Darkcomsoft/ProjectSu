@@ -12,7 +12,7 @@ namespace ProjectIND.darkcomsoft.src.gui.guisystem.font
 {
     public class Font: ClassBase
     {
-        private string m_fontName;
+        private string v_fontName;
 
         private float aspectRatio;
 
@@ -48,7 +48,7 @@ namespace ProjectIND.darkcomsoft.src.gui.guisystem.font
         {
             string fontFilePath = string.Concat(Application.AssetsPath, "/Font/", FontName, ".fnt");
 
-            m_fontName = FontName;
+            v_fontName = FontName;
             aspectRatio = (float)WindowMain.Instance.Width / (float)WindowMain.Instance.Height;
 
             AtlasTexture = new Texture(ImageFile.FontLoadImage("/Font/", FontName), TextureMinFilter.Nearest, TextureMagFilter.Nearest);
@@ -173,7 +173,7 @@ namespace ProjectIND.darkcomsoft.src.gui.guisystem.font
                 }
                 else
                 {
-                    throw new Exception("Don't Found this Character: (63) on this Font:("+ m_fontName + ")");
+                    throw new Exception("Don't Found this Character: (63) on this Font:("+ v_fontName + ")");
                 }
             }
         }

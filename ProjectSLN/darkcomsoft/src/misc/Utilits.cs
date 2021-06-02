@@ -17,18 +17,18 @@ namespace ProjectIND.darkcomsoft.src.misc
     /// </summary>
     public static class Utilits
     {
-        private static int m_gcClearTime = 0;
+        private static int v_gcClearTime = 0;
 
         /// <summary>
         /// This function call the <see cref="GC.Collect"/>, but this is not need, so to make sure the gc is called this will be called until a int variable reach 5000 units, so its no every frame
         /// </summary>
         public static void GC_Collect()
         {
-            m_gcClearTime++;
-            if (m_gcClearTime >= 5000)
+            v_gcClearTime++;
+            if (v_gcClearTime >= 5000)
             {
                 GC.Collect();
-                m_gcClearTime = 0;
+                v_gcClearTime = 0;
             }
         }
 

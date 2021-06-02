@@ -7,7 +7,7 @@ namespace ProjectIND.darkcomsoft.src
 {
     public abstract class ClassBase : IDisposable
     {
-        private bool m_showdebugDispose = true;
+        private bool v_showdebugDispose = true;
 
         public ClassBase()
         {
@@ -19,7 +19,7 @@ namespace ProjectIND.darkcomsoft.src
             Dispose(false);
         }
 
-        private bool m_isdisposedByTheGameEngine = false;
+        private bool v_isdisposedByTheGameEngine = false;
 
         // To detect redundant calls
         private bool _disposed = false;
@@ -43,14 +43,14 @@ namespace ProjectIND.darkcomsoft.src
             {
                 //Dispose managed resources
                 OnDispose();
-                m_isdisposedByTheGameEngine = true;
+                v_isdisposedByTheGameEngine = true;
             }
 
             /// free unmanaged resources (unmanaged objects) and override a finalizer below.
             /// set large fields to null.
             /// 
             /// If the Dispose() isn't called by the game engine, ts gona be called by the Finalizer
-            if (!m_isdisposedByTheGameEngine)
+            if (!v_isdisposedByTheGameEngine)
             {
                 Debug.Log("DISPOSED BY THE FINALIZER!!!", "DISPOSESYSTEM");
                 OnDispose();
@@ -64,7 +64,7 @@ namespace ProjectIND.darkcomsoft.src
         /// </summary>
         protected virtual void OnDispose()
         {
-            if (m_showdebugDispose)
+            if (v_showdebugDispose)
             {
                 Debug.Log("DISPOSED: " + this.GetType() + " (HASH: " + this.GetHashCode() + ")", "DISPOSESYSTEM");
             }
@@ -92,6 +92,6 @@ namespace ProjectIND.darkcomsoft.src
         /// <summary>
         /// if is true when this object is disposed is Write a debug text on console, Default=True
         /// </summary>
-        protected bool ShowDisposeDebugMsg { get { return m_showdebugDispose; } set { m_showdebugDispose = value; } }
+        protected bool ShowDisposeDebugMsg { get { return v_showdebugDispose; } set { v_showdebugDispose = value; } }
     }
 }

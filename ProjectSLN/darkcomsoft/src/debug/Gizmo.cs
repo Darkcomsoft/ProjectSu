@@ -11,35 +11,35 @@ namespace ProjectIND.darkcomsoft.src.debug
 {
     public class Gizmo : ClassBase
     {
-        private static Gizmo m_instance;
+        private static Gizmo v_instance;
 
-        private Shader m_gizmoShader;
+        private Shader v_gizmoShader;
 
-        private Vector2[] m_rectangleVertices;
+        private Vector2[] v_rectangleVertices;
         private int VAO, VBO;
 
-        private bool m_gizmoDisponivel = false;
+        private bool v_gizmoDisponivel = false;
 
         public Gizmo()
         {
-            m_gizmoShader = ResourcesManager.GetShader("Gizmo");
+            v_gizmoShader = ResourcesManager.GetShader("Gizmo");
 
-            m_instance = this;
+            v_instance = this;
             CreateQuad();
             SetUpBuffers();
-            m_gizmoDisponivel = true;
+            v_gizmoDisponivel = true;
         }
 
         protected override void OnDispose()
         {
-            m_gizmoDisponivel = false;
+            v_gizmoDisponivel = false;
 
             DisposeBuffers();
 
-            m_rectangleVertices = null;
-            m_gizmoShader = null;
+            v_rectangleVertices = null;
+            v_gizmoShader = null;
 
-            m_instance = null;
+            v_instance = null;
             base.OnDispose();
         }
 
@@ -51,7 +51,7 @@ namespace ProjectIND.darkcomsoft.src.debug
             GL.BindVertexArray(VAO);
 
             GL.BindBuffer(BufferTarget.ArrayBuffer, VBO);
-            GL.BufferData(BufferTarget.ArrayBuffer, m_rectangleVertices.Length * Vector2.SizeInBytes, m_rectangleVertices, BufferUsageHint.StaticDraw);
+            GL.BufferData(BufferTarget.ArrayBuffer, v_rectangleVertices.Length * Vector2.SizeInBytes, v_rectangleVertices, BufferUsageHint.StaticDraw);
             GL.VertexAttribPointer(0, 2, VertexAttribPointerType.Float, false, 0, 0);
             GL.EnableVertexAttribArray(0);
         }
@@ -68,7 +68,7 @@ namespace ProjectIND.darkcomsoft.src.debug
 
         private void CreateQuad()
         {
-            m_rectangleVertices = new Vector2[4]
+            v_rectangleVertices = new Vector2[4]
            {
                  new Vector2(1f,  1f), // top right
                  new Vector2(1f, -1f), // bottom right
@@ -80,8 +80,8 @@ namespace ProjectIND.darkcomsoft.src.debug
         public static void DrawCube()
         {
             if (!Debug.isDebugEnabled) { return; }
-            if (m_instance == null) { return; }
-            if (!m_instance.m_gizmoDisponivel) { return; }
+            if (v_instance == null) { return; }
+            if (!v_instance.v_gizmoDisponivel) { return; }
 
 
         }
@@ -96,24 +96,24 @@ namespace ProjectIND.darkcomsoft.src.debug
         public static void DrawRectangle(Matrix4 world, Matrix4 projection, Color4 color, PrimitiveType primitiveType)
         {
             if (!Debug.isDebugEnabled) { return; }
-            if (m_instance == null) { return; }
-            if (!m_instance.m_gizmoDisponivel) { return; }
+            if (v_instance == null) { return; }
+            if (!v_instance.v_gizmoDisponivel) { return; }
 
             GL.Enable(EnableCap.Blend);
             GL.Disable(EnableCap.DepthTest);
             GL.BlendFunc(BlendingFactor.SrcAlpha, BlendingFactor.OneMinusSrcAlpha);
 
             //Draw Start
-            GL.BindVertexArray(m_instance.VAO);
-            GL.BindBuffer(BufferTarget.ArrayBuffer, m_instance.VBO);
+            GL.BindVertexArray(v_instance.VAO);
+            GL.BindBuffer(BufferTarget.ArrayBuffer, v_instance.VBO);
 
-            m_instance.m_gizmoShader.Use();
+            v_instance.v_gizmoShader.Use();
 
-            m_instance.m_gizmoShader.Set("world", world);
-            m_instance.m_gizmoShader.Set("projection", projection);
-            m_instance.m_gizmoShader.Set("gizmoColor", color);
+            v_instance.v_gizmoShader.Set("world", world);
+            v_instance.v_gizmoShader.Set("projection", projection);
+            v_instance.v_gizmoShader.Set("gizmoColor", color);
 
-            GL.DrawArrays(primitiveType, 0, m_instance.m_rectangleVertices.Length);
+            GL.DrawArrays(primitiveType, 0, v_instance.v_rectangleVertices.Length);
 
             GL.BindBuffer(BufferTarget.ArrayBuffer, 0);
             GL.BindVertexArray(0);

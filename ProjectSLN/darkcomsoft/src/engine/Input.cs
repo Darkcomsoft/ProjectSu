@@ -14,16 +14,16 @@ namespace ProjectIND.darkcomsoft.src.engine
     /// </summary>
     public class Input : ClassBase
     {
-        private static Input m_instance;
+        private static Input v_instance;
 
-        private RectangleF m_mousePositionRec = new Rectangle(0, 0, 1, 1);
+        private RectangleF v_mousePositionRec = new Rectangle(0, 0, 1, 1);
 
         public KeyboardState keyboardState;
         public MouseState mouseState;
 
         public Input()
         {
-            m_instance = this;
+            v_instance = this;
 
             keyboardState = WindowMain.Instance.KeyboardState;
             mouseState = WindowMain.Instance.MouseState;
@@ -33,7 +33,7 @@ namespace ProjectIND.darkcomsoft.src.engine
         {
             keyboardState = null;
             mouseState = null;
-            m_instance = null;
+            v_instance = null;
             base.OnDispose();
         }
 
@@ -72,7 +72,7 @@ namespace ProjectIND.darkcomsoft.src.engine
         /// <summary>
         /// Get mouse position RectangleF relative to bottom-left of the screen 
         /// </summary>
-        public static RectangleF GetMousePositionRec { get { instance.m_mousePositionRec.X = instance.mouseState.Position.X; instance.m_mousePositionRec.Y = WindowMain.Instance.Height - instance.mouseState.Position.Y; return instance.m_mousePositionRec; } }
-        public static Input instance { get { return m_instance; } }
+        public static RectangleF GetMousePositionRec { get { instance.v_mousePositionRec.X = instance.mouseState.Position.X; instance.v_mousePositionRec.Y = WindowMain.Instance.Height - instance.mouseState.Position.Y; return instance.v_mousePositionRec; } }
+        public static Input instance { get { return v_instance; } }
     }
 }

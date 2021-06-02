@@ -4,8 +4,8 @@ using System.Text;
 
 namespace ProjectIND.darkcomsoft.src.worldgenerator
 {
-    public struct Block
+    public struct BlockVoxel
     {
-        public byte m_blockID;
+        public byte v_blockID;
     }
 }

@@ -12,44 +12,44 @@ namespace ProjectIND.darkcomsoft.src.resources
 {
     public class ResourcesManager : ClassBase
     {
-        private static ResourcesManager m_instance;
-        private Dictionary<string, Shader> m_shaderList;
-        private Dictionary<string, Texture> m_textureList;
-        private Dictionary<string, Font> m_fontList;
+        private static ResourcesManager v_instance;
+        private Dictionary<string, Shader> v_shaderList;
+        private Dictionary<string, Texture> v_textureList;
+        private Dictionary<string, Font> v_fontList;
 
         public ResourcesManager()
         {
-            m_instance = this;
-            m_shaderList = new Dictionary<string, Shader>();
-            m_textureList = new Dictionary<string, Texture>();
-            m_fontList = new Dictionary<string, Font>();
+            v_instance = this;
+            v_shaderList = new Dictionary<string, Shader>();
+            v_textureList = new Dictionary<string, Texture>();
+            v_fontList = new Dictionary<string, Font>();
         }
 
         protected override void OnDispose()
         {
-            foreach (var item in m_shaderList)
+            foreach (var item in v_shaderList)
             {
                 item.Value.Dispose();
             }
 
-            foreach (var item in m_textureList)
+            foreach (var item in v_textureList)
             {
                 item.Value.Dispose();
             }
 
-            foreach (var item in m_fontList)
+            foreach (var item in v_fontList)
             {
                 item.Value.Dispose();
             }
 
-            m_textureList.Clear();
-            m_shaderList.Clear();
-            m_fontList.Clear();
+            v_textureList.Clear();
+            v_shaderList.Clear();
+            v_fontList.Clear();
 
-            m_textureList = null;
-            m_shaderList = null;
-            m_fontList = null;
-            m_instance = null;
+            v_textureList = null;
+            v_shaderList = null;
+            v_fontList = null;
+            v_instance = null;
             base.OnDispose();
         }
 
@@ -107,7 +107,7 @@ namespace ProjectIND.darkcomsoft.src.resources
 
         public static Shader GetShader(string ShaderName)
         {
-            if (instance.m_shaderList.TryGetValue(ShaderName, out Shader shader))
+            if (instance.v_shaderList.TryGetValue(ShaderName, out Shader shader))
             {
                 return shader;
             }
@@ -117,7 +117,7 @@ namespace ProjectIND.darkcomsoft.src.resources
 
         public static Texture GetTexture(string TextureName)
         {
-            if (instance.m_textureList.TryGetValue(TextureName, out Texture texture))
+            if (instance.v_textureList.TryGetValue(TextureName, out Texture texture))
             {
                 return texture;
             }
@@ -126,7 +126,7 @@ namespace ProjectIND.darkcomsoft.src.resources
 
         public static Font GetFont(string FontName)
         {
-            if (instance.m_fontList.TryGetValue(FontName, out Font font))
+            if (instance.v_fontList.TryGetValue(FontName, out Font font))
             {
                 return font;
             }
@@ -140,8 +140,8 @@ namespace ProjectIND.darkcomsoft.src.resources
             {
                 ShaderFile shaderFile = GLSLLoad.LoadShaderFile("/Shaders/", ShaderName);
                 Shader shader = new Shader(shaderFile);
-                if (m_shaderList.ContainsKey(ShaderName)) { return; }
-                m_shaderList.Add(ShaderName, shader);
+                if (v_shaderList.ContainsKey(ShaderName)) { return; }
+                v_shaderList.Add(ShaderName, shader);
                 Debug.Log("Shader Loaded! : " + ShaderName, "RESOURCES-MANAGER");
             }
             catch (Exception e)
@@ -156,8 +156,8 @@ namespace ProjectIND.darkcomsoft.src.resources
             {
                 ImageFile imageFile = ImageFile.LoadImage("/Texture/", TextureName);
                 Texture texture = new Texture(imageFile);
-                if (m_textureList.ContainsKey(TextureName)) { return; }
-                m_textureList.Add(TextureName,texture);
+                if (v_textureList.ContainsKey(TextureName)) { return; }
+                v_textureList.Add(TextureName,texture);
                 Debug.Log("Texture Loaded! : " + TextureName, "RESOURCES-MANAGER");
             }
             catch (Exception e)
@@ -170,8 +170,8 @@ namespace ProjectIND.darkcomsoft.src.resources
         {
             try
             {
-                if (m_fontList.ContainsKey(FontName)) { return; }
-                m_fontList.Add(FontName, new Font(FontName));
+                if (v_fontList.ContainsKey(FontName)) { return; }
+                v_fontList.Add(FontName, new Font(FontName));
                 Debug.Log("Font Loaded! : " + FontName, "RESOURCES-MANAGER");
             }
             catch (Exception e)
@@ -181,6 +181,6 @@ namespace ProjectIND.darkcomsoft.src.resources
         }
         #endregion
 
-        public static ResourcesManager instance { get { return m_instance; } }
+        public static ResourcesManager instance { get { return v_instance; } }
     }
 }

@@ -19,19 +19,19 @@ namespace ProjectIND.darkcomsoft.src.network
         /// This i the default NetDeliveryMethod, used for the netcode systems, all entitys have ther one NetDeliveryMethod
         /// </summary>
         public const NetDeliveryMethod NetBaseDeliveryMethod = NetDeliveryMethod.ReliableOrdered;
-        private Dictionary<int, Entity> m_netViewEntityList = new Dictionary<int, Entity>();
+        private Dictionary<int, Entity> v_netViewEntityList = new Dictionary<int, Entity>();
 
-        private static NetworkManager m_instance;
-        private NetworkType m_netType;
-        private NetworkBase m_network;
+        private static NetworkManager v_instance;
+        private NetworkType v_netType;
+        private NetworkBase v_network;
 
-        private NetworkCallBacks m_networkCallBacks;
+        private NetworkCallBacks v_networkCallBacks;
 
         public NetworkManager()
         {
-            m_instance = this;
+            v_instance = this;
 
-            m_networkCallBacks = new NetworkCallBacks();
+            v_networkCallBacks = new NetworkCallBacks();
         }
 
         public static void CreateServer(long ip, int port, int maxplayers)
@@ -76,7 +76,7 @@ namespace ProjectIND.darkcomsoft.src.network
         {
             if (!IsRuning) { throw new Exception("You can't spawn a entity when you are disconnected or when server is not runing"); }
 
-            instance.m_network.Spawn(entity);
+            instance.v_network.Spawn(entity);
         }
 
         /// <summary>
@@ -87,67 +87,67 @@ namespace ProjectIND.darkcomsoft.src.network
         {
             if (!IsRuning) { throw new Exception("You can't destroy a entity when you are disconnected or when server is not runing"); }
 
-            instance.m_network.Destroy(gameobject);
+            instance.v_network.Destroy(gameobject);
         }
 
         public void Tick()
         {
-            if (m_network != null)
+            if (v_network != null)
             {
-                m_network.Tick();
+                v_network.Tick();
             }
         }
 
         private void doDisconnect()
         {
-            m_netType = NetworkType.none;
+            v_netType = NetworkType.none;
 
-            if (m_network != null)
+            if (v_network != null)
             {
-                m_network.Dispose();
-                m_network = null;
+                v_network.Dispose();
+                v_network = null;
             }
         }
 
         private void doCreateServer(long ip, int port, int maxplayers)
         {
-            if (m_netType != NetworkType.none) { Debug.Log("Can't create a server, Is allready runing a network instance: " + m_netType, "NETWORK");  return; }
+            if (v_netType != NetworkType.none) { Debug.Log("Can't create a server, Is allready runing a network instance: " + v_netType, "NETWORK");  return; }
 
-            m_netType = NetworkType.Server;
-            m_network = new NetworkServer(ip, port, maxplayers);
+            v_netType = NetworkType.Server;
+            v_network = new NetworkServer(ip, port, maxplayers);
         }
 
         private void doConnectClient(string ip, int port)
         {
-            if (m_netType != NetworkType.none) { Debug.Log("Can't connect Is allready runing a network instance: " + m_netType, "NETWORK"); return; }
+            if (v_netType != NetworkType.none) { Debug.Log("Can't connect Is allready runing a network instance: " + v_netType, "NETWORK"); return; }
 
-            m_netType = NetworkType.Client;
-            m_network = new NetworkClient(ip, port);
+            v_netType = NetworkType.Client;
+            v_network = new NetworkClient(ip, port);
         }
 
         protected override void OnDispose()
         {
             Disconnect();//Call disconnect any way if the network is finished.
 
-            m_netViewEntityList.Clear();
+            v_netViewEntityList.Clear();
 
-            m_networkCallBacks.Dispose();
-            m_networkCallBacks = null;
+            v_networkCallBacks.Dispose();
+            v_networkCallBacks = null;
 
-            m_netViewEntityList = null;
-            m_instance = null;
+            v_netViewEntityList = null;
+            v_instance = null;
             base.OnDispose();
         }
 
         #region NetUtilits
         public static void AddEntityNet(Entity entity)
         {
-            instance.m_netViewEntityList.Add(entity.getViewId, entity);
+            instance.v_netViewEntityList.Add(entity.getViewId, entity);
         }
 
         public static void RemoveEntityNet(Entity entity)
         {
-            instance.m_netViewEntityList.Remove(entity.getViewId);
+            instance.v_netViewEntityList.Remove(entity.getViewId);
         }
 
         /// <summary>
@@ -157,7 +157,7 @@ namespace ProjectIND.darkcomsoft.src.network
         /// <returns></returns>
         public static bool IsMine(long uniqId)
         {
-            if (uniqId.Equals(instance.m_network.getPeer.UniqueIdentifier))
+            if (uniqId.Equals(instance.v_network.getPeer.UniqueIdentifier))
             {
                 return true;
             }
@@ -166,9 +166,9 @@ namespace ProjectIND.darkcomsoft.src.network
 
         public static NetConnection GetMyConnection()
         {
-            foreach (var item in instance.m_network.getPeer.Connections)
+            foreach (var item in instance.v_network.getPeer.Connections)
             {
-                if (item.RemoteUniqueIdentifier == instance.m_network.getPeer.UniqueIdentifier)
+                if (item.RemoteUniqueIdentifier == instance.v_network.getPeer.UniqueIdentifier)
                 {
                     return item;
                 }
@@ -183,11 +183,11 @@ namespace ProjectIND.darkcomsoft.src.network
             get
             {
                 NetConnection retval = null;
-                if (instance.m_network.getPeer.Connections.Count > 0)
+                if (instance.v_network.getPeer.Connections.Count > 0)
                 {
                     try
                     {
-                        retval = instance.m_network.getPeer.Connections[0];
+                        retval = instance.v_network.getPeer.Connections[0];
                     }
                     catch
                     {
@@ -200,15 +200,15 @@ namespace ProjectIND.darkcomsoft.src.network
         }
         #endregion
 
-        public static NetworkManager instance { get { return m_instance; } }
-        public static NetworkType getStatus { get { return instance.m_netType; } }
-        public static bool IsRuning { get { if (instance.m_netType != NetworkType.none) { return true; } return false; } }
+        public static NetworkManager instance { get { return v_instance; } }
+        public static NetworkType getStatus { get { return instance.v_netType; } }
+        public static bool IsRuning { get { if (instance.v_netType != NetworkType.none) { return true; } return false; } }
         /// <summary>
         /// If is server return True, if is Client return False
         /// </summary>
-        //public static bool IsServer { get { if (instance.m_netType == NetworkType.Server) { return true; } return false; } }
+        //public static bool IsServer { get { if (instance.v_netType == NetworkType.Server) { return true; } return false; } }
 
-        public Dictionary<int, Entity> getNetViewEntityList { get { return m_netViewEntityList; } }
+        public Dictionary<int, Entity> getNetViewEntityList { get { return v_netViewEntityList; } }
     }
 
     public enum NetworkType : byte

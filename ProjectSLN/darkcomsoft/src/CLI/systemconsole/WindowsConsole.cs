@@ -10,7 +10,7 @@ namespace ProjectIND.darkcomsoft.src.CLI.systemconsole
 	{
 		public static WindowsConsole instance { get; private set; }
 
-		private static bool m_isConsoleOpen = false;
+		private static bool v_isConsoleOpen = false;
 
 		private TextWriter oldOutput;
 		public event System.Action<string> OnInputText;
@@ -25,7 +25,7 @@ namespace ProjectIND.darkcomsoft.src.CLI.systemconsole
 			ShowDisposeDebugMsg = false;
 
 			InitializeConsole();
-			m_isConsoleOpen = true;
+			v_isConsoleOpen = true;
 		}
 
 		public void Tick()
@@ -35,7 +35,7 @@ namespace ProjectIND.darkcomsoft.src.CLI.systemconsole
 
 		protected override void OnDispose()
 		{
-			m_isConsoleOpen = false;
+			v_isConsoleOpen = false;
 			ShutdownConsole();
 			instance = null;
 			base.OnDispose();
@@ -238,6 +238,6 @@ namespace ProjectIND.darkcomsoft.src.CLI.systemconsole
 		}
 		#endregion
 
-		public static bool isOpen { get { return m_isConsoleOpen; } }
+		public static bool isOpen { get { return v_isConsoleOpen; } }
 	}
 }

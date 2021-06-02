@@ -13,7 +13,7 @@ namespace ProjectIND.darkcomsoft.src.engine.gameobject
     public class ObjectManager : ClassBase
     {
         private static ObjectManager instance;
-        private List<GameObject> m_objectList = new List<GameObject>();
+        private List<GameObject> v_objectList = new List<GameObject>();
 
         public ObjectManager()
         {
@@ -22,27 +22,27 @@ namespace ProjectIND.darkcomsoft.src.engine.gameobject
 
         protected override void OnDispose()
         {
-            for (int i = 0; i < m_objectList.Count; i++)
+            for (int i = 0; i < v_objectList.Count; i++)
             {
-                GameObject.DestroyObject(m_objectList[i]);
+                GameObject.DestroyObject(v_objectList[i]);
             }
-            m_objectList.Clear();
+            v_objectList.Clear();
 
-            m_objectList = null;
+            v_objectList = null;
             instance = null;
             base.OnDispose();
         }
 
         public void Tick()
         {
-            for (int i = 0; i < m_objectList.Count; i++)
+            for (int i = 0; i < v_objectList.Count; i++)
             {
-                GameObject entityBase = m_objectList[i];
+                GameObject entityBase = v_objectList[i];
                 entityBase.Tick();
 
                 if (entityBase.isRemoved)
                 {
-                    m_objectList.Remove(entityBase);
+                    v_objectList.Remove(entityBase);
                     entityBase.Dispose();
                 }
             }
@@ -57,7 +57,7 @@ namespace ProjectIND.darkcomsoft.src.engine.gameobject
         public static GameObject CreateGameObject<T>(World world)
         {
             GameObject gameObject = Utilits.CreateInstance<GameObject>(typeof(T));
-            Instance.m_objectList.Add(gameObject);
+            Instance.v_objectList.Add(gameObject);
             gameObject.Create(world);
             return gameObject;
         }
@@ -71,7 +71,7 @@ namespace ProjectIND.darkcomsoft.src.engine.gameobject
         public static GameObject CreateGameObject(Type type, World world)
         {
             GameObject gameObject = Utilits.CreateInstance<GameObject>(type);
-            Instance.m_objectList.Add(gameObject);
+            Instance.v_objectList.Add(gameObject);
             gameObject.Create(world);
             return gameObject;
         }
@@ -88,7 +88,7 @@ namespace ProjectIND.darkcomsoft.src.engine.gameobject
             {
                 if (insta)
                 {
-                    Instance.m_objectList.Remove(entity);
+                    Instance.v_objectList.Remove(entity);
                     entity.Dispose();
                 }
                 else
@@ -100,25 +100,25 @@ namespace ProjectIND.darkcomsoft.src.engine.gameobject
 
         public static bool ContainsEntity(GameObject entity)
         {
-            return Instance.m_objectList.Contains(entity);
+            return Instance.v_objectList.Contains(entity);
         }
 
         public static void WorldClear<T>(T world)
         {
-            for (int i = 0; i < Instance.m_objectList.Count; i++)
+            for (int i = 0; i < Instance.v_objectList.Count; i++)
             {
-                if (Instance.m_objectList[i].GetWorld is T)
+                if (Instance.v_objectList[i].GetWorld is T)
                 {
-                    if (Instance.m_objectList[i] != null)
+                    if (Instance.v_objectList[i] != null)
                     {
-                        GameObject.DestroyObject(Instance.m_objectList[i]);
+                        GameObject.DestroyObject(Instance.v_objectList[i]);
                     }
                 }
             }
         }
 
         public static ObjectManager Instance { get { return instance; } }
-        public List<GameObject> getEntityList { get { return m_objectList; } }
-        public GameObject[] getEntityArray { get { return m_objectList.ToArray(); } }
+        public List<GameObject> getEntityList { get { return v_objectList; } }
+        public GameObject[] getEntityArray { get { return v_objectList.ToArray(); } }
     }
 }

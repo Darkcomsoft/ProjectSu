@@ -15,10 +15,10 @@ namespace ProjectIND.darkcomsoft.src
 {
     class main
     {
-        private const int m_GcCleanOutOfMemoryException = 2;
+        private const int v_GcCleanOutOfMemoryException = 2;
 
-        public static WindowsConsole m_windowsConsole { get; private set; }
-        private static ApplicationType m_appType;
+        public static WindowsConsole v_windowsConsole { get; private set; }
+        private static ApplicationType v_appType;
 
         [MTAThread]
         static void Main(string[] args)
@@ -28,7 +28,7 @@ namespace ProjectIND.darkcomsoft.src
 
             GCSettings.LatencyMode = GCLatencyMode.LowLatency;
 
-            m_windowsConsole = new WindowsConsole();
+            v_windowsConsole = new WindowsConsole();
 #if Client
             StartClient();
 #endif
@@ -36,15 +36,15 @@ namespace ProjectIND.darkcomsoft.src
             StartServer();
 #endif
 
-            m_windowsConsole?.Dispose();
-            m_windowsConsole = null;
+            v_windowsConsole?.Dispose();
+            v_windowsConsole = null;
         }
 
         private static void StartClient()
         {
             CheckOpenAL();
 
-            m_appType = ApplicationType.Client;
+            v_appType = ApplicationType.Client;
 
             GameWindowSettings gameWindowSettings = GameWindowSettings.Default;
             gameWindowSettings.IsMultiThreaded = false;//ISSO TAMBEM NAO ESTA SENDO USADO, SE PA NUNCA SERA NAO SEI
@@ -70,7 +70,7 @@ namespace ProjectIND.darkcomsoft.src
                 catch (OutOfMemoryException memoryEx)
                 {
                     Debug.LogWarning("GC: " + memoryEx.Message, "Main");
-                    for (int i = 0; i < m_GcCleanOutOfMemoryException; i++)
+                    for (int i = 0; i < v_GcCleanOutOfMemoryException; i++)
                     {
                         Debug.LogWarning("GC: Collecting Garbage!", "Main");
                         GC.Collect();
@@ -92,7 +92,7 @@ namespace ProjectIND.darkcomsoft.src
 
         private static void StartServer()
         {
-            m_appType = ApplicationType.Server;
+            v_appType = ApplicationType.Server;
 
             using (ServerMain server = new ServerMain())
             {

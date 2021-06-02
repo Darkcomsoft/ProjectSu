@@ -45,7 +45,7 @@ namespace ProjectIND.darkcomsoft.src.network
                 peer.UPnP.ForwardPort(port, "Port for the server of " + Application.AppName);
             }
 
-            m_peer = peer;
+            v_peer = peer;
             _peerStatistics = peer.Statistics;
 
             //OUTRO CODIGO QUE TALVEZ NAO SEJA NESSESARIO, SE NAO FOR REMOVER DEPOIS
@@ -62,7 +62,7 @@ namespace ProjectIND.darkcomsoft.src.network
         public override void Tick()
         {
             NetIncomingMessage inc;
-            while ((inc = m_peer.ReadMessage()) != null)
+            while ((inc = v_peer.ReadMessage()) != null)
             {
                 switch (inc.MessageType)
                 {
@@ -111,7 +111,7 @@ namespace ProjectIND.darkcomsoft.src.network
 
                             List<NetViewSerializer> netvi = new List<NetViewSerializer>();
 
-                            var OuMS = m_peer.CreateMessage();
+                            var OuMS = v_peer.CreateMessage();
                             OuMS.Write((byte)NetDataType.ConnectData);
 
                             foreach (var kvp in ObjectManager.Instance.getEntityList)
@@ -148,7 +148,7 @@ namespace ProjectIND.darkcomsoft.src.network
                             Debug.Log("ConnectData(XML): " + data, "NETWORK");
                             Debug.Log("ConnectData(CompressString): " + compressed, "NETWORK");
 
-                            m_peer.SendMessage(OuMS, inc.SenderConnection, NetDeliveryMethod.ReliableOrdered);//Send the data to Connection
+                            v_peer.SendMessage(OuMS, inc.SenderConnection, NetDeliveryMethod.ReliableOrdered);//Send the data to Connection
                         }
                         else if (inc.SenderConnection.Status == NetConnectionStatus.RespondedConnect)
                         {
@@ -182,7 +182,7 @@ namespace ProjectIND.darkcomsoft.src.network
                         }
                         break;
                 }
-                m_peer.Recycle(inc);
+                v_peer.Recycle(inc);
             }
             base.Tick();
         }
@@ -216,7 +216,7 @@ namespace ProjectIND.darkcomsoft.src.network
         {
             int viewid = Utilits.UniqueID(5);
 
-            var msg = m_peer.CreateMessage();
+            var msg = v_peer.CreateMessage();
 
             msg.Write((byte)NetDataType.Spawn);
 
@@ -225,7 +225,7 @@ namespace ProjectIND.darkcomsoft.src.network
 
             msg.Write(viewid);
             msg.Write(entity.getRegionID);//Current region id
-            msg.WriteVariableInt64(m_peer.UniqueIdentifier);//Netcode ID
+            msg.WriteVariableInt64(v_peer.UniqueIdentifier);//Netcode ID
 
             //Position
             msg.Write(entity.transform.Position.X);
@@ -239,13 +239,13 @@ namespace ProjectIND.darkcomsoft.src.network
 
             Server_SendToAll(msg, NetDeliveryMethod.ReliableOrdered);
 
-            entity.SetupEntityNetcode(viewid, m_peer.UniqueIdentifier);
+            entity.SetupEntityNetcode(viewid, v_peer.UniqueIdentifier);
             base.Spawn(entity);
         }
 
         public override void Destroy(Entity entity)
         {
-            var msg = m_peer.CreateMessage();
+            var msg = v_peer.CreateMessage();
 
             msg.Write((byte)NetDataType.Destroy);
             msg.Write(entity.getViewId);
@@ -299,7 +299,7 @@ namespace ProjectIND.darkcomsoft.src.network
             #region ServerResend
             int viewid = Utilits.UniqueID(5);
 
-            var msg = m_peer.CreateMessage();
+            var msg = v_peer.CreateMessage();
 
             msg.Write((byte)NetDataType.Spawn);
 
@@ -308,7 +308,7 @@ namespace ProjectIND.darkcomsoft.src.network
 
             msg.Write(viewid);
             msg.Write(entityBase.getRegionID);//Current region id
-            msg.WriteVariableInt64(m_peer.UniqueIdentifier);//Netcode ID
+            msg.WriteVariableInt64(v_peer.UniqueIdentifier);//Netcode ID
 
             //Position
             msg.Write(entityBase.transform.Position.X);
@@ -331,7 +331,7 @@ namespace ProjectIND.darkcomsoft.src.network
 
             if (inc.SenderConnection.RemoteUniqueIdentifier != owner) { return; }//if the destroy sender don't own the entity return, only owner of the entity can destroy the entity or the server
 
-            var msg = m_peer.CreateMessage();
+            var msg = v_peer.CreateMessage();
 
             msg.Write((byte)NetDataType.Destroy);
             msg.Write(viewId);

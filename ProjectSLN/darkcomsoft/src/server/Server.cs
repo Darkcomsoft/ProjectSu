@@ -11,7 +11,7 @@ namespace ProjectIND.darkcomsoft.src.server
     public class Server : BuildTypeBase
     {
         public static Server instance { get; private set; }
-        private bool m_gameisDisconnected = false;
+        private bool v_gameisDisconnected = false;
 
         public Server()
         {
@@ -23,7 +23,7 @@ namespace ProjectIND.darkcomsoft.src.server
         {
             UnLinkNetworkCallBacks();
 
-            if (!m_gameisDisconnected)
+            if (!v_gameisDisconnected)
             {
                 StopServer();
             }
@@ -99,7 +99,7 @@ namespace ProjectIND.darkcomsoft.src.server
 
         public static void StopServer()
         {
-            instance.m_gameisDisconnected = true;
+            instance.v_gameisDisconnected = true;
             NetworkManager.Disconnect();
         }
     }

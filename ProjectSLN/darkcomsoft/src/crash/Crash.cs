@@ -6,6 +6,6 @@ namespace ProjectIND.darkcomsoft.src.crash
 {
     public struct Crash
     {
-        public Exception m_thisExecption;
+        public Exception v_thisExecption;
     }
 }

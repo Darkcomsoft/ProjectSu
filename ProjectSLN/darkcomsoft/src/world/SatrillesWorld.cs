@@ -15,18 +15,18 @@ namespace ProjectIND.darkcomsoft.src.world
     /// </summary>
     public class SatrillesWorld : World
     {
-        private TerrainGenerator m_terrainGenObject;
+        private TerrainGenerator v_terrainGenObject;
 
         public override void Start()
         {
-            m_terrainGenObject = (TerrainGenerator)GameObject.SpawnObject<TerrainGenerator>(this);
+            v_terrainGenObject = (TerrainGenerator)GameObject.SpawnObject<TerrainGenerator>(this);
             base.Start();
         }
 
         protected override void OnDispose()
         {
-            GameObject.DestroyObject(m_terrainGenObject, true);
-            m_terrainGenObject = null;
+            GameObject.DestroyObject(v_terrainGenObject, true);
+            v_terrainGenObject = null;
 
             base.OnDispose();
         }

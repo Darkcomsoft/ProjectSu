@@ -18,31 +18,31 @@ namespace ProjectIND.darkcomsoft.src.gui.guisystem
 {
     public class GUI : ClassBase
     {
-        private static GUI m_instance;
+        private static GUI v_instance;
 
         /// <summary>
         /// This list is used to tick and draw all activated guielements
         /// </summary>
-        private List<GUIBase> m_guiList;
+        private List<GUIBase> v_guiList;
         /// <summary>
         /// This list is used for store all disabled gui elements
         /// </summary>
-        private List<GUIBase> m_guiDisabledList;
+        private List<GUIBase> v_guiDisabledList;
 
-        private GUIBase m_currentFocusedGui;
-        private GUIBase m_currentGuiHoverd;
+        private GUIBase v_currentFocusedGui;
+        private GUIBase v_currentGuiHoverd;
 
-        private int[] m_rectangleIndices;
-        private Vector2[] m_rectangleVertices;
-        private Vector2[] m_rectangleUv;
+        private int[] v_rectangleIndices;
+        private Vector2[] v_rectangleVertices;
+        private Vector2[] v_rectangleUv;
         private int IBO, VAO, VBO, UBO;
 
         public GUI()
         {
-            m_instance = this;
+            v_instance = this;
 
-            m_guiList = new List<GUIBase>();
-            m_guiDisabledList = new List<GUIBase>();
+            v_guiList = new List<GUIBase>();
+            v_guiDisabledList = new List<GUIBase>();
 
             StartRectangleMesh();
 
@@ -63,40 +63,40 @@ namespace ProjectIND.darkcomsoft.src.gui.guisystem
                 OnResize();
             }
 
-            for (int i = 0; i < m_guiList.Count; i++)
+            for (int i = 0; i < v_guiList.Count; i++)
             {
-                if (m_guiList[i].isEnabled)
+                if (v_guiList[i].isEnabled)
                 {
-                    m_guiList[i].Tick();
+                    v_guiList[i].Tick();
                 }
             }
 
             if (Input.GetKeyDown(Keys.Escape) || Input.GetKeyDown(Keys.Enter) || Input.GetKeyDown(Keys.KeyPadEnter))
             {
-                if (m_currentFocusedGui != null)
+                if (v_currentFocusedGui != null)
                 {
-                    m_currentFocusedGui.SetStatus(GUIElementStatus.Focus, false);
-                    m_currentFocusedGui = null;
+                    v_currentFocusedGui.SetStatus(GUIElementStatus.Focus, false);
+                    v_currentFocusedGui = null;
                 }
             }
         }
 
         public void Draw()
         {
-            for (int i = 0; i < m_guiList.Count; i++)
+            for (int i = 0; i < v_guiList.Count; i++)
             {
-                if (m_guiList[i].isEnabled)
+                if (v_guiList[i].isEnabled)
                 {
-                    m_guiList[i].Draw();
+                    v_guiList[i].Draw();
                 }
             }
         }
 
         public void OnResize()
         {
-            for (int i = 0; i < m_guiList.Count; i++)
+            for (int i = 0; i < v_guiList.Count; i++)
             {
-                m_guiList[i].Resize();
+                v_guiList[i].Resize();
             }
 
             TickMouseHover();
@@ -112,18 +112,18 @@ namespace ProjectIND.darkcomsoft.src.gui.guisystem
             if (CursorManager.isLocked) { return; }
             if (!WindowMain.Instance.IsFocused) { return; }
 
-            if (m_currentGuiHoverd != null)
+            if (v_currentGuiHoverd != null)
             {
-                m_currentFocusedGui = m_currentGuiHoverd;
-                m_currentGuiHoverd.SetStatus(GUIElementStatus.Focus, true);
-                m_currentGuiHoverd.MouseClick(e);
+                v_currentFocusedGui = v_currentGuiHoverd;
+                v_currentGuiHoverd.SetStatus(GUIElementStatus.Focus, true);
+                v_currentGuiHoverd.MouseClick(e);
             }
             else
             {
-                if (m_currentFocusedGui!=null)
+                if (v_currentFocusedGui!=null)
                 {
-                    m_currentFocusedGui.SetStatus(GUIElementStatus.Focus, false);
-                    m_currentFocusedGui = null;
+                    v_currentFocusedGui.SetStatus(GUIElementStatus.Focus, false);
+                    v_currentFocusedGui = null;
                 }
             }
         }
@@ -133,34 +133,34 @@ namespace ProjectIND.darkcomsoft.src.gui.guisystem
             if (CursorManager.isLocked) { return; }
             if (!WindowMain.Instance.IsFocused) { return; }
 
-            if (m_currentGuiHoverd != null)
+            if (v_currentGuiHoverd != null)
             {
-                m_currentGuiHoverd.MouseRelease(e);
+                v_currentGuiHoverd.MouseRelease(e);
             }
         }
 
         protected override void OnDispose()
         {
-            foreach (var item in m_guiList)
+            foreach (var item in v_guiList)
             {
                 item.Dispose();
             }
 
-            m_guiList.Clear();
-            m_guiList = null;
+            v_guiList.Clear();
+            v_guiList = null;
 
             UnbindRectangleBuffers();
 
-            m_instance = null;
-            m_rectangleVertices = null;
-            m_rectangleIndices = null;
-            m_rectangleUv = null;
+            v_instance = null;
+            v_rectangleVertices = null;
+            v_rectangleIndices = null;
+            v_rectangleUv = null;
             base.OnDispose();
         }
 
         private void StartRectangleMesh()
         {
-            m_rectangleVertices = new Vector2[4]
+            v_rectangleVertices = new Vector2[4]
             {
                  new Vector2(1f,  1f), // top right
                  new Vector2(1f, -1f), // bottom right
@@ -168,13 +168,13 @@ namespace ProjectIND.darkcomsoft.src.gui.guisystem
                 new Vector2(-1f,  1f) // top left
             };
 
-            m_rectangleIndices = new int[6]
+            v_rectangleIndices = new int[6]
             {
                 0, 1, 3,   // first triangle
                 1, 2, 3    // second triangle
             };
 
-            m_rectangleUv = new Vector2[4] {
+            v_rectangleUv = new Vector2[4] {
                 new Vector2(0.0f, 1.0f),
                 new Vector2(1.0f, 1.0f),
 
@@ -192,17 +192,17 @@ namespace ProjectIND.darkcomsoft.src.gui.guisystem
             UBO = GL.GenBuffer();//Uv Buffer
 
             GL.BindBuffer(BufferTarget.ElementArrayBuffer, IBO);
-            GL.BufferData(BufferTarget.ElementArrayBuffer, m_rectangleIndices.Length * sizeof(int), m_rectangleIndices, BufferUsageHint.StaticDraw);
+            GL.BufferData(BufferTarget.ElementArrayBuffer, v_rectangleIndices.Length * sizeof(int), v_rectangleIndices, BufferUsageHint.StaticDraw);
 
             GL.BindVertexArray(VAO);
 
             GL.BindBuffer(BufferTarget.ArrayBuffer, VBO);
-            GL.BufferData(BufferTarget.ArrayBuffer, m_rectangleVertices.Length * Vector2.SizeInBytes, m_rectangleVertices, BufferUsageHint.StaticDraw);
+            GL.BufferData(BufferTarget.ArrayBuffer, v_rectangleVertices.Length * Vector2.SizeInBytes, v_rectangleVertices, BufferUsageHint.StaticDraw);
             GL.VertexAttribPointer(0, 2, VertexAttribPointerType.Float, false, 0, 0);
             GL.EnableVertexAttribArray(0);
 
             GL.BindBuffer(BufferTarget.ArrayBuffer, UBO);
-            GL.BufferData(BufferTarget.ArrayBuffer, m_rectangleUv.Length * Vector2.SizeInBytes, m_rectangleUv, BufferUsageHint.StaticDraw);
+            GL.BufferData(BufferTarget.ArrayBuffer, v_rectangleUv.Length * Vector2.SizeInBytes, v_rectangleUv, BufferUsageHint.StaticDraw);
             GL.VertexAttribPointer(1, 2, VertexAttribPointerType.Float, false, 0, 0);
             GL.EnableVertexAttribArray(1);
         }
@@ -229,14 +229,14 @@ namespace ProjectIND.darkcomsoft.src.gui.guisystem
 
         public void s_EnableGUI(GUIBase gUI)
         {
-            m_guiDisabledList.Add(gUI);
-            m_guiList.Remove(gUI);
+            v_guiDisabledList.Add(gUI);
+            v_guiList.Remove(gUI);
         }
 
         public void s_DisableGUI(GUIBase gUI)
         {
-            m_guiDisabledList.Remove(gUI);
-            m_guiList.Add(gUI);
+            v_guiDisabledList.Remove(gUI);
+            v_guiList.Add(gUI);
         }
 
         public void DrawRec(GUIBase gUIBase)
@@ -248,7 +248,7 @@ namespace ProjectIND.darkcomsoft.src.gui.guisystem
             GL.BindVertexArray(VAO);
             GL.BindBuffer(BufferTarget.ElementArrayBuffer, IBO);
 
-            GL.DrawElements(PrimitiveType.Triangles, m_rectangleIndices.Length, DrawElementsType.UnsignedInt, 0);
+            GL.DrawElements(PrimitiveType.Triangles, v_rectangleIndices.Length, DrawElementsType.UnsignedInt, 0);
 
             GL.BindBuffer(BufferTarget.ElementArrayBuffer, 0);
             GL.BindVertexArray(0);
@@ -259,31 +259,31 @@ namespace ProjectIND.darkcomsoft.src.gui.guisystem
 
         public static void AddGUI(GUIBase gUIBase)
         {
-            instance.m_guiList.Add(gUIBase);
+            instance.v_guiList.Add(gUIBase);
         }
 
         public static void RemoveGUI(GUIBase gUIBase)
         {
-            if (instance.m_guiList.Contains(gUIBase))
+            if (instance.v_guiList.Contains(gUIBase))
             {
-                instance.m_guiList.Remove(gUIBase);
+                instance.v_guiList.Remove(gUIBase);
             }
 
-            if (instance.m_guiDisabledList.Contains(gUIBase))
+            if (instance.v_guiDisabledList.Contains(gUIBase))
             {
-                instance.m_guiDisabledList.Remove(gUIBase);
+                instance.v_guiDisabledList.Remove(gUIBase);
             }
 
-            if (instance.m_currentFocusedGui == gUIBase)
+            if (instance.v_currentFocusedGui == gUIBase)
             {
-                instance.m_currentFocusedGui.SetStatus(GUIElementStatus.Focus, false);
-                instance.m_currentFocusedGui = null;
+                instance.v_currentFocusedGui.SetStatus(GUIElementStatus.Focus, false);
+                instance.v_currentFocusedGui = null;
             }
 
-            if (instance.m_currentGuiHoverd == gUIBase)
+            if (instance.v_currentGuiHoverd == gUIBase)
             {
-                instance.m_currentGuiHoverd.SetStatus(GUIElementStatus.Hover, false);
-                instance.m_currentGuiHoverd = null;
+                instance.v_currentGuiHoverd.SetStatus(GUIElementStatus.Hover, false);
+                instance.v_currentGuiHoverd = null;
             }
         }
 
@@ -291,34 +291,34 @@ namespace ProjectIND.darkcomsoft.src.gui.guisystem
         {
             if (!CursorManager.isLocked)
             {
-                if (instance.m_currentGuiHoverd != null && instance.m_currentGuiHoverd.IsMouseOn())
+                if (instance.v_currentGuiHoverd != null && instance.v_currentGuiHoverd.IsMouseOn())
                 {
                     return;
                 }
-                else if (instance.m_currentGuiHoverd != null)
+                else if (instance.v_currentGuiHoverd != null)
                 {
-                    instance.m_currentGuiHoverd = null;
+                    instance.v_currentGuiHoverd = null;
                 }
 
-                for (int i = instance.m_guiList.Count - 1; i >= 0; i--)
+                for (int i = instance.v_guiList.Count - 1; i >= 0; i--)
                 {
-                    if (instance.m_guiList[i].isInputEnabled)
+                    if (instance.v_guiList[i].isInputEnabled)
                     {
-                        if (instance.m_guiList[i].isMouseHover)
+                        if (instance.v_guiList[i].isMouseHover)
                         {
-                            instance.m_guiList[i].SetStatus(GUIElementStatus.Hover, false);
+                            instance.v_guiList[i].SetStatus(GUIElementStatus.Hover, false);
                         }
                     }
                 }
 
-                for (int i = instance.m_guiList.Count - 1; i >= 0; i--)
+                for (int i = instance.v_guiList.Count - 1; i >= 0; i--)
                 {
-                    if (instance.m_guiList[i].isInputEnabled)
+                    if (instance.v_guiList[i].isInputEnabled)
                     {
-                        if (instance.m_guiList[i].IsMouseOn())
+                        if (instance.v_guiList[i].IsMouseOn())
                         {
-                            instance.m_guiList[i].SetStatus(GUIElementStatus.Hover, true);
-                            instance.m_currentGuiHoverd = instance.m_guiList[i];
+                            instance.v_guiList[i].SetStatus(GUIElementStatus.Hover, true);
+                            instance.v_currentGuiHoverd = instance.v_guiList[i];
                             return;
                         }
                     }
@@ -326,6 +326,6 @@ namespace ProjectIND.darkcomsoft.src.gui.guisystem
             }
         }
 
-        public static GUI instance { get { return m_instance; } }
+        public static GUI instance { get { return v_instance; } }
     }
 }

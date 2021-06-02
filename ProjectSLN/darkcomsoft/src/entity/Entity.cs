@@ -35,42 +35,42 @@ namespace ProjectIND.darkcomsoft.src.entity
 
         #region OldStuffOfNetwork
         [Obsolete]
-        protected int m_regionId { get; private set; }//this the in world region, sync only player inside the region withothers
+        protected int v_regionId { get; private set; }//this the in world region, sync only player inside the region withothers
         [Obsolete]
-        private long m_Owner;
+        private long v_Owner;
         [Obsolete]
-        private int m_ViewID = 0;
+        private int v_ViewID = 0;
         [Obsolete]
-        private NetDeliveryMethod m_DefaultNetDeliveryMethod = NetDeliveryMethod.Unreliable;
+        private NetDeliveryMethod v_DefaultNetDeliveryMethod = NetDeliveryMethod.Unreliable;
         [Obsolete]
         private Dictionary<string, RPCALL> _methodlist;
         [Obsolete]
-        private bool m_IsEntityReady;//if the entity is ready for do send RPC, if the entity is spaned on the network
+        private bool v_IsEntityReady;//if the entity is ready for do send RPC, if the entity is spaned on the network
         [Obsolete]
         public void SetupEntityNetcode(int id, long owner)
         {
-            m_ViewID = id;
-            m_Owner = owner;
+            v_ViewID = id;
+            v_Owner = owner;
 
-            m_IsEntityReady = true;
+            v_IsEntityReady = true;
             //NetworkManager.AddEntityNet(this);
             OnStart();
         }
 
         [Obsolete]
-        public long getOwner { get { return m_Owner; } }
+        public long getOwner { get { return v_Owner; } }
         [Obsolete]
-        public int getViewId { get { return m_ViewID; } }
+        public int getViewId { get { return v_ViewID; } }
         [Obsolete]
-        public int getRegionID { get { return m_regionId; } }
+        public int getRegionID { get { return v_regionId; } }
         [Obsolete]
-        public bool isReady { get { return m_IsEntityReady; } }
+        public bool isReady { get { return v_IsEntityReady; } }
         [Obsolete]
         public bool isMine
         {
             get
             {
-                return NetworkManager.IsMine(m_Owner);
+                return NetworkManager.IsMine(v_Owner);
             }
         }
         #endregion

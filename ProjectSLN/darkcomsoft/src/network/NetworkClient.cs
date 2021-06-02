@@ -31,7 +31,7 @@ namespace ProjectIND.darkcomsoft.src.network
             NetClient peer = new NetClient(config);
             peer.Start(); // needed for initialization
 
-            m_peer = peer;
+            v_peer = peer;
 
             NetOutgoingMessage approval = peer.CreateMessage();
             approval.Write(NetConfig.SecretKey);
@@ -60,7 +60,7 @@ namespace ProjectIND.darkcomsoft.src.network
 
         public override void Tick()
         {
-            NetIncomingMessage inc = m_peer.ReadMessage();
+            NetIncomingMessage inc = v_peer.ReadMessage();
             while (inc != null)
             {
                 switch (inc.MessageType)
@@ -128,7 +128,7 @@ namespace ProjectIND.darkcomsoft.src.network
                         }
                         break;
                 }
-                m_peer.Recycle(inc);
+                v_peer.Recycle(inc);
             }
             base.Tick();
         }
@@ -159,7 +159,7 @@ namespace ProjectIND.darkcomsoft.src.network
         {
             int viewid = Utilits.UniqueID(5);
 
-            var msg = m_peer.CreateMessage();
+            var msg = v_peer.CreateMessage();
 
             msg.Write((byte)NetDataType.Spawn);
 
@@ -168,7 +168,7 @@ namespace ProjectIND.darkcomsoft.src.network
 
             msg.Write(viewid);
             msg.Write(entity.getRegionID);//Current region id
-            msg.WriteVariableInt64(m_peer.UniqueIdentifier);//Netcode ID
+            msg.WriteVariableInt64(v_peer.UniqueIdentifier);//Netcode ID
 
             //Position
             msg.Write(entity.transform.Position.X);
@@ -182,13 +182,13 @@ namespace ProjectIND.darkcomsoft.src.network
 
             PeerClient.SendMessage(msg, NetDeliveryMethod.ReliableOrdered);
 
-            entity.SetupEntityNetcode(viewid, m_peer.UniqueIdentifier);
+            entity.SetupEntityNetcode(viewid, v_peer.UniqueIdentifier);
             base.Spawn(entity);
         }
 
         public override void Destroy(Entity entity)
         {
-            var msg = m_peer.CreateMessage();
+            var msg = v_peer.CreateMessage();
 
             msg.Write((byte)NetDataType.Destroy);
             msg.Write(entity.getViewId);

@@ -14,35 +14,35 @@ namespace ProjectIND.darkcomsoft.src.engine
     /// </summary>
     public class ThreadLoop : ClassBase
     {
-        private bool m_runnig;
-        private string m_threadName = "";
-        private int m_tickRate = 15;
+        private bool v_runnig;
+        private string v_threadName = "";
+        private int v_tickRate = 15;
 
-        private Thread m_thread;
-        private System.Diagnostics.Stopwatch m_watchUpdate;
+        private Thread v_thread;
+        private System.Diagnostics.Stopwatch v_watchUpdate;
 
-        private ThreadCallBack m_tickCall;
-        private ThreadCallBack m_startCall;
-        private ThreadCallBack m_destroyCall;
+        private ThreadCallBack v_tickCall;
+        private ThreadCallBack v_startCall;
+        private ThreadCallBack v_destroyCall;
 
         public ThreadLoop(ThreadCallBack tickDele, ThreadCallBack startDele = null, ThreadCallBack destroyDele = null)
         {
             try
             {
-                m_runnig = false;
+                v_runnig = false;
 
-                m_tickCall = tickDele;
-                m_startCall = startDele;
-                m_destroyCall = destroyDele;
+                v_tickCall = tickDele;
+                v_startCall = startDele;
+                v_destroyCall = destroyDele;
 
-                m_watchUpdate = new System.Diagnostics.Stopwatch();
+                v_watchUpdate = new System.Diagnostics.Stopwatch();
 
-                m_thread = new Thread(new ThreadStart(Run));
-                m_thread.Priority = ThreadPriority.BelowNormal;
-                m_thread.IsBackground = true;
-                m_thread.Start();
+                v_thread = new Thread(new ThreadStart(Run));
+                v_thread.Priority = ThreadPriority.BelowNormal;
+                v_thread.IsBackground = true;
+                v_thread.Start();
 
-                m_threadName = m_thread.ManagedThreadId.ToString();
+                v_threadName = v_thread.ManagedThreadId.ToString();
             }
             catch (Exception e)
             {
@@ -54,22 +54,22 @@ namespace ProjectIND.darkcomsoft.src.engine
         {
             try
             {
-                m_runnig = false;
-                m_tickRate = TickRate;
+                v_runnig = false;
+                v_tickRate = TickRate;
 
-                m_tickCall = tickDele;
-                m_startCall = startDele;
-                m_destroyCall = destroyDele;
+                v_tickCall = tickDele;
+                v_startCall = startDele;
+                v_destroyCall = destroyDele;
 
-                m_watchUpdate = new System.Diagnostics.Stopwatch();
+                v_watchUpdate = new System.Diagnostics.Stopwatch();
 
-                m_thread = new Thread(new ThreadStart(Run));
-                m_thread.Name = ThreadName;
-                m_thread.Priority = threadPriority;
-                m_thread.IsBackground = threadBackground;
-                m_thread.Start();
+                v_thread = new Thread(new ThreadStart(Run));
+                v_thread.Name = ThreadName;
+                v_thread.Priority = threadPriority;
+                v_thread.IsBackground = threadBackground;
+                v_thread.Start();
 
-                m_threadName = ThreadName;
+                v_threadName = ThreadName;
             }
             catch (Exception e)
             {
@@ -81,21 +81,21 @@ namespace ProjectIND.darkcomsoft.src.engine
         {
             try
             {
-                m_runnig = true;
+                v_runnig = true;
                 Start();
 
-                m_watchUpdate.Start();
+                v_watchUpdate.Start();
 
-                var l_lastTime = m_watchUpdate.ElapsedMilliseconds;
-                var l_mspertick = 1000.0d / m_tickRate;
+                var l_lastTime = v_watchUpdate.ElapsedMilliseconds;
+                var l_mspertick = 1000.0d / v_tickRate;
                 var l_noprocess = 0d;
                 var l_ticks = 0;
-                var lastTimer1 = m_watchUpdate.ElapsedMilliseconds;
+                var lastTimer1 = v_watchUpdate.ElapsedMilliseconds;
                 long now = 0;
 
-                while (m_runnig)
+                while (v_runnig)
                 {
-                    now = m_watchUpdate.ElapsedMilliseconds;
+                    now = v_watchUpdate.ElapsedMilliseconds;
                     l_noprocess += (now - l_lastTime) / l_mspertick;
                     l_lastTime = now;
                     while (l_noprocess >= 1)
@@ -106,11 +106,11 @@ namespace ProjectIND.darkcomsoft.src.engine
                     }
 
                     Thread.Sleep(1);
-                    if (m_watchUpdate.ElapsedMilliseconds - lastTimer1 > 1000)
+                    if (v_watchUpdate.ElapsedMilliseconds - lastTimer1 > 1000)
                     {
                         if (Debug.isDebugEnabled)
                         {
-                            Debug.Log(l_ticks + " Tick", "THREAD-" + m_threadName);
+                            Debug.Log(l_ticks + " Tick", "THREAD-" + v_threadName);
                         }
                         lastTimer1 += 1000;
                         l_ticks = 0;
@@ -125,25 +125,25 @@ namespace ProjectIND.darkcomsoft.src.engine
             }
         }
 
-        private void Tick() { m_tickCall?.Invoke(); }
+        private void Tick() { v_tickCall?.Invoke(); }
 
-        private void Start() { m_startCall?.Invoke(); }
-        private void Destroy() { m_destroyCall?.Invoke(); Debug.Log("Thread Loop is finished!", "THREAD-" + m_threadName); }
+        private void Start() { v_startCall?.Invoke(); }
+        private void Destroy() { v_destroyCall?.Invoke(); Debug.Log("Thread Loop is finished!", "THREAD-" + v_threadName); }
 
         protected override void OnDispose()
         {
             try
             {
-                m_runnig = false;
+                v_runnig = false;
 
-                m_thread.Join();//NAO SEI SE ISSO FAZ O QUE ESTOU QUERENDO, MAS EU VI QUE ISSO DA UM BLOCK NO MAIN THREAD, ATE ESTE THREAD FINALIZAR, NAO SEI
+                v_thread.Join();//NAO SEI SE ISSO FAZ O QUE ESTOU QUERENDO, MAS EU VI QUE ISSO DA UM BLOCK NO MAIN THREAD, ATE ESTE THREAD FINALIZAR, NAO SEI
 
-                m_watchUpdate = null;
-                m_thread = null;
+                v_watchUpdate = null;
+                v_thread = null;
 
-                m_tickCall = null;
-                m_startCall = null;
-                m_destroyCall = null;
+                v_tickCall = null;
+                v_startCall = null;
+                v_destroyCall = null;
             }
             catch (Exception e)
             {

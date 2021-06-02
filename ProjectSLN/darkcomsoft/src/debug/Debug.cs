@@ -10,28 +10,28 @@ namespace ProjectIND.darkcomsoft.src.debug
     public static class Debug
     {
         public static BeginMode GLBeginMode = BeginMode.Triangles;
-        private static bool m_debugMode = false;
+        private static bool v_debugMode = false;
 
-        private static bool m_printDebugMode = false;
+        private static bool v_printDebugMode = false;
 
         public static void EnableDebug()
         {
-            m_debugMode = true;
+            v_debugMode = true;
         }
 
         public static void DisableDebug()
         {
-            m_debugMode = false;
+            v_debugMode = false;
         }
 
         public static void EnablePrintDebug()
         {
-            m_printDebugMode = true;
+            v_printDebugMode = true;
         }
 
         public static void DisablePrintDebug()
         {
-            m_printDebugMode = false;
+            v_printDebugMode = false;
         }
 
         private static string GetPrintTime()
@@ -49,7 +49,7 @@ namespace ProjectIND.darkcomsoft.src.debug
 
         public static void Log(string menssage, string caller = "")
         {
-            if (!m_printDebugMode) { return; }
+            if (!v_printDebugMode) { return; }
 
             string callerName = "";
 
@@ -72,7 +72,7 @@ namespace ProjectIND.darkcomsoft.src.debug
 
         public static void LogWarning(string menssage, string caller = "")
         {
-            if (!m_printDebugMode) { return; }
+            if (!v_printDebugMode) { return; }
 
             string callerName = "";
 
@@ -94,7 +94,7 @@ namespace ProjectIND.darkcomsoft.src.debug
 
         public static void LogError(string menssage, string caller = "")
         {
-            if (!m_printDebugMode) { return; }
+            if (!v_printDebugMode) { return; }
 
             string callerName = "";
 
@@ -169,6 +169,6 @@ namespace ProjectIND.darkcomsoft.src.debug
         }
         #endregion
 
-        public static bool isDebugEnabled { get { return m_debugMode; } }
+        public static bool isDebugEnabled { get { return v_debugMode; } }
     }
 }

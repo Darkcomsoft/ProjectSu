@@ -10,7 +10,7 @@ namespace ProjectIND.darkcomsoft.src.client
     /// </summary>
     public static class GameSettings
     {
-        private static float m_GuiScale = 1;
+        private static float v_GuiScale = 1;
         public static int TargetFrameRate = 60;
 
         //Interations
@@ -28,6 +28,6 @@ namespace ProjectIND.darkcomsoft.src.client
         public static Keys DEBUGSCREEN_KEY = Keys.F2;
 
 
-        public static float GuiScale { get { return m_GuiScale; } set { m_GuiScale = value; if (m_GuiScale < 0.1f) { m_GuiScale = 0.1f; } } }
+        public static float GuiScale { get { return v_GuiScale; } set { v_GuiScale = value; if (v_GuiScale < 0.1f) { v_GuiScale = 0.1f; } } }
     }
 }

@@ -22,38 +22,38 @@ namespace ProjectIND.darkcomsoft.src.client
     {
         public static Client instance { get; private set; }
 
-        private Game m_clientManager;
+        private Game v_clientManager;
 
-        public static Input m_input { get; private set; }
-        public static Gizmo m_gizmos { get; private set; }
-        public static GUI m_gui { get; private set; }
+        public static Input v_input { get; private set; }
+        public static Gizmo v_gizmos { get; private set; }
+        public static GUI v_gui { get; private set; }
 
-        private bool m_restartGame = false;
+        private bool v_restartGame = false;
 
         public Client()
         {
             instance = this;
 
-            m_gizmos = new Gizmo();//This is only for debug
-            m_input = new Input();
-            m_gui = new GUI();
+            v_gizmos = new Gizmo();//This is only for debug
+            v_input = new Input();
+            v_gui = new GUI();
 
-            m_clientManager = new Game();
+            v_clientManager = new Game();
         }
 
         public override void Tick()
         {
-            if (m_restartGame)
+            if (v_restartGame)
             {
-                if (m_clientManager != null)
+                if (v_clientManager != null)
                 {
-                    m_clientManager.Dispose();
-                    m_clientManager = null;
+                    v_clientManager.Dispose();
+                    v_clientManager = null;
 
-                    m_clientManager = new Game();
+                    v_clientManager = new Game();
                 }
 
-                m_restartGame = false;
+                v_restartGame = false;
             }
 
             /*if (Input.GetKeyDown(Keys.P))
@@ -80,7 +80,7 @@ namespace ProjectIND.darkcomsoft.src.client
                 }
             }
 
-            m_gui?.Tick();
+            v_gui?.Tick();
             base.Tick();
         }
 
@@ -89,26 +89,26 @@ namespace ProjectIND.darkcomsoft.src.client
             //DrawStuuff Like 3d
 
             //DrawGUI
-            m_gui?.Draw();
+            v_gui?.Draw();
             base.TickDraw();
         }
 
         protected override void OnDispose()
         {
-            if (m_clientManager != null)
+            if (v_clientManager != null)
             {
-                m_clientManager.Dispose();
-                m_clientManager = null;
+                v_clientManager.Dispose();
+                v_clientManager = null;
             }
 
-            m_gui?.Dispose();
-            m_gui = null;
+            v_gui?.Dispose();
+            v_gui = null;
 
-            m_gizmos?.Dispose();
-            m_gizmos = null;
+            v_gizmos?.Dispose();
+            v_gizmos = null;
 
-            m_input?.Dispose();
-            m_input = null;
+            v_input?.Dispose();
+            v_input = null;
 
             instance = null;
             base.OnDispose();
@@ -116,31 +116,31 @@ namespace ProjectIND.darkcomsoft.src.client
 
         public override void OnResize()
         {
-            m_gui?.OnResize();
+            v_gui?.OnResize();
             base.OnResize();
         }
 
         public override void OnMouseMove()
         {
-            m_gui?.OnMouseMove();
+            v_gui?.OnMouseMove();
             base.OnMouseMove();
         }
 
         public override void OnMouseDown(MouseButtonEventArgs e)
         {
-            m_gui?.OnMousePress(e);
+            v_gui?.OnMousePress(e);
             base.OnMouseDown(e);
         }
 
         public override void OnMouseUp(MouseButtonEventArgs e)
         {
-            m_gui?.OnMouseRelease(e);
+            v_gui?.OnMouseRelease(e);
             base.OnMouseUp(e);
         }
 
         public void RestartGame()
         {
-            m_restartGame = true;
+            v_restartGame = true;
         }
     }
 }

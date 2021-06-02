@@ -14,21 +14,21 @@ namespace ProjectIND.darkcomsoft.src.worldgenerator
     /// </summary>
     public class Chunk : GameObject
     {
-        public const int m_size = 16;
+        public const int v_size = 16;
 
-        private Block[,,] m_voxelArray;
+        private BlockVoxel[,,] v_voxelArray;
 
-        public ChunkState m_chunkState { get; private set; }
-        public ChunkStage m_chunkStages { get; private set; }
+        public ChunkState v_chunkState { get; private set; }
+        public ChunkStage v_chunkStages { get; private set; }
 
         public void SetUp(Vector3d position)
         {
             transform.Position = position;
 
-            m_voxelArray = new Block[m_size, m_size, m_size];
+            v_voxelArray = new BlockVoxel[v_size, v_size, v_size];
 
-            m_chunkState = ChunkState.notready;
-            m_chunkStages = ChunkStage.empty;
+            v_chunkState = ChunkState.notready;
+            v_chunkStages = ChunkStage.empty;
         }
 
         protected override void OnAwake()
@@ -43,18 +43,18 @@ namespace ProjectIND.darkcomsoft.src.worldgenerator
 
         public void SetState(ChunkState chunkState)
         {
-            m_chunkState = chunkState;
+            v_chunkState = chunkState;
         }
 
         public void PopulateVoxels()
         {
-            for (int x = 0; x < m_size; x++)
+            for (int x = 0; x < v_size; x++)
             {
-                for (int y = 0; y < m_size; y++)
+                for (int y = 0; y < v_size; y++)
                 {
-                    for (int z = 0; z < m_size; z++)
+                    for (int z = 0; z < v_size; z++)
                     {
-                        m_voxelArray[x, y, z].m_blockID = 0;
+                        v_voxelArray[x, y, z].v_blockID = 0;
                     }
                 }
             }

@@ -19,45 +19,45 @@ namespace ProjectIND.darkcomsoft.src.engine.gameobject
     /// </summary>
     public abstract class GameObject : ClassBase
     {
-        protected Transform m_transform { get; private set; }
-        protected bool m_removed { get; private set; }
-        protected bool m_visible { get; private set; }
-        protected bool m_usefrustum { get; private set; }
+        protected Transform v_transform { get; private set; }
+        protected bool v_removed { get; private set; }
+        protected bool v_visible { get; private set; }
+        protected bool v_usefrustum { get; private set; }
 
-        protected bool m_activated { get; private set; }
+        protected bool v_activated { get; private set; }
 
-        protected World m_world { get; private set; }//world of this entity is in
+        protected World v_world { get; private set; }//world of this entity is in
 
         public void Create(World world)
         {
             Debug.Log(this.GetType() + " is Created!");
 
-            m_removed = false;
-            m_visible = false;
-            m_usefrustum = false;
+            v_removed = false;
+            v_visible = false;
+            v_usefrustum = false;
 
-            m_transform = new Transform();
-            this.m_world = world;
+            v_transform = new Transform();
+            this.v_world = world;
 
             OnAwake();
 
             Enable();
         }
 
-        public void Tick() { if (m_activated && !m_removed) { doTick(); } }
-        public void Draw(DrawStage drawStage) { if (m_activated && !m_removed) { doDraw(drawStage); } }
+        public void Tick() { if (v_activated && !v_removed) { doTick(); } }
+        public void Draw(DrawStage drawStage) { if (v_activated && !v_removed) { doDraw(drawStage); } }
 
         public void DestroyThis()
         {
-            m_removed = true;
+            v_removed = true;
             Disable();
         }
 
         private void doTick()
         {
-            m_visible = false;
+            v_visible = false;
 
-            if (m_usefrustum)
+            if (v_usefrustum)
             {
                 DoCheckIfVisible();
             }
@@ -69,9 +69,9 @@ namespace ProjectIND.darkcomsoft.src.engine.gameobject
 
         private void doDraw(DrawStage drawStage)
         {
-            if (m_usefrustum)
+            if (v_usefrustum)
             {
-                if (m_visible)
+                if (v_visible)
                 {
                     OnDraw(drawStage);
                 }
@@ -91,7 +91,7 @@ namespace ProjectIND.darkcomsoft.src.engine.gameobject
 
             if (Frustum.VolumeVsFrustum(transform.Position, transform.VolumeSize))
             {
-                m_visible = true;
+                v_visible = true;
             }
         }
 
@@ -101,8 +101,8 @@ namespace ProjectIND.darkcomsoft.src.engine.gameobject
 
             transform.Dispose();
 
-            m_transform = null;
-            m_world = null;
+            v_transform = null;
+            v_world = null;
             base.OnDispose();
         }
 
@@ -112,7 +112,7 @@ namespace ProjectIND.darkcomsoft.src.engine.gameobject
         /// <param name="value"></param>
         public void UseFrustum(bool value)
         {
-            m_usefrustum = value;
+            v_usefrustum = value;
         }
 
         /// <summary>
@@ -120,7 +120,7 @@ namespace ProjectIND.darkcomsoft.src.engine.gameobject
         /// </summary>
         protected void Enable()
         {
-            m_activated = true;
+            v_activated = true;
         }
 
         /// <summary>
@@ -128,7 +128,7 @@ namespace ProjectIND.darkcomsoft.src.engine.gameobject
         /// </summary>
         protected void Disable()
         {
-            m_activated = false;
+            v_activated = false;
         }
 
         /// <summary>
@@ -165,7 +165,7 @@ namespace ProjectIND.darkcomsoft.src.engine.gameobject
         /// Move this GameObject to this <paramref name="world"/> World!
         /// </summary>
         /// <param name="world"></param>
-        protected void ChangeWorld(World world) { m_world = world; OnWorldChanged(); }
+        protected void ChangeWorld(World world) { v_world = world; OnWorldChanged(); }
 
         /// <summary>
         /// "Spawn" a GameObject, if is a Entity spawn on network
@@ -216,9 +216,9 @@ namespace ProjectIND.darkcomsoft.src.engine.gameobject
             return obj;
         }
 
-        public Transform transform { get { return m_transform; } }
-        public World GetWorld { get { return m_world; } }
-        public bool isRemoved { get { return m_removed; } }
-        public bool isVisible { get { return m_visible; } }
+        public Transform transform { get { return v_transform; } }
+        public World GetWorld { get { return v_world; } }
+        public bool isRemoved { get { return v_removed; } }
+        public bool isVisible { get { return v_visible; } }
     }
 }

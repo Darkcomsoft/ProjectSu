@@ -16,15 +16,15 @@ namespace ProjectIND.darkcomsoft.src.client
     public class Game : ClassBase
     {
         public static Game instance { get; private set; }
-        private bool m_isPlaying = false;
+        private bool v_isPlaying = false;
 
-        public static PlayerManager m_playerManager { get; private set; }
+        public static PlayerManager v_playerManager { get; private set; }
 
         public Game()
         {
             instance = this;
 
-            m_playerManager = new PlayerManager();
+            v_playerManager = new PlayerManager();
 
             CreateStartWorlds();
         }
@@ -33,8 +33,8 @@ namespace ProjectIND.darkcomsoft.src.client
         {
             WorldManager.DestroyAllWorlds();
 
-            m_playerManager.Dispose();
-            m_playerManager = null;
+            v_playerManager.Dispose();
+            v_playerManager = null;
 
             instance = null;
             base.OnDispose();
@@ -47,13 +47,13 @@ namespace ProjectIND.darkcomsoft.src.client
 
         public void StartSinglePlayer()
         {
-            m_isPlaying = true;
+            v_isPlaying = true;
             JoinGameWorld();
         }
 
         public static void Disconnect()
         {
-            instance.m_isPlaying = false;
+            instance.v_isPlaying = false;
             instance.LoadMainMenu();
         }
 
