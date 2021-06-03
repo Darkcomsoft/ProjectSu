@@ -7,5 +7,11 @@ namespace ProjectIND.darkcomsoft.src.worldgenerator
     public struct BlockVoxel
     {
         public byte v_blockID;
+
+
+        public BlockVoxel[] GetNeighboors()
+        {
+            return null;
+        }
     }
 }
