@@ -191,7 +191,8 @@ namespace ProjectIND.darkcomsoft.src.resources
         #region LoadBlocks
         private void LoadBlocks()
         {
-            v_blockDataList.Add(0, new AirBlock(0));
+            v_blockDataList.Add(0, new AirBlock());
+            v_blockDataList.Add(1, new DirtBlock());
         }
         #endregion
 

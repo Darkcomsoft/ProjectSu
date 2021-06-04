@@ -6,10 +6,10 @@ namespace ProjectIND.darkcomsoft.src.blocks
 {
     public class AirBlock : Block
     {
-        public AirBlock(byte id)
+        public AirBlock()
         {
             v_blockName = "block_air";
-            v_blockID = id;
+            v_blockID = 0;
         }
 
         protected override void OnDispose()

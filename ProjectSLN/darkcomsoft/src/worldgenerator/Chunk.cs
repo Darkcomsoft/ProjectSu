@@ -1,5 +1,6 @@
 ﻿using OpenTK.Mathematics;
 using ProjectIND.darkcomsoft.src;
+using ProjectIND.darkcomsoft.src.blocks;
 using ProjectIND.darkcomsoft.src.engine;
 using ProjectIND.darkcomsoft.src.engine.gameobject;
 using ProjectIND.darkcomsoft.src.enums;
@@ -110,10 +111,7 @@ namespace ProjectIND.darkcomsoft.src.worldgenerator
 
                                     lock (v_uvs)
                                     {
-                                        v_uvs.Add(Game.SpriteManager.GetTileUVs(Blocks[x, y, z])[0]);
-                                        v_uvs.Add(Game.SpriteManager.GetTileUVs(Blocks[x, y, z])[1]);
-                                        v_uvs.Add(Game.SpriteManager.GetTileUVs(Blocks[x, y, z])[2]);
-                                        v_uvs.Add(Game.SpriteManager.GetTileUVs(Blocks[x, y, z])[3]);
+                                        v_uvs.AddRange(Block.GetBlockByID(blockney[s].v_blockID).GetUV());
                                     }
 
                                     #region Hide
@@ -141,8 +139,6 @@ namespace ProjectIND.darkcomsoft.src.worldgenerator
                                     vertexIndex += 4;
                                 }
                             }
-
-                            blockney = null;
                         }
                     }
                 }

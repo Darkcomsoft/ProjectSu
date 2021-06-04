@@ -3,6 +3,7 @@ using ProjectIND.darkcomsoft.src.debug;
 using ProjectIND.darkcomsoft.src.entity;
 using ProjectIND.darkcomsoft.src.game;
 using ProjectIND.darkcomsoft.src.network;
+using ProjectIND.darkcomsoft.src.resources;
 using ProjectIND.darkcomsoft.src.world;
 using System;
 using System.Collections.Generic;
@@ -23,6 +24,8 @@ namespace ProjectIND.darkcomsoft.src.client
         public Game()
         {
             instance = this;
+
+            ResourcesManager.instance.LoadResources();
 
             v_playerManager = new PlayerManager();
 
