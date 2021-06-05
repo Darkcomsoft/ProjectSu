@@ -8,25 +8,33 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 using System.Threading;
-using ProjectIND.darkcomsoft.src.game;
+using ProjectIND.darkcomsoft.src.client;
 
 namespace ProjectIND.darkcomsoft.src.worldgenerator
 {
     public class TerrainGenerator : GameObject
     {
+        public static TerrainGenerator instance { get; private set; }
+
         private int v_terrainGenDistanceX = 20;
         private int v_terrainGenDistanceY = 10;
 
         private ThreadLoop v_terrainLoadThreadLoop;
         private ActionQueue v_destrouChunkQueue;
 
+        //VoxelPopulate
+        private ThreadLoop v_populateVoxelThreadLoop;
+        private Queue<Vector3> v_populateVoxelQueue;
+
         private Dictionary<Vector3d, Chunk> v_chunkList;
 
         protected override void OnAwake()
         {
+            instance = this;
             v_chunkList = new Dictionary<Vector3d, Chunk>();
 
             v_destrouChunkQueue = new ActionQueue();
+            v_populateVoxelQueue = new Queue<Vector3>();
 
             StartThreads();//start all others threads
             base.OnAwake();
@@ -37,6 +45,9 @@ namespace ProjectIND.darkcomsoft.src.worldgenerator
             v_terrainLoadThreadLoop.Dispose();
             v_terrainLoadThreadLoop = null;
 
+            v_populateVoxelThreadLoop.Dispose();
+            v_populateVoxelThreadLoop = null;
+
             v_destrouChunkQueue.Dispose();
             v_destrouChunkQueue = null;
 
@@ -45,8 +56,11 @@ namespace ProjectIND.darkcomsoft.src.worldgenerator
                 DestroyChunk(item.Value);
             }
 
-            v_chunkList = null;
+            v_populateVoxelQueue.Clear();
+            v_populateVoxelQueue = null;
 
+            v_chunkList = null;
+            instance = null;
             base.OnDispose();
         }
 
@@ -60,12 +74,13 @@ namespace ProjectIND.darkcomsoft.src.worldgenerator
         {
             Debug.Log("Starting Threads!");
             v_terrainLoadThreadLoop = new ThreadLoop("ThreadTerrainLoad", ThreadPriority.Lowest, false, 15, new ThreadCallBack(GenTick));
+            v_populateVoxelThreadLoop = new ThreadLoop("ThreadVoxelPopulate", ThreadPriority.Lowest,  false, 5, new ThreadCallBack(PopulateVoxelTick));
         }
 
         //Terrain loader tick
         private void GenTick()
         {
-            Vector3d PlayerP = new Vector3d((int)(Math.Round(PlayerManager.v_playerPosition.X / Chunk.v_size) * Chunk.v_size), (int)(Math.Round(PlayerManager.v_playerPosition.Y / Chunk.v_size) * Chunk.v_size), (int)(Math.Round(PlayerManager.v_playerPosition.Z / Chunk.v_size) * Chunk.v_size));
+            Vector3d PlayerP = new Vector3d((int)(Math.Round(Game.v_playerPosition.X / Chunk.v_size) * Chunk.v_size), (int)(Math.Round(Game.v_playerPosition.Y / Chunk.v_size) * Chunk.v_size), (int)(Math.Round(Game.v_playerPosition.Z / Chunk.v_size) * Chunk.v_size));
             int minX = (int)PlayerP.X - v_terrainGenDistanceX;
             int maxX = (int)PlayerP.X + v_terrainGenDistanceX;
 
@@ -116,6 +131,22 @@ namespace ProjectIND.darkcomsoft.src.worldgenerator
             }
         }
 
+        private void PopulateVoxelTick()
+        {
+            lock (v_populateVoxelQueue)
+            {
+                while (v_populateVoxelQueue.Count > 0)
+                {
+                    Vector3 pos = v_populateVoxelQueue.Dequeue();
+
+                    if (v_chunkList.ContainsKey(pos))
+                    {
+                        v_chunkList[pos].PopulateVoxels();
+                    }
+                }
+            }
+        }
+
         private void DestroyChunk(Chunk chunk)
         {
             GameObject.DestroyObject(chunk);
@@ -124,6 +155,11 @@ namespace ProjectIND.darkcomsoft.src.worldgenerator
             {
                 v_chunkList.Remove(chunk.transform.Position);
             }
+        }
+
+        public static void RequestVoxelPopulate(Chunk chunk)
+        {
+            instance.v_populateVoxelQueue.Enqueue((Vector3)chunk.transform.Position);
         }
     }
 }

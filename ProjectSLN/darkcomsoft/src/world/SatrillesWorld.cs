@@ -20,6 +20,9 @@ namespace ProjectIND.darkcomsoft.src.world
         public override void Start()
         {
             v_terrainGenObject = (TerrainGenerator)GameObject.SpawnObject<TerrainGenerator>(this);
+
+            Game.SpawnPlayer(this);
+
             base.Start();
         }
 

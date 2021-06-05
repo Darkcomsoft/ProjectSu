@@ -1,7 +1,6 @@
 C:\Users\estev\Documents\GitHub\ProjectIndustry\ProjectSLN\obj\x64\Debug\netcoreapp3.1\ProjectIND.csprojAssemblyReference.cache
 C:\Users\estev\Documents\GitHub\ProjectIndustry\ProjectSLN\obj\x64\Debug\netcoreapp3.1\ProjectIND.AssemblyInfoInputs.cache
 C:\Users\estev\Documents\GitHub\ProjectIndustry\ProjectSLN\obj\x64\Debug\netcoreapp3.1\ProjectIND.AssemblyInfo.cs
-C:\Users\estev\Documents\GitHub\ProjectIndustry\ProjectSLN\obj\x64\Debug\netcoreapp3.1\ProjectIND.csproj.CoreCompileInputs.cache
 C:\Users\estev\Documents\GitHub\ProjectIndustry\ProjectSLN\bin\x64\Debug\netcoreapp3.1\ProjectIndustry.exe
 C:\Users\estev\Documents\GitHub\ProjectIndustry\ProjectSLN\bin\x64\Debug\netcoreapp3.1\ProjectIndustry.deps.json
 C:\Users\estev\Documents\GitHub\ProjectIndustry\ProjectSLN\bin\x64\Debug\netcoreapp3.1\ProjectIndustry.runtimeconfig.json
@@ -33,3 +32,5 @@ C:\Users\estev\Documents\GitHub\ProjectIndustry\ProjectSLN\obj\x64\Debug\netcore
 C:\Users\estev\Documents\GitHub\ProjectIndustry\ProjectSLN\obj\x64\Debug\netcoreapp3.1\ProjectIndustry.dll
 C:\Users\estev\Documents\GitHub\ProjectIndustry\ProjectSLN\obj\x64\Debug\netcoreapp3.1\ProjectIndustry.pdb
 C:\Users\estev\Documents\GitHub\ProjectIndustry\ProjectSLN\obj\x64\Debug\netcoreapp3.1\ProjectIND.genruntimeconfig.cache
+C:\Users\estev\Documents\GitHub\ProjectIndustry\ProjectSLN\bin\x64\Debug\netcoreapp3.1\BEPUphysics.dll
+C:\Users\estev\Documents\GitHub\ProjectIndustry\ProjectSLN\bin\x64\Debug\netcoreapp3.1\BEPUutilities.dll

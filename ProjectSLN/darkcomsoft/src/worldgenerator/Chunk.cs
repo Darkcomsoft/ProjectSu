@@ -41,6 +41,8 @@ namespace ProjectIND.darkcomsoft.src.worldgenerator
 
             v_chunkState = ChunkState.notready;
             v_chunkStages = ChunkStage.empty;
+
+            TerrainGenerator.RequestVoxelPopulate(this);
         }
 
         protected override void OnAwake()
@@ -60,6 +62,8 @@ namespace ProjectIND.darkcomsoft.src.worldgenerator
 
         public void PopulateVoxels()
         {
+            v_chunkStages = ChunkStage.do_voxel;
+
             for (int x = 0; x < v_size; x++)
             {
                 for (int y = 0; y < v_size; y++)

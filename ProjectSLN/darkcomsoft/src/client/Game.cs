@@ -1,7 +1,9 @@
 ﻿using Lidgren.Network;
+using OpenTK.Mathematics;
 using ProjectIND.darkcomsoft.src.debug;
+using ProjectIND.darkcomsoft.src.engine.gameobject;
 using ProjectIND.darkcomsoft.src.entity;
-using ProjectIND.darkcomsoft.src.game;
+using ProjectIND.darkcomsoft.src.misc;
 using ProjectIND.darkcomsoft.src.network;
 using ProjectIND.darkcomsoft.src.resources;
 using ProjectIND.darkcomsoft.src.world;
@@ -19,15 +21,18 @@ namespace ProjectIND.darkcomsoft.src.client
         public static Game instance { get; private set; }
         private bool v_isPlaying = false;
 
-        public static PlayerManager v_playerManager { get; private set; }
+        #region Player
+        public PlayerEntity v_playerentity { get; private set; }
+        public static bool v_playerAlive { get; private set; }
+        public static Vector3d v_playerPosition = Vector3d.Zero;
+        #endregion
+
 
         public Game()
         {
             instance = this;
 
             ResourcesManager.instance.LoadResources();
-
-            v_playerManager = new PlayerManager();
 
             CreateStartWorlds();
         }
@@ -36,8 +41,7 @@ namespace ProjectIND.darkcomsoft.src.client
         {
             WorldManager.DestroyAllWorlds();
 
-            v_playerManager.Dispose();
-            v_playerManager = null;
+            v_playerentity = null;
 
             instance = null;
             base.OnDispose();
@@ -71,6 +75,25 @@ namespace ProjectIND.darkcomsoft.src.client
         {
             WorldManager.DestroyAllWorlds();
             WorldManager.SpawnWorld<MainMenuWorld>();
+        }
+        #endregion
+
+        #region PlayerManager
+        public static void SpawnPlayer(World worldToSpawn)
+        {
+            if (instance.v_playerentity != null) { return; }
+
+            PlayerEntity player = (PlayerEntity)GameObject.SpawnObject<PlayerEntity>(worldToSpawn);
+            instance.v_playerentity = player;
+
+            v_playerAlive = true;
+        }
+
+        [EngineOnly]
+        public static void KillPlayer(PlayerEntity playerEntity)
+        {
+            v_playerAlive = false;
+            instance.v_playerentity = null;
         }
         #endregion
     }
