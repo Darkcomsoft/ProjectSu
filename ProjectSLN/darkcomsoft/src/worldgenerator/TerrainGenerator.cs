@@ -92,9 +92,9 @@ namespace ProjectIND.darkcomsoft.src.worldgenerator
 
             foreach (var item in v_chunkList)
             {
-                if (item.Value.transform.Position.X > maxX || item.Value.transform.Position.X < minX || item.Value.transform.Position.Y > maxY || item.Value.transform.Position.Y < minY || item.Value.transform.Position.Z > maxZ || item.Value.transform.Position.Z < minZ)
+                if (item.Value.transform.v_Position.X > maxX || item.Value.transform.v_Position.X < minX || item.Value.transform.v_Position.Y > maxY || item.Value.transform.v_Position.Y < minY || item.Value.transform.v_Position.Z > maxZ || item.Value.transform.v_Position.Z < minZ)
                 {
-                    if (v_chunkList.ContainsKey(item.Value.transform.Position))
+                    if (v_chunkList.ContainsKey(item.Value.transform.v_Position))
                     {
                         item.Value.SetState(enums.ChunkState.deleted);
                         v_destrouChunkQueue.Enqueue(() => { DestroyChunk(item.Value); });
@@ -153,13 +153,13 @@ namespace ProjectIND.darkcomsoft.src.worldgenerator
 
             lock (v_chunkList)
             {
-                v_chunkList.Remove(chunk.transform.Position);
+                v_chunkList.Remove(chunk.transform.v_Position);
             }
         }
 
         public static void RequestVoxelPopulate(Chunk chunk)
         {
-            instance.v_populateVoxelQueue.Enqueue((Vector3)chunk.transform.Position);
+            instance.v_populateVoxelQueue.Enqueue((Vector3)chunk.transform.v_Position);
         }
     }
 }

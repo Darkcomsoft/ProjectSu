@@ -9,11 +9,11 @@ namespace ProjectIND.darkcomsoft.src.entity
     /// </summary>
     public class LivingEntity : Entity
     {
-        private bool v_alive = false;
+        public bool v_isAlive { get; private set; }
 
         protected override void OnAwake()
         {
-            v_alive = true;
+            v_isAlive = true;
             base.OnAwake();
         }
 

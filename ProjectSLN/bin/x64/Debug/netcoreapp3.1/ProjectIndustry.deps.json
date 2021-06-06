@@ -9,6 +9,7 @@
       "ProjectIndustry/1.0.0": {
         "dependencies": {
           "BEPUphysics": "1.5.2",
+          "BEPUutilities": "1.5.1",
           "Newtonsoft.Json": "13.0.1",
           "OpenTK": "4.6.4",
           "System.Drawing.Common": "5.0.2",

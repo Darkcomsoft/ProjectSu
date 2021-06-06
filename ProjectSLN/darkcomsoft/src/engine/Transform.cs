@@ -11,9 +11,9 @@ namespace ProjectIND.darkcomsoft.src.engine
 {
     public class Transform : ClassBase
     {
-        private Vector3d v_Position;
-        private Quaterniond v_Rotation;
-        private Vector3d v_Size;
+        public Vector3d v_Position;
+        public Quaterniond v_Rotation;
+        public Vector3d v_Size;
 
         /// <summary>
         /// this is the boundbox, you can calculate with the 3d model, or set a custom value
@@ -93,30 +93,6 @@ namespace ProjectIND.darkcomsoft.src.engine
             }
         }
 
-        public Vector3d Position
-        {
-            get
-            {
-                return v_Position;
-            }
-            set { v_Position = value; }
-        }
-        public Quaterniond Rotation
-        {
-            get
-            {
-                return v_Rotation;
-            }
-            set { v_Rotation = value; }
-        }
-        public Vector3d Size
-        {
-            get
-            {
-                return v_Size;
-            }
-            set { v_Size = value; }
-        }
         /// <summary>
         /// this is the boundbox, you can calculate with the 3d model, or set a custom value
         /// </summary>

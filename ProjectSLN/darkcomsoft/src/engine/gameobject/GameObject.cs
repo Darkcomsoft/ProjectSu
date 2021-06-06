@@ -30,6 +30,7 @@ namespace ProjectIND.darkcomsoft.src.engine.gameobject
 
         public void Create(World world)
         {
+            OnAwake();
             Debug.Log(this.GetType() + " is Created!");
 
             v_removed = false;
@@ -39,8 +40,7 @@ namespace ProjectIND.darkcomsoft.src.engine.gameobject
             v_transform = new Transform();
             this.v_world = world;
 
-            OnAwake();
-
+            OnStart();
             Enable();
         }
 
@@ -89,7 +89,7 @@ namespace ProjectIND.darkcomsoft.src.engine.gameobject
             //I DONT KNOW BUT THIS FUNCTIONS FRUSTUM NEED SOME OPTIMIZATION, I DON'T KNOW DO A LOOK
             Frustum.CalculateFrustum(Camera.main.GetProjectionMatrix(), transform.GetTransformWorld);
 
-            if (Frustum.VolumeVsFrustum(transform.Position, transform.VolumeSize))
+            if (Frustum.VolumeVsFrustum(transform.v_Position, transform.VolumeSize))
             {
                 v_visible = true;
             }

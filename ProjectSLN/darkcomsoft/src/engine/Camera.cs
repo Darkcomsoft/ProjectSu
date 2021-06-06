@@ -17,7 +17,7 @@ namespace ProjectIND.darkcomsoft.src.engine
     {
         private static Camera Main;
 
-        private Entity entityBase;
+        private Transform v_prentTransform;
         public Vector3 position;
         public Quaternion rotation;
 
@@ -31,11 +31,11 @@ namespace ProjectIND.darkcomsoft.src.engine
         private Matrix4 ViewMatrix;
         private Matrix4 ProjectionMatrix;
 
-        public Camera(Entity entity, float camHight)
+        public Camera(Transform entity, float camHight)
         {
             Main = this;
 
-            entityBase = entity;
+            v_prentTransform = entity;
 
             position = new Vector3(0, camHight, 0);
             rotation = Quaternion.Identity;
@@ -45,7 +45,7 @@ namespace ProjectIND.darkcomsoft.src.engine
 
         public void Tick()
         {
-            var camRotation = Matrix3.CreateRotationX((float)rotation.X + (float)entityBase.transform.Rotation.X) * Matrix3.CreateRotationY((float)rotation.Y + (float)entityBase.transform.Rotation.Y) * Matrix3.CreateRotationZ((float)rotation.Z + (float)entityBase.transform.Rotation.Z);
+            var camRotation = Matrix3.CreateRotationX((float)rotation.X + (float)v_prentTransform.v_Rotation.X) * Matrix3.CreateRotationY((float)rotation.Y + (float)v_prentTransform.v_Rotation.Y) * Matrix3.CreateRotationZ((float)rotation.Z + (float)v_prentTransform.v_Rotation.Z);
 
             var camOriginalTarget = new Vector3d(0, 0, 1);
             var camRotatedTarget = Vector3.Transform((Vector3)camOriginalTarget, camRotation.ExtractRotation());
@@ -127,7 +127,7 @@ namespace ProjectIND.darkcomsoft.src.engine
             {
                 Main = null;
             }
-            entityBase = null;
+            v_prentTransform = null;
             base.OnDispose();
         }
 

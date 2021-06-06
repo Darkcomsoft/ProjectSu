@@ -21,6 +21,7 @@ using System.Diagnostics;
 using System.IO;
 using System.Runtime.InteropServices;
 using System.Text;
+using ProjectIND.darkcomsoft.src.engine.physics;
 
 namespace ProjectIND.darkcomsoft.src
 {
@@ -42,6 +43,7 @@ namespace ProjectIND.darkcomsoft.src
         public static ResourcesManager v_resourceManager { get; private set; }
         public static WorldManager v_worldManager { get; private set; }
         public static ObjectManager v_entityManager { get; private set; }
+        public static Physics v_physics;
 
         private bool v_appIsClosing = false;
 
@@ -56,6 +58,7 @@ namespace ProjectIND.darkcomsoft.src
             v_resourceManager = new ResourcesManager();
             v_worldManager = new WorldManager();
             v_entityManager = new ObjectManager();
+            v_physics = new Physics();
 
             switch (applicationType)
             {
@@ -81,6 +84,7 @@ namespace ProjectIND.darkcomsoft.src
 
                 v_entityManager?.Tick();
                 v_worldManager?.Tick();
+                v_physics?.Tick((float)time);
             }
         }
 
@@ -107,6 +111,9 @@ namespace ProjectIND.darkcomsoft.src
 
             v_resourceManager?.Dispose();
             v_resourceManager = null;
+
+            v_physics.Dispose();
+            v_physics = null;
 
             instance = null;
             base.OnDispose();

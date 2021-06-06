@@ -127,13 +127,13 @@ namespace ProjectIND.darkcomsoft.src.network
                                 neww.ViewID = entity.getViewId;
                                 neww.RegionID = entity.getRegionID;
 
-                                neww.p_x = entity.transform.Position.X;
-                                neww.p_y = entity.transform.Position.Y;
-                                neww.p_z = entity.transform.Position.Z;
+                                neww.p_x = entity.transform.v_Position.X;
+                                neww.p_y = entity.transform.v_Position.Y;
+                                neww.p_z = entity.transform.v_Position.Z;
 
-                                neww.r_x = entity.transform.Rotation.X;
-                                neww.r_y = entity.transform.Rotation.Y;
-                                neww.r_z = entity.transform.Rotation.Z;
+                                neww.r_x = entity.transform.v_Rotation.X;
+                                neww.r_y = entity.transform.v_Rotation.Y;
+                                neww.r_z = entity.transform.v_Rotation.Z;
 
                                 netvi.Add(neww);
                             }
@@ -228,14 +228,14 @@ namespace ProjectIND.darkcomsoft.src.network
             msg.WriteVariableInt64(v_peer.UniqueIdentifier);//Netcode ID
 
             //Position
-            msg.Write(entity.transform.Position.X);
-            msg.Write(entity.transform.Position.Y);
-            msg.Write(entity.transform.Position.Z);
+            msg.Write(entity.transform.v_Position.X);
+            msg.Write(entity.transform.v_Position.Y);
+            msg.Write(entity.transform.v_Position.Z);
 
             //Rotation
-            msg.Write(entity.transform.Rotation.X);
-            msg.Write(entity.transform.Rotation.Y);
-            msg.Write(entity.transform.Rotation.Z);
+            msg.Write(entity.transform.v_Rotation.X);
+            msg.Write(entity.transform.v_Rotation.Y);
+            msg.Write(entity.transform.v_Rotation.Z);
 
             Server_SendToAll(msg, NetDeliveryMethod.ReliableOrdered);
 
@@ -291,8 +291,8 @@ namespace ProjectIND.darkcomsoft.src.network
 
             Entity entityBase = (Entity)GameObject.SpawnObject(Type.GetType(typeName), WorldManager.GetWorld(Type.GetType(worldType)));
             entityBase.SetupEntityNetcode(viewId, ownerId);
-            entityBase.transform.Position = position;
-            entityBase.transform.Rotation = rotation;
+            entityBase.transform.v_Position = position;
+            entityBase.transform.v_Rotation = rotation;
             #endregion
 
             //Send to every one but exclude the sender
@@ -311,14 +311,14 @@ namespace ProjectIND.darkcomsoft.src.network
             msg.WriteVariableInt64(v_peer.UniqueIdentifier);//Netcode ID
 
             //Position
-            msg.Write(entityBase.transform.Position.X);
-            msg.Write(entityBase.transform.Position.Y);
-            msg.Write(entityBase.transform.Position.Z);
+            msg.Write(entityBase.transform.v_Position.X);
+            msg.Write(entityBase.transform.v_Position.Y);
+            msg.Write(entityBase.transform.v_Position.Z);
 
             //Rotation
-            msg.Write(entityBase.transform.Rotation.X);
-            msg.Write(entityBase.transform.Rotation.Y);
-            msg.Write(entityBase.transform.Rotation.Z);
+            msg.Write(entityBase.transform.v_Rotation.X);
+            msg.Write(entityBase.transform.v_Rotation.Y);
+            msg.Write(entityBase.transform.v_Rotation.Z);
 
             Server_SendToAll(msg, NetDeliveryMethod.ReliableOrdered, ownerId);
             #endregion

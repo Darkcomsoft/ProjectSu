@@ -46,6 +46,7 @@ namespace ProjectIND.darkcomsoft.src.engine.physics
             v_parallelLooper.Dispose();
             v_parallelLooper = null;
             v_space = null;
+            instance = null;
             base.OnDispose();
         }
 

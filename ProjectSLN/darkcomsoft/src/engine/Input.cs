@@ -74,5 +74,6 @@ namespace ProjectIND.darkcomsoft.src.engine
         /// </summary>
         public static RectangleF GetMousePositionRec { get { instance.v_mousePositionRec.X = instance.mouseState.Position.X; instance.v_mousePositionRec.Y = WindowMain.Instance.Height - instance.mouseState.Position.Y; return instance.v_mousePositionRec; } }
         public static Input instance { get { return v_instance; } }
+        public static MouseState getMouse{get{ return WindowMain.Instance.MouseState; } }
     }
 }

@@ -24,7 +24,7 @@ namespace ProjectIND.darkcomsoft.src.engine.gameobject
         {
             for (int i = 0; i < v_objectList.Count; i++)
             {
-                GameObject.DestroyObject(v_objectList[i]);
+                GameObject.DestroyObject(v_objectList[i], true);
             }
             v_objectList.Clear();
 
@@ -38,12 +38,15 @@ namespace ProjectIND.darkcomsoft.src.engine.gameobject
             for (int i = 0; i < v_objectList.Count; i++)
             {
                 GameObject entityBase = v_objectList[i];
-                entityBase.Tick();
 
                 if (entityBase.isRemoved)
                 {
                     v_objectList.Remove(entityBase);
                     entityBase.Dispose();
+                }
+                else
+                {
+                    entityBase.Tick();
                 }
             }
         }
@@ -111,7 +114,7 @@ namespace ProjectIND.darkcomsoft.src.engine.gameobject
                 {
                     if (Instance.v_objectList[i] != null)
                     {
-                        GameObject.DestroyObject(Instance.v_objectList[i]);
+                        GameObject.DestroyObject(Instance.v_objectList[i], true);
                     }
                 }
             }

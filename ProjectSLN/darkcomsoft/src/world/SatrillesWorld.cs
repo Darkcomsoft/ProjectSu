@@ -31,6 +31,8 @@ namespace ProjectIND.darkcomsoft.src.world
             GameObject.DestroyObject(v_terrainGenObject, true);
             v_terrainGenObject = null;
 
+            Game.KillPlayer(true);
+
             base.OnDispose();
         }
 

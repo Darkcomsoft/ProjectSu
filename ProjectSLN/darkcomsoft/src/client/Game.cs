@@ -89,9 +89,24 @@ namespace ProjectIND.darkcomsoft.src.client
             v_playerAlive = true;
         }
 
-        [EngineOnly]
-        public static void KillPlayer(PlayerEntity playerEntity)
+        public static void KillPlayer(PlayerEntity playerEntity, bool instant = false)
         {
+            if (instance.v_playerentity == null) { return; }
+            if (playerEntity.v_isAlive) { return; }//if is alive, means the entity of the player is not ready ot die
+
+            GameObject.DestroyObject(playerEntity, instant);
+
+            v_playerAlive = false;
+            instance.v_playerentity = null;
+        }
+
+        public static void KillPlayer(bool instant = false)
+        {
+            if (instance.v_playerentity == null) { return; }
+            if (instance.v_playerentity.v_isAlive) { return; }
+            
+            GameObject.DestroyObject(instance.v_playerentity, instant);
+
             v_playerAlive = false;
             instance.v_playerentity = null;
         }

@@ -171,14 +171,14 @@ namespace ProjectIND.darkcomsoft.src.network
             msg.WriteVariableInt64(v_peer.UniqueIdentifier);//Netcode ID
 
             //Position
-            msg.Write(entity.transform.Position.X);
-            msg.Write(entity.transform.Position.Y);
-            msg.Write(entity.transform.Position.Z);
+            msg.Write(entity.transform.v_Position.X);
+            msg.Write(entity.transform.v_Position.Y);
+            msg.Write(entity.transform.v_Position.Z);
 
             //Rotation
-            msg.Write(entity.transform.Rotation.X);
-            msg.Write(entity.transform.Rotation.Y);
-            msg.Write(entity.transform.Rotation.Z);
+            msg.Write(entity.transform.v_Rotation.X);
+            msg.Write(entity.transform.v_Rotation.Y);
+            msg.Write(entity.transform.v_Rotation.Z);
 
             PeerClient.SendMessage(msg, NetDeliveryMethod.ReliableOrdered);
 
@@ -226,8 +226,8 @@ namespace ProjectIND.darkcomsoft.src.network
 
             Entity entityBase = (Entity)GameObject.SpawnObject(Type.GetType(typeName), WorldManager.GetWorld(Type.GetType(worldType)));
             entityBase.SetupEntityNetcode(viewId, ownerId);
-            entityBase.transform.Position = position;
-            entityBase.transform.Rotation = rotation;
+            entityBase.transform.v_Position = position;
+            entityBase.transform.v_Rotation = rotation;
         }
 
         private void ReadDestroyData(NetIncomingMessage inc)
@@ -253,8 +253,8 @@ namespace ProjectIND.darkcomsoft.src.network
                 Debug.Log("EntityReceived: " + kvp.ViewID);
                 Entity entityBase = (Entity)GameObject.SpawnObject(Type.GetType(kvp.EntityType), WorldManager.GetWorld(Type.GetType(kvp.WorldType)));
                 entityBase.SetupEntityNetcode(kvp.ViewID, kvp.Owner);
-                entityBase.transform.Position = new Vector3d(kvp.p_x, kvp.p_y, kvp.p_z);
-                entityBase.transform.Rotation = new Quaterniond(kvp.r_x, kvp.r_y, kvp.r_z, Quaterniond.Identity.W);
+                entityBase.transform.v_Position = new Vector3d(kvp.p_x, kvp.p_y, kvp.p_z);
+                entityBase.transform.v_Rotation = new Quaterniond(kvp.r_x, kvp.r_y, kvp.r_z, Quaterniond.Identity.W);
             }
 
             NetworkCallBacks.OnReceivedServerData?.Invoke();

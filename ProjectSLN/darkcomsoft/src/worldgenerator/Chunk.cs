@@ -31,7 +31,7 @@ namespace ProjectIND.darkcomsoft.src.worldgenerator
 
         public void SetUp(Vector3d position)
         {
-            transform.Position = position;
+            transform.v_Position = position;
 
             v_voxelArray = new BlockVoxel[v_size, v_size, v_size];
 
