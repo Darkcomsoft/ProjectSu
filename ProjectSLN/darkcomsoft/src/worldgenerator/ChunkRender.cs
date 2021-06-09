@@ -33,6 +33,7 @@ namespace ProjectIND.darkcomsoft.src.worldgenerator
             v_texture = ResourcesManager.GetTexture("BlockAtlas");
             v_shader = ResourcesManager.GetShader("ChunkShader");
 
+            GenBuffers();
             BindBuffers();
         }
 
@@ -54,7 +55,7 @@ namespace ProjectIND.darkcomsoft.src.worldgenerator
 
                 GL.CullFace(CullFaceMode.Front);
                 GL.Enable(EnableCap.CullFace);
-
+                GL.Enable(EnableCap.DepthTest);
                 v_texture.Use();
 
                 v_shader.Use();
@@ -72,16 +73,23 @@ namespace ProjectIND.darkcomsoft.src.worldgenerator
 
                 GL.BindVertexArray(v_VAO);
                 GL.BindBuffer(BufferTarget.ElementArrayBuffer, v_IBO);
-                GL.DrawElements(Debug.GLBeginMode, v_mesh.v_indices.Length, DrawElementsType.UnsignedInt, 0);
+                GL.DrawElements(BeginMode.Triangles, v_mesh.v_indices.Length, DrawElementsType.UnsignedInt, 0);//DrawCall
+
+                if (Debug.isDebugEnabled)
+                {
+                    GL.DrawElements(BeginMode.LineLoop, v_mesh.v_indices.Length, DrawElementsType.UnsignedInt, 0);//Wire DrawCall - For Debug
+                }
+
                 GL.BindBuffer(BufferTarget.ElementArrayBuffer, 0);
                 GL.BindVertexArray(0);
 
                 GL.Disable(EnableCap.CullFace);
+                GL.Disable(EnableCap.DepthTest);
             }
         }
 
         #region Bind
-        private void BindBuffers()
+        private void GenBuffers()
         {
             v_IBO = GL.GenBuffer();
             v_VAO = GL.GenVertexArray();
@@ -89,7 +97,10 @@ namespace ProjectIND.darkcomsoft.src.worldgenerator
             v_VBO = GL.GenBuffer();
             v_TBO = GL.GenBuffer();
             v_NBO = GL.GenBuffer();
+        }
 
+        private void BindBuffers()
+        {
             GL.BindBuffer(BufferTarget.ElementArrayBuffer, v_IBO);
             GL.BufferData(BufferTarget.ElementArrayBuffer, v_mesh.v_indices.Length * sizeof(int), v_mesh.v_indices, BufferUsageHint.DynamicDraw);
 
@@ -138,5 +149,11 @@ namespace ProjectIND.darkcomsoft.src.worldgenerator
             GL.DeleteVertexArray(v_VAO);
         }
         #endregion
+
+        public void UpdateMeshRender(ChunkMesh chunkMesh)
+        {
+            v_mesh = chunkMesh;
+            BindBuffers();
+        }
     }
 }

@@ -9,7 +9,6 @@ namespace ProjectIND.darkcomsoft.src.debug
 {
     public static class Debug
     {
-        public static BeginMode GLBeginMode = BeginMode.Triangles;
         private static bool v_debugMode = false;
 
         private static bool v_printDebugMode = false;

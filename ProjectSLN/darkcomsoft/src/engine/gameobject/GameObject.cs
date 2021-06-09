@@ -30,18 +30,17 @@ namespace ProjectIND.darkcomsoft.src.engine.gameobject
 
         public void Create(World world)
         {
-            OnAwake();
-            Debug.Log(this.GetType() + " is Created!");
-
+            Enable();
             v_removed = false;
             v_visible = false;
             v_usefrustum = false;
 
+            OnAwake();
+            Debug.Log(this.GetType() + " is Created!");
             v_transform = new Transform();
             this.v_world = world;
 
             OnStart();
-            Enable();
         }
 
         public void Tick() { if (v_activated && !v_removed) { doTick(); } }

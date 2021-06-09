@@ -92,6 +92,8 @@ namespace ProjectIND.darkcomsoft.src.resources
             switch (Application.AppType)
             {
                 case ApplicationType.Client:
+                    LoadShader("ChunkShader");
+                    LoadTexture("BlockAtlas");
 
                     LoadBlocks();
                     break;

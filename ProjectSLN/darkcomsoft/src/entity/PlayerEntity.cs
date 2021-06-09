@@ -29,12 +29,11 @@ namespace ProjectIND.darkcomsoft.src.entity
         private CharacterController v_charController;
         private Vector2d v_lastPos;
         private Vector2 v_moveVector = new Vector2(0,0);
+        private Vector3d v_mouseRotationBuffer;
         private Camera v_playerCamera;
 
         protected override void OnStart()
         {
-            UseFrustum(false);
-
             SetUpController();
             v_playerControllerReady = true;
             base.OnStart();
@@ -87,7 +86,21 @@ namespace ProjectIND.darkcomsoft.src.entity
             #endregion
 
             #region CameraRotation
+            v_mouseRotationBuffer.X = Yaw;
+            v_mouseRotationBuffer.Y = Pitch;
 
+            if (Pitch < MathHelper.DegreesToRadians(-75.0f))
+            {
+                Pitch = v_mouseRotationBuffer.Y - (v_mouseRotationBuffer.Y - MathHelper.DegreesToRadians(-75.0f));
+            }
+
+            if (Pitch > MathHelper.DegreesToRadians(75.0f))
+            {
+                Pitch = v_mouseRotationBuffer.Y - (v_mouseRotationBuffer.Y - MathHelper.DegreesToRadians(75.0f));
+            }
+
+            v_playerCamera.rotation = new Quaternion(-MathHelper.Clamp((float)v_mouseRotationBuffer.Y, MathHelper.DegreesToRadians(-75.0f), MathHelper.DegreesToRadians(75.0f)), 0, 0, 0);
+            transform.v_Rotation = new Quaterniond(0, WrapAngle(v_mouseRotationBuffer.X), 0, 0);
             #endregion
 
             #region Movement
@@ -126,7 +139,7 @@ namespace ProjectIND.darkcomsoft.src.entity
 
             v_charController = new CharacterController();
             v_charController.Body.Position = new BEPUutilities.Vector3((float)transform.v_Position.X, (float)transform.v_Position.Y, (float)transform.v_Position.Z);
-            //_CharacterController.Body.BecomeKinematic();
+            v_charController.Body.BecomeKinematic();
             Physics.Add(v_charController);
         }
 

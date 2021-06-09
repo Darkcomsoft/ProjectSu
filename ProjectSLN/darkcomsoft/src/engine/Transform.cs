@@ -26,7 +26,7 @@ namespace ProjectIND.darkcomsoft.src.engine
         /// <summary>
         /// [REMOVER ASSIM QUE POSSIVEL]This is the global player position, used to do the fix impresission of the float.
         /// </summary>
-        public static Vector3d PlayerRootPosition;//remover isso assim que possivel, e por na classe do player.
+        public static Vector3d PlayerRootPosition = Vector3d.Zero;//remover isso assim que possivel, e por na classe do player.
 
         public Transform()
         {

@@ -51,6 +51,14 @@ namespace ProjectIND.darkcomsoft.src.engine.gameobject
             }
         }
 
+        public void TickDraw(enums.DrawStage stage)
+        {
+            for (int i = 0; i < v_objectList.Count; i++)
+            {
+                v_objectList[i].Draw(stage);
+            }
+        }
+
         /// <summary>
         ///  THIS IS ONLY FOR THE GAME-ENGINE TO CALL, Use This <see cref="GameObject.SpawnObject{T}(World)"/> instead!
         /// </summary>

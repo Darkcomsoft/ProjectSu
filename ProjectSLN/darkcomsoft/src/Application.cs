@@ -91,7 +91,11 @@ namespace ProjectIND.darkcomsoft.src
         public void TickDraw(double time)
         {
             if (!v_appIsClosing)
+            {
+                v_entityManager?.TickDraw(DrawStage.SolidDraw);
+                v_entityManager?.TickDraw(DrawStage.TransparentDraw);//MELHORAR O SISTEMA DE DRAW DO JOGO ESSE AQUI E SO PARA TESTE
                 gameInstance?.TickDraw();
+            }
         }
 
         //DAR UMA OLHADA NA ORDEM DE DISPOSE, POR QUE ESTOU FAZENDO DE QUALQUER GEITO
