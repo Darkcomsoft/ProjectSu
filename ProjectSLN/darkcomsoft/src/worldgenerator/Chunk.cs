@@ -4,6 +4,7 @@ using ProjectIND.darkcomsoft.src.blocks;
 using ProjectIND.darkcomsoft.src.engine;
 using ProjectIND.darkcomsoft.src.engine.gameobject;
 using ProjectIND.darkcomsoft.src.enums;
+using ProjectIND.darkcomsoft.src.render;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -19,25 +20,19 @@ namespace ProjectIND.darkcomsoft.src.worldgenerator
 
         private BlockVoxel[,,] v_voxelArray;
 
+        private ChunkRender v_chunkRender;
+
         public ChunkState v_chunkState { get; private set; }
         public ChunkStage v_chunkStages { get; private set; }
 
-        #region MeshData
-        private List<Vector3> v_verts;
-        private List<int> v_indices;
-        private List<Vector2> v_uvs;
-
-        #endregion
+        private ChunkMesh v_chunkMesh;
 
         public void SetUp(Vector3d position)
         {
             transform.v_Position = position;
 
             v_voxelArray = new BlockVoxel[v_size, v_size, v_size];
-
-            v_verts = new List<Vector3>();
-            v_indices = new List<int>();
-            v_uvs = new List<Vector2>();
+            v_chunkMesh = new ChunkMesh();
 
             v_chunkState = ChunkState.notready;
             v_chunkStages = ChunkStage.empty;
@@ -52,7 +47,22 @@ namespace ProjectIND.darkcomsoft.src.worldgenerator
 
         protected override void OnDispose()
         {
+            v_voxelArray = null;
+
+            v_chunkRender?.Dispose();
+            v_chunkRender = null;
             base.OnDispose();
+        }
+
+        protected override void OnTick()
+        {
+            if (v_chunkStages == ChunkStage.do_Mesh)
+            {
+                TerrainGenerator.RequestMeshPopulate(this);
+                v_chunkRender = new ChunkRender(this, v_chunkMesh);
+                v_chunkStages = ChunkStage.do_finals;
+            }
+            base.OnTick();
         }
 
         public void SetState(ChunkState chunkState)
@@ -74,6 +84,7 @@ namespace ProjectIND.darkcomsoft.src.worldgenerator
                     }
                 }
             }
+            v_chunkStages = ChunkStage.do_Mesh;
         }
 
         public void PopulateMesh()
@@ -147,6 +158,8 @@ namespace ProjectIND.darkcomsoft.src.worldgenerator
                     }
                 }
             }
+
+            v_chunkStages = ChunkStage.ready;
         }
 
         public static Vector3 GetVert(int index)

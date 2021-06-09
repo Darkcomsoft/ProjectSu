@@ -1,4 +1,5 @@
-﻿using ProjectIND.darkcomsoft.src.engine.gameobject;
+﻿using OpenTK.Mathematics;
+using ProjectIND.darkcomsoft.src.engine.gameobject;
 using ProjectIND.darkcomsoft.src.entity.managers;
 using ProjectIND.darkcomsoft.src.network;
 using System;
@@ -13,6 +14,17 @@ namespace ProjectIND.darkcomsoft.src.world
     public abstract class World : ClassBase
     {
         public static World instance { get; private set; }
+
+        #region Ambience
+        public bool Enabled = true;
+        public float Density = 0.014f;
+        public float Distance = 3.5f;
+
+        public Color4 FogColor = new Color4(0, 0.7490196f, 1, 1);
+        public Color4 SkyColor = Color4.DeepSkyBlue;
+        public Color4 SkyHorizonColor = Color4.SkyBlue;
+        public Color4 AmbienceColor = Color4.White;
+        #endregion
 
         protected override void OnDispose()
         {

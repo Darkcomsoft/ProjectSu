@@ -24,7 +24,11 @@ namespace ProjectIND.darkcomsoft.src.worldgenerator
 
         //VoxelPopulate
         private ThreadLoop v_populateVoxelThreadLoop;
-        private Queue<Vector3> v_populateVoxelQueue;
+        private Queue<Vector3d> v_populateVoxelQueue;
+
+        //VoxelPopulate
+        private ThreadLoop v_populateMeshThreadLoop;
+        private Queue<Vector3d> v_populateMeshQueue;
 
         private Dictionary<Vector3d, Chunk> v_chunkList;
 
@@ -34,7 +38,8 @@ namespace ProjectIND.darkcomsoft.src.worldgenerator
             v_chunkList = new Dictionary<Vector3d, Chunk>();
 
             v_destrouChunkQueue = new ActionQueue();
-            v_populateVoxelQueue = new Queue<Vector3>();
+            v_populateVoxelQueue = new Queue<Vector3d>();
+            v_populateMeshQueue = new Queue<Vector3d>();
 
             StartThreads();//start all others threads
             base.OnAwake();
@@ -48,6 +53,9 @@ namespace ProjectIND.darkcomsoft.src.worldgenerator
             v_populateVoxelThreadLoop.Dispose();
             v_populateVoxelThreadLoop = null;
 
+            v_populateMeshThreadLoop.Dispose();
+            v_populateMeshThreadLoop = null;
+
             v_destrouChunkQueue.Dispose();
             v_destrouChunkQueue = null;
 
@@ -58,6 +66,9 @@ namespace ProjectIND.darkcomsoft.src.worldgenerator
 
             v_populateVoxelQueue.Clear();
             v_populateVoxelQueue = null;
+
+            v_populateMeshQueue.Clear();
+            v_populateMeshQueue = null;
 
             v_chunkList = null;
             instance = null;
@@ -73,8 +84,9 @@ namespace ProjectIND.darkcomsoft.src.worldgenerator
         private void StartThreads()
         {
             Debug.Log("Starting Threads!");
-            v_terrainLoadThreadLoop = new ThreadLoop("ThreadTerrainLoad", ThreadPriority.Lowest, false, 15, new ThreadCallBack(GenTick));
-            v_populateVoxelThreadLoop = new ThreadLoop("ThreadVoxelPopulate", ThreadPriority.Lowest,  false, 5, new ThreadCallBack(PopulateVoxelTick));
+            v_terrainLoadThreadLoop = new ThreadLoop("Thread_Terrain_Load", ThreadPriority.Lowest, false, 15, new ThreadCallBack(GenTick));
+            v_populateVoxelThreadLoop = new ThreadLoop("Thread_Voxel_Populate", ThreadPriority.Lowest,  false, 10, new ThreadCallBack(PopulateVoxelTick));
+            v_populateMeshThreadLoop = new ThreadLoop("Thread_Mesh_Populate", ThreadPriority.Lowest, false, 10, new ThreadCallBack(PopulateMeshTick));
         }
 
         //Terrain loader tick
@@ -137,11 +149,27 @@ namespace ProjectIND.darkcomsoft.src.worldgenerator
             {
                 while (v_populateVoxelQueue.Count > 0)
                 {
-                    Vector3 pos = v_populateVoxelQueue.Dequeue();
+                    Vector3d pos = v_populateVoxelQueue.Dequeue();
 
                     if (v_chunkList.ContainsKey(pos))
                     {
                         v_chunkList[pos].PopulateVoxels();
+                    }
+                }
+            }
+        }
+
+        private void PopulateMeshTick()
+        {
+            lock (v_populateMeshQueue)
+            {
+                while (v_populateMeshQueue.Count > 0)
+                {
+                    Vector3d pos = v_populateMeshQueue.Dequeue();
+
+                    if (v_chunkList.ContainsKey(pos))
+                    {
+                        v_chunkList[pos].PopulateMesh();
                     }
                 }
             }
@@ -159,7 +187,12 @@ namespace ProjectIND.darkcomsoft.src.worldgenerator
 
         public static void RequestVoxelPopulate(Chunk chunk)
         {
-            instance.v_populateVoxelQueue.Enqueue((Vector3)chunk.transform.v_Position);
+            instance.v_populateVoxelQueue.Enqueue(chunk.transform.v_Position);
+        }
+
+        public static void RequestMeshPopulate(Chunk chunk)
+        {
+            instance.v_populateMeshQueue.Enqueue(chunk.transform.v_Position);
         }
     }
 }

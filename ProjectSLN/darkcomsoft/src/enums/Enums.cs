@@ -11,7 +11,7 @@ namespace ProjectIND.darkcomsoft.src.enums
 
     public enum ChunkStage : byte
     {
-        empty, do_voxel, do_nature, do_finals, ready
+        empty, do_voxel, do_Mesh, do_nature, do_finals, ready
     }
 
     /// <summary>
