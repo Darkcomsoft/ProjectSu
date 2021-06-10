@@ -194,5 +194,58 @@ namespace ProjectIND.darkcomsoft.src.worldgenerator
         {
             instance.v_populateMeshQueue.Enqueue(chunk.transform.v_Position);
         }
+
+        #region GetFunctions
+        public BlockVoxel GetTileAt(int x, int y,int z)
+        {
+            Chunk chunk = GetChunkAt(x, y,z);
+
+            if (chunk != null)
+            {
+                return chunk.v_voxelArray[x - (int)chunk.transform.v_Position.X, y - (int)chunk.transform.v_Position.Y, z - (int)chunk.transform.v_Position.Z];
+            }
+            return new BlockVoxel();
+        }
+
+        public BlockVoxel GetTileAt(Vector3d pos)
+        {
+            Chunk chunk = GetChunkAt((int)pos.X, (int)pos.Y, (int)pos.Z);
+
+            if (chunk != null)
+            {
+                return chunk.v_voxelArray[(int)pos.X - (int)chunk.transform.v_Position.X, (int)pos.Y - (int)chunk.transform.v_Position.Y, (int)pos.Z - (int)chunk.transform.v_Position.Z];
+            }
+            return new BlockVoxel();
+        }
+
+        public BlockVoxel GetTileAt(double x, double y,double z)
+        {
+            int mx = MathUtils.FloorToInt(x);
+            int my = MathUtils.FloorToInt(y);
+            int mz = MathUtils.FloorToInt(z);
+
+            Chunk chunk = GetChunkAt(mx, my, mz);
+
+            if (chunk != null)
+            {
+                return chunk.v_voxelArray[mx - (int)chunk.transform.v_Position.X, my - (int)chunk.transform.v_Position.Y, mz - (int)chunk.transform.v_Position.Z];
+            }
+            return new BlockVoxel();
+        }
+
+        public Chunk GetChunkAt(int xx, int yy,int zz)
+        {
+            Vector3d chunkpos = new Vector3d(MathUtils.FloorToInt(xx / (double)Chunk.v_size) * Chunk.v_size, MathUtils.FloorToInt(yy / (double)Chunk.v_size) * Chunk.v_size, MathUtils.FloorToInt(zz / (double)Chunk.v_size) * Chunk.v_size);
+
+            if (v_chunkList.ContainsKey(chunkpos))
+            {
+                return v_chunkList[chunkpos];
+            }
+            else
+            {
+                return null;
+            }
+        }
+        #endregion
     }
 }

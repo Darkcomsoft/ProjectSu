@@ -26,7 +26,7 @@ namespace ProjectIND.darkcomsoft.src
             LoadLauncheArguments(args);
             CheckDevMode();
 
-            GCSettings.LatencyMode = GCLatencyMode.LowLatency;
+            //GCSettings.LatencyMode = GCLatencyMode.LowLatency;
 
             v_windowsConsole = new WindowsConsole();
 #if Client

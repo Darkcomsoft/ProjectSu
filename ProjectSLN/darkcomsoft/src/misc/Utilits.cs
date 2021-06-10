@@ -320,4 +320,9 @@ namespace ProjectIND.darkcomsoft.src.misc
             }
         }
     }
+
+    public static class MathUtils
+    {
+        public static int FloorToInt(double value) => (int)Math.Floor(value);
+    }
 }

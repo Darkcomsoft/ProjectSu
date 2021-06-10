@@ -18,13 +18,19 @@ namespace ProjectIND.darkcomsoft.src.worldgenerator
     {
         public const int v_size = 16;
 
-        private BlockVoxel[,,] v_voxelArray;
+        public BlockVoxel[,,] v_voxelArray { get; private set; }
 
         private ChunkRender v_chunkRender;
         private ChunkMesh v_chunkMesh;
 
         public ChunkState v_chunkState { get; private set; }
         public ChunkStage v_chunkStages { get; private set; }
+
+        private Queue<Action> v_actionQueue = new Queue<Action>();
+
+        private List<Vector3> v_verts = new List<Vector3>();
+        private List<int> v_indices = new List<int>();
+        private List<Vector2> v_uvs = new List<Vector2>();
 
         public void SetUp(Vector3d position)
         {
@@ -46,6 +52,13 @@ namespace ProjectIND.darkcomsoft.src.worldgenerator
 
         protected override void OnDispose()
         {
+            v_actionQueue.Clear();
+            v_actionQueue = null;
+
+            v_verts.Clear();
+            v_indices.Clear();
+            v_uvs.Clear();
+
             v_voxelArray = null;
 
             v_chunkRender?.Dispose();
@@ -55,15 +68,9 @@ namespace ProjectIND.darkcomsoft.src.worldgenerator
 
         protected override void OnTick()
         {
-            if (v_chunkStages == ChunkStage.do_Mesh)
+            while (v_actionQueue.Count > 0)
             {
-                TerrainGenerator.RequestMeshPopulate(this);
-            }
-
-            if (v_chunkStages == ChunkStage.do_finals)
-            {
-                v_chunkRender = new ChunkRender(this, v_chunkMesh);
-                v_chunkStages = ChunkStage.ready;
+                v_actionQueue.Dequeue().Invoke();
             }
             base.OnTick();
         }
@@ -98,27 +105,24 @@ namespace ProjectIND.darkcomsoft.src.worldgenerator
                 {
                     for (int z = 0; z < v_size; z++)
                     {
-                        if (rand.Next(0,1) == 0)
-                        {
-                            v_voxelArray[x, y, z].v_blockID = 0;
-                        }
-                        else
-                        {
-                            v_voxelArray[x, y, z].v_blockID = 1;
-                        }
+                        v_voxelArray[x, y, z].x = x + (int)transform.v_Position.X;
+                        v_voxelArray[x, y, z].y = y + (int)transform.v_Position.X;
+                        v_voxelArray[x, y, z].z = z + (int)transform.v_Position.X;
+
+                        v_voxelArray[x, y, z].v_blockID = (byte)rand.Next(0, 10);
                     }
                 }
             }
-            v_chunkStages = ChunkStage.do_Mesh;
+            v_actionQueue.Enqueue(() => { TerrainGenerator.RequestMeshPopulate(this); });
         }
 
         public void PopulateMesh()
         {
             int vertexIndex = 0;
 
-            List<Vector3> v_verts = new List<Vector3>();
-            List<int> v_indices = new List<int>();
-            List<Vector2> v_uvs = new List<Vector2>();
+            v_verts.Clear();
+            v_indices.Clear();
+            v_uvs.Clear();
 
             for (int x = 0; x < v_size; x++)
             {
@@ -135,28 +139,19 @@ namespace ProjectIND.darkcomsoft.src.worldgenerator
                             {
                                 if (blockney[s].v_blockID != 0)
                                 {
-                                    lock (v_verts)
-                                    {
-                                        v_verts.Add(GetVert(Tris[s, 0]) + blockpos);
-                                        v_verts.Add(GetVert(Tris[s, 1]) + blockpos);
-                                        v_verts.Add(GetVert(Tris[s, 2]) + blockpos);
-                                        v_verts.Add(GetVert(Tris[s, 3]) + blockpos);
-                                    }
+                                    v_verts.Add(GetVert(Tris[s, 0]) + blockpos);
+                                    v_verts.Add(GetVert(Tris[s, 1]) + blockpos);
+                                    v_verts.Add(GetVert(Tris[s, 2]) + blockpos);
+                                    v_verts.Add(GetVert(Tris[s, 3]) + blockpos);
 
-                                    lock (v_indices)
-                                    {
-                                        v_indices.Add(vertexIndex);
-                                        v_indices.Add(vertexIndex + 1);
-                                        v_indices.Add(vertexIndex + 2);
-                                        v_indices.Add(vertexIndex + 2);
-                                        v_indices.Add(vertexIndex + 1);
-                                        v_indices.Add(vertexIndex + 3);
-                                    }
+                                    v_indices.Add(vertexIndex);
+                                    v_indices.Add(vertexIndex + 1);
+                                    v_indices.Add(vertexIndex + 2);
+                                    v_indices.Add(vertexIndex + 2);
+                                    v_indices.Add(vertexIndex + 1);
+                                    v_indices.Add(vertexIndex + 3);
 
-                                    lock (v_uvs)
-                                    {
-                                        v_uvs.AddRange(Block.GetBlockByID(blockney[s].v_blockID).GetUV());
-                                    }
+                                    v_uvs.AddRange(Block.GetBlockByID(blockney[s].v_blockID).GetUV());
 
                                     #region Hide
                                     /*if (currentBlock.Type == TypeBlock.Grass)
@@ -192,7 +187,11 @@ namespace ProjectIND.darkcomsoft.src.worldgenerator
             v_chunkMesh.v_indices = v_indices.ToArray();
             v_chunkMesh.v_uvs = v_uvs.ToArray();
 
-            v_chunkStages = ChunkStage.do_finals;
+            v_verts.Clear();
+            v_indices.Clear();
+            v_uvs.Clear();
+
+            v_actionQueue.Enqueue(() => { v_chunkRender = new ChunkRender(this, v_chunkMesh); });
         }
 
         public static Vector3 GetVert(int index)

@@ -52,8 +52,8 @@ namespace ProjectIND.darkcomsoft.src
             /// If the Dispose() isn't called by the game engine, ts gona be called by the Finalizer
             if (!v_isdisposedByTheGameEngine)
             {
-                /*Debug.Log("DISPOSED BY THE FINALIZER!!!", "DISPOSESYSTEM");
-                OnDispose();*/
+                Debug.Log("DISPOSED BY THE FINALIZER!!!", "DISPOSESYSTEM");
+                OnDispose();
             }
 
             _disposed = true;
